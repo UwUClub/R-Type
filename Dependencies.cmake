@@ -5,8 +5,8 @@ include(cmake/CPM.cmake)
 # targets
 function(R_Type_setup_dependencies)
 
-  find_package(Catch2 CONFIG)
-  find_package(Boost CONFIG)
+  find_package(Catch2)
+  find_package(Boost)
 
   if(NOT TARGET Catch2::Catch2WithMain)
     cpmaddpackage("gh:catchorg/Catch2@3.3.2")
