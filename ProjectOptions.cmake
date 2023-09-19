@@ -1,5 +1,4 @@
 include(cmake/SystemLink.cmake)
-include(cmake/LibFuzzer.cmake)
 include(CMakeDependentOption)
 include(CheckCXXCompilerFlag)
 
@@ -77,15 +76,6 @@ macro(R_Type_setup_options)
       R_Type_ENABLE_PCH
       R_Type_ENABLE_CACHE)
   endif()
-
-  R_Type_check_libfuzzer_support(LIBFUZZER_SUPPORTED)
-  if(LIBFUZZER_SUPPORTED AND (R_Type_ENABLE_SANITIZER_ADDRESS OR R_Type_ENABLE_SANITIZER_THREAD OR R_Type_ENABLE_SANITIZER_UNDEFINED))
-    set(DEFAULT_FUZZER ON)
-  else()
-    set(DEFAULT_FUZZER OFF)
-  endif()
-
-  option(R_Type_BUILD_FUZZ_TESTS "Enable fuzz testing executable" ${DEFAULT_FUZZER})
 
 endmacro()
 
