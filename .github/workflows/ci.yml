@@ -156,15 +156,33 @@ jobs:
       - name: Install boost
         if: matrix.os == 'windows-2022' && matrix.compiler == 'msvc'
         uses: MarkusJx/install-boost@v2.4.4
-        id: install-boost-linux
+        id: install-boost-windows-msvc-2022
+        with:
+          boost_version: 1.83.0
+          platform_version: 2022
+          toolset: msvc
+
+      - name: Install boost
+        if: matrix.os == 'windows-2019' && matrix.compiler == 'msvc'
+        uses: MarkusJx/install-boost@v2.4.4
+        id: install-boost-windows-msvc
         with:
           boost_version: 1.83.0
           platform_version: 2019
           toolset: msvc
 
       - name: Install boost
+        if: matrix.os == 'windows-2019' && matrix.compiler == 'llvm-15.0.2'
         uses: MarkusJx/install-boost@v1.0.1
-        id: install-boost
+        id: install-boost-windows-llvm
+        with:
+          boost_version: 1.83.0
+          platform_version: 2019
+
+      - name: Install boost
+        if: matrix.os == 'ubuntu-20.04'
+        uses: MarkusJx/install-boost@v1.0.1
+        id: install-boost-ubuntu
         with:
           boost_version: 1.83.0
           platform_version: 20.04
