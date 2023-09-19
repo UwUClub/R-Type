@@ -7,15 +7,15 @@ add_executable(
         main.cpp
 )
 
-target_link_libraries(server
+target_link_libraries(client
         PRIVATE R_Type::R_Type_options
         R_Type::R_Type_warnings
         ${Boost_LIBRARIES}
 )
 
-target_include_directories(server PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
-target_include_directories(server PRIVATE ${Boost_INCLUDE_DIRS})
+target_include_directories(client PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(client PRIVATE ${Boost_INCLUDE_DIRS})
 
-set_target_properties(server PROPERTIES
+set_target_properties(client PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
 )
