@@ -80,7 +80,6 @@ if(R_Type_BUILD_FUZZ_TESTS)
     message(WARNING "You need asan or tsan enabled for meaningful fuzz testing")
   endif()
   add_subdirectory(fuzz_test)
-
 endif()
 
 # If MSVC is being used, and ASAN is enabled, we need to set the debugger environment
@@ -92,25 +91,24 @@ if(MSVC)
 endif()
 
 # set the startup project for the "play" button in MSVC
-set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT intro)
+set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT server)
 
 if(CMAKE_SKIP_INSTALL_RULES)
   return()
 endif()
 
 include(cmake/PackageProject.cmake)
+find_package(Boost)
 
 # Add other targets that you want installed here, by default we just package the one executable
 # we know we want to ship
 R_Type_package_project(
   TARGETS
-  intro
+  server
+  client
   R_Type_options
   R_Type_warnings
-  # FIXME: this does not work! CK
-  # PRIVATE_DEPENDENCIES_CONFIGURED project_options project_warnings
 )
-
 # Experience shows that explicit package naming can help make it easier to sort
 # out potential ABI related issues before they start, while helping you
 # track a build to a specific GIT SHA
