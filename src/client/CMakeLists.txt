@@ -1,6 +1,6 @@
 find_package(Boost REQUIRED COMPONENTS system thread)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread -O")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
 add_executable(
         client
