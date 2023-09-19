@@ -154,7 +154,7 @@ jobs:
           opencppcoverage: true
 
       - name: Install boost
-        if: matrix.os == 'windows-2022 && matrix.compiler == 'msvc'
+        if: matrix.os == 'windows-2022' && matrix.compiler == 'msvc'
         uses: MarkusJx/install-boost@v2.4.4
         id: install-boost
         with:
