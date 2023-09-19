@@ -156,7 +156,7 @@ jobs:
       - name: Install boost
         if: matrix.os == 'windows-2022' && matrix.compiler == 'msvc'
         uses: MarkusJx/install-boost@v2.4.4
-        id: install-boost
+        id: install-boost-linux
         with:
           boost_version: 1.83.0
           platform_version: 2019
