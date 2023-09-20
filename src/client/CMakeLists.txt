@@ -3,14 +3,12 @@ find_package(SDL2)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
-add_executable(
-        client
-        main.cpp
-)
+target_sources(client PRIVATE main.cpp)
 
 target_link_libraries(client
         PRIVATE R_Type::R_Type_options
         R_Type::R_Type_warnings
+        ecs
         ${SDL2_LIBRARIES}
         ${Boost_LIBRARIES}
 )

@@ -1,11 +1,12 @@
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
-add_library(ecs STATIC
+target_sources(ecs PRIVATE
         World.hpp
         SparseArray.hpp
 )
 
 add_subdirectory(Event)
+add_subdirectory(Resources)
 
 target_link_libraries(ecs
         PRIVATE R_Type::R_Type_options
@@ -13,6 +14,7 @@ target_link_libraries(ecs
 )
 
 target_include_directories(ecs PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(client PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
 set_target_properties(ecs PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
