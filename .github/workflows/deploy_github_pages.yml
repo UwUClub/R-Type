@@ -1,0 +1,30 @@
+name: Doxygen GitHub Pages Deploy Action
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get install -y doxygen
+
+      - name: Build documentation
+        run: |
+          doxygen doxyfile
+          touch documentation/docs/.nojekyll
+
+      - name: deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: documentation/
+          ssh-key: ${{ secrets.SSH_KEY }}
+          git-config-email: "<>"
+          git-config-name: "Github Action documentation"
