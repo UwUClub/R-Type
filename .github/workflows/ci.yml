@@ -1,8 +1,9 @@
 name: ci
 on:
   pull_request:
-  release:
-    types: [published]
+    branches:
+      - main
+      - dev
   push:
     branches:
       - main
@@ -10,6 +11,7 @@ on:
 
 env:
   CLANG_TIDY_VERSION: "15.0.2"
+  _CRT_SECURE_NO_WARNINGS: 1
   VERBOSE: 1
 
 
@@ -46,7 +48,6 @@ jobs:
           - OFF
 
         exclude:
-          # mingw is determined by this author to be too buggy to support
           - os: windows-2019
             compiler: gcc-11
 
