@@ -1,5 +1,6 @@
 name: auto-clang-format
-on: [pull_request]
+on:
+  push
 
 jobs:
   build:
@@ -7,14 +8,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - uses: DoozyX/clang-format-lint-action@v0.13
+    - uses: DoozyX/clang-format-lint-action@v0.16.2
       with:
         source: '.'
         exclude: './third_party ./external'
         extensions: 'h,cpp,hpp'
         clangFormatVersion: 16
         inplace: True
-    - uses: EndBug/add-and-commit@v4
+    - uses: EndBug/add-and-commit@v9
       with:
         author_name: Clang Robot
         author_email: robot@uwuclub.com
