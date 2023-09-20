@@ -44,12 +44,3 @@ void NetworkHandler::send(const boost::asio::const_buffer aBuffer, size_t aClien
     }
 }
 
-void NetworkHandler::triggerEvent(const boost::system::error_code &error, std::size_t bytes_transferred)
-{
-    if (!error) {
-        std::cout << "Received " << bytes_transferred << " bytes" << std::endl;
-    } else {
-        std::cerr << "Error: " << error.message() << std::endl;
-    }
-    listen();
-}
