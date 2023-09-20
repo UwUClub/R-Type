@@ -5,6 +5,7 @@
 #include <boost/array.hpp>
 #include <boost/bind.hpp>
 #include "NetworkHandler.hpp"
+#include "SingleRequestListener.hpp"
 
 using boost::asio::ip::udp;
 
@@ -22,15 +23,10 @@ NetworkHandler::NetworkHandler(const unsigned short aPort) : _port(aPort), _sock
 void NetworkHandler::listen()
 {
     try {
-        boost::array<char, 1> recvBuf;
-        udp::endpoint remoteEndpoint;
+        SingleRequestListener listener = SingleRequestListener(_ioContext, _socket);
+        // boost::array<char, 1> recvBuf;
+        // udp::endpoint remoteEndpoint;
 
-        _socket.async_receive_from(
-            boost::asio::buffer(recvBuf),
-            remoteEndpoint,
-            boost::bind(&NetworkHandler::triggerEvent, this, boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred)
-        );
-        _ioContext.run();
         //_socket.receive_from(boost::asio::buffer(recvBuf), remoteEndpoint);
         //bool alreadyIn = _clients.find(remoteEndpoint) != _clients.end();
         //std::count(_clients.begin(), _clients.end(), remoteEndpoint) > 0;
