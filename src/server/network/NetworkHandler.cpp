@@ -12,22 +12,19 @@ NetworkHandler::NetworkHandler() : _socket(udp::socket(_ioContext, udp::endpoint
 
 void NetworkHandler::listen()
 {
-    try {
-        SingleRequestListener listener = SingleRequestListener(_ioContext, _socket);
-        // boost::array<char, 1> recvBuf;
-        // udp::endpoint remoteEndpoint;
+    SingleRequestListener listener(_ioContext, _socket, this);
+    // boost::array<char, 1> recvBuf;
+    // udp::endpoint remoteEndpoint;
 
-        //_socket.receive_from(boost::asio::buffer(recvBuf), remoteEndpoint);
-        // bool alreadyIn = _clients.find(remoteEndpoint) != _clients.end();
-        // std::count(_clients.begin(), _clients.end(), remoteEndpoint) > 0;
+    //_socket.receive_from(boost::asio::buffer(recvBuf), remoteEndpoint);
+    // bool alreadyIn = _clients.find(remoteEndpoint) != _clients.end();
+    // std::count(_clients.begin(), _clients.end(), remoteEndpoint) > 0;
 
-        // if (!alreadyIn) {
-        // std::cout << "New client connected: " << remoteEndpoint << std::endl;
-        //_clients[remoteEndpoint] = Player(Color::RED);
-        //}
-    } catch (std::exception &e) {
-        std::cerr << "NetworkHandler run error: " << e.what() << std::endl;
-    }
+    // if (!alreadyIn) {
+    // std::cout << "New client connected: " << remoteEndpoint << std::endl;
+    //_clients[remoteEndpoint] = Player(Color::RED);
+    //}
+
 }
 
 void NetworkHandler::send(const boost::asio::const_buffer aBuffer, size_t aClientId)

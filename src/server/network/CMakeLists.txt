@@ -7,6 +7,7 @@ target_sources(server PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/NetworkHandler.cpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/SingleRequestListener.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/SingleRequestListener.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/Packets.hpp"
 )
 
 target_link_libraries(server

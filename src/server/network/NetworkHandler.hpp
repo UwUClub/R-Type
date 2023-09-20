@@ -1,5 +1,6 @@
 #include <boost/asio.hpp>
 #include <map>
+#include <iostream>
 
 #ifndef NETWORKHANDLER_HPP
     #define NETWORKHANDLER_HPP
@@ -7,19 +8,6 @@
 #define UDP_PORT 13
 
 using boost::asio::ip::udp;
-
-enum class NetworkEvent
-{
-    CONNECT = 0,
-    DISCONNECT,
-    CRASH,
-    MOVE,
-    SHOOT,
-    MONSTER_SPAWN,
-    MONSTER_DEATH,
-    MONSTER_MOVE,
-    MONSTER_SHOOT
-};
 
 class NetworkHandler
 {

@@ -3,8 +3,8 @@
 #include <boost/bind.hpp>
 #include <iostream>
 
-SingleRequestListener::SingleRequestListener(boost::asio::io_context &aIoContext, udp::socket &aSocket)
-    : _buffer()
+SingleRequestListener::SingleRequestListener(boost::asio::io_context &aIoContext, udp::socket &aSocket, NetworkHandler *aNetworkHandler)
+    : _buffer(), _networkHandler(aNetworkHandler)
 {
     aSocket.async_receive_from(boost::asio::buffer(_buffer), _remoteEndpoint,
                                boost::bind(&SingleRequestListener::receiveRequest, this,
@@ -20,5 +20,6 @@ void SingleRequestListener::receiveRequest(const boost::system::error_code &aErr
 
     std::string result(_buffer.data(), aBytesTransferred);
     std::cout << "Received " << result << " from " << _remoteEndpoint << std::endl;
-    NetworkHandler::getInstance();
+    _networkHandler->listen();
+    delete this;
 }
