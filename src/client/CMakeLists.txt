@@ -6,6 +6,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 add_executable(
         client
         main.cpp
+        NetworkHandler.hpp
+        NetworkHandler.cpp
 )
 
 target_link_libraries(client
