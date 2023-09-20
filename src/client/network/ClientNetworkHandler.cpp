@@ -1,4 +1,4 @@
-#include "NetworkHandler.hpp"
+#include "ClientNetworkHandler.hpp"
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
 #include <iostream>
@@ -6,7 +6,7 @@
 
 using boost::asio::ip::udp;
 
-NetworkHandler::NetworkHandler(const std::string &host)
+ClientNetworkHandler::ClientNetworkHandler(const std::string &host)
     : _resolver(udp::resolver(_ioContext)),
       _socket(udp::socket(_ioContext))
 {
@@ -15,7 +15,7 @@ NetworkHandler::NetworkHandler(const std::string &host)
     std::cout << "Connected to " << _serverEndpoint << std::endl;
 }
 
-void NetworkHandler::listen()
+void ClientNetworkHandler::listen()
 {
     try {
         // send(boost::asio::buffer("hello from client"));
@@ -28,17 +28,17 @@ void NetworkHandler::listen()
         }
 
     } catch (std::exception &e) {
-        std::cerr << "NetworkHandler run error: " << e.what() << std::endl;
+        std::cerr << "ClientNetworkHandler run error: " << e.what() << std::endl;
     }
 }
 
-void NetworkHandler::send(const boost::asio::const_buffer &buffer)
+void ClientNetworkHandler::send(const boost::asio::const_buffer &buffer)
 {
     try {
         // boost::array<char, 1> buffer  = {{ 0 }};
         _socket.send_to(boost::asio::buffer(buffer), _serverEndpoint);
         std::cout << "Sent something to " << _serverEndpoint << std::endl;
     } catch (std::exception &e) {
-        std::cerr << "NetworkHandler send error: " << e.what() << std::endl;
+        std::cerr << "ClientNetworkHandler send error: " << e.what() << std::endl;
     }
 }

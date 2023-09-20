@@ -22,12 +22,12 @@ enum class PacketToSendType
 struct PacketToSend
 {
     PacketToSendType type;
+    std::any body;
 };
 
 struct ReceivedPacket
 {
-    Game::ClientEvent type;
-    std::any body;
+    Game::GameEvent type;
 };
 
 #endif

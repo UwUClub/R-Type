@@ -1,8 +1,8 @@
 #ifndef GAMEEVENT_HPP
-#define GAMEEVENT_HPP
+    #define GAMEEVENT_HPP
 
-#include "Event.hpp"
-#include "Utils.hpp"
+    #include "Event.hpp"
+    #include "Utils.hpp"
 
 namespace Game {
 
@@ -11,8 +11,9 @@ namespace Game {
         CONNECT = 0,
         DISCONNECT = 1,
         CRASH = 2,
-        MOVE = 3,
-        SHOOT = 4
+        MOVE_UP = 3,
+        MOVE_DOWN = 4,
+        SHOOT = 5
     };
 
     /**

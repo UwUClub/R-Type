@@ -1,6 +1,6 @@
 #include <boost/asio.hpp>
 #include <iostream>
-#include "NetworkHandler.hpp"
+#include "ClientNetworkHandler.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
         return 1;
     }
     try {
-        NetworkHandler network = NetworkHandler(argv[1]);
+        ClientNetworkHandler network = ClientNetworkHandler(argv[1]);
         // network.run(argv[1]);
         network.send(boost::asio::buffer("hello from client"));
         network.send(boost::asio::buffer("hello again from client"));

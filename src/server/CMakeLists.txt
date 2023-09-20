@@ -7,7 +7,6 @@ add_executable(
         main.cpp
 )
 
-add_subdirectory(game)
 add_subdirectory(network)
 
 target_link_libraries(server

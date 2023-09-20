@@ -1,11 +1,11 @@
 #include <boost/asio.hpp>
 
-#ifndef NETWORKHANDLER_HPP
-    #define NETWORKHANDLER_HPP
+#ifndef ClientNetworkHandler_HPP
+    #define ClientNetworkHandler_HPP
 
 using boost::asio::ip::udp;
 
-class NetworkHandler
+class ClientNetworkHandler
 {
     private:
         boost::asio::io_context _ioContext;
@@ -18,8 +18,8 @@ class NetworkHandler
          * @brief Connect to the server
          * @param host The ip address of the server (without port)
          */
-        explicit NetworkHandler(const std::string &);
-        ~NetworkHandler() = default;
+        explicit ClientNetworkHandler(const std::string &);
+        ~ClientNetworkHandler() = default;
 
         /**
          * @brief Listen to the server

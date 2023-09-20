@@ -1,10 +1,10 @@
 #include <iostream>
-#include "NetworkHandler.hpp"
+#include "ServerNetworkHandler.hpp"
 
 int main()
 {
     try {
-        NetworkHandler::getInstance();
+        ServerNetworkHandler::getInstance();
         std::string test;
         std::cin >> test;
         // network.send("hello from client");

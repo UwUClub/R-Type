@@ -14,8 +14,8 @@ target_link_libraries(server
 )
 
 target_include_directories(server
-        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../ecs"
-        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../ecs/Event"
+        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../ecs"
+        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../ecs/Event"
 )
 
 set_target_properties(server PROPERTIES

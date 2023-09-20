@@ -6,9 +6,9 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 add_executable(
         client
         main.cpp
-        NetworkHandler.hpp
-        NetworkHandler.cpp
 )
+
+add_subdirectory(network)
 
 target_link_libraries(client
         PRIVATE R_Type::R_Type_options
@@ -17,6 +17,7 @@ target_link_libraries(client
         ${Boost_LIBRARIES}
 )
 
+target_include_directories(client PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/network")
 target_include_directories(client PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(client PRIVATE ${Boost_INCLUDE_DIRS})
 target_include_directories(client PRIVATE ${SDL2_INCLUDE_DIRS})
