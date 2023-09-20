@@ -4,18 +4,11 @@
 
 using boost::asio::ip::udp;
 
-NetworkHandler::NetworkHandler(const unsigned short aPort)
-    : _port(aPort),
-      _socket(udp::socket(_ioContext, udp::endpoint(udp::v4(), aPort)))
+NetworkHandler::NetworkHandler() : _socket(udp::socket(_ioContext, udp::endpoint(udp::v4(), _port)))
 {
     std::cout << "Server listening on port " << _port << std::endl;
     listen();
 }
-
-// void handler(const boost::system::error_code &error, std::size_t bytes_transferred)
-// {
-//     std::cout << "HANDLER" << std::endl;
-// }
 
 void NetworkHandler::listen()
 {

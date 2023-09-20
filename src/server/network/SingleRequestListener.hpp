@@ -4,12 +4,14 @@
 #ifndef REQUESTLISTENER_HPP
 #define NETWORKHANDLER_HPP
 
+#define BUFFER_SIZE 128
+
 using boost::asio::ip::udp;
 
 class SingleRequestListener {
 
     private:
-    boost::array<char, 1> _buffer;
+    boost::array<char, BUFFER_SIZE> _buffer;
     udp::endpoint _remoteEndpoint;
 
     public:

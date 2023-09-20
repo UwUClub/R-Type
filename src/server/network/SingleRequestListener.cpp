@@ -1,6 +1,7 @@
 #include <iostream>
 #include <boost/bind.hpp>
 #include "SingleRequestListener.hpp"
+#include "NetworkHandler.hpp"
 
 SingleRequestListener::SingleRequestListener(boost::asio::io_context &aIoContext, udp::socket &aSocket) : _buffer()
 {
@@ -19,4 +20,5 @@ void SingleRequestListener::receiveRequest(const boost::system::error_code &aErr
 
     std::string result(_buffer.data(), aBytesTransferred);
     std::cout << "Received " << result << " from " << _remoteEndpoint << std::endl;
+    NetworkHandler::getInstance();
 }
