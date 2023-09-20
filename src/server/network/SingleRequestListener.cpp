@@ -3,8 +3,10 @@
 #include <iostream>
 #include "NetworkHandler.hpp"
 
-SingleRequestListener::SingleRequestListener(boost::asio::io_context &aIoContext, udp::socket &aSocket, NetworkHandler *aNetworkHandler)
-    : _buffer(), _networkHandler(aNetworkHandler)
+SingleRequestListener::SingleRequestListener(boost::asio::io_context &aIoContext, udp::socket &aSocket,
+                                             NetworkHandler *aNetworkHandler)
+    : _buffer(),
+      _networkHandler(aNetworkHandler)
 {
     aSocket.async_receive_from(boost::asio::buffer(_buffer), _remoteEndpoint,
                                boost::bind(&SingleRequestListener::receiveRequest, this,
