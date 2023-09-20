@@ -40,7 +40,7 @@ git clone git@github.com:UwUClub/R-Type.git
 
 ## Compilation
 
-### Using the script (recommended)
+### Using CMake
 
 ```bash
 cmake -S . -B build && cmake --build build
