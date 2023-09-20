@@ -1,5 +1,5 @@
-#include <vector>
 #include <any>
+#include <vector>
 #include "GameEvent.hpp"
 
 #ifndef PACKETS_HPP
@@ -21,13 +21,13 @@ enum class PacketToSendType
 
 struct PacketToSend
 {
-    PacketToSendType type;
+        PacketToSendType type;
 };
 
 struct ReceivedPacket
 {
-    Game::ClientEvent type;
-    std::any body;
+        Game::ClientEvent type;
+        std::any body;
 };
 
 #endif

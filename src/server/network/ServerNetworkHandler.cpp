@@ -1,7 +1,7 @@
 #include "ServerNetworkHandler.hpp"
-#include <iostream>
 #include <boost/bind.hpp>
-//#include "SingleRequestListener.hpp"
+#include <iostream>
+// #include "SingleRequestListener.hpp"
 
 using boost::asio::ip::udp;
 
@@ -17,8 +17,7 @@ void ServerNetworkHandler::listen()
     _readEndpoint = udp::endpoint();
 
     _socket.async_receive_from(boost::asio::buffer(_readBuffer), _readEndpoint,
-                               boost::bind(&ServerNetworkHandler::handleRequest, this,
-                                           boost::asio::placeholders::error,
+                               boost::bind(&ServerNetworkHandler::handleRequest, this, boost::asio::placeholders::error,
                                            boost::asio::placeholders::bytes_transferred));
     _ioContext.run();
     // check if _clients map has a value

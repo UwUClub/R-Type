@@ -1,8 +1,8 @@
 #ifndef GAMEEVENT_HPP
-    #define GAMEEVENT_HPP
+#define GAMEEVENT_HPP
 
-    #include "Event.hpp"
-    #include "Utils.hpp"
+#include "Event.hpp"
+#include "Utils.hpp"
 
 namespace Game {
 
