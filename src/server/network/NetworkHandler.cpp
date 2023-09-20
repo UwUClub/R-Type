@@ -1,5 +1,5 @@
-#include <iostream>
 #include "NetworkHandler.hpp"
+#include <iostream>
 #include "SingleRequestListener.hpp"
 
 using boost::asio::ip::udp;
