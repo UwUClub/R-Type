@@ -1,7 +1,7 @@
 #include "SingleRequestListener.hpp"
-#include "NetworkHandler.hpp"
 #include <boost/bind.hpp>
 #include <iostream>
+#include "NetworkHandler.hpp"
 
 SingleRequestListener::SingleRequestListener(boost::asio::io_context &aIoContext, udp::socket &aSocket)
     : _buffer()
