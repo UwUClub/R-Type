@@ -26,13 +26,15 @@ enum class ReceivedPacketType
     MONSTER_SHOOT
 };
 
-struct PacketToSend {
-    PacketToSendType type;
+struct PacketToSend
+{
+        PacketToSendType type;
 };
 
-struct ReceivedPacket {
-    ReceivedPacketType type;
-    std::vector<int> data;
+struct ReceivedPacket
+{
+        ReceivedPacketType type;
+        std::vector<int> data;
 };
 
 #endif

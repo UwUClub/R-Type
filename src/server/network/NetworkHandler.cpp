@@ -25,7 +25,6 @@ void NetworkHandler::listen()
     // std::cout << "New client connected: " << remoteEndpoint << std::endl;
     //_clients[remoteEndpoint] = Player(Color::RED);
     //}
-
 }
 
 void NetworkHandler::send(const boost::asio::const_buffer aBuffer, size_t aClientId)

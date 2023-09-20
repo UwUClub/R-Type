@@ -1,6 +1,6 @@
 #include <boost/asio.hpp>
-#include <map>
 #include <iostream>
+#include <map>
 
 #ifndef NETWORKHANDLER_HPP
     #define NETWORKHANDLER_HPP
