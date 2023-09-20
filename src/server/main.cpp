@@ -3,7 +3,8 @@
 
 #define UDP_PORT 13
 
-int main() {
+int main()
+{
     try {
         NetworkHandler network = NetworkHandler(UDP_PORT);
         std::string test;

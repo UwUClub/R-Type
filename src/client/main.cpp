@@ -2,7 +2,8 @@
 #include <boost/asio.hpp>
 #include "NetworkHandler.hpp"
 
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[])
+{
     if (argc != 2) {
         std::cerr << "Usage: client <host>" << std::endl;
         return 1;
