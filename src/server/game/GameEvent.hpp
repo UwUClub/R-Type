@@ -27,6 +27,6 @@ namespace Game {
              */
             GameEvent();
     };
-} // namespace ECS::Event
+} // namespace Game
 
 #endif // !
