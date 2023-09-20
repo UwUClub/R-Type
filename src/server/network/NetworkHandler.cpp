@@ -4,7 +4,8 @@
 
 using boost::asio::ip::udp;
 
-NetworkHandler::NetworkHandler() : _socket(udp::socket(_ioContext, udp::endpoint(udp::v4(), _port)))
+NetworkHandler::NetworkHandler()
+    : _socket(udp::socket(_ioContext, udp::endpoint(udp::v4(), _port)))
 {
     std::cout << "Server listening on port " << _port << std::endl;
     listen();
@@ -40,4 +41,3 @@ void NetworkHandler::send(const boost::asio::const_buffer aBuffer, size_t aClien
         std::cerr << "NetworkHandler send error: " << e.what() << std::endl;
     }
 }
-
