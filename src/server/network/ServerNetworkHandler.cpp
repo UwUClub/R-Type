@@ -1,13 +1,14 @@
 #include "ServerNetworkHandler.hpp"
+#include <algorithm>
 #include <boost/bind.hpp>
 #include <iostream>
-#include <algorithm>
 
 namespace Network {
 
     using boost::asio::ip::udp;
 
-    void startIoService(boost::asio::io_context &aIoContext) {
+    void startIoService(boost::asio::io_context &aIoContext)
+    {
         aIoContext.run();
     }
 
@@ -30,8 +31,9 @@ namespace Network {
         _readEndpoint = udp::endpoint();
 
         _socket.async_receive_from(boost::asio::buffer(_readBuffer), _readEndpoint,
-                                boost::bind(&ServerNetworkHandler::handleRequest, this, boost::asio::placeholders::error,
-                                            boost::asio::placeholders::bytes_transferred));
+                                   boost::bind(&ServerNetworkHandler::handleRequest, this,
+                                               boost::asio::placeholders::error,
+                                               boost::asio::placeholders::bytes_transferred));
     }
 
     void ServerNetworkHandler::handleRequest(const boost::system::error_code &aError, std::size_t aBytesTransferred)
@@ -66,4 +68,4 @@ namespace Network {
         }
     }
 
-}
+} // namespace Network

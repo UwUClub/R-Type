@@ -25,27 +25,27 @@ namespace Network {
             std::thread _ioThread;
 
             /**
-            * @brief Launch the server
-            */
+             * @brief Launch the server
+             */
             explicit ServerNetworkHandler();
 
             /**
-            * @brief Handle a request from a client
-            * @param error The error code
-            * @param bytesTransferred The number of bytes transferred
-            */
+             * @brief Handle a request from a client
+             * @param error The error code
+             * @param bytesTransferred The number of bytes transferred
+             */
             void handleRequest(const boost::system::error_code &, std::size_t);
 
         public:
             /**
-            * @brief Destroy the ServerNetworkHandler object
-            */
+             * @brief Destroy the ServerNetworkHandler object
+             */
             ~ServerNetworkHandler();
 
             /**
-            * @brief Get the instance of the singleton
-            * @return ServerNetworkHandler & The instance of the singleton
-            */
+             * @brief Get the instance of the singleton
+             * @return ServerNetworkHandler & The instance of the singleton
+             */
             static ServerNetworkHandler &getInstance()
             {
                 static ServerNetworkHandler instance;
@@ -53,18 +53,18 @@ namespace Network {
             }
 
             /**
-            * @brief Listen to clients
-            */
+             * @brief Listen to clients
+             */
             void listen();
 
             /**
-            * @brief Send a message to the server
-            * @param buffer The message to send
-            * @param clientId The id of the client to send the message to
-            */
+             * @brief Send a message to the server
+             * @param buffer The message to send
+             * @param clientId The id of the client to send the message to
+             */
             void send(const boost::asio::const_buffer, size_t);
     };
 
-}
+} // namespace Network
 
 #endif

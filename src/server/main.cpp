@@ -5,7 +5,7 @@ int main()
 {
     try {
         Network::ServerNetworkHandler &network = Network::ServerNetworkHandler::getInstance();
-        (void)network;
+        (void) network;
 
         std::string exitWord;
         std::cin >> exitWord;
