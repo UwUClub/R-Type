@@ -3,34 +3,38 @@
 #ifndef ClientNetworkHandler_HPP
     #define ClientNetworkHandler_HPP
 
-using boost::asio::ip::udp;
+namespace Network {
 
-class ClientNetworkHandler
-{
-    private:
-        boost::asio::io_context _ioContext;
-        udp::endpoint _serverEndpoint;
-        udp::resolver _resolver;
-        udp::socket _socket;
+    using boost::asio::ip::udp;
 
-    public:
-        /**
-         * @brief Connect to the server
-         * @param host The ip address of the server (without port)
-         */
-        explicit ClientNetworkHandler(const std::string &);
-        ~ClientNetworkHandler() = default;
+    class ClientNetworkHandler
+    {
+        private:
+            boost::asio::io_context _ioContext;
+            udp::endpoint _serverEndpoint;
+            udp::resolver _resolver;
+            udp::socket _socket;
 
-        /**
-         * @brief Listen to the server
-         */
-        void listen();
+        public:
+            /**
+            * @brief Connect to the server
+            * @param host The ip address of the server (without port)
+            */
+            explicit ClientNetworkHandler(const std::string &);
+            ~ClientNetworkHandler() = default;
 
-        /**
-         * @brief Send a message to the server
-         * @param buffer The message to send
-         */
-        void send(const boost::asio::const_buffer &);
-};
+            /**
+            * @brief Listen to the server
+            */
+            void listen();
+
+            /**
+            * @brief Send a message to the server
+            * @param buffer The message to send
+            */
+            void send(const boost::asio::const_buffer &);
+    };
+
+}
 
 #endif

@@ -13,8 +13,9 @@ target_link_libraries(server
         PRIVATE R_Type::R_Type_options
         R_Type::R_Type_warnings
         ${Boost_LIBRARIES}
+        ecs
 )
-target_include_directories(server PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/game")
+
 target_include_directories(server PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/network")
 target_include_directories(server PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(server PRIVATE ${Boost_INCLUDE_DIRS})

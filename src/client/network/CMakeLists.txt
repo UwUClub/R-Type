@@ -5,7 +5,6 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 target_sources(client PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/ClientNetworkHandler.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/ClientNetworkHandler.cpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/Packets.hpp"
 )
 
 target_link_libraries(client
@@ -14,8 +13,8 @@ target_link_libraries(client
         ${Boost_LIBRARIES}
 )
 
-target_include_directories(client
-        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../game_common"
+target_include_directories(client PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 set_target_properties(client PROPERTIES

@@ -1,10 +1,10 @@
 #ifndef GAMEEVENT_HPP
 #define GAMEEVENT_HPP
 
-#include "Event.hpp"
+#include "Event/Event.hpp"
 #include "Utils.hpp"
 
-namespace Game {
+namespace RTypeProtocol {
 
     enum class ClientEvent
     {

@@ -1,6 +1,6 @@
 #include "GameEvent.hpp"
 
-namespace Game {
+namespace RTypeProtocol {
 
     GameEvent::GameEvent()
         : ECS::Event::Event(ECS::Event::EventType::GAME)

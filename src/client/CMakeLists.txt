@@ -15,6 +15,8 @@ target_link_libraries(client
         R_Type::R_Type_warnings
         ${SDL2_LIBRARIES}
         ${Boost_LIBRARIES}
+        ecs
+        rtype_protocol
 )
 
 target_include_directories(client PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/network")

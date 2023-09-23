@@ -12,7 +12,10 @@ target_link_libraries(ecs
         R_Type::R_Type_warnings
 )
 
-target_include_directories(ecs PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(ecs PRIVATE
+        "${CMAKE_CURRENT_SOURCE_DIR}/Event"
+        ${CMAKE_CURRENT_SOURCE_DIR}
+)
 
 set_target_properties(ecs PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin

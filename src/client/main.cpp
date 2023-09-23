@@ -1,6 +1,8 @@
 #include <boost/asio.hpp>
 #include <iostream>
 #include "ClientNetworkHandler.hpp"
+// #include "Packets.hpp"
+// #include "GameEvent.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -9,11 +11,15 @@ int main(int argc, char *argv[])
         return 1;
     }
     try {
-        ClientNetworkHandler network = ClientNetworkHandler(argv[1]);
+        Network::ClientNetworkHandler network = Network::ClientNetworkHandler(argv[1]);
         // network.run(argv[1]);
         network.send(boost::asio::buffer("hello from client"));
         network.send(boost::asio::buffer("hello again from client"));
         network.send(boost::asio::buffer("hello again AGAIN from client"));
+
+        // Network::ClientToServerPacket packet = {
+        //     Game::ClientEvent::CONNECT
+        // };
     } catch (std::exception &e) {
         std::cerr << "[Error]" << e.what() << std::endl;
     }
