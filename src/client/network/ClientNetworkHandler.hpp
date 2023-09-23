@@ -18,6 +18,7 @@ namespace Network {
             udp::resolver _resolver;
             udp::socket _socket;
             boost::array<char, READ_BUFFER_SIZE> _readBuffer;
+            std::thread _ioThread;
 
             /**
             * @brief Connect to the server
@@ -33,7 +34,7 @@ namespace Network {
 
         public:
   
-            ~ClientNetworkHandler() = default;
+            ~ClientNetworkHandler();
 
             /**
             * @brief Get the instance of the singleton

@@ -10,7 +10,6 @@ int main()
         Network::ClientNetworkHandler &network = Network::ClientNetworkHandler::getInstance();
             
         // boost::array<char, 1> buffer  = {{ 0 }};
-
         network.send(boost::asio::buffer("hello from client"));
         network.send(boost::asio::buffer("hello again from client"));
         network.send(boost::asio::buffer("hello again AGAIN from client"));
