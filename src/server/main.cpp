@@ -9,7 +9,6 @@ int main()
 
         std::string exitWord;
         std::cin >> exitWord;
-        // network.send("hello from client");
     } catch (std::exception &e) {
         std::cerr << "[Error]" << e.what() << std::endl;
     }

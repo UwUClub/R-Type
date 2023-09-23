@@ -34,6 +34,9 @@ namespace Network {
 
         public:
   
+            /**
+             * @brief Destroy the ClientNetworkHandler object
+             */
             ~ClientNetworkHandler();
 
             /**
