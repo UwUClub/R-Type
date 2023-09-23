@@ -11,7 +11,7 @@ namespace Network {
 
     ClientNetworkHandler::ClientNetworkHandler()
         : _resolver(udp::resolver(_ioContext)),
-        _socket(udp::socket(_ioContext))
+          _socket(udp::socket(_ioContext))
     {
         _serverEndpoint = *_resolver.resolve(udp::v4(), HOST, "daytime").begin();
         _socket.open(udp::v4());
@@ -46,4 +46,4 @@ namespace Network {
         }
     }
 
-}
+} // namespace Network

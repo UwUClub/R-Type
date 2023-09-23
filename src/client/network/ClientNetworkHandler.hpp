@@ -51,12 +51,12 @@ namespace Network {
             void listen();
 
             /**
-            * @brief Send a message to the server
-            * @param buffer The message to send
-            */
+             * @brief Send a message to the server
+             * @param buffer The message to send
+             */
             void send(const boost::asio::const_buffer &);
     };
 
-}
+} // namespace Network
 
 #endif

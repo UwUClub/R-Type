@@ -6,4 +6,4 @@ namespace RTypeProtocol {
         : ECS::Event::Event(ECS::Event::EventType::GAME)
     {}
 
-} // namespace Game
+} // namespace RTypeProtocol
