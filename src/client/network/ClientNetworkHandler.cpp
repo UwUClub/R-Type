@@ -21,8 +21,9 @@ namespace Network {
     void ClientNetworkHandler::listen()
     {
         _socket.async_receive_from(boost::asio::buffer(_readBuffer), _serverEndpoint,
-                                    boost::bind(&ClientNetworkHandler::handleRequest, this, boost::asio::placeholders::error,
-                                                boost::asio::placeholders::bytes_transferred));
+                                   boost::bind(&ClientNetworkHandler::handleRequest, this,
+                                               boost::asio::placeholders::error,
+                                               boost::asio::placeholders::bytes_transferred));
         _ioContext.run();
     }
 

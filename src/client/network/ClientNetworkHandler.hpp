@@ -20,25 +20,24 @@ namespace Network {
             boost::array<char, READ_BUFFER_SIZE> _readBuffer;
 
             /**
-            * @brief Connect to the server
-            */
+             * @brief Connect to the server
+             */
             ClientNetworkHandler();
 
             /**
-            * @brief Handle a request from server
-            * @param error The error code
-            * @param bytesTransferred The number of bytes transferred
-            */
+             * @brief Handle a request from server
+             * @param error The error code
+             * @param bytesTransferred The number of bytes transferred
+             */
             void handleRequest(const boost::system::error_code &, std::size_t);
 
         public:
-  
             ~ClientNetworkHandler() = default;
 
             /**
-            * @brief Get the instance of the singleton
-            * @return ClientNetworkHandler & The instance of the singleton
-            */
+             * @brief Get the instance of the singleton
+             * @return ClientNetworkHandler & The instance of the singleton
+             */
             static ClientNetworkHandler &getInstance()
             {
                 static ClientNetworkHandler instance;
@@ -46,8 +45,8 @@ namespace Network {
             }
 
             /**
-            * @brief Listen to the server
-            */
+             * @brief Listen to the server
+             */
             void listen();
 
             /**

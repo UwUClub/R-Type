@@ -5,7 +5,7 @@ int main()
 {
     try {
         ServerNetworkHandler &srv = ServerNetworkHandler::getInstance();
-        (void)srv;
+        (void) srv;
         std::string exitWord;
         std::cin >> exitWord;
         // network.send("hello from client");
