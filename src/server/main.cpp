@@ -4,9 +4,10 @@
 int main()
 {
     try {
-        ServerNetworkHandler::getInstance();
-        std::string test;
-        std::cin >> test;
+        ServerNetworkHandler &srv = ServerNetworkHandler::getInstance();
+        (void)srv;
+        std::string exitWord;
+        std::cin >> exitWord;
         // network.send("hello from client");
     } catch (std::exception &e) {
         std::cerr << "[Error]" << e.what() << std::endl;

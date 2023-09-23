@@ -6,8 +6,7 @@
 #ifndef ServerNetworkHandler_HPP
     #define ServerNetworkHandler_HPP
 
-    #define UDP_PORT 13
-
+constexpr unsigned short UDP_PORT = 13;
 constexpr unsigned short READ_BUFFER_SIZE = 128;
 
 using boost::asio::ip::udp;
@@ -24,7 +23,6 @@ class ServerNetworkHandler
 
         /**
          * @brief Launch the server
-         * @param port The port to listen to
          */
         explicit ServerNetworkHandler();
 

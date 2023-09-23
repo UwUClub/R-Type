@@ -4,15 +4,13 @@
 // #include "Packets.hpp"
 // #include "GameEvent.hpp"
 
-int main(int argc, char *argv[])
+int main()
 {
-    if (argc != 2) {
-        std::cerr << "Usage: client <host>" << std::endl;
-        return 1;
-    }
     try {
-        Network::ClientNetworkHandler network = Network::ClientNetworkHandler(argv[1]);
-        // network.run(argv[1]);
+        Network::ClientNetworkHandler &network = Network::ClientNetworkHandler::getInstance();
+            
+        // boost::array<char, 1> buffer  = {{ 0 }};
+
         network.send(boost::asio::buffer("hello from client"));
         network.send(boost::asio::buffer("hello again from client"));
         network.send(boost::asio::buffer("hello again AGAIN from client"));
@@ -20,6 +18,9 @@ int main(int argc, char *argv[])
         // Network::ClientToServerPacket packet = {
         //     Game::ClientEvent::CONNECT
         // };
+
+        std::string exitWord;
+        std::cin >> exitWord;
     } catch (std::exception &e) {
         std::cerr << "[Error]" << e.what() << std::endl;
     }
