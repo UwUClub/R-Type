@@ -1,5 +1,5 @@
-#include <vector>
 #include <any>
+#include <vector>
 #include "GameEvent.hpp"
 
 #ifndef PACKETS_HPP
@@ -23,15 +23,15 @@ namespace RTypeProtocol {
 
     struct ServerToClientPacket
     {
-        ServerToClientPacketType type;
-        std::any body;
+            ServerToClientPacketType type;
+            std::any body;
     };
 
     struct ClientToServerPacket
     {
-        GameEvent type;
+            GameEvent type;
     };
 
-}
+} // namespace RTypeProtocol
 
 #endif

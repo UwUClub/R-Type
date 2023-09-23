@@ -28,6 +28,6 @@ namespace RTypeProtocol {
              */
             GameEvent();
     };
-} // namespace Game
+} // namespace RTypeProtocol
 
 #endif // !

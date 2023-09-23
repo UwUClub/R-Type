@@ -10,7 +10,7 @@ namespace Network {
 
     ClientNetworkHandler::ClientNetworkHandler(const std::string &host)
         : _resolver(udp::resolver(_ioContext)),
-        _socket(udp::socket(_ioContext))
+          _socket(udp::socket(_ioContext))
     {
         _serverEndpoint = *_resolver.resolve(udp::v4(), host, "daytime").begin();
         _socket.open(udp::v4());
@@ -44,4 +44,4 @@ namespace Network {
         }
     }
 
-}
+} // namespace Network

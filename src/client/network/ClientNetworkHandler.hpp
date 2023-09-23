@@ -17,24 +17,24 @@ namespace Network {
 
         public:
             /**
-            * @brief Connect to the server
-            * @param host The ip address of the server (without port)
-            */
+             * @brief Connect to the server
+             * @param host The ip address of the server (without port)
+             */
             explicit ClientNetworkHandler(const std::string &);
             ~ClientNetworkHandler() = default;
 
             /**
-            * @brief Listen to the server
-            */
+             * @brief Listen to the server
+             */
             void listen();
 
             /**
-            * @brief Send a message to the server
-            * @param buffer The message to send
-            */
+             * @brief Send a message to the server
+             * @param buffer The message to send
+             */
             void send(const boost::asio::const_buffer &);
     };
 
-}
+} // namespace Network
 
 #endif
