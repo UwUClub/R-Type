@@ -33,7 +33,6 @@ namespace Network {
             void handleRequest(const boost::system::error_code &, std::size_t);
 
         public:
-  
             /**
              * @brief Destroy the ClientNetworkHandler object
              */
