@@ -20,7 +20,7 @@
 #include <utility>
 #include <vector>
 #include "SparseArray.hpp"
-#include <unordered_map>
+#include <boost/container/flat_map.hpp>
 
 namespace ECS::Core {
     /**
@@ -271,9 +271,11 @@ as Component container
 
         private:
             size_t _id {0};
-            std::unordered_map<std::type_index, std::any> _components;
-            std::unordered_map<std::type_index, std::function<void(World &, const std::size_t &)>> _eraseFunctions;
-            std::unordered_map<std::type_index, std::function<void(World &, const std::size_t &)>> _addFunctions;
+            boost::container::flat_map<std::type_index, std::any> _components;
+            boost::container::flat_map<std::type_index, std::function<void(World &, const std::size_t &)>>
+                _eraseFunctions;
+            boost::container::flat_map<std::type_index, std::function<void(World &, const std::size_t &)>>
+                _addFunctions;
             std::vector<std::size_t> _reusableIds;
 
             using systemFunction = std::function<void(World &)>;
