@@ -20,7 +20,7 @@
 #include <utility>
 #include <vector>
 #include "SparseArray.hpp"
-#include <unordered_map>
+#include <boost/container/flat_map.hpp>
 
 namespace ECS::Core {
     /**
@@ -64,6 +64,11 @@ as Component container
                     auto &component = registry.getComponent<Component>();
 
                     component.erase(idx);
+                };
+                _addFunctions[std::type_index(typeid(Component))] = [](World &registry, const std::size_t &idx) {
+                    auto &component = registry.getComponent<Component>();
+
+                    component.emplaceAt(idx, Component());
                 };
                 return std::any_cast<SparseArray<Component> &>(component);
             }
@@ -126,34 +131,15 @@ as Component container
             std::size_t createEntity()
             {
                 if (_reusableIds.empty()) {
-                    _id++;
-                    return _id - 1;
+                    for (auto &component : _components) {
+                        _addFunctions[component.first](*this, _id);
+                    }
+                    return _id++;
                 }
                 auto &idx = _reusableIds.back();
 
                 _reusableIds.pop_back();
                 return idx;
-            }
-
-            /**
-             * @brief Create an entity with Id provided
-             *
-             * @param aIndex The index of the entity
-             * @return std::size_t The index of the entity
-             * @throw RegistryException If the index is already used
-             */
-            std::size_t entityFromIndex(const std::size_t &aIndex)
-            {
-                if (_reusableIds.empty() && _id > aIndex) {
-                    throw RegistryException("Index already used");
-                }
-                if (aIndex >= _id) {
-                    for (auto i = _id; i < aIndex; i++) {
-                        _reusableIds.push_back(i);
-                    }
-                    _id = aIndex + 1;
-                }
-                return aIndex;
             }
 
             /**
@@ -285,8 +271,11 @@ as Component container
 
         private:
             size_t _id {0};
-            std::unordered_map<std::type_index, std::any> _components;
-            std::unordered_map<std::type_index, std::function<void(World &, const std::size_t &)>> _eraseFunctions;
+            boost::container::flat_map<std::type_index, std::any> _components;
+            boost::container::flat_map<std::type_index, std::function<void(World &, const std::size_t &)>>
+                _eraseFunctions;
+            boost::container::flat_map<std::type_index, std::function<void(World &, const std::size_t &)>>
+                _addFunctions;
             std::vector<std::size_t> _reusableIds;
 
             using systemFunction = std::function<void(World &)>;

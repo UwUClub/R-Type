@@ -1,6 +1,5 @@
 #include "EventManager.hpp"
 #include <memory>
-#include <pthread.h>
 #include "Event.hpp"
 
 //-------------------CONSTRUCTORS / DESTRUCTOR-------------------//
