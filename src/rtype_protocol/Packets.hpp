@@ -1,11 +1,11 @@
 #include <any>
 #include <vector>
-#include "GameEvent.hpp"
 
 #ifndef PACKETS_HPP
     #define PACKETS_HPP
 
 namespace RTypeProtocol {
+    enum class ClientEvent;
 
     enum class ServerToClientPacketType
     {
@@ -29,7 +29,7 @@ namespace RTypeProtocol {
 
     struct ClientToServerPacket
     {
-            GameEvent type;
+            ClientEvent type;
     };
 
 } // namespace RTypeProtocol
