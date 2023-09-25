@@ -1,4 +1,3 @@
-#include <boost/array.hpp>
 #include <boost/asio.hpp>
 #include <iostream>
 #include <map>
@@ -17,9 +16,9 @@ namespace Network {
     {
         private:
             boost::asio::ip::port_type _port = UDP_PORT;
-            boost::asio::io_context _ioContext;
+            boost::asio::io_service *_ioService;
             udp::socket _socket;
-            boost::array<char, READ_BUFFER_SIZE> _readBuffer;
+            std::array<char, READ_BUFFER_SIZE> _readBuffer;
             udp::endpoint _readEndpoint;
             std::map<size_t, udp::endpoint> _clients;
             std::thread _ioThread;
@@ -27,7 +26,7 @@ namespace Network {
             /**
              * @brief Launch the server
              */
-            explicit ServerNetworkHandler();
+            explicit ServerNetworkHandler(boost::asio::io_service *aIoService);
 
             /**
              * @brief Handle a request from a client
@@ -40,15 +39,15 @@ namespace Network {
             /**
              * @brief Destroy the ServerNetworkHandler object
              */
-            ~ServerNetworkHandler();
+            ~ServerNetworkHandler() = default;
 
             /**
              * @brief Get the instance of the singleton
              * @return ServerNetworkHandler & The instance of the singleton
              */
-            static ServerNetworkHandler &getInstance()
+            static ServerNetworkHandler &getInstance(boost::asio::io_service *aIoService)
             {
-                static ServerNetworkHandler instance;
+                static ServerNetworkHandler instance(aIoService);
                 return instance;
             }
 

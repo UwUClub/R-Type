@@ -4,24 +4,32 @@
 // #include "Packets.hpp"
 // #include "GameEvent.hpp"
 
-int main()
+void runClientNetwork(boost::asio::io_service *aIoService)
 {
     try {
-        Network::ClientNetworkHandler &network = Network::ClientNetworkHandler::getInstance();
-
-        // boost::array<char, 1> buffer  = {{ 0 }};
-        network.send(boost::asio::buffer("hello from client"));
-        network.send(boost::asio::buffer("hello again from client"));
-        network.send(boost::asio::buffer("hello again AGAIN from client"));
-
-        // Network::ClientToServerPacket packet = {
-        //     Game::ClientEvent::CONNECT
-        // };
-
-        std::string exitWord;
-        std::cin >> exitWord;
+       Network::ClientNetworkHandler::getInstance(aIoService);
     } catch (std::exception &e) {
         std::cerr << "[Error]" << e.what() << std::endl;
     }
+}
+
+int main()
+{
+    boost::asio::io_service *ioService = new boost::asio::io_service();
+    std::thread clientThread(runClientNetwork, ioService);
+
+    // Network::ClientToServerPacket packet = {
+    //     Game::ClientEvent::CONNECT
+    // };
+
+    // network.send(boost::asio::buffer("hello from client"));
+    // network.send(boost::asio::buffer("hello again from client"));
+    // network.send(boost::asio::buffer("hello again AGAIN from client"));
+
+    std::string exitWord;
+    std::cin >> exitWord;
+
+    ioService->stop();
+    clientThread.join();
     return 0;
 }

@@ -9,26 +9,15 @@ namespace Network {
 
     using boost::asio::ip::udp;
 
-    void startIoService(boost::asio::io_context &aIoContext)
-    {
-        aIoContext.run();
-    }
-
-    ClientNetworkHandler::ClientNetworkHandler()
-        : _resolver(udp::resolver(_ioContext)),
-          _socket(udp::socket(_ioContext))
+    ClientNetworkHandler::ClientNetworkHandler(boost::asio::io_service *aIoService)
+        : _ioService(aIoService),
+          _resolver(udp::resolver(*_ioService)),
+          _socket(udp::socket(*_ioService))
     {
         _serverEndpoint = *_resolver.resolve(udp::v4(), HOST, "daytime").begin();
         _socket.open(udp::v4());
         std::cout << "Connected to " << _serverEndpoint << std::endl;
-        _ioThread = std::thread(startIoService, std::ref(_ioContext));
         listen();
-    }
-
-    ClientNetworkHandler::~ClientNetworkHandler()
-    {
-        _ioContext.stop();
-        _ioThread.join();
     }
 
     void ClientNetworkHandler::listen()
@@ -37,6 +26,8 @@ namespace Network {
                                    boost::bind(&ClientNetworkHandler::handleRequest, this,
                                                boost::asio::placeholders::error,
                                                boost::asio::placeholders::bytes_transferred));
+
+        (*_ioService).run();
     }
 
     void ClientNetworkHandler::handleRequest(const boost::system::error_code &aError, std::size_t aBytesTransferred)

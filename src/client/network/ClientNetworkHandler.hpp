@@ -1,4 +1,3 @@
-#include <boost/array.hpp>
 #include <boost/asio.hpp>
 
 #ifndef ClientNetworkHandler_HPP
@@ -13,17 +12,17 @@ namespace Network {
     class ClientNetworkHandler
     {
         private:
-            boost::asio::io_context _ioContext;
+            boost::asio::io_service *_ioService;
             udp::endpoint _serverEndpoint;
             udp::resolver _resolver;
             udp::socket _socket;
-            boost::array<char, READ_BUFFER_SIZE> _readBuffer;
+            std::array<char, READ_BUFFER_SIZE> _readBuffer;
             std::thread _ioThread;
 
             /**
              * @brief Connect to the server
              */
-            ClientNetworkHandler();
+            ClientNetworkHandler(boost::asio::io_service *aIoService);
 
             /**
              * @brief Handle a request from server
@@ -36,15 +35,15 @@ namespace Network {
             /**
              * @brief Destroy the ClientNetworkHandler object
              */
-            ~ClientNetworkHandler();
+            ~ClientNetworkHandler() = default;
 
             /**
              * @brief Get the instance of the singleton
              * @return ClientNetworkHandler & The instance of the singleton
              */
-            static ClientNetworkHandler &getInstance()
+            static ClientNetworkHandler &getInstance(boost::asio::io_service *aIoService)
             {
-                static ClientNetworkHandler instance;
+                static ClientNetworkHandler instance(aIoService);
                 return instance;
             }
 

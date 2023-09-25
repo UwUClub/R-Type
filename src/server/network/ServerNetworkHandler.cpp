@@ -7,23 +7,11 @@ namespace Network {
 
     using boost::asio::ip::udp;
 
-    void startIoService(boost::asio::io_context &aIoContext)
-    {
-        aIoContext.run();
-    }
-
-    ServerNetworkHandler::ServerNetworkHandler()
-        : _socket(udp::socket(_ioContext, udp::endpoint(udp::v4(), _port)))
+    ServerNetworkHandler::ServerNetworkHandler(boost::asio::io_service *aIoService)
+        : _ioService(aIoService), _socket(udp::socket(*aIoService, udp::endpoint(udp::v4(), _port)))
     {
         std::cout << "Server listening on port " << _port << std::endl;
-        _ioThread = std::thread(startIoService, std::ref(_ioContext));
         listen();
-    }
-
-    ServerNetworkHandler::~ServerNetworkHandler()
-    {
-        _ioContext.stop();
-        _ioThread.join();
     }
 
     void ServerNetworkHandler::listen()
@@ -34,6 +22,8 @@ namespace Network {
                                    boost::bind(&ServerNetworkHandler::handleRequest, this,
                                                boost::asio::placeholders::error,
                                                boost::asio::placeholders::bytes_transferred));
+        
+        (*_ioService).run();
     }
 
     void ServerNetworkHandler::handleRequest(const boost::system::error_code &aError, std::size_t aBytesTransferred)
