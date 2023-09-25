@@ -29,6 +29,41 @@ namespace ECS::Utils {
             float x;
             float y;
     };
+
+    struct Speed
+    {
+            Speed()
+                : speed(0)
+            {}
+            Speed(float aSpeed)
+                : speed(aSpeed)
+            {}
+            float speed;
+    };
+
+    struct TypeEntity
+    {
+            TypeEntity()
+                : isPlayer(false),
+                  isEnemy(false),
+                  isBullet(false),
+                  isWall(false),
+                  isBonus(false)
+            {}
+            TypeEntity(bool aIsPlayer, bool aIsEnemy, bool aIsBullet, bool aIsWall, bool aIsBonus)
+                : isPlayer(aIsPlayer),
+                  isEnemy(aIsEnemy),
+                  isBullet(aIsBullet),
+                  isWall(aIsWall),
+                  isBonus(aIsBonus)
+            {}
+            bool isPlayer;
+            bool isEnemy;
+            bool isBullet;
+            bool isWall;
+            bool isBonus;
+    };
+
 } // namespace ECS::Utils
 
 #endif // !

@@ -3,7 +3,10 @@ find_package(SDL2)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
-target_sources(client PRIVATE main.cpp)
+target_sources(client PRIVATE 
+        main.cpp
+        System.cpp
+)
 
 target_link_libraries(client
         PRIVATE R_Type::R_Type_options
