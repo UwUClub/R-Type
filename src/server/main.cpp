@@ -3,14 +3,15 @@
 
 int main(int ac, char **av)
 {
-    if (ac < 2) {
-        std::cerr << "Usage: " << av[0] << " <port>" << std::endl;
+    if (ac < 3) {
+        std::cerr << "Usage: " << av[0] << " <host> <port>" << std::endl;
         return 84;
     }
 
     try {
-        unsigned short port = static_cast<unsigned short>(std::stoi(av[1]));
-        Network::ServerNetworkHandler &network = Network::ServerNetworkHandler::getInstance(port);
+        std::string host(av[1]);
+        unsigned short port = static_cast<unsigned short>(std::stoi(av[2]));
+        Network::ServerNetworkHandler &network = Network::ServerNetworkHandler::getInstance(host, port);
 
         std::string exitWord;
         std::cin >> exitWord;

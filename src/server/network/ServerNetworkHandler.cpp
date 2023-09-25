@@ -7,12 +7,15 @@ namespace Network {
 
     using boost::asio::ip::udp;
 
-    ServerNetworkHandler::ServerNetworkHandler(unsigned short aPort)
+    ServerNetworkHandler::ServerNetworkHandler(std::string &aHost, unsigned short aPort)
         : _port(aPort),
-          _socket(udp::socket(_ioService, udp::endpoint(udp::v4(), aPort))),
+          _socket(_ioService),
           _readBuffer()
     {
-        std::cout << "Server listening on port " << _port << std::endl;
+        boost::asio::ip::udp::endpoint endpoint(boost::asio::ip::address::from_string(aHost), aPort);
+        _socket.open(endpoint.protocol());
+        _socket.bind(endpoint);
+        std::cout << "Server " << endpoint << " listening" << std::endl;
         listen();
     }
 
@@ -66,6 +69,7 @@ namespace Network {
     void ServerNetworkHandler::stop()
     {
         _ioService.stop();
+        _socket.close();
         if (_ioThread.joinable()) {
             _ioThread.join();
         }

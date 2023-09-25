@@ -25,9 +25,10 @@ namespace Network {
 
             /**
              * @brief Launch the server
+             * @param aHost The host to listen to
              * @param aPort The port to listen to
              */
-            explicit ServerNetworkHandler(unsigned short);
+            explicit ServerNetworkHandler(std::string &, unsigned short);
 
             /**
              * @brief Handle a request from a client
@@ -47,9 +48,9 @@ namespace Network {
              * @param aPort The port to listen to
              * @return ServerNetworkHandler & The instance of the singleton
              */
-            static ServerNetworkHandler &getInstance(unsigned short aPort)
+            static ServerNetworkHandler &getInstance(std::string &aHost, unsigned short aPort)
             {
-                static ServerNetworkHandler instance(aPort);
+                static ServerNetworkHandler instance(aHost, aPort);
                 return instance;
             }
 
