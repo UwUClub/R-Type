@@ -4,7 +4,8 @@
 
 namespace ECS {
     void System::movePlayer(Core::World &world, Core::SparseArray<ECS::Utils::Vector2f> &pos,
-    Core::SparseArray<ECS::Utils::Speed> &speed, Core::SparseArray<ECS::Utils::TypeEntity> &type)
+                            Core::SparseArray<ECS::Utils::Speed> &speed,
+                            Core::SparseArray<ECS::Utils::TypeEntity> &type)
     {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         auto keyboardEvent = eventManager->getEventsByType(Event::EventType::KEYBOARD);
@@ -26,4 +27,4 @@ namespace ECS {
             }
         }
     }
-}
+} // namespace ECS

@@ -1,7 +1,7 @@
 #include <iostream>
-#include "World.hpp"
-#include "Utils.hpp"
 #include "System.hpp"
+#include "Utils.hpp"
+#include "World.hpp"
 
 int main()
 {
@@ -12,9 +12,9 @@ int main()
 
     size_t idPlayer = world.createEntity();
 
-    vec.insertAt(idPlayer, ECS::Utils::Vector2f{10, 10});
-    spd.insertAt(idPlayer, ECS::Utils::Speed{10});
-    type.insertAt(idPlayer, ECS::Utils::TypeEntity{true, false, false, false, false});
+    vec.insertAt(idPlayer, ECS::Utils::Vector2f {10, 10});
+    spd.insertAt(idPlayer, ECS::Utils::Speed {10});
+    type.insertAt(idPlayer, ECS::Utils::TypeEntity {true, false, false, false, false});
     world.addSystem<ECS::Utils::Vector2f, ECS::Utils::Speed, ECS::Utils::TypeEntity>(ECS::System::movePlayer);
     world.runSystems();
     std::cout << vec[idPlayer].value().x << std::endl;
