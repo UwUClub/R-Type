@@ -15,7 +15,7 @@ namespace Network {
     class ServerNetworkHandler
     {
         private:
-            boost::asio::ip::port_type _port = UDP_PORT;
+            boost::asio::ip::port_type _port;
             boost::asio::io_service _ioService;
             udp::socket _socket;
             std::array<char, READ_BUFFER_SIZE> _readBuffer;
@@ -25,13 +25,14 @@ namespace Network {
 
             /**
              * @brief Launch the server
+             * @param aPort The port to listen to
              */
-            explicit ServerNetworkHandler();
+            explicit ServerNetworkHandler(unsigned short);
 
             /**
              * @brief Handle a request from a client
-             * @param error The error code
-             * @param bytesTransferred The number of bytes transferred
+             * @param aError The error code
+             * @param aBytesTransferred The number of bytes transferred
              */
             void handleRequest(const boost::system::error_code &, std::size_t);
 
@@ -43,11 +44,12 @@ namespace Network {
 
             /**
              * @brief Get the instance of the singleton
+             * @param aPort The port to listen to
              * @return ServerNetworkHandler & The instance of the singleton
              */
-            static ServerNetworkHandler &getInstance()
+            static ServerNetworkHandler &getInstance(unsigned short aPort)
             {
-                static ServerNetworkHandler instance;
+                static ServerNetworkHandler instance(aPort);
                 return instance;
             }
 
@@ -58,8 +60,8 @@ namespace Network {
 
             /**
              * @brief Send a message to the server
-             * @param buffer The message to send
-             * @param clientId The id of the client to send the message to
+             * @param aBuffer The message to send
+             * @param aClientId The id of the client to send the message to
              */
             void send(const boost::asio::const_buffer, size_t);
 

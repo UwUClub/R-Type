@@ -7,8 +7,10 @@ namespace Network {
 
     using boost::asio::ip::udp;
 
-    ServerNetworkHandler::ServerNetworkHandler()
-        : _socket(udp::socket(_ioService, udp::endpoint(udp::v4(), _port)))
+    ServerNetworkHandler::ServerNetworkHandler(unsigned short aPort)
+        : _port(aPort),
+          _socket(udp::socket(_ioService, udp::endpoint(udp::v4(), aPort))),
+          _readBuffer()
     {
         std::cout << "Server listening on port " << _port << std::endl;
         listen();

@@ -5,15 +5,14 @@
 
 namespace Network {
 
-    constexpr std::string_view HOST = "127.0.0.1";
-
     using boost::asio::ip::udp;
 
-    ClientNetworkHandler::ClientNetworkHandler()
+    ClientNetworkHandler::ClientNetworkHandler(std::string &aHost, std::string &aPort)
         : _resolver(udp::resolver(_ioService)),
-          _socket(udp::socket(_ioService))
+          _socket(udp::socket(_ioService)),
+          _readBuffer()
     {
-        _serverEndpoint = *_resolver.resolve(udp::v4(), HOST, "daytime").begin();
+        _serverEndpoint = *_resolver.resolve(udp::v4(), aHost, aPort).begin();
         _socket.open(udp::v4());
         std::cout << "Connected to " << _serverEndpoint << std::endl;
         listen();

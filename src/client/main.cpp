@@ -4,10 +4,17 @@
 // #include "Packets.hpp"
 // #include "GameEvent.hpp"
 
-int main()
+int main(int ac, char **av)
 {
+    if (ac < 3) {
+        std::cerr << "Usage: " << av[0] << " <host> <port>" << std::endl;
+        return 84;
+    }
+
     try {
-        Network::ClientNetworkHandler &network = Network::ClientNetworkHandler::getInstance();
+        std::string host(av[1]);
+        std::string port(av[2]);
+        Network::ClientNetworkHandler &network = Network::ClientNetworkHandler::getInstance(host, port);
 
         // Network::ClientToServerPacket packet = {
         //     Game::ClientEvent::CONNECT

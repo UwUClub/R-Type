@@ -21,13 +21,15 @@ namespace Network {
 
             /**
              * @brief Connect to the server
+             * @param aHost The host to connect to
+             * @param aPort The port to connect to
              */
-            ClientNetworkHandler();
+            ClientNetworkHandler(std::string &, std::string &);
 
             /**
              * @brief Handle a request from server
-             * @param error The error code
-             * @param bytesTransferred The number of bytes transferred
+             * @param aError The error code
+             * @param aBytesTransferred The number of bytes transferred
              */
             void handleRequest(const boost::system::error_code &, std::size_t);
 
@@ -39,11 +41,13 @@ namespace Network {
 
             /**
              * @brief Get the instance of the singleton
+             * @param aHost The host to connect to
+             * @param aPort THe port to connect to
              * @return ClientNetworkHandler & The instance of the singleton
              */
-            static ClientNetworkHandler &getInstance()
+            static ClientNetworkHandler &getInstance(std::string &aHost, std::string &aPort)
             {
-                static ClientNetworkHandler instance;
+                static ClientNetworkHandler instance(aHost, aPort);
                 return instance;
             }
 
@@ -54,7 +58,7 @@ namespace Network {
 
             /**
              * @brief Send a message to the server
-             * @param buffer The message to send
+             * @param aBuffer The message to send
              */
             void send(const boost::asio::const_buffer &);
 
