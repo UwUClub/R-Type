@@ -99,11 +99,31 @@ jobs:
         # Prefix the list here with "+" to use these queries and those in the config file.
         # queries: ./path/to/local/query, your-org/your-repo/queries@main
 
-
     - name: Build
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: |
         cmake --build ./build --config ${{matrix.build_type}}
+
+    - name: Deploy on server
+      if: env.GITHUB_REF_NAME == "main"
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        port: 21
+        local-dir: ./build/bin/
+        server-dir: /home/beafowl/
+
+    - name: executing remote ssh commands using ssh key
+      if: env.GITHUB_REF_NAME == "main"
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        key: ${{ secrets.SSH_KEY }}
+        script: reboot
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
