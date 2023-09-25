@@ -7,7 +7,7 @@
 void runClientNetwork(boost::asio::io_service *aIoService)
 {
     try {
-       Network::ClientNetworkHandler::getInstance(aIoService);
+        Network::ClientNetworkHandler::getInstance(aIoService);
     } catch (std::exception &e) {
         std::cerr << "[Error]" << e.what() << std::endl;
     }

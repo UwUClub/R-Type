@@ -13,12 +13,12 @@ void runServerNetwork(boost::asio::io_service *aIoService)
 
 int main()
 {
-    boost::asio::io_service *ioService = new boost::asio::io_service(); 
+    boost::asio::io_service *ioService = new boost::asio::io_service();
     std::thread serverThread(runServerNetwork, ioService);
 
     std::string exitWord;
     std::cin >> exitWord;
-    
+
     ioService->stop();
     serverThread.join();
     return 0;
