@@ -4,9 +4,13 @@
 namespace ECS::Utils {
     struct Vector2i
     {
-            Vector2i(int x, int y)
-                : x(x),
-                  y(y)
+            Vector2i()
+                : x(0),
+                  y(0)
+            {}
+            Vector2i(int aX, int aY)
+                : x(aX),
+                  y(aY)
             {}
             int x;
             int y;
@@ -14,9 +18,13 @@ namespace ECS::Utils {
 
     struct Vector2f
     {
-            Vector2f(float x, float y)
-                : x(x),
-                  y(y)
+            Vector2f()
+                : x(0),
+                  y(0)
+            {}
+            Vector2f(float aX, float aY)
+                : x(aX),
+                  y(aY)
             {}
             float x;
             float y;

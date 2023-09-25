@@ -2,10 +2,9 @@ find_package(Boost REQUIRED COMPONENTS system thread)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
-add_executable(
-        server
+target_sources(server PRIVATE
         main.cpp
-)
+        )
 
 add_subdirectory(network)
 
