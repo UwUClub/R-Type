@@ -16,7 +16,7 @@ namespace Network {
     {
         private:
             boost::asio::ip::port_type _port = UDP_PORT;
-            boost::asio::io_service *_ioService;
+            boost::asio::io_service _ioService;
             udp::socket _socket;
             std::array<char, READ_BUFFER_SIZE> _readBuffer;
             udp::endpoint _readEndpoint;
@@ -26,7 +26,7 @@ namespace Network {
             /**
              * @brief Launch the server
              */
-            explicit ServerNetworkHandler(boost::asio::io_service *aIoService);
+            explicit ServerNetworkHandler();
 
             /**
              * @brief Handle a request from a client
@@ -45,9 +45,9 @@ namespace Network {
              * @brief Get the instance of the singleton
              * @return ServerNetworkHandler & The instance of the singleton
              */
-            static ServerNetworkHandler &getInstance(boost::asio::io_service *aIoService)
+            static ServerNetworkHandler &getInstance()
             {
-                static ServerNetworkHandler instance(aIoService);
+                static ServerNetworkHandler instance;
                 return instance;
             }
 
@@ -62,6 +62,11 @@ namespace Network {
              * @param clientId The id of the client to send the message to
              */
             void send(const boost::asio::const_buffer, size_t);
+
+            /**
+             * @brief Stop the server
+             */
+            void stop();
     };
 
 } // namespace Network

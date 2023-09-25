@@ -9,10 +9,9 @@ namespace Network {
 
     using boost::asio::ip::udp;
 
-    ClientNetworkHandler::ClientNetworkHandler(boost::asio::io_service *aIoService)
-        : _ioService(aIoService),
-          _resolver(udp::resolver(*_ioService)),
-          _socket(udp::socket(*_ioService))
+    ClientNetworkHandler::ClientNetworkHandler()
+        : _resolver(udp::resolver(_ioService)),
+          _socket(udp::socket(_ioService))
     {
         _serverEndpoint = *_resolver.resolve(udp::v4(), HOST, "daytime").begin();
         _socket.open(udp::v4());
@@ -27,7 +26,9 @@ namespace Network {
                                                boost::asio::placeholders::error,
                                                boost::asio::placeholders::bytes_transferred));
 
-        (*_ioService).run();
+        if (!_ioThread.joinable()) {
+            _ioThread = std::thread(boost::bind(&boost::asio::io_service::run, &_ioService));
+        }
     }
 
     void ClientNetworkHandler::handleRequest(const boost::system::error_code &aError, std::size_t aBytesTransferred)
@@ -47,6 +48,14 @@ namespace Network {
             std::cout << "Sent something to " << _serverEndpoint << std::endl;
         } catch (std::exception &e) {
             std::cerr << "ClientNetworkHandler send error: " << e.what() << std::endl;
+        }
+    }
+
+    void ClientNetworkHandler::stop()
+    {
+        _ioService.stop();
+        if (_ioThread.joinable()) {
+            _ioThread.join();
         }
     }
 

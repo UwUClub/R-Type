@@ -12,7 +12,7 @@ namespace Network {
     class ClientNetworkHandler
     {
         private:
-            boost::asio::io_service *_ioService;
+            boost::asio::io_service _ioService;
             udp::endpoint _serverEndpoint;
             udp::resolver _resolver;
             udp::socket _socket;
@@ -22,7 +22,7 @@ namespace Network {
             /**
              * @brief Connect to the server
              */
-            ClientNetworkHandler(boost::asio::io_service *aIoService);
+            ClientNetworkHandler();
 
             /**
              * @brief Handle a request from server
@@ -41,9 +41,9 @@ namespace Network {
              * @brief Get the instance of the singleton
              * @return ClientNetworkHandler & The instance of the singleton
              */
-            static ClientNetworkHandler &getInstance(boost::asio::io_service *aIoService)
+            static ClientNetworkHandler &getInstance()
             {
-                static ClientNetworkHandler instance(aIoService);
+                static ClientNetworkHandler instance;
                 return instance;
             }
 
@@ -57,6 +57,11 @@ namespace Network {
              * @param buffer The message to send
              */
             void send(const boost::asio::const_buffer &);
+
+            /**
+             * @brief Stop the client
+             */
+            void stop();
     };
 
 } // namespace Network

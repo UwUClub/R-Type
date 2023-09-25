@@ -7,9 +7,8 @@ namespace Network {
 
     using boost::asio::ip::udp;
 
-    ServerNetworkHandler::ServerNetworkHandler(boost::asio::io_service *aIoService)
-        : _ioService(aIoService),
-          _socket(udp::socket(*aIoService, udp::endpoint(udp::v4(), _port)))
+    ServerNetworkHandler::ServerNetworkHandler()
+        : _socket(udp::socket(_ioService, udp::endpoint(udp::v4(), _port)))
     {
         std::cout << "Server listening on port " << _port << std::endl;
         listen();
@@ -24,7 +23,9 @@ namespace Network {
                                                boost::asio::placeholders::error,
                                                boost::asio::placeholders::bytes_transferred));
 
-        (*_ioService).run();
+        if (!_ioThread.joinable()) {
+            _ioThread = std::thread(boost::bind(&boost::asio::io_service::run, &_ioService));
+        }
     }
 
     void ServerNetworkHandler::handleRequest(const boost::system::error_code &aError, std::size_t aBytesTransferred)
@@ -42,6 +43,7 @@ namespace Network {
             _clients[id] = _readEndpoint;
 
             send(boost::asio::buffer("Welcome to the server!"), id);
+            send(boost::asio::buffer("How are you ?"), id);
         }
         // --------------------------
         listen();
@@ -56,6 +58,14 @@ namespace Network {
             std::cout << "Sent a request to " << clientEndpoint << " (id " << aClientId << ")" << std::endl;
         } catch (std::exception &e) {
             std::cerr << "ServerNetworkHandler send error: " << e.what() << std::endl;
+        }
+    }
+
+    void ServerNetworkHandler::stop()
+    {
+        _ioService.stop();
+        if (_ioThread.joinable()) {
+            _ioThread.join();
         }
     }
 
