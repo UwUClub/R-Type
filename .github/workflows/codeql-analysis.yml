@@ -105,7 +105,7 @@ jobs:
         cmake --build ./build --config ${{matrix.build_type}}
 
     - name: Deploy on server
-      if: env.GITHUB_REF_NAME == "main"
+      if: github.ref.name == 'main'
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
         server: ${{ secrets.FTP_SERVER }}
@@ -116,7 +116,7 @@ jobs:
         server-dir: /home/beafowl/
 
     - name: executing remote ssh commands using ssh key
-      if: env.GITHUB_REF_NAME == "main"
+      if: github.ref.name == 'main'
       uses: appleboy/ssh-action@v0.1.10
       with:
         host: ${{ secrets.FTP_SERVER }}
