@@ -32,7 +32,7 @@ jobs:
           - windows-2019
         compiler:
           - llvm-15.0.2
-          - g++-13
+          - gcc-11
         generator:
           - "Ninja Multi-Config"
         build_type:
@@ -46,7 +46,7 @@ jobs:
 
         exclude:
           - os: windows-2019
-            compiler: g++-13
+            compiler: gcc-11
 
           - os: Ubuntu-20.04
             packaging_maintainer_mode: ON
@@ -54,7 +54,7 @@ jobs:
         include:
           # Add appropriate variables for gcov version required. This will intentionally break
           # if you try to use a compiler that does not have gcov set
-          - compiler: g++-13
+          - compiler: gcc-11
             gcov_executable: gcov
             enable_ipo: On
 
@@ -69,7 +69,7 @@ jobs:
 
           # This exists solely to make sure a non-multiconfig build works
           - os: ubuntu-20.04
-            compiler: g++-13
+            compiler: gcc-11
             generator: "Unix Makefiles"
             build_type: Debug
             gcov_executable: gcov
