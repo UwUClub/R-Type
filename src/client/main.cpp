@@ -20,7 +20,9 @@ int main()
     vec.insertAt(idPlayer, ECS::Utils::Vector2f {10, 10});
     spd.insertAt(idPlayer, ECS::Utils::Speed {10});
     type.insertAt(idPlayer, ECS::Utils::TypeEntity {true, false, false, false, false});
-    sprite.insertAt(idPlayer, ECS::Utils::LoadedSprite {"assets/sprites/r-typesheet42.png", nullptr, {0, 0, 33, 17}, {300, 15, 33, 17}});
+    sprite.insertAt(
+        idPlayer,
+        ECS::Utils::LoadedSprite {"assets/sprites/r-typesheet42.png", nullptr, {0, 0, 33, 17}, {300, 15, 33, 17}});
     world.addSystem(ECS::System::getInput);
     world.addSystem<ECS::Utils::LoadedSprite>(ECS::System::loadTextures);
     world.addSystem<ECS::Utils::LoadedSprite, ECS::Utils::Vector2f>(ECS::System::displayEntities);

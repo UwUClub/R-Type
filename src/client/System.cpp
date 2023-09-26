@@ -1,8 +1,8 @@
-#include <SDL2/SDL_image.h>
 #include "System.hpp"
 #include "EventManager.hpp"
 #include "KeyboardEvent.hpp"
 #include "SDLDisplayClass.hpp"
+#include <SDL2/SDL_image.h>
 
 namespace ECS {
     void System::movePlayer(Core::World &world, Core::SparseArray<ECS::Utils::Vector2f> &aPos,
@@ -90,8 +90,8 @@ namespace ECS {
                 continue;
             aSprites[i].value().srcRect.x = aPos[i].value().x;
             aSprites[i].value().srcRect.y = aPos[i].value().y;
-            SDL_RenderCopy(display._renderer, aSprites[i].value().texture,
-                &aSprites[i].value().rect, &aSprites[i].value().srcRect);
+            SDL_RenderCopy(display._renderer, aSprites[i].value().texture, &aSprites[i].value().rect,
+                           &aSprites[i].value().srcRect);
         }
     }
 

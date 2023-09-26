@@ -40,7 +40,7 @@ namespace ECS {
 
             /**
              * @brief Load all the textures of the game
-             * 
+             *
              * @param aWorld A reference to the world
              * @param aSprites SparseArray of all the entities sprites
              */
@@ -48,7 +48,7 @@ namespace ECS {
 
             /**
              * @brief Display all the entities on the screen
-             * 
+             *
              * @param aWorld A reference to the world
              * @param aSprites SparseArray of all the entities sprites
              */
