@@ -13,6 +13,7 @@ target_link_libraries(client
         R_Type::R_Type_warnings
         ${SDL2_LIBRARIES}
         ${Boost_LIBRARIES}
+        Boost::serialization
         Threads::Threads
         ecs
         rtype_protocol
