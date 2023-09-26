@@ -5,7 +5,10 @@
 //-------------------CONSTRUCTORS / DESTRUCTOR-------------------//
 ECS::Event::EventManager::EventManager() = default;
 
-ECS::Event::EventManager::~EventManager() = default;
+ECS::Event::EventManager::~EventManager()
+{
+    clearEvents();
+}
 
 //-------------------PUBLIC METHODS-------------------//
 void ECS::Event::EventManager::pushEvent(Event *aEvent)
