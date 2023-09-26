@@ -1,9 +1,9 @@
 #include <iostream>
+#include "EventManager.hpp"
+#include "SDLDisplayClass.hpp"
 #include "System.hpp"
 #include "Utils.hpp"
 #include "World.hpp"
-#include "SDLDisplayClass.hpp"
-#include "EventManager.hpp"
 
 int main()
 {

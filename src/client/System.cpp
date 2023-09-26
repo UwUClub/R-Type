@@ -1,5 +1,5 @@
-#include <SDL2/SDL.h>
 #include "System.hpp"
+#include <SDL2/SDL.h>
 #include "EventManager.hpp"
 #include "KeyboardEvent.hpp"
 #include "SDLDisplayClass.hpp"
@@ -18,7 +18,7 @@ namespace ECS {
             }
             for (auto event : keyboardEvent) {
                 auto keyEvent = static_cast<Event::KeyboardEvent *>(event);
-                std::cout << "OUI " << (int)keyEvent->_keyId << std::endl;
+                std::cout << "OUI " << (int) keyEvent->_keyId << std::endl;
                 if (keyEvent->_keyId == Event::KeyIdentifier::UP)
                     pos[i].value().y -= speed[i].value().speed;
                 if (keyEvent->_keyId == Event::KeyIdentifier::DOWN)
@@ -42,8 +42,7 @@ namespace ECS {
                 eventManager->pushEvent(keyEvent);
             }
             if (event.type == SDL_WINDOWEVENT && (_windowEventMap.find(event.window.event) != _windowEventMap.end())) {
-                auto windowEvent = new Event::WindowEvent(1920, 1920, 0, 0,
-                                                          ECS::Event::WindowDisplayState::FULLSCREEN,
+                auto windowEvent = new Event::WindowEvent(1920, 1920, 0, 0, ECS::Event::WindowDisplayState::FULLSCREEN,
                                                           ECS::Event::WindowFocusState::FOCUSED,
                                                           _windowEventMap.at(event.window.event));
                 eventManager->pushEvent(windowEvent);
@@ -56,7 +55,6 @@ namespace ECS {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         auto windowEvent = eventManager->getEventsByType(Event::EventType::WINDOW);
         SDLDisplayClass &display = SDLDisplayClass::getInstance();
-
 
         for (size_t i = 0; i < windowEvent.size(); i++) {
             auto event = static_cast<Event::WindowEvent *>(windowEvent[i]);

@@ -5,7 +5,6 @@
 ** SDLDisplayClass
 */
 
-
 #include "SDLDisplayClass.hpp"
 
 SDLDisplayClass::SDLDisplayClass()
@@ -16,8 +15,8 @@ SDLDisplayClass::SDLDisplayClass()
         printf("Couldn't initialize SDL: %s\n", SDL_GetError());
         return;
     }
-    _window = SDL_CreateWindow("R-Type", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-                                SCREEN_WIDTH, SCREEN_HEIGHT, windowFlags);
+    _window = SDL_CreateWindow("R-Type", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT,
+                               windowFlags);
     if (!_window) {
         printf("Failed to open SDL window: %s\n", SDL_GetError());
         return;
