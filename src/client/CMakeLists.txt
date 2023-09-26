@@ -6,6 +6,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 target_sources(client PRIVATE 
         main.cpp
         System.cpp
+        SDLDisplayClass.cpp
 )
 
 target_link_libraries(client
