@@ -35,7 +35,7 @@ namespace ECS::Core {
             ~ResourcesManager()
             {
                 for (auto &resource : _resources) {
-                    auto &unloader = _unloader[std::type_index(resource.second.type())];
+                    auto &unloader = _unloader[std::type_index(resource.second->type())];
                     unloader(resource.second);
                 }
             }
@@ -56,19 +56,19 @@ namespace ECS::Core {
              * @return Resource& A reference to the resource
              */
             template<class Resource>
-            Resource &load(const std::string &aPath)
+            Resource *load(const std::string &aPath)
             {
                 try {
                     auto isLoaded = _resources.find(aPath);
                     if (isLoaded != _resources.end()) {
-                        return std::any_cast<Resource &>(isLoaded->second);
+                        return std::any_cast<Resource *>(isLoaded->second);
                     }
 
                     auto &loader = _loaders[std::type_index(typeid(Resource))];
-                    auto &resource = loader(aPath);
+                    auto *resource = loader(aPath);
 
                     _resources[aPath] = resource;
-                    return std::any_cast<Resource &>(_resources[aPath]);
+                    return std::any_cast<Resource *>(_resources[aPath]);
                 } catch (const std::bad_any_cast &e) {
                     throw ResourcesManagerException("Bad cast: " + std::string(e.what()));
                 }
@@ -88,7 +88,7 @@ namespace ECS::Core {
                     return;
                 }
 
-                auto &unloader = _unloader[std::type_index(isLoaded->second.type())];
+                auto &unloader = _unloader[std::type_index(typeid(Resource))];
                 unloader(isLoaded->second);
                 _resources.erase(aPath);
             }
@@ -101,8 +101,8 @@ namespace ECS::Core {
              * @param aLoader The loader
              */
             template<class Resource>
-            void addHandlers(const std::function<void(Resource &)> &aUnloader,
-                             const std::function<Resource &(const std::string &)> &aLoader)
+            void addHandlers(const std::function<void(Resource *)> &aUnloader,
+                             const std::function<Resource *(const std::string &)> &aLoader)
             {
                 addUnloader<Resource>(aUnloader);
                 addLoaders<Resource>(aLoader);
@@ -117,8 +117,8 @@ namespace ECS::Core {
              * @param aUnloader The unloader of the resource
              */
             template<class Resource>
-            void addResource(const std::string &aValue, const Resource &aResource,
-                             const std::function<void(Resource &)> &aUnloader)
+            void addResource(const std::string &aValue, const Resource *aResource,
+                             const std::function<void(Resource *)> &aUnloader)
             {
                 if (_resources.find(aValue) != _resources.end()) {
                     return;
@@ -129,9 +129,9 @@ namespace ECS::Core {
 
         private:
             //-------------- PRIVATE MEMBERS --------------//
-            boost::container::flat_map<std::type_index, std::function<std::any &(const std::string &)>> _loaders;
-            boost::container::flat_map<std::type_index, std::function<void(std::any &)>> _unloader;
-            boost::container::flat_map<std::string, std::any> _resources;
+            boost::container::flat_map<std::type_index, std::function<std::any *(const std::string &)>> _loaders;
+            boost::container::flat_map<std::type_index, std::function<void(std::any *)>> _unloader;
+            boost::container::flat_map<std::string, std::any *> _resources;
 
         private:
             //-------------- CTOR --------------//
@@ -144,7 +144,7 @@ namespace ECS::Core {
              * @param aLoader The loader
              */
             template<class Resource>
-            void addLoaders(const std::function<Resource &(const std::string &)> &aLoader)
+            void addLoaders(const std::function<Resource *(const std::string &)> &aLoader)
             {
                 _loaders[std::type_index(typeid(Resource))] = aLoader;
             }
@@ -156,7 +156,7 @@ namespace ECS::Core {
              * @param aUnloader The unloader
              */
             template<class Resource>
-            void addUnloader(const std::function<void(Resource &)> &aUnloader)
+            void addUnloader(const std::function<void(Resource *)> &aUnloader)
             {
                 _unloader[std::type_index(typeid(Resource))] = aUnloader;
             }

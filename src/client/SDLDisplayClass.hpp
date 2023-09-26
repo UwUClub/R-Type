@@ -24,14 +24,14 @@ class SDLDisplayClass
     public:
         /**
          * @brief Destroy the SDLDisplayClass object
-         * 
+         *
          */
         ~SDLDisplayClass();
 
         /**
          * @brief Get an Instance of the SDLDisplayClass (singleton)
-         * 
-         * @return SDLDisplayClass& 
+         *
+         * @return SDLDisplayClass&
          */
         static SDLDisplayClass &getInstance()
         {
@@ -42,7 +42,7 @@ class SDLDisplayClass
 
         /**
          * @brief Construct a new SDLDisplayClass object
-         * 
+         *
          */
         SDLDisplayClass();
         SDL_Renderer *_renderer;
