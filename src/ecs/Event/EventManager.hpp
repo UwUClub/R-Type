@@ -71,24 +71,30 @@ namespace ECS::Event {
              *
              * @param aEvent The event to push.
              */
-            void pushEvent(Event &aEvent);
+            void pushEvent(Event *aEvent);
 
             /**
              * @brief Get the Events object
              *
              * @return std::vector<Event>& A reference to the vector of events.
              */
-            [[nodiscard]] std::vector<Event> &getEvents();
+            [[nodiscard]] std::vector<Event *> &getEvents();
 
             /**
              * @brief Get all the events of a specific type
              *
              */
-            std::vector<Event> getEventsByType(const EventType &aEventType);
+            std::vector<Event *> getEventsByType(const EventType &aEventType);
+
+            /**
+             * @brief Clear all the events
+             *
+             */
+            void clearEvents();
 
         private:
             EventManager();
-            std::vector<Event> _events;
+            std::vector<Event *> _events;
 
         private:
             //-------------------EXCEPTIONS-------------------//
