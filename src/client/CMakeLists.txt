@@ -18,6 +18,8 @@ target_link_libraries(client
         ${Boost_LIBRARIES}
         ecs
         rtype_protocol
+        Boost::asio
+        Boost::serialization
 )
 
 target_include_directories(client PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/network")

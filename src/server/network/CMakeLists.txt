@@ -18,6 +18,7 @@ target_link_libraries(server
         ecs
         rtype_protocol
         Boost::asio
+        Boost::serialization
 )
 
 target_include_directories(server PRIVATE
