@@ -1,5 +1,5 @@
 #include "ServerNetworkHandler.hpp"
-#include "GameEvent.hpp"
+#include "ServerGameEvent.hpp"
 #include "Packets.hpp"
 #include "Event/EventManager.hpp"
 #include <algorithm>
@@ -46,7 +46,7 @@ namespace Network {
         RTypeProtocol::ClientToServerPacket packet = RTypeProtocol::unserializePacket<RTypeProtocol::ClientToServerPacket, std::array<char, READ_BUFFER_SIZE>>(_readBuffer);
         std::cout << "Received header " << static_cast<int>(packet.header) << " from " << _readEndpoint << std::endl;
 
-        RTypeProtocol::GameEvent *evt = new RTypeProtocol::GameEvent(RTypeProtocol::ClientEvent::CONNECT);
+        RTypeProtocol::ServerGameEvent *evt = new RTypeProtocol::ServerGameEvent(RTypeProtocol::ClientEvent::CONNECT, 42);
         ECS::Event::EventManager::getInstance()->pushEvent(evt);
 
         // --- CONNECT event case ---
