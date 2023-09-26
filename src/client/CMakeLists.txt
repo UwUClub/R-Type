@@ -1,4 +1,4 @@
-find_package(Boost REQUIRED COMPONENTS system thread asio)
+find_package(Boost REQUIRED COMPONENTS system thread asio serialization)
 find_package(SDL2)
 
 if (GCC)
@@ -16,12 +16,12 @@ target_link_libraries(client
         R_Type::R_Type_warnings
         ${SDL2_LIBRARIES}
         ${Boost_LIBRARIES}
-        Boost::asio
         ecs
         rtype_protocol
 )
 
 target_include_directories(client PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/network")
+target_include_directories(client PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../rtype_protocol")
 target_include_directories(client PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(client PRIVATE ${Boost_INCLUDE_DIRS})
 target_include_directories(client PRIVATE ${SDL2_INCLUDE_DIRS})

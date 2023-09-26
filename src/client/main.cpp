@@ -1,8 +1,8 @@
 #include <boost/asio.hpp>
 #include <iostream>
 #include "ClientNetworkHandler.hpp"
-// #include "Packets.hpp"
-// #include "GameEvent.hpp"
+#include "GameEvent.hpp"
+#include "Packets.hpp"
 
 int main(int ac, char **av)
 {
@@ -16,13 +16,9 @@ int main(int ac, char **av)
         std::string port(av[2]);
         Network::ClientNetworkHandler &network = Network::ClientNetworkHandler::getInstance(host, port);
 
-        // Network::ClientToServerPacket packet = {
-        //     Game::ClientEvent::CONNECT
-        // };
-
-        network.send(boost::asio::buffer("hello from client"));
-        network.send(boost::asio::buffer("hello again from client"));
-        network.send(boost::asio::buffer("hello again AGAIN from client"));
+        RTypeProtocol::ClientToServerPacket packet;
+        packet.header = RTypeProtocol::ClientEvent::CRASH;
+        network.send(packet);
 
         std::string exitWord;
         std::cin >> exitWord;

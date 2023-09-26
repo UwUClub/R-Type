@@ -1,15 +1,20 @@
 #include "ServerNetworkHandler.hpp"
 #include <algorithm>
 #include <boost/bind.hpp>
+#include <boost/serialization/serialization.hpp>
 #include <iostream>
+#include "Event/EventManager.hpp"
+#include "GameEvent.hpp"
+#include "Packets.hpp"
+#include <boost/archive/binary_iarchive.hpp>
+#include <boost/archive/binary_oarchive.hpp>
 
 namespace Network {
 
     using boost::asio::ip::udp;
 
     ServerNetworkHandler::ServerNetworkHandler(std::string &aHost, unsigned short aPort)
-        : _port(aPort),
-          _socket(_ioService),
+        : _socket(_ioService),
           _readBuffer()
     {
         boost::asio::ip::udp::endpoint endpoint(boost::asio::ip::address::from_string(aHost), aPort);
@@ -38,28 +43,35 @@ namespace Network {
         (void) aError;
         (void) aBytesTransferred;
 
-        std::string result(_readBuffer.data(), aBytesTransferred);
-        std::cout << "Received " << result << " from " << _readEndpoint << std::endl;
+        RTypeProtocol::ClientToServerPacket packet =
+            RTypeProtocol::unserializePacket<RTypeProtocol::ClientToServerPacket, std::array<char, READ_BUFFER_SIZE>>(
+                _readBuffer);
+        std::cout << "Received header " << static_cast<int>(packet.header) << " from " << _readEndpoint << std::endl;
+
+        RTypeProtocol::GameEvent *evt = new RTypeProtocol::GameEvent(RTypeProtocol::ClientEvent::CONNECT);
+        ECS::Event::EventManager::getInstance()->pushEvent(evt);
 
         // --- CONNECT event case ---
-        size_t id = 42; // temporary
-        if (_clients.find(id) == _clients.end()) {
-            std::cout << "New client connected: " << _readEndpoint << " (id " << id << ")" << std::endl;
-            _clients[id] = _readEndpoint;
+        // size_t id = 42; // temporary
+        // if (_clients.find(id) == _clients.end()) {
+        //     std::cout << "New client connected: " << _readEndpoint << " (id " << id << ")" << std::endl;
+        //     _clients[id] = _readEndpoint;
 
-            send(boost::asio::buffer("Welcome to the server!"), id);
-            send(boost::asio::buffer("How are you ?"), id);
-        }
+        //     send(boost::asio::buffer("Welcome to the server!"), id);
+        //     send(boost::asio::buffer("How are you ?"), id);
+        // }
         // --------------------------
         listen();
     }
 
-    void ServerNetworkHandler::send(const boost::asio::const_buffer aBuffer, size_t aClientId)
+    void ServerNetworkHandler::send(const RTypeProtocol::ServerToClientPacket &aPacket, size_t aClientId)
     {
         try {
-            boost::system::error_code ignoredError;
             udp::endpoint clientEndpoint = _clients[aClientId];
-            _socket.send_to(aBuffer, clientEndpoint, 0, ignoredError);
+
+            boost::asio::streambuf buf;
+            serializePacket<const RTypeProtocol::ServerToClientPacket &>(&buf, aPacket);
+            _socket.send_to(buf.data(), clientEndpoint);
             std::cout << "Sent a request to " << clientEndpoint << " (id " << aClientId << ")" << std::endl;
         } catch (std::exception &e) {
             std::cerr << "ServerNetworkHandler send error: " << e.what() << std::endl;

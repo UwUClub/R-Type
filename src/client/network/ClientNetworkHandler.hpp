@@ -1,7 +1,8 @@
 #include <boost/asio.hpp>
+#include "Packets.hpp"
 
-#ifndef ClientNetworkHandler_HPP
-    #define ClientNetworkHandler_HPP
+#ifndef CLIENTNETWORKHANDLER_HPP
+    #define CLIENTNETWORKHANDLER_HPP
 
 constexpr unsigned short READ_BUFFER_SIZE = 128;
 
@@ -58,9 +59,9 @@ namespace Network {
 
             /**
              * @brief Send a message to the server
-             * @param aBuffer The message to send
+             * @param aPacket The packet to send
              */
-            void send(const boost::asio::const_buffer &);
+            void send(const RTypeProtocol::ClientToServerPacket &);
 
             /**
              * @brief Stop the client

@@ -1,7 +1,11 @@
 #include "ClientNetworkHandler.hpp"
+#include <boost/asio.hpp>
 #include <boost/bind.hpp>
+#include <boost/serialization/serialization.hpp>
 #include <iostream>
 #include <string>
+#include "Packets.hpp"
+#include <boost/archive/binary_oarchive.hpp>
 
 namespace Network {
 
@@ -35,15 +39,19 @@ namespace Network {
         (void) aError;
         (void) aBytesTransferred;
 
-        std::string result(_readBuffer.data(), aBytesTransferred);
-        std::cout << "Received " << result << " from server" << std::endl;
+        RTypeProtocol::ServerToClientPacket packet =
+            RTypeProtocol::unserializePacket<RTypeProtocol::ServerToClientPacket, std::array<char, READ_BUFFER_SIZE>>(
+                _readBuffer);
+        std::cout << "Received header " << static_cast<int>(packet.header) << " from " << _serverEndpoint << std::endl;
         listen();
     }
 
-    void ClientNetworkHandler::send(const boost::asio::const_buffer &buffer)
+    void ClientNetworkHandler::send(const RTypeProtocol::ClientToServerPacket &aPacket)
     {
         try {
-            _socket.send_to(boost::asio::buffer(buffer), _serverEndpoint);
+            boost::asio::streambuf buf;
+            serializePacket<const RTypeProtocol::ClientToServerPacket &>(&buf, aPacket);
+            _socket.send_to(buf.data(), _serverEndpoint);
             std::cout << "Sent something to " << _serverEndpoint << std::endl;
         } catch (std::exception &e) {
             std::cerr << "ClientNetworkHandler send error: " << e.what() << std::endl;
