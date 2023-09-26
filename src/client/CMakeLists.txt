@@ -1,5 +1,9 @@
-find_package(Boost REQUIRED COMPONENTS system serialization)
+find_package(Boost REQUIRED COMPONENTS system thread asio serialization)
 find_package(SDL2)
+
+if (GCC)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
+endif (GCC)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
