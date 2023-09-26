@@ -4,8 +4,8 @@
 #include <SDL2/SDL.h>
 #include "KeyboardEvent.hpp"
 #include "MouseEvent.hpp"
-#include "WindowEvent.hpp"
 #include "Utils.hpp"
+#include "WindowEvent.hpp"
 #include "World.hpp"
 
 namespace ECS {
@@ -29,6 +29,7 @@ namespace ECS {
              * 
              * @param world A reference to the world
              */
+
             static void getInput(Core::World &world);
 
             /**
@@ -44,12 +45,9 @@ namespace ECS {
              * 
              */
             static const inline std::unordered_map<SDL_Keycode, const ECS::Event::KeyIdentifier> _keyMap = {
-                { SDLK_ESCAPE, ECS::Event::KeyIdentifier::ESCAPE },
-                { SDLK_UP, ECS::Event::KeyIdentifier::UP },
-                { SDLK_DOWN, ECS::Event::KeyIdentifier::DOWN },
-                { SDLK_LEFT, ECS::Event::KeyIdentifier::LEFT },
-                { SDLK_RIGHT, ECS::Event::KeyIdentifier::RIGHT },
-                { SDLK_SPACE, ECS::Event::KeyIdentifier::SPACE },
+                {SDLK_ESCAPE, ECS::Event::KeyIdentifier::ESCAPE}, {SDLK_UP, ECS::Event::KeyIdentifier::UP},
+                {SDLK_DOWN, ECS::Event::KeyIdentifier::DOWN},     {SDLK_LEFT, ECS::Event::KeyIdentifier::LEFT},
+                {SDLK_RIGHT, ECS::Event::KeyIdentifier::RIGHT},   {SDLK_SPACE, ECS::Event::KeyIdentifier::SPACE},
             };
 
             /**
@@ -57,10 +55,10 @@ namespace ECS {
              * 
              */
             static const inline std::unordered_map<Uint32, const ECS::Event::WindowEventType> _windowEventMap = {
-                { SDL_WINDOWEVENT_CLOSE, ECS::Event::WindowEventType::CLOSED },
-                { SDL_WINDOWEVENT_RESIZED, ECS::Event::WindowEventType::RESIZED },
-                { SDL_WINDOWEVENT_FOCUS_GAINED, ECS::Event::WindowEventType::FOCUSED },
-                { SDL_WINDOWEVENT_FOCUS_LOST, ECS::Event::WindowEventType::UNFOCUSED },
+                {SDL_WINDOWEVENT_CLOSE, ECS::Event::WindowEventType::CLOSED},
+                {SDL_WINDOWEVENT_RESIZED, ECS::Event::WindowEventType::RESIZED},
+                {SDL_WINDOWEVENT_FOCUS_GAINED, ECS::Event::WindowEventType::FOCUSED},
+                {SDL_WINDOWEVENT_FOCUS_LOST, ECS::Event::WindowEventType::UNFOCUSED},
             };
     };
 } // namespace ECS
