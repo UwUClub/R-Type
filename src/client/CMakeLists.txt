@@ -1,4 +1,4 @@
-find_package(Boost REQUIRED COMPONENTS system asio)
+find_package(Boost REQUIRED COMPONENTS system thread asio)
 find_package(SDL2)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")

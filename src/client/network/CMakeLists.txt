@@ -1,4 +1,4 @@
-find_package(Boost REQUIRED COMPONENTS system thread)
+find_package(Boost REQUIRED COMPONENTS system thread asio)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
@@ -11,6 +11,7 @@ target_link_libraries(client
         PRIVATE R_Type::R_Type_options
         R_Type::R_Type_warnings
         ${Boost_LIBRARIES}
+        Boost::asio
 )
 
 target_include_directories(client PRIVATE
