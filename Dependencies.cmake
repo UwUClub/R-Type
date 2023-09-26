@@ -13,7 +13,7 @@ function(R_Type_setup_dependencies)
     cpmaddpackage("gh:catchorg/Catch2@3.3.2")
   endif()
 
-  if (NOT TARGET Boost::boost OR NOT TARGET Boost::system OR NOT TARGET Boost::asio)
+  if (NOT TARGET Boost::boost OR NOT TARGET Boost::system OR NOT TARGET Boost::asio OR NOT TARGET Boost::serialization)
     CPMAddPackage(
             NAME Boost
             VERSION 1.83.0
@@ -23,6 +23,7 @@ function(R_Type_setup_dependencies)
             "header_only"
             "system"
             "asio"
+            "serialization"
     )
   endif()
 

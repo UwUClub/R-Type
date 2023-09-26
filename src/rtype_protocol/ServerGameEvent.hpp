@@ -1,8 +1,9 @@
-#ifndef GAMEEVENT_HPP
-#define GAMEEVENT_HPP
-
 #include "Event/Event.hpp"
 #include "Utils.hpp"
+#include <cstddef>
+
+#ifndef SERVERGAMEEVENT_HPP
+    #define SERVERGAMEEVENT_HPP
 
 namespace RTypeProtocol {
 
@@ -23,7 +24,7 @@ namespace RTypeProtocol {
     {
         private:
             ServerEventType _type;
-            size_t _id;
+            std::size_t _id;
 
         public:
             //-------------------CONSTRUCTORS / DESTRUCTOR-------------------//

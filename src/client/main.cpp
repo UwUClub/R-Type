@@ -1,7 +1,7 @@
 #include <boost/asio.hpp>
 #include <iostream>
 #include "ClientNetworkHandler.hpp"
-#include "GameEvent.hpp"
+#include "ServerGameEvent.hpp"
 #include "Packets.hpp"
 
 int main(int ac, char **av)
@@ -17,7 +17,7 @@ int main(int ac, char **av)
         Network::ClientNetworkHandler &network = Network::ClientNetworkHandler::getInstance(host, port);
 
         RTypeProtocol::ClientToServerPacket packet;
-        packet.header = RTypeProtocol::ClientEvent::CRASH;
+        packet.header = RTypeProtocol::ServerEventType::MOVE_UP;
         network.send(packet);
 
         std::string exitWord;

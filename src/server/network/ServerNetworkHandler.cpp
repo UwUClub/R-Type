@@ -1,13 +1,10 @@
 #include "ServerNetworkHandler.hpp"
-#include "ServerGameEvent.hpp"
 #include "Event/EventManager.hpp"
+#include "Packets.hpp"
 #include <algorithm>
 #include <boost/bind.hpp>
 #include <boost/serialization/serialization.hpp>
 #include <iostream>
-#include "Event/EventManager.hpp"
-#include "GameEvent.hpp"
-#include "Packets.hpp"
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/archive/binary_oarchive.hpp>
 
@@ -50,7 +47,7 @@ namespace Network {
                 _readBuffer);
         std::cout << "Received header " << static_cast<int>(packet.header) << " from " << _readEndpoint << std::endl;
 
-        RTypeProtocol::ServerGameEvent *evt = new RTypeProtocol::ServerGameEvent(RTypeProtocol::ClientEvent::CONNECT, 42);
+        RTypeProtocol::ServerGameEvent *evt = new RTypeProtocol::ServerGameEvent(packet.header, 42);
         ECS::Event::EventManager::getInstance()->pushEvent(evt);
 
         // --- CONNECT event case ---
