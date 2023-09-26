@@ -32,6 +32,14 @@ namespace ECS::Core {
                 return instance;
             }
 
+            ~ResourcesManager()
+            {
+                for (auto &resource : _resources) {
+                    auto &unloader = _unloader[std::type_index(resource.second.type())];
+                    unloader(resource.second);
+                }
+            }
+
             ResourcesManager(const ResourcesManager &aOther) = default;
             ResourcesManager(ResourcesManager &&aOther) noexcept = default;
 
@@ -64,6 +72,25 @@ namespace ECS::Core {
                 } catch (const std::bad_any_cast &e) {
                     throw ResourcesManagerException("Bad cast: " + std::string(e.what()));
                 }
+            }
+
+            /**
+             * @brief Unload the resource
+             *
+             * @tparam Resource The type of the resource
+             * @param aPath The path to the resource
+             */
+            template<class Resource>
+            void unload(const std::string &aPath)
+            {
+                auto isLoaded = _resources.find(aPath);
+                if (isLoaded == _resources.end()) {
+                    return;
+                }
+
+                auto &unloader = _unloader[std::type_index(isLoaded->second.type())];
+                unloader(isLoaded->second);
+                _resources.erase(aPath);
             }
 
             /**
