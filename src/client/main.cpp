@@ -1,8 +1,8 @@
 #include <boost/asio.hpp>
 #include <iostream>
 #include "ClientNetworkHandler.hpp"
-#include "ServerGameEvent.hpp"
 #include "Packets.hpp"
+#include "ServerGameEvent.hpp"
 
 int main(int ac, char **av)
 {

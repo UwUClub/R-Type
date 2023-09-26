@@ -1,5 +1,3 @@
-#include "ClientGameEvent.hpp"
-#include "ServerGameEvent.hpp"
 #include <any>
 #include <boost/asio.hpp>
 #include <boost/serialization/serialization.hpp>
@@ -8,6 +6,8 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "ClientGameEvent.hpp"
+#include "ServerGameEvent.hpp"
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/archive/binary_oarchive.hpp>
 
@@ -25,9 +25,9 @@ namespace RTypeProtocol {
             template<typename archive>
             void serialize(archive &ar, const unsigned int /*version*/)
             {
-                ar & header;
-                ar & id;
-                ar & body;
+                ar &header;
+                ar &id;
+                ar &body;
             }
     };
 
