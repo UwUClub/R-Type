@@ -108,6 +108,25 @@ namespace ECS::Core {
                 addLoaders<Resource>(aLoader);
             }
 
+            /**
+             * @brief Add a loaded resource to the resources map
+             *
+             * @tparam Resource The type of the resource
+             * @param aValue The name of the resource, for retrieve it
+             * @param aResource The resource to store
+             * @param aUnloader The unloader of the resource
+             */
+            template<class Resource>
+            void addResource(const std::string &aValue, const Resource &aResource,
+                             const std::function<void(Resource &)> &aUnloader)
+            {
+                if (_resources.find(aValue) != _resources.end()) {
+                    return;
+                }
+                addUnloader<Resource>(aUnloader);
+                _resources[aValue] = aResource;
+            }
+
         private:
             //-------------- PRIVATE MEMBERS --------------//
             boost::container::flat_map<std::type_index, std::function<std::any &(const std::string &)>> _loaders;
