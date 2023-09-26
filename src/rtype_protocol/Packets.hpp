@@ -1,13 +1,13 @@
 #include <any>
-#include <vector>
-#include <string>
-#include <sstream>
-#include <iostream>
 #include <boost/asio.hpp>
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/vector.hpp>
-#include <boost/archive/binary_oarchive.hpp>
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <vector>
 #include <boost/archive/binary_iarchive.hpp>
+#include <boost/archive/binary_oarchive.hpp>
 
 #ifndef PACKETS_HPP
     #define PACKETS_HPP
@@ -35,9 +35,10 @@ namespace RTypeProtocol {
             std::vector<int> body;
 
             template<typename archive>
-            void serialize(archive &ar, const unsigned int /*version*/) {
-                ar & header;
-                ar & body;
+            void serialize(archive &ar, const unsigned int /*version*/)
+            {
+                ar &header;
+                ar &body;
             }
     };
 
@@ -46,8 +47,9 @@ namespace RTypeProtocol {
             ClientEvent header;
 
             template<typename archive>
-            void serialize(archive &ar, const unsigned int /*version*/) {
-                ar & header;
+            void serialize(archive &ar, const unsigned int /*version*/)
+            {
+                ar &header;
             }
     };
 
