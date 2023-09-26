@@ -1,5 +1,9 @@
 find_package(Boost REQUIRED COMPONENTS system thread asio)
 
+if (GCC)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
+endif (GCC)
+
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
 target_sources(client PRIVATE
