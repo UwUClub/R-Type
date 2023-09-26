@@ -139,6 +139,9 @@ as Component container
                 auto &idx = _reusableIds.back();
 
                 _reusableIds.pop_back();
+                for (auto &component : _components) {
+                    _addFunctions[component.first](*this, idx);
+                }
                 return idx;
             }
 
