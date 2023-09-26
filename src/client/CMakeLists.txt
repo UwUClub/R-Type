@@ -1,4 +1,4 @@
-find_package(Boost REQUIRED COMPONENTS system thread)
+find_package(Boost 1.82.0 REQUIRED COMPONENTS system asio)
 find_package(SDL2)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
@@ -10,9 +10,9 @@ add_subdirectory(network)
 target_link_libraries(client
         PRIVATE R_Type::R_Type_options
         R_Type::R_Type_warnings
-        ecs
         ${SDL2_LIBRARIES}
         ${Boost_LIBRARIES}
+        Boost::asio
         ecs
         rtype_protocol
 )
