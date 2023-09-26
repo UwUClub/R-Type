@@ -8,6 +8,7 @@ function(R_Type_setup_dependencies)
   find_package(Catch2)
   find_package(Boost)
   find_package(SDL2)
+  find_package(SDL2_image)
 
   if(NOT TARGET Catch2::Catch2WithMain)
     cpmaddpackage("gh:catchorg/Catch2@3.3.2")
@@ -29,6 +30,14 @@ function(R_Type_setup_dependencies)
             GITHUB_REPOSITORY "libsdl-org/SDL"
             GIT_TAG "release-2.28.3"
     )
+  endif()
+
+  if (NOT TARGET SDL2_image::SDL2_image)
+      CPMAddPackage(
+        NAME SDL2_image
+        GIT_REPOSITORY "https://github.com/libsdl-org/SDL_image.git"
+        GIT_TAG "release-2.6.3" # Replace with the desired SDL2_image version/tag
+      )
   endif()
 
 endfunction()

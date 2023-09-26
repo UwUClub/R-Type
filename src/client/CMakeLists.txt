@@ -1,5 +1,5 @@
 find_package(Boost REQUIRED COMPONENTS system thread)
-find_package(SDL2)
+find_package(SDL2 REQUIRED)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
@@ -14,6 +14,7 @@ target_link_libraries(client
         R_Type::R_Type_warnings
         ecs
         ${SDL2_LIBRARIES}
+        SDL2_image::SDL2_image
         ${Boost_LIBRARIES}
 )
 
