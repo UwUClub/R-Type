@@ -5,7 +5,6 @@
 #include "Utils.hpp"
 #include "World.hpp"
 
-
 int main()
 {
     ECS::Core::World &world = ECS::Core::World::getInstance();
