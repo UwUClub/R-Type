@@ -1,8 +1,6 @@
 find_package(Boost REQUIRED COMPONENTS system thread asio serialization)
 
-if (GCC)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
-endif (GCC)
+find_package(Threads REQUIRED)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
@@ -18,6 +16,7 @@ target_link_libraries(server
         ecs
         rtype_protocol
         Boost::asio
+        Threads::Threads
 )
 
 target_include_directories(server PRIVATE

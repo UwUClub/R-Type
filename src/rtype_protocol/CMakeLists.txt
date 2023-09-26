@@ -1,5 +1,7 @@
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
+find_package(Boost REQUIRED COMPONENTS system thread asio serialization)
+
 add_library(rtype_protocol STATIC
         GameEvent.hpp
         GameEvent.cpp

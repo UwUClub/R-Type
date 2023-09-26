@@ -1,9 +1,6 @@
 find_package(Boost REQUIRED COMPONENTS system thread asio serialization)
 find_package(SDL2)
-
-if (GCC)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
-endif (GCC)
+find_package(Threads REQUIRED)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
@@ -16,6 +13,7 @@ target_link_libraries(client
         R_Type::R_Type_warnings
         ${SDL2_LIBRARIES}
         ${Boost_LIBRARIES}
+        Threads::Threads
         ecs
         rtype_protocol
 )
