@@ -1,13 +1,15 @@
 #include "ServerNetworkHandler.hpp"
 #include "ServerGameEvent.hpp"
-#include "Packets.hpp"
 #include "Event/EventManager.hpp"
 #include <algorithm>
 #include <boost/bind.hpp>
-#include <boost/archive/binary_oarchive.hpp>
-#include <boost/archive/binary_iarchive.hpp>
 #include <boost/serialization/serialization.hpp>
 #include <iostream>
+#include "Event/EventManager.hpp"
+#include "GameEvent.hpp"
+#include "Packets.hpp"
+#include <boost/archive/binary_iarchive.hpp>
+#include <boost/archive/binary_oarchive.hpp>
 
 namespace Network {
 
@@ -43,7 +45,9 @@ namespace Network {
         (void) aError;
         (void) aBytesTransferred;
 
-        RTypeProtocol::ClientToServerPacket packet = RTypeProtocol::unserializePacket<RTypeProtocol::ClientToServerPacket, std::array<char, READ_BUFFER_SIZE>>(_readBuffer);
+        RTypeProtocol::ClientToServerPacket packet =
+            RTypeProtocol::unserializePacket<RTypeProtocol::ClientToServerPacket, std::array<char, READ_BUFFER_SIZE>>(
+                _readBuffer);
         std::cout << "Received header " << static_cast<int>(packet.header) << " from " << _readEndpoint << std::endl;
 
         RTypeProtocol::ServerGameEvent *evt = new RTypeProtocol::ServerGameEvent(RTypeProtocol::ClientEvent::CONNECT, 42);

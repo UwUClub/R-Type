@@ -1,7 +1,7 @@
-#include "Packets.hpp"
 #include <boost/asio.hpp>
 #include <iostream>
 #include <map>
+#include "Packets.hpp"
 
 #ifndef ServerNetworkHandler_HPP
     #define ServerNetworkHandler_HPP

@@ -1,15 +1,15 @@
 #include "ClientGameEvent.hpp"
 #include "ServerGameEvent.hpp"
 #include <any>
-#include <vector>
-#include <string>
-#include <sstream>
-#include <iostream>
 #include <boost/asio.hpp>
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/vector.hpp>
-#include <boost/archive/binary_oarchive.hpp>
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <vector>
 #include <boost/archive/binary_iarchive.hpp>
+#include <boost/archive/binary_oarchive.hpp>
 
 #ifndef PACKETS_HPP
     #define PACKETS_HPP
@@ -23,7 +23,8 @@ namespace RTypeProtocol {
             std::vector<float> body;
 
             template<typename archive>
-            void serialize(archive &ar, const unsigned int /*version*/) {
+            void serialize(archive &ar, const unsigned int /*version*/)
+            {
                 ar & header;
                 ar & id;
                 ar & body;
@@ -35,8 +36,9 @@ namespace RTypeProtocol {
             ServerEventType header;
 
             template<typename archive>
-            void serialize(archive &ar, const unsigned int /*version*/) {
-                ar & header;
+            void serialize(archive &ar, const unsigned int /*version*/)
+            {
+                ar &header;
             }
     };
 
