@@ -11,173 +11,172 @@
 #include <algorithm>
 #include <any>
 #include <functional>
+#include <iostream>
 #include <memory>
 #include <string>
 #include <typeindex>
 #include <utility>
 #include <boost/container/flat_map.hpp>
+#include <boost/type_index.hpp>
 
 namespace ECS::Core {
+    class IResourceHandlerBase
+    {
+        public:
+            virtual ~IResourceHandlerBase() = default;
+    };
+
     /**
      * @brief ResourcesManager class is a singleton that store all the resources
      *
      */
+    template<typename Resource, typename... Args>
+    class ResourceHandler : public IResourceHandlerBase
+    {
+        public:
+            using ResourceMap = boost::container::flat_map<std::string, Resource *>;
+            using Loader = std::function<Resource *(Args...)>;
+            using Unloader = std::function<void(Resource *)>;
+
+        public:
+            //------------------- CONSTRUCTORS / DESTRUCTOR-------------------//
+            /**
+             * @brief Construct a new Resource Handler object
+             *
+             * @param aLoader The function that load the resource
+             * @param aUnloader The function that unload the resource
+             */
+            ResourceHandler(Loader aLoader, Unloader aUnloader)
+                : _loader(aLoader),
+                  _unloader(aUnloader)
+            {}
+
+            /**
+             * @brief Destroy the Resource Handler object
+             * @details Unload all the resources
+             */
+            ~ResourceHandler() override
+            {
+                unloadAll();
+            }
+
+            //------------------- OPERATORS-------------------//
+            ResourceHandler(const ResourceHandler &aOther) = default;
+            ResourceHandler(ResourceHandler &&aOther) noexcept = default;
+            ResourceHandler &operator=(const ResourceHandler &aOther) = default;
+            ResourceHandler &operator=(ResourceHandler &&aOther) noexcept = default;
+
+            //------------------- PUBLIC METHODS-------------------//
+            /**
+             * @brief Get the Resource object
+             *
+             * @param aName The name of the resource
+             * @return Resource* A pointer to the resource
+             */
+            Resource *get(const std::string &aName)
+            {
+                auto itx = _resources.find(aName);
+
+                if (itx == _resources.end()) {
+                    return nullptr;
+                }
+                return itx->second;
+            }
+
+            /**
+             * @brief A function that load a resource
+             *
+             * @tparam FuncArgs (Inferred)
+             * @param aName The name of the resource (can be the path of the resource)
+             * @param aArgs The arguments to pass to the loader
+             * @return Resource* A pointer to the resource
+             */
+            template<typename... FuncArgs>
+            Resource *load(const std::string &aName, FuncArgs &&...aArgs)
+            {
+                auto itx = _resources.find(aName);
+
+                if (itx != _resources.end()) {
+                    return itx->second;
+                }
+                auto *resource = _loader(std::forward<FuncArgs>(aArgs)...);
+
+                _resources[aName] = resource;
+                return resource;
+            }
+
+            /**
+             * @brief A function that unload a resource
+             *
+             * @param aName The name of the resource
+             */
+            void unload(const std::string &aName)
+            {
+                auto itx = _resources.find(aName);
+
+                if (itx == _resources.end()) {
+                    return;
+                }
+                _unloader(itx->second);
+                _resources.erase(itx);
+            }
+
+            /**
+             * @brief A function that unload all the resources
+             *
+             */
+            void unloadAll()
+            {
+                for (auto &resource : _resources) {
+                    _unloader(resource.second);
+                }
+                _resources.clear();
+            }
+
+        private:
+            ResourceMap _resources;
+            Loader _loader;
+            Unloader _unloader;
+    };
     class ResourcesManager
     {
         public:
-            //-------------- CTOR, DTOR, OPERATORS --------------//
-            static ResourcesManager &getInstance()
+            template<typename Resource, typename... Args>
+            void registerHandler(const std::string &key, typename ResourceHandler<Resource, Args...>::Loader loaderFunc,
+                                 typename ResourceHandler<Resource, Args...>::Unloader unloaderFunc)
             {
-                static ResourcesManager instance;
-                return instance;
-            }
-
-            ~ResourcesManager()
-            {
-                for (auto &resource : _resources) {
-                    auto &unloader = _unloader[std::type_index(resource.second->type())];
-                    unloader(resource.second);
+                if (_handlers.find(key) != _handlers.end()) {
+                    throw std::runtime_error("Handler for this key already registered.");
                 }
+                _handlers[key] = std::make_unique<ResourceHandler<Resource, Args...>>(loaderFunc, unloaderFunc);
             }
 
-            ResourcesManager(const ResourcesManager &aOther) = default;
-            ResourcesManager(ResourcesManager &&aOther) noexcept = default;
-
-            ResourcesManager &operator=(const ResourcesManager &aOther) = default;
-            ResourcesManager &operator=(ResourcesManager &&aOther) noexcept = default;
-
-            //-------------- PUBLIC METHODS --------------//
-
-            /**
-             * @brief Load the resource if it's not already loaded
-             *
-             * @tparam Resource The type of the resource
-             * @param aPath The path to the resource
-             * @return Resource& A reference to the resource
-             */
-            template<class Resource>
-            Resource *load(const std::string &aPath)
+            template<typename Resource>
+            ResourceHandler<Resource> &getHandler(const std::string &key)
             {
-                try {
-                    auto isLoaded = _resources.find(aPath);
-                    if (isLoaded != _resources.end()) {
-                        return std::any_cast<Resource *>(isLoaded->second);
-                    }
-
-                    auto &loader = _loaders[std::type_index(typeid(Resource))];
-                    auto *resource = loader(aPath);
-
-                    _resources[aPath] = resource;
-                    return std::any_cast<Resource *>(_resources[aPath]);
-                } catch (const std::bad_any_cast &e) {
-                    throw ResourcesManagerException("Bad cast: " + std::string(e.what()));
+                if (_handlers.find(key) == _handlers.end()) {
+                    throw std::runtime_error("Handler for this key not found.");
                 }
+                return *dynamic_cast<ResourceHandler<Resource> *>(_handlers[key].get());
             }
 
-            /**
-             * @brief Unload the resource
-             *
-             * @tparam Resource The type of the resource
-             * @param aPath The path to the resource
-             */
-            template<class Resource>
-            void unload(const std::string &aPath)
+            void unregisterHandler(const std::string &key)
             {
-                auto isLoaded = _resources.find(aPath);
-                if (isLoaded == _resources.end()) {
-                    return;
+                if (_handlers.find(key) == _handlers.end()) {
+                    throw std::runtime_error("Handler for this key not found.");
                 }
-
-                auto &unloader = _unloader[std::type_index(typeid(Resource))];
-                unloader(isLoaded->second);
-                _resources.erase(aPath);
+                _handlers.erase(key);
             }
 
-            /**
-             * @brief Add both a loader and an unloader for a resource
-             *
-             * @tparam Resource The type of the resource
-             * @param aUnloader The unloader
-             * @param aLoader The loader
-             */
-            template<class Resource>
-            void addHandlers(const std::function<void(Resource *)> &aUnloader,
-                             const std::function<Resource *(const std::string &)> &aLoader)
+            void unregisterAllHandlers()
             {
-                addUnloader<Resource>(aUnloader);
-                addLoaders<Resource>(aLoader);
-            }
-
-            /**
-             * @brief Add a loaded resource to the resources map
-             *
-             * @tparam Resource The type of the resource
-             * @param aValue The name of the resource, for retrieve it
-             * @param aResource The resource to store
-             * @param aUnloader The unloader of the resource
-             */
-            template<class Resource>
-            void addResource(const std::string &aValue, const Resource *aResource,
-                             const std::function<void(Resource &)> &aUnloader)
-            {
-                if (_resources.find(aValue) != _resources.end()) {
-                    return;
-                }
-                addUnloader<Resource>(aUnloader);
-                _resources[aValue] = aResource;
+                _handlers.clear();
             }
 
         private:
-            //-------------- PRIVATE MEMBERS --------------//
-            boost::container::flat_map<std::type_index, std::function<std::any *(const std::string &)>> _loaders;
-            boost::container::flat_map<std::type_index, std::function<void(std::any *)>> _unloader;
-            boost::container::flat_map<std::string, std::any *> _resources;
-
-        private:
-            //-------------- CTOR --------------//
-            ResourcesManager() = default;
-
-            /**
-             * @brief Add a loader for a resource
-             *
-             * @tparam Resource The type of the resource
-             * @param aLoader The loader
-             */
-            template<class Resource>
-            void addLoaders(const std::function<Resource *(const std::string &)> &aLoader)
-            {
-                _loaders[std::type_index(typeid(Resource))] = aLoader;
-            }
-
-            /**
-             * @brief Add an unloader for a resource
-             *
-             * @tparam Resource The type of the resource
-             * @param aUnloader The unloader
-             */
-            template<class Resource>
-            void addUnloader(const std::function<void(Resource *)> &aUnloader)
-            {
-                _unloader[std::type_index(typeid(Resource))] = aUnloader;
-            }
-
-            class ResourcesManagerException : public std::exception
-            {
-                public:
-                    explicit ResourcesManagerException(const std::string &aMessage)
-                        : _message(aMessage)
-                    {}
-                    ~ResourcesManagerException() override = default;
-
-                    const char *what() const noexcept override
-                    {
-                        return _message.c_str();
-                    }
-
-                private:
-                    std::string _message;
-            };
+            std::unordered_map<std::string, std::unique_ptr<IResourceHandlerBase>> _handlers;
     };
+
 } // namespace ECS::Core
 
 #endif /* !RESSOURCESMANAGER_HPP_ */
