@@ -6,14 +6,14 @@ include(cmake/CPM.cmake)
 function(R_Type_setup_dependencies)
 
   find_package(Catch2)
-  find_package(Boost)
+  find_package(Boost COMPONENTS system asio)
   find_package(SDL2)
 
   if(NOT TARGET Catch2::Catch2WithMain)
     cpmaddpackage("gh:catchorg/Catch2@3.3.2")
   endif()
 
-  if (NOT TARGET Boost::boost)
+  if (NOT TARGET Boost::boost OR NOT TARGET Boost::system OR NOT TARGET Boost::asio)
     CPMAddPackage(
             NAME Boost
             VERSION 1.83.0
