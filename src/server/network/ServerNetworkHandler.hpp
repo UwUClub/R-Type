@@ -1,3 +1,4 @@
+#include "Packets.hpp"
 #include <boost/asio.hpp>
 #include <iostream>
 #include <map>
@@ -7,15 +8,13 @@
 
 namespace Network {
 
-    constexpr unsigned short UDP_PORT = 13;
-    constexpr unsigned short READ_BUFFER_SIZE = 128;
+    constexpr unsigned short READ_BUFFER_SIZE = 1024;
 
     using boost::asio::ip::udp;
 
     class ServerNetworkHandler
     {
         private:
-            boost::asio::ip::port_type _port;
             boost::asio::io_service _ioService;
             udp::socket _socket;
             std::array<char, READ_BUFFER_SIZE> _readBuffer;
@@ -61,10 +60,10 @@ namespace Network {
 
             /**
              * @brief Send a message to the server
-             * @param aBuffer The message to send
+             * @param aPacket The packet to send
              * @param aClientId The id of the client to send the message to
              */
-            void send(const boost::asio::const_buffer, size_t);
+            void send(const RTypeProtocol::ServerToClientPacket &, size_t);
 
             /**
              * @brief Stop the server

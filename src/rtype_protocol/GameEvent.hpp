@@ -21,12 +21,16 @@ namespace RTypeProtocol {
      */
     class GameEvent : public ECS::Event::Event
     {
+        private:
+            ClientEvent _value;
+
         public:
             //-------------------CONSTRUCTORS / DESTRUCTOR-------------------//
             /**
              * @brief Construct a new Game Event object
+             * @param aValue the value of the event
              */
-            GameEvent();
+            explicit GameEvent(ClientEvent aValue);
     };
 } // namespace RTypeProtocol
 

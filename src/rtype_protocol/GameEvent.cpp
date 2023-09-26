@@ -2,8 +2,8 @@
 
 namespace RTypeProtocol {
 
-    GameEvent::GameEvent()
-        : ECS::Event::Event(ECS::Event::EventType::GAME)
+    GameEvent::GameEvent(ClientEvent aValue)
+        : ECS::Event::Event(ECS::Event::EventType::GAME), _value(aValue)
     {}
 
 } // namespace RTypeProtocol

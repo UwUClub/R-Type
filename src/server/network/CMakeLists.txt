@@ -1,4 +1,4 @@
-find_package(Boost REQUIRED COMPONENTS system thread)
+find_package(Boost REQUIRED COMPONENTS system thread serialization)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
@@ -11,10 +11,14 @@ target_link_libraries(server
         PRIVATE R_Type::R_Type_options
         R_Type::R_Type_warnings
         ${Boost_LIBRARIES}
+        ecs
+        rtype_protocol
 )
 
 target_include_directories(server PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
+        "${CMAKE_CURRENT_SOURCE_DIR}/../../ecs"
+        "${CMAKE_CURRENT_SOURCE_DIR}/../../rtype_protocol"
         ${Boost_INCLUDE_DIRS}
 )
 
