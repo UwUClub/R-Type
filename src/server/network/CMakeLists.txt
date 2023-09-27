@@ -16,6 +16,7 @@ target_link_libraries(server
         ecs
         rtype_protocol
         Boost::asio
+        Boost::serialization
         Threads::Threads
 )
 

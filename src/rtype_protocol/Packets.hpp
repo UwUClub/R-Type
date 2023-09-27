@@ -6,6 +6,8 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "ClientGameEvent.hpp"
+#include "ServerGameEvent.hpp"
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/archive/binary_oarchive.hpp>
 
@@ -13,38 +15,25 @@
     #define PACKETS_HPP
 
 namespace RTypeProtocol {
-    enum class ClientEvent;
-
-    enum class ServerToClientPacketType
-    {
-        PLAYER_CONNECTION = 0,
-        PLAYER_DISCONNECTION = 1,
-        PLAYER_POSITION = 2,
-        PLAYER_SHOOT = 3,
-        PLAYER_HEALTH = 4,
-        PLAYER_DEATH = 5,
-        MONSTER_SPAWN = 6,
-        MONSTER_DEATH = 7,
-        MONSTER_POSITION = 8,
-        MONSTER_SHOOT = 9,
-    };
 
     struct ServerToClientPacket
     {
-            ServerToClientPacketType header;
-            std::vector<int> body;
+            ClientEventType header;
+            std::size_t id;
+            std::vector<float> body;
 
             template<typename archive>
             void serialize(archive &ar, const unsigned int /*version*/)
             {
                 ar &header;
+                ar &id;
                 ar &body;
             }
     };
 
     struct ClientToServerPacket
     {
-            ClientEvent header;
+            ServerEventType header;
 
             template<typename archive>
             void serialize(archive &ar, const unsigned int /*version*/)
@@ -62,14 +51,12 @@ namespace RTypeProtocol {
     }
 
     template<typename PacketType, typename BufferType>
-    PacketType &unserializePacket(BufferType &aReadBuffer)
+    void unserializePacket(PacketType *aPacket, BufferType &aReadBuffer)
     {
         std::string receivedData(aReadBuffer.data(), aReadBuffer.size());
         std::istringstream archiveStream(receivedData);
         boost::archive::binary_iarchive archive(archiveStream);
-        PacketType packet;
-        archive >> packet;
-        return packet;
+        archive >> *aPacket;
     }
 } // namespace RTypeProtocol
 
