@@ -24,7 +24,8 @@ project(
 
 include(cmake/PreventInSourceBuilds.cmake)
 include(ProjectOptions.cmake)
-
+set(SDL2_DOWNLOADED FALSE)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 R_Type_setup_options()
 
 R_Type_global_options()

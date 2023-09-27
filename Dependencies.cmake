@@ -283,15 +283,18 @@ function(R_Type_setup_dependencies)
             GIT_PROGRESS TRUE
     )
     FetchContent_MakeAvailable(SDL2)
+    set(SDL2_DOWNLOADED TRUE)
   endif()
 
-  FetchContent_Declare(
-          SDL2_image
-          GIT_REPOSITORY https://github.com/libsdl-org/SDL_image.git
-          GIT_TAG release-2.6.3
-          GIT_SHALLOW TRUE
-          GIT_PROGRESS TRUE
-  )
+  if (NOT TARGET SLD2_image)
+    FetchContent_Declare(
+            SDL2_image
+            GIT_REPOSITORY https://github.com/libsdl-org/SDL_image.git
+            GIT_TAG release-2.6.3
+            GIT_SHALLOW TRUE
+            GIT_PROGRESS TRUE
+    )
+  endif()
 
   # START ADDITION
   set(SDL2IMAGE_INSTALL OFF)
