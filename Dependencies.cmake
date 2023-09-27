@@ -175,9 +175,9 @@ function(R_Type_setup_dependencies)
     )
   endif()
 
-  if (NOT TARGET type_traits)
+  if (NOT TARGET Boost::type_traits)
     CPMAddPackage(
-            NAME type_traits
+            NAME boost_type_traits
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/type_traits"
             GIT_TAG "boost-1.83.0"
