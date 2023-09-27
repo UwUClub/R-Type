@@ -1,9 +1,9 @@
 #include "ClientNetworkHandler.hpp"
-#include "Packets.hpp"
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
 #include <iostream>
 #include <string>
+#include "Packets.hpp"
 
 namespace Network {
 
@@ -38,7 +38,8 @@ namespace Network {
         (void) aBytesTransferred;
 
         RTypeProtocol::ServerToClientPacket packet;
-        RTypeProtocol::unserializePacket<RTypeProtocol::ServerToClientPacket, std::array<char, READ_BUFFER_SIZE>>(&packet, _readBuffer);
+        RTypeProtocol::unserializePacket<RTypeProtocol::ServerToClientPacket, std::array<char, READ_BUFFER_SIZE>>(
+            &packet, _readBuffer);
         std::cout << "Received header " << static_cast<int>(packet.header) << " from " << _serverEndpoint << std::endl;
         listen();
     }
