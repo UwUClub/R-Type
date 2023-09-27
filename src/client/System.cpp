@@ -1,15 +1,14 @@
 #include "System.hpp"
+#include <functional>
 #include "EventManager.hpp"
 #include "KeyboardEvent.hpp"
 #include "SDLDisplayClass.hpp"
 #include <SDL2/SDL_image.h>
 #include <unordered_map>
-#include <functional>
 
 namespace ECS {
     void System::movePlayer(Core::World &world, Core::SparseArray<Utils::Vector2f> &aPos,
-                            Core::SparseArray<Utils::Speed> &aSpeed,
-                            Core::SparseArray<Utils::TypeEntity> &aType)
+                            Core::SparseArray<Utils::Speed> &aSpeed, Core::SparseArray<Utils::TypeEntity> &aType)
     {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         auto keyboardEvent = eventManager->getEventsByType(Event::EventType::KEYBOARD);
