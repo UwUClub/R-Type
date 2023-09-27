@@ -61,14 +61,14 @@ as Component container
                 }
                 auto &component = _components[std::type_index(typeid(Component))] = SparseArray<Component>();
                 _eraseFunctions[std::type_index(typeid(Component))] = [](World &registry, const std::size_t &idx) {
-                    auto &component = registry.getComponent<Component>();
+                    auto &myComponent = registry.getComponent<Component>();
 
-                    component.erase(idx);
+                    myComponent.erase(idx);
                 };
                 _addFunctions[std::type_index(typeid(Component))] = [](World &registry, const std::size_t &idx) {
-                    auto &component = registry.getComponent<Component>();
+                    auto &myComponent = registry.getComponent<Component>();
 
-                    component.emplaceAt(idx, Component());
+                    myComponent.emplaceAt(idx, Component());
                 };
                 return std::any_cast<SparseArray<Component> &>(component);
             }
@@ -235,6 +235,16 @@ as Component container
                 }
             }
 
+            void setRunning(bool aRunning)
+            {
+                _isRunning = aRunning;
+            }
+
+            [[__nodiscard__]] bool isRunning() const
+            {
+                return _isRunning;
+            }
+
         private:
             /**
              * @brief Call a system, this is what is stored in the vector of systems
@@ -283,6 +293,8 @@ as Component container
 
             using systemFunction = std::function<void(World &)>;
             std::vector<systemFunction> _systems;
+
+            bool _isRunning {false};
     };
 } // namespace ECS::Core
 
