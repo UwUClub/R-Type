@@ -1,23 +1,34 @@
 #include "System.hpp"
+#include <functional>
 #include "EventManager.hpp"
 #include "KeyboardEvent.hpp"
 #include "SDLDisplayClass.hpp"
 #include <SDL2/SDL_image.h>
 #include <unordered_map>
-#include <functional>
 
 namespace ECS {
     void System::movePlayer(Core::World &world, Core::SparseArray<Utils::Vector2f> &aPos,
-                            Core::SparseArray<Utils::Speed> &aSpeed,
-                            Core::SparseArray<Utils::TypeEntity> &aType)
+                            Core::SparseArray<Utils::Speed> &aSpeed, Core::SparseArray<Utils::TypeEntity> &aType)
     {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         auto keyboardEvent = eventManager->getEventsByType(Event::EventType::KEYBOARD);
         std::unordered_map<const Event::KeyIdentifier, std::function<void(float &, Utils::Vector2f &)>> keyMap = {
-            {Event::KeyIdentifier::UP, [](float &spd, Utils::Vector2f &xy) { xy.y = xy.y <= 0 ? 0 : xy.y -= spd; }},
-            {Event::KeyIdentifier::DOWN, [](float &spd, Utils::Vector2f &xy) { xy.y = xy.y >= SCREEN_HEIGHT ? SCREEN_HEIGHT : xy.y += spd; }},
-            {Event::KeyIdentifier::LEFT, [](float &spd, Utils::Vector2f &xy) { xy.x = xy.x <= 0 ? 0 : xy.x -= spd; }},
-            {Event::KeyIdentifier::RIGHT, [](float &spd, Utils::Vector2f &xy) { xy.x = xy.x >= SCREEN_WIDTH ? SCREEN_WIDTH : xy.x += spd; }},
+            {Event::KeyIdentifier::UP,
+             [](float &spd, Utils::Vector2f &xy) {
+                 xy.y = xy.y <= 0 ? 0 : xy.y -= spd;
+             }},
+            {Event::KeyIdentifier::DOWN,
+             [](float &spd, Utils::Vector2f &xy) {
+                 xy.y = xy.y >= SCREEN_HEIGHT ? SCREEN_HEIGHT : xy.y += spd;
+             }},
+            {Event::KeyIdentifier::LEFT,
+             [](float &spd, Utils::Vector2f &xy) {
+                 xy.x = xy.x <= 0 ? 0 : xy.x -= spd;
+             }},
+            {Event::KeyIdentifier::RIGHT,
+             [](float &spd, Utils::Vector2f &xy) {
+                 xy.x = xy.x >= SCREEN_WIDTH ? SCREEN_WIDTH : xy.x += spd;
+             }},
         };
 
         for (size_t i = 0; i < aPos.size(); i++) {
