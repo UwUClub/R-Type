@@ -21,6 +21,7 @@ SDLDisplayClass::SDLDisplayClass()
         printf("Failed to open SDL window: %s\n", SDL_GetError());
         return;
     }
+    IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG);
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
     _renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED);
     if (!_renderer) {
