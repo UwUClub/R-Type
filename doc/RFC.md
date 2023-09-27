@@ -86,11 +86,9 @@ The protocol is binary, so packets must be serialized to binary format before be
 
 We made a C++ library commonly usable by client and server programs. It requires [Boost Asio](https://www.boost.org/doc/libs/1_83_0/doc/html/boost_asio.html). It defines:
 - `ServerToClientPacket` and `ClientToServerPacket` structs,
-- `ClientGameEvent` and `ServerGameEvent` classes compatible with our [ECS]() (todo: add ECS download link)
+- `ClientGameEvent` and `ServerGameEvent` classes compatible with our ECS
 - `serializePacket` and `unserializePacket` functions (see examples).
 All under a namespace called `RTypeProtocol`.
-
-(todo: add download)
 
 ## 3. Security Considerations
 
