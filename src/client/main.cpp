@@ -1,13 +1,13 @@
 #include <boost/asio.hpp>
 #include <iostream>
+#include "ClientNetworkHandler.hpp"
 #include "EventManager.hpp"
+#include "Packets.hpp"
 #include "SDLDisplayClass.hpp"
+#include "ServerGameEvent.hpp"
 #include "System.hpp"
 #include "Utils.hpp"
 #include "World.hpp"
-#include "ClientNetworkHandler.hpp"
-#include "Packets.hpp"
-#include "ServerGameEvent.hpp"
 
 int main(int ac, char **av)
 {
