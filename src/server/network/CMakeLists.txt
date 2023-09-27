@@ -22,8 +22,6 @@ target_link_libraries(server
 
 target_include_directories(server PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
-        "${CMAKE_CURRENT_SOURCE_DIR}/../../ecs"
-        "${CMAKE_CURRENT_SOURCE_DIR}/../../rtype_protocol"
         ${Boost_INCLUDE_DIRS}
 )
 

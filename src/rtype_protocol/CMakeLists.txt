@@ -2,7 +2,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
 find_package(Boost REQUIRED COMPONENTS system thread asio)
 
-add_library(rtype_protocol STATIC
+target_sources(rtype_protocol PRIVATE
         ServerGameEvent.hpp
         ServerGameEvent.cpp
         ClientGameEvent.hpp
@@ -18,8 +18,16 @@ target_link_libraries(rtype_protocol
 )
 
 target_include_directories(rtype_protocol PRIVATE
-        "${CMAKE_CURRENT_SOURCE_DIR}/../ecs"
-        "${CMAKE_CURRENT_SOURCE_DIR}/../ecs/Event"
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${Boost_INCLUDE_DIRS}
+)
+
+target_include_directories(client PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${Boost_INCLUDE_DIRS}
+)
+
+target_include_directories(server PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${Boost_INCLUDE_DIRS}
 )

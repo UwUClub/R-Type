@@ -1,6 +1,5 @@
 #include <cstddef>
-#include "Event/Event.hpp"
-#include "Utils.hpp"
+#include "Event.hpp"
 
 #ifndef SERVERGAMEEVENT_HPP
     #define SERVERGAMEEVENT_HPP

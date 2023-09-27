@@ -21,7 +21,6 @@ target_link_libraries(server
         ecs
 )
 
-target_include_directories(server PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/network")
 target_include_directories(server PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(server PRIVATE ${Boost_INCLUDE_DIRS})
 

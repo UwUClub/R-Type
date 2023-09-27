@@ -3,7 +3,7 @@
 #include <boost/bind.hpp>
 #include <boost/serialization/serialization.hpp>
 #include <iostream>
-#include "Event/EventManager.hpp"
+#include "EventManager.hpp"
 #include "Packets.hpp"
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/archive/binary_oarchive.hpp>

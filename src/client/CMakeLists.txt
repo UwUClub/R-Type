@@ -21,8 +21,6 @@ target_link_libraries(client
         Boost::serialization
 )
 
-target_include_directories(client PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/network")
-target_include_directories(client PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../rtype_protocol")
 target_include_directories(client PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(client PRIVATE ${Boost_INCLUDE_DIRS})
 target_include_directories(client PRIVATE ${SDL2_INCLUDE_DIRS})
