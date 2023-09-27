@@ -51,14 +51,12 @@ namespace RTypeProtocol {
     }
 
     template<typename PacketType, typename BufferType>
-    PacketType &unserializePacket(BufferType &aReadBuffer)
+    void unserializePacket(PacketType *aPacket, BufferType &aReadBuffer)
     {
         std::string receivedData(aReadBuffer.data(), aReadBuffer.size());
         std::istringstream archiveStream(receivedData);
         boost::archive::binary_iarchive archive(archiveStream);
-        PacketType packet;
-        archive >> packet;
-        return packet;
+        archive >> *aPacket;
     }
 } // namespace RTypeProtocol
 

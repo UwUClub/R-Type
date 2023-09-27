@@ -42,9 +42,8 @@ namespace Network {
         (void) aError;
         (void) aBytesTransferred;
 
-        RTypeProtocol::ClientToServerPacket packet =
-            RTypeProtocol::unserializePacket<RTypeProtocol::ClientToServerPacket, std::array<char, READ_BUFFER_SIZE>>(
-                _readBuffer);
+        RTypeProtocol::ClientToServerPacket packet;
+        RTypeProtocol::unserializePacket<RTypeProtocol::ClientToServerPacket, std::array<char, READ_BUFFER_SIZE>>(&packet, _readBuffer);
         std::cout << "Received header " << static_cast<int>(packet.header) << " from " << _readEndpoint << std::endl;
 
         RTypeProtocol::ServerGameEvent *evt = new RTypeProtocol::ServerGameEvent(packet.header, 42);
