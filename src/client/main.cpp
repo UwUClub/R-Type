@@ -1,11 +1,15 @@
+#include <boost/asio.hpp>
 #include <iostream>
 #include "EventManager.hpp"
 #include "SDLDisplayClass.hpp"
 #include "System.hpp"
 #include "Utils.hpp"
 #include "World.hpp"
+#include "ClientNetworkHandler.hpp"
+#include "Packets.hpp"
+#include "ServerGameEvent.hpp"
 
-int main()
+int main(int ac, char **av)
 {
     ECS::Core::World &world = ECS::Core::World::getInstance();
     SDLDisplayClass &display = SDLDisplayClass::getInstance();

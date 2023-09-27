@@ -25,7 +25,6 @@ project(
 include(cmake/PreventInSourceBuilds.cmake)
 include(ProjectOptions.cmake)
 
-
 R_Type_setup_options()
 
 R_Type_global_options()
@@ -34,7 +33,6 @@ R_Type_setup_dependencies()
 
 R_Type_local_options()
 
-# don't know if this should be set globally from here or not...
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
 set(GIT_SHA
@@ -69,7 +67,6 @@ endif()
 include(CTest)
 
 if(BUILD_TESTING)
-  message(AUTHOR_WARNING "Building Tests. Be sure to check out test/constexpr_tests.cpp for constexpr testing")
   add_subdirectory(test)
 endif()
 
