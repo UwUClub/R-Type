@@ -17,15 +17,20 @@ Copyright (c) The persons identified as the game developers.  All rights reserve
 
 ## Table of Contents
 
-1. [Introduction](#introduction)
-2. [Protocol Specification](#protocol-specification)
-   2.1. [Packet Types](#packet-types)
-   2.2. [Packet Format](#message-format)
-   2.3. [Serialization](#security-considerations)
-   2.4. [R-Type Protocol Library](#r-type-protocol-library)
-3. [Security Considerations](#security-considerations)
-4. [Examples](#examples)
-7. [Author's Addresses](#authors-addresses)
+1. [Introduction](#1-introduction)
+2. [Protocol Specification](#2-protocol-specification)
+
+   2.1. [Packet Types](#21-packet-types)
+
+   2.2. [Packet Format](#22-packet-format)
+
+   2.3. [Serialization](#23-serialization)
+
+   2.4. [R-Type Protocol Library](#24-r-type-protocol-library)
+
+3. [Security Considerations](#3-security-considerations)
+4. [Examples](#4-examples)
+5. [Author's Addresses](#5-authors-addresses)
 
 ## 1. Introduction
 
