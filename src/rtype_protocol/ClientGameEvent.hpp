@@ -12,12 +12,11 @@ namespace RTypeProtocol {
         PLAYER_DISCONNECTION = 1,
         PLAYER_POSITION = 2,
         PLAYER_SHOOT = 3,
-        PLAYER_HEALTH = 4,
-        PLAYER_DEATH = 5,
-        MONSTER_SPAWN = 6,
-        MONSTER_DEATH = 7,
-        MONSTER_POSITION = 8,
-        MONSTER_SHOOT = 9,
+        PLAYER_DEATH = 4,
+        MONSTER_SPAWN = 5,
+        MONSTER_DEATH = 6,
+        MONSTER_POSITION = 7,
+        MONSTER_SHOOT = 8,
     };
 
     /**

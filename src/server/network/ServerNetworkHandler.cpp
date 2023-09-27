@@ -45,9 +45,9 @@ namespace Network {
         RTypeProtocol::ClientToServerPacket packet;
         RTypeProtocol::unserializePacket<RTypeProtocol::ClientToServerPacket, std::array<char, READ_BUFFER_SIZE>>(
             &packet, _readBuffer);
-        std::cout << "Received header " << static_cast<int>(packet.header) << " from " << _readEndpoint << std::endl;
+        std::cout << "Received type " << static_cast<int>(packet.type) << " from " << _readEndpoint << std::endl;
 
-        RTypeProtocol::ServerGameEvent *evt = new RTypeProtocol::ServerGameEvent(packet.header, 42);
+        RTypeProtocol::ServerGameEvent *evt = new RTypeProtocol::ServerGameEvent(packet.type, 42);
         ECS::Event::EventManager::getInstance()->pushEvent(evt);
 
         // --- CONNECT event case ---

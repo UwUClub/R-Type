@@ -40,7 +40,7 @@ namespace Network {
         RTypeProtocol::ServerToClientPacket packet;
         RTypeProtocol::unserializePacket<RTypeProtocol::ServerToClientPacket, std::array<char, READ_BUFFER_SIZE>>(
             &packet, _readBuffer);
-        std::cout << "Received header " << static_cast<int>(packet.header) << " from " << _serverEndpoint << std::endl;
+        std::cout << "Received type " << static_cast<int>(packet.type) << " from " << _serverEndpoint << std::endl;
         listen();
     }
 

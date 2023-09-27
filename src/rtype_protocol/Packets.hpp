@@ -18,27 +18,29 @@ namespace RTypeProtocol {
 
     struct ServerToClientPacket
     {
-            ClientEventType header;
+            ClientEventType type;
             std::size_t id;
-            std::vector<float> body;
+            bool isYou;
+            std::array<float, 2> position;
 
             template<typename archive>
             void serialize(archive &ar, const unsigned int /*version*/)
             {
-                ar &header;
+                ar &type;
                 ar &id;
-                ar &body;
+                ar &isYou;
+                ar &position;
             }
     };
 
     struct ClientToServerPacket
     {
-            ServerEventType header;
+            ServerEventType type;
 
             template<typename archive>
             void serialize(archive &ar, const unsigned int /*version*/)
             {
-                ar &header;
+                ar &type;
             }
     };
 

@@ -11,9 +11,11 @@ namespace RTypeProtocol {
         CONNECT = 0,
         DISCONNECT = 1,
         CRASH = 2,
-        MOVE_UP = 3,
-        MOVE_DOWN = 4,
-        SHOOT = 5
+        MOVE_LEFT = 3,
+        MOVE_UP = 4,
+        MOVE_RIGHT = 5,
+        MOVE_DOWN = 6,
+        SHOOT = 7
     };
 
     /**
