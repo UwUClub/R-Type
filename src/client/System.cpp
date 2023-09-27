@@ -54,9 +54,9 @@ namespace ECS {
                 eventManager->pushEvent(keyEvent);
             }
             if (event.type == SDL_WINDOWEVENT && (_windowEventMap.find(event.window.event) != _windowEventMap.end())) {
-                auto windowEvent = new Event::WindowEvent(1920, 1920, 0, 0, ECS::Event::WindowDisplayState::FULLSCREEN,
-                                                          ECS::Event::WindowFocusState::FOCUSED,
-                                                          _windowEventMap.at(event.window.event));
+                auto windowEvent = new Event::WindowEvent(
+                    SCREEN_WIDTH, SCREEN_WIDTH, 0, 0, ECS::Event::WindowDisplayState::FULLSCREEN,
+                    ECS::Event::WindowFocusState::FOCUSED, _windowEventMap.at(event.window.event));
                 eventManager->pushEvent(windowEvent);
             }
         }

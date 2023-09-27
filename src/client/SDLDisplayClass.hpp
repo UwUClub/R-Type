@@ -8,8 +8,8 @@
 #ifndef SDLDISPLAYClass_HPP_
 #define SDLDISPLAYClass_HPP_
 
-#define SCREEN_WIDTH  1920
-#define SCREEN_HEIGHT 1080
+constexpr int SCREEN_WIDTH = 1920;
+constexpr int SCREEN_HEIGHT = 1080;
 
 #include <SDL2/SDL.h>
 #include <string>
