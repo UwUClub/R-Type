@@ -8,7 +8,6 @@ target_sources(ecs PRIVATE
 )
 
 add_subdirectory(Event)
-add_subdirectory(Resources)
 
 target_link_libraries(ecs
         PRIVATE R_Type::R_Type_options
