@@ -101,40 +101,34 @@ Remember that the server should always have the last word on the client.
 Here is an example of a C++ client sending a `MOVE_UP` packet to a C++ server, both using our RType protocol library and [Boost Asio](https://www.boost.org/doc/libs/1_83_0/doc/html/boost_asio.html):
 
 **Client side**:
-```
+```C++
 #include "Packets.hpp"
 #include "ServerGameEvent.hpp"
 #include <boost/asio.hpp>
-...
-// setup socket and serverEndpoint
-...
+// ... setup socket and serverEndpoint ...
 RTypeProtocol::ClientToServerPacket packet;
 packet.type = RTypeProtocol::ServerEventType::MOVE_UP;
 boost::asio::streambuf buf;
 
 RTypeProtocol::serializePacket<const RTypeProtocol::ClientToServerPacket &>(&buf, packet);
 socket.send_to(buf.data(), serverEndpoint);
-...
+// ...
 ```
 
 **Server side**:
-```
+```C++
 #include "Packets.hpp"
 #include "ServerGameEvent.hpp"
 #include <boost/asio.hpp>
-...
+// ...
 constexpr unsigned short READ_BUFFER_SIZE = 128;
-...
+// ...
 std::array<char, READ_BUFFER_SIZE> readBuffer;
-...
-// fill readBuffer using Boost Asio
-...
+// ... fill readBuffer using Boost Asio ...
 RTypeProtocol::ClientToServerPacket packet;
 
 RTypeProtocol::unserializePacket<RTypeProtocol::ClientToServerPacket, std::array<char, READ_BUFFER_SIZE>>(&packet, readBuffer);
-
-// you can access packet here (packet.type == MOVE_UP)
-...
+// ... you can access packet here (packet.type is now MOVE_UP) ...
 ```
 
 The idea is the same for sending packets in the other direction with `RTypeProtocol::ServerToClientPacket`.
