@@ -1,4 +1,4 @@
-find_package(Boost REQUIRED COMPONENTS system thread asio serialization)
+find_package(Boost REQUIRED COMPONENTS system thread serialization)
 
 find_package(Threads REQUIRED)
 
