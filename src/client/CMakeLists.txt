@@ -1,16 +1,24 @@
-find_package(Boost REQUIRED COMPONENTS system thread)
+find_package(Boost REQUIRED COMPONENTS system thread serialization)
 find_package(SDL2)
+find_package(Threads REQUIRED)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
 target_sources(client PRIVATE main.cpp)
 
+add_subdirectory(network)
+
 target_link_libraries(client
         PRIVATE R_Type::R_Type_options
         R_Type::R_Type_warnings
-        ecs
         ${SDL2_LIBRARIES}
         ${Boost_LIBRARIES}
+        Boost::serialization
+        Threads::Threads
+        ecs
+        rtype_protocol
+        Boost::asio
+        Boost::serialization
 )
 
 target_include_directories(client PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
