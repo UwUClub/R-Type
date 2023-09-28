@@ -14,7 +14,7 @@ target_link_libraries(ecs
         R_Type::R_Type_warnings
         SDL2::SDL2
         SDL2::SDL2main
-        SDL2_image::SDL2_image
+        SDL2_image
         ${Boost_LIBRARIES}
 )
 

@@ -18,7 +18,7 @@ if (SDL2_DOWNLOADED)
             R_Type::R_Type_warnings
             SDL2::SDL2main
             SDL2::SDL2
-            SDL2_image::SDL2_image
+            SDL2_image
             ${Boost_LIBRARIES}
             Boost::serialization
             Threads::Threads
@@ -33,7 +33,7 @@ else()
             R_Type::R_Type_warnings
             SDL2::SDL2main
             SDL2::SDL2
-            SDL2_image::SDL2_image
+            SDL2_image
             ${Boost_LIBRARIES}
             Boost::serialization
             Threads::Threads
@@ -46,7 +46,7 @@ endif()
 
 target_include_directories(client PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(client PRIVATE ${Boost_INCLUDE_DIRS})
-target_include_directories(client PRIVATE ${SDL2_INCLUDE_DIRS})
+target_include_directories(client PRIVATE "../../build/_deps/sdl2-src/include/SDL2")
 target_include_directories(client PRIVATE "../../build/_deps/sdl2_image-src/include")
 
 set_target_properties(client PROPERTIES

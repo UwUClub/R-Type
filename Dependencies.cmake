@@ -283,8 +283,8 @@ function(R_Type_setup_dependencies)
             GIT_SHALLOW TRUE
             GIT_PROGRESS TRUE
     )
-    FetchContent_MakeAvailable(SDL2)
   endif()
+  FetchContent_MakeAvailable(SDL2)
 
   if (NOT TARGET SDL2_image::SDL2_image)
     FetchContent_Declare(
@@ -294,14 +294,11 @@ function(R_Type_setup_dependencies)
             GIT_SHALLOW TRUE
             GIT_PROGRESS TRUE
     )
-    FetchContent_MakeAvailable(SDL2_image)
   endif()
 
   set(SDL2IMAGE_INSTALL OFF)
   set(BUILD_SHARED_LIBS FALSE)
 
-  find_package(SDL2_image)
-
-  message(WARNING "SDL2_image found: ${SDL2IMAGE_FOUND}")
+  FetchContent_MakeAvailable(SDL2_image)
 
 endfunction()
