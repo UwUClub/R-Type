@@ -1,6 +1,8 @@
 #ifndef UTILS_HPP
 #define UTILS_HPP
 
+#include <SDL.h>
+
 namespace ECS::Utils {
     struct Vector2i
     {
@@ -66,7 +68,22 @@ namespace ECS::Utils {
 
     struct LoadedSprite
     {
+            LoadedSprite()
+                : path(""),
+                  texture(nullptr),
+                  rect({0, 0, 0, 0}),
+                  srcRect({0, 0, 0, 0})
+            {}
+            LoadedSprite(std::string aPath, SDL_Texture *aTexture, SDL_Rect aRect, SDL_Rect aSrcRect)
+                : path(aPath),
+                  texture(aTexture),
+                  rect(aRect),
+                  srcRect(aSrcRect)
+            {}
             std::string path;
+            SDL_Texture *texture;
+            SDL_Rect rect;
+            SDL_Rect srcRect;
     };
 
 } // namespace ECS::Utils

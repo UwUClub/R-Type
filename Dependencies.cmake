@@ -8,8 +8,9 @@ include(cmake/FindSDL2.cmake)
 function(R_Type_setup_dependencies)
 
   find_package(Catch2 QUIET)
-  find_package(Boost COMPONENTS system serialization align assert config core static_assert throw_exception array bind chrono integer move mpl predef asio ratio type_traits typeof utility coroutine date_time function regex smart_ptr preprocessor io)
-  find_package(SDL2)
+  find_package(Boost QUIET COMPONENTS system serialization align assert config core static_assert throw_exception array bind chrono integer move mpl predef asio ratio type_traits typeof utility coroutine date_time function regex smart_ptr preprocessor io QUIET)
+  find_package(SDL2 QUIET)
+  find_package(SDL2_image QUIET)
 
   if(NOT TARGET Catch2::Catch2WithMain)
     CPMAddPackage(
@@ -26,6 +27,8 @@ function(R_Type_setup_dependencies)
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/boost"
             GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+            GIT_PROGRESS TRUE
     )
   endif()
 
@@ -272,21 +275,18 @@ function(R_Type_setup_dependencies)
     )
   endif()
 
-  Set(FETCHCONTENT_QUIET FALSE)
-
-  if (NOT TARGET SDL2::SDL2)
+  if (NOT TARGET SDL2)
     FetchContent_Declare(
             SDL2
             GIT_REPOSITORY https://github.com/libsdl-org/SDL.git
-            GIT_TAG release-2.26.3
+            GIT_TAG release-2.28.3
             GIT_SHALLOW TRUE
             GIT_PROGRESS TRUE
     )
     FetchContent_MakeAvailable(SDL2)
-    set(SDL2_DOWNLOADED TRUE)
   endif()
 
-  if (NOT TARGET SLD2_image)
+  if (NOT TARGET SDL2_image::SDL2_image)
     FetchContent_Declare(
             SDL2_image
             GIT_REPOSITORY https://github.com/libsdl-org/SDL_image.git
@@ -294,13 +294,14 @@ function(R_Type_setup_dependencies)
             GIT_SHALLOW TRUE
             GIT_PROGRESS TRUE
     )
+    FetchContent_MakeAvailable(SDL2_image)
   endif()
 
-  # START ADDITION
   set(SDL2IMAGE_INSTALL OFF)
   set(BUILD_SHARED_LIBS FALSE)
-  # END ADDITION
 
-  FetchContent_MakeAvailable(SDL2_image)
+  find_package(SDL2_image)
+
+  message(WARNING "SDL2_image found: ${SDL2IMAGE_FOUND}")
 
 endfunction()

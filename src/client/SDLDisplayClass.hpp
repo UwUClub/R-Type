@@ -16,7 +16,7 @@ constexpr int SCREEN_HEIGHT = 1080;
 #include "KeyboardEvent.hpp"
 #include "MouseEvent.hpp"
 #include "WindowEvent.hpp"
-#include <SDL2/SDL_image.h>
+#include <SDL_image.h>
 #include <unordered_map>
 
 class SDLDisplayClass

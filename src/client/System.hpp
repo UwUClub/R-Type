@@ -6,6 +6,7 @@
 #include "Utils.hpp"
 #include "WindowEvent.hpp"
 #include "World.hpp"
+#include <SDL.h>
 
 namespace ECS {
     class System

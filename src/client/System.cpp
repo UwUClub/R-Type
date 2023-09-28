@@ -3,7 +3,8 @@
 #include "EventManager.hpp"
 #include "KeyboardEvent.hpp"
 #include "SDLDisplayClass.hpp"
-#include <SDL2/SDL_image.h>
+#include <SDL_image.h>
+#include <SDL.h>
 #include <unordered_map>
 
 namespace ECS {
