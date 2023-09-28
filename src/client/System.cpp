@@ -1,10 +1,10 @@
 #include "System.hpp"
+#include <SDL.h>
 #include <functional>
 #include "EventManager.hpp"
 #include "KeyboardEvent.hpp"
 #include "SDLDisplayClass.hpp"
 #include <SDL_image.h>
-#include <SDL.h>
 #include <unordered_map>
 
 namespace ECS {
