@@ -72,7 +72,7 @@ namespace ECS::Event {
         END = 63,
         HOME = 64,
         INSERT = 65,
-        DELETE = 66,
+        DEL = 66,
         ADD = 67,
         SUBTRACT = 68,
         MULTIPLY = 69,
