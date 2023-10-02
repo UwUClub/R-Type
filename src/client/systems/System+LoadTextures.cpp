@@ -4,7 +4,7 @@
 #include <SDL_image.h>
 
 namespace ECS {
-    void System::loadTextures(Core::World &aWorld, Core::SparseArray<Component::LoadedSprite> &aSprites)
+    void System::loadTextures(Core::SparseArray<Component::LoadedSprite> &aSprites)
     {
         SDLDisplayClass &display = SDLDisplayClass::getInstance();
 

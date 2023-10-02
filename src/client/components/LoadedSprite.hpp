@@ -15,16 +15,15 @@ namespace Component {
     struct LoadedSprite
     {
             LoadedSprite()
-                : path(""),
-                  texture(nullptr),
+                : texture(nullptr),
                   rect({0, 0, 0, 0}),
                   srcRect({0, 0, 0, 0})
             {}
-            LoadedSprite(std::string aPath, SDL_Texture *aTexture, SDL_Rect aRect, SDL_Rect aSrcRect)
+            LoadedSprite(std::string aPath, SDL_Texture *aTexture, SDL_Rect aTextureRect, SDL_Rect aDisplayRect)
                 : path(std::move(aPath)),
                   texture(aTexture),
-                  rect(aRect),
-                  srcRect(aSrcRect)
+                  rect(aTextureRect),
+                  srcRect(aDisplayRect)
             {}
             std::string path;
             SDL_Texture *texture;

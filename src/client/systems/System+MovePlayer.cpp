@@ -6,8 +6,7 @@
 #include <unordered_map>
 
 namespace ECS {
-    void System::movePlayer(Core::World &world, Core::SparseArray<Utils::Vector2f> &aPos,
-                            Core::SparseArray<Component::Speed> &aSpeed,
+    void System::movePlayer(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
                             Core::SparseArray<Component::TypeEntity> &aType)
     {
         Event::EventManager *eventManager = Event::EventManager::getInstance();

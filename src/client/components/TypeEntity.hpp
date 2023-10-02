@@ -15,7 +15,8 @@ namespace Component {
                   isEnemy(false),
                   isBullet(false),
                   isWall(false),
-                  isBonus(false)
+                  isBonus(false),
+                  isBackground(false)
             {}
             TypeEntity(bool aIsPlayer, bool aIsEnemy, bool aIsBullet, bool aIsWall, bool aIsBonus, bool aIsBackground)
                 : isPlayer(aIsPlayer),
@@ -25,6 +26,7 @@ namespace Component {
                   isBonus(aIsBonus),
                   isBackground(aIsBackground)
             {}
+
             bool isPlayer;
             bool isEnemy;
             bool isBullet;
