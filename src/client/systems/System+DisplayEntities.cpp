@@ -18,9 +18,11 @@ namespace ECS {
             if (!aPos[i].has_value()) {
                 continue;
             }
-            aSprites[i]->srcRect.x = static_cast<int>(aPos[i].value().x);
-            aSprites[i]->srcRect.y = static_cast<int>(aPos[i].value().y);
-            SDL_RenderCopy(display._renderer, aSprites[i]->texture, &aSprites[i]->rect, &aSprites[i]->srcRect);
+            if (aSprites[i]->srcRect != nullptr) {
+                aSprites[i]->srcRect->x = static_cast<int>(aPos[i].value().x);
+                aSprites[i]->srcRect->y = static_cast<int>(aPos[i].value().y);
+            }
+            SDL_RenderCopy(display._renderer, aSprites[i]->texture, aSprites[i]->rect, aSprites[i]->srcRect);
         }
     }
 } // namespace ECS

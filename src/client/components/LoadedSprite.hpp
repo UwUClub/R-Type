@@ -17,10 +17,10 @@ namespace Component {
             LoadedSprite()
                 : path(""),
                   texture(nullptr),
-                  rect({0, 0, 0, 0}),
-                  srcRect({0, 0, 0, 0})
+                  rect(nullptr),
+                  srcRect(nullptr)
             {}
-            LoadedSprite(std::string aPath, SDL_Texture *aTexture, SDL_Rect aRect, SDL_Rect aSrcRect)
+            LoadedSprite(std::string aPath, SDL_Texture *aTexture, SDL_Rect *aRect, SDL_Rect *aSrcRect)
                 : path(std::move(aPath)),
                   texture(aTexture),
                   rect(aRect),
@@ -28,8 +28,8 @@ namespace Component {
             {}
             std::string path;
             SDL_Texture *texture;
-            SDL_Rect rect;
-            SDL_Rect srcRect;
+            SDL_Rect *rect;
+            SDL_Rect *srcRect;
     };
 } // namespace Component
 #endif // DEBUG

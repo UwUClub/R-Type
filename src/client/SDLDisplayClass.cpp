@@ -60,6 +60,12 @@ SDLDisplayClass::~SDLDisplayClass()
             continue;
         }
         SDL_DestroyTexture(sprite->texture);
+        if (sprite->rect != NULL) {
+            delete sprite->rect;
+        }
+        if (sprite->srcRect != NULL) {
+            delete sprite->srcRect;
+        }
     }
 
     SDL_DestroyRenderer(_renderer);
