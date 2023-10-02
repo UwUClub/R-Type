@@ -5,9 +5,8 @@ on:
       - main
       - dev
   push:
-    branches:
-      - main
-      - dev
+    tags:
+      - '*'
 
 env:
   CLANG_TIDY_VERSION: "15.0.2"
