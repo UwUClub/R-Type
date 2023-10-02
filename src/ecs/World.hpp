@@ -254,74 +254,73 @@ as Component container
             void setDeltaTime(float aDeltaTime)
             {
                 _deltaTime = aDeltaTime;
-                [[nodiscard]] bool isRunning() const
-                {
-                    return _isRunning;
-                }
+            }
 
-                void stop()
-                {
-                    _isRunning = false;
-                }
+            [[nodiscard]] bool isRunning() const
+            {
+                return _isRunning;
+            }
 
-                void start()
-                {
-                    _isRunning = true;
-                }
+            void stop()
+            {
+                _isRunning = false;
+            }
 
-            private:
-                /**
-                 * @brief Call a system, this is what is stored in the vector of systems
-                 *
-                 * @tparam Components The components that the system needs
-                 * @tparam Function Inferred by the compiler
-                 * @param aFunction The function to call
-                 * @param aReg The World
-                 */
-                template<typename... Components, typename Function>
-                void callSystem(Function && aFunction, World & aReg)
-                {
-                    aFunction(aReg, getComponent<Components>()...);
-                }
+            void start()
+            {
+                _isRunning = true;
+            }
 
-                //-------------- EXCEPTION --------------//
-                /**
-                 * @brief Exception class for the World class
-                 *
-                 */
-                class RegistryException : public std::exception
-                {
-                    public:
-                        explicit RegistryException(const char *message)
-                            : _message(message)
-                        {}
+        private:
+            /**
+             * @brief Call a system, this is what is stored in the vector of systems
+             *
+             * @tparam Components The components that the system needs
+             * @tparam Function Inferred by the compiler
+             * @param aFunction The function to call
+             * @param aReg The World
+             */
+            template<typename... Components, typename Function>
+            void callSystem(Function &&aFunction, World &aReg)
+            {
+                aFunction(aReg, getComponent<Components>()...);
+            }
 
-                        const char *what() const noexcept override
-                        {
-                            return _message;
-                        }
+            //-------------- EXCEPTION --------------//
+            /**
+             * @brief Exception class for the World class
+             *
+             */
+            class RegistryException : public std::exception
+            {
+                public:
+                    explicit RegistryException(const char *message)
+                        : _message(message)
+                    {}
 
-                    private:
-                        const char *_message;
-                };
-                World() = default;
+                    const char *what() const noexcept override
+                    {
+                        return _message;
+                    }
 
-            private:
-                size_t _id {0};
-                std::map<std::type_index, std::any> _components;
-                std::map<std::type_index, std::function<void(World &, const std::size_t &)>> _eraseFunctions;
-                std::map<std::type_index, std::function<void(World &, const std::size_t &)>> _addFunctions;
-                std::vector<std::size_t> _reusableIds;
-
-                using systemFunction = std::function<void(World &)>;
-                std::vector<systemFunction> _systems;
-
-<<<<<<< HEAD
-                float _deltaTime = 0;
-=======
-                bool _isRunning {true};
->>>>>>> 850bf834421281e3a31ccab8c44983d9ac3e6716
+                private:
+                    const char *_message;
             };
-    } // namespace ECS::Core
+            World() = default;
+
+        private:
+            size_t _id {0};
+            std::map<std::type_index, std::any> _components;
+            std::map<std::type_index, std::function<void(World &, const std::size_t &)>> _eraseFunctions;
+            std::map<std::type_index, std::function<void(World &, const std::size_t &)>> _addFunctions;
+            std::vector<std::size_t> _reusableIds;
+
+            using systemFunction = std::function<void(World &)>;
+            std::vector<systemFunction> _systems;
+
+            float _deltaTime = 0;
+            bool _isRunning {true};
+    };
+} // namespace ECS::Core
 
 #endif /* !WORLD_HPP_ */
