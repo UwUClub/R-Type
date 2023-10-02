@@ -43,7 +43,7 @@ events, including player interactions and monster behavior.
 
 ### 2.1. Packet Types
 
-The protocol defines the following packet types:
+Each client is a game player. The protocol defines the following packet types:
 
 **Client to Server Packets:**
 - `CONNECT` (0)
@@ -54,8 +54,6 @@ The protocol defines the following packet types:
 - `MOVE_RIGHT` (5)
 - `MOVE_DOWN` (6)
 - `SHOOT` (7)
-
-Each client is a game player. The above packets correspond to player actions.
 
 **Server to Client Packets:**
 - `PLAYER_CONNECTION` (0)
@@ -71,12 +69,14 @@ Each client is a game player. The above packets correspond to player actions.
 ### 2.2. Packet Format
 
 - Each packet has a 4 bytes (*int*) `type` property. It contains the packet type.
-- Each "Server to Client" packet has an 8 bytes (*size_t*) `id` property to identify the player or monster concerned by the packet in 8 bytes. It should naturally be common to clients and server.
-- The `PLAYER_CONNECTION` packet has a 2 bytes (boolean) `isYou` property. If it's `true`, the receiving client can assign its id as the associated id property.
-- The following "Server to Client" packets have a 8 bytes (array of 2 float) `position` property:
-    - `PLAYER_POSITION` (2)
-    - `MONSTER_SPAWN` (6)
-    - `MONSTER_POSITION` (8)
+- Each *Server to Client* packet has an 8 bytes (*size_t*) `id` property to identify the entity concerned by the packet. Entity ids should naturally be synced between clients and server.
+- Each *Server to Client* packet has a `payload` property. It's a vector of *float* that contains a set of details:
+   - The `PLAYER_CONNECTION` payload contains one float. If it's `1`, it means that the player designated by the id property is the one who receives the packet. Otherwise, it's not.
+   - The following packets have a payload containing a pair of X/Y coordinates for positioning:
+     - `PLAYER_POSITION` (2)
+     - `MONSTER_SPAWN` (6)
+     - `MONSTER_POSITION` (8)
+   - All the other packets have an empty payload.
 
 ### 2.3. Serialization
 
