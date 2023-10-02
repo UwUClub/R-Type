@@ -37,9 +37,9 @@ pipeline {
                         steps {
                             script {
                                 if (PLATFORM == 'linux') {
-                                    sh './build/proj'
+                                    sh './build/test/tests'
                                 } else {
-                                    bat '.\\build\\proj.exe'
+                                    bat '.\\build\\test\\tests.exe'
                                 }
                             }
                         }
