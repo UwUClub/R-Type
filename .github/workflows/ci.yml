@@ -1,12 +1,16 @@
 name: ci
 on:
+  release:
+    types: [ published ]
   pull_request:
     branches:
       - main
       - dev
   push:
     tags:
-      - '*'
+    branches:
+      - main
+      - dev
 
 env:
   CLANG_TIDY_VERSION: "15.0.2"
