@@ -262,6 +262,7 @@ as Component container
             {
                 return _delta.count();
             }
+
         private:
             /**
              * @brief Call a system, this is what is stored in the vector of systems
