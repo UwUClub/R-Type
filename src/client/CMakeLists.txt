@@ -6,7 +6,10 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
 target_sources(client PRIVATE
         main.cpp
-        System.cpp
+        System+DisplayEntities.cpp
+        System+GetInput.cpp
+        System+LoadTextures.cpp
+        System+MovePlayer.cpp
         SDLDisplayClass.cpp
 )
 
