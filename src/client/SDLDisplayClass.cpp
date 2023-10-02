@@ -10,26 +10,27 @@
 #include "SparseArray.hpp"
 #include "Utils.hpp"
 #include "World.hpp"
+#include <SDL_stdinc.h>
 
 SDLDisplayClass::SDLDisplayClass()
 {
-    int windowFlags = 0;
+    const Uint32 windowFlags = 0;
 
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
-        printf("Couldn't initialize SDL: %s\n", SDL_GetError());
+        std::cerr << "Couldn't initialize SDL: " << SDL_GetError() << std::endl;
         return;
     }
     _window = SDL_CreateWindow("R-Type", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT,
                                windowFlags);
-    if (!_window) {
-        printf("Failed to open SDL window: %s\n", SDL_GetError());
+    if (_window == nullptr) {
+        std::cout << "Failed to open SDL window: " << SDL_GetError() << std::endl;
         return;
     }
     IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG);
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
     _renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED);
-    if (!_renderer) {
-        printf("Failed to create renderer: %s\n", SDL_GetError());
+    if (_renderer == nullptr) {
+        std::cerr << "Failed to create renderer: " << SDL_GetError() << std::endl;
         return;
     }
 }
@@ -42,7 +43,7 @@ void SDLDisplayClass::addEntity(ECS::Utils::Vector2f aPos, Component::Speed aSpe
     auto &spd = world.getComponent<Component::Speed>();
     auto &type = world.getComponent<Component::TypeEntity>();
     auto &sprite = world.getComponent<Component::LoadedSprite>();
-    size_t idx = world.createEntity();
+    const size_t idx = world.createEntity();
 
     vec.insertAt(idx, aPos);
     spd.insertAt(idx, aSpeed);

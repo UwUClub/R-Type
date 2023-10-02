@@ -3,8 +3,7 @@
 #include "World.hpp"
 
 namespace ECS {
-    void System::moveBackground(Core::World &aWorld, Core::SparseArray<Utils::Vector2f> &aPos,
-                                Core::SparseArray<Component::Speed> &aSpeed,
+    void System::moveBackground(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
                                 Core::SparseArray<Component::TypeEntity> &aType)
     {
         for (size_t i = 0; i < aType.size(); i++) {

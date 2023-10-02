@@ -5,7 +5,7 @@
 #include "System.hpp"
 #include <unordered_map>
 namespace ECS {
-    void System::getInput(Core::World &aWorld)
+    void System::getInput()
     {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         SDL_Event event;
