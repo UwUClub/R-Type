@@ -62,14 +62,14 @@ as Component container
                 }
                 auto &component = _components[std::type_index(typeid(Component))] = SparseArray<Component>();
                 _eraseFunctions[std::type_index(typeid(Component))] = [](World &registry, const std::size_t &idx) {
-                    auto &component = registry.getComponent<Component>();
+                    auto &myComponent = registry.getComponent<Component>();
 
-                    component.erase(idx);
+                    myComponent.erase(idx);
                 };
                 _addFunctions[std::type_index(typeid(Component))] = [](World &registry, const std::size_t &idx) {
-                    auto &component = registry.getComponent<Component>();
+                    auto &myComponent = registry.getComponent<Component>();
 
-                    component.emplaceAt(idx, Component());
+                    myComponent.emplaceAt(idx, Component());
                 };
                 return std::any_cast<SparseArray<Component> &>(component);
             }
@@ -140,6 +140,9 @@ as Component container
                 auto &idx = _reusableIds.back();
 
                 _reusableIds.pop_back();
+                for (auto &component : _components) {
+                    _addFunctions[component.first](*this, idx);
+                }
                 return idx;
             }
 
@@ -251,57 +254,74 @@ as Component container
             void setDeltaTime(float aDeltaTime)
             {
                 _deltaTime = aDeltaTime;
-            }
+                [[nodiscard]] bool isRunning() const
+                {
+                    return _isRunning;
+                }
 
-        private:
-            /**
-             * @brief Call a system, this is what is stored in the vector of systems
-             *
-             * @tparam Components The components that the system needs
-             * @tparam Function Inferred by the compiler
-             * @param aFunction The function to call
-             * @param aReg The World
-             */
-            template<typename... Components, typename Function>
-            void callSystem(Function &&aFunction, World &aReg)
-            {
-                aFunction(aReg, getComponent<Components>()...);
-            }
+                void stop()
+                {
+                    _isRunning = false;
+                }
 
-            //-------------- EXCEPTION --------------//
-            /**
-             * @brief Exception class for the World class
-             *
-             */
-            class RegistryException : public std::exception
-            {
-                public:
-                    explicit RegistryException(const char *message)
-                        : _message(message)
-                    {}
+                void start()
+                {
+                    _isRunning = true;
+                }
 
-                    const char *what() const noexcept override
-                    {
-                        return _message;
-                    }
+            private:
+                /**
+                 * @brief Call a system, this is what is stored in the vector of systems
+                 *
+                 * @tparam Components The components that the system needs
+                 * @tparam Function Inferred by the compiler
+                 * @param aFunction The function to call
+                 * @param aReg The World
+                 */
+                template<typename... Components, typename Function>
+                void callSystem(Function && aFunction, World & aReg)
+                {
+                    aFunction(aReg, getComponent<Components>()...);
+                }
 
-                private:
-                    const char *_message;
+                //-------------- EXCEPTION --------------//
+                /**
+                 * @brief Exception class for the World class
+                 *
+                 */
+                class RegistryException : public std::exception
+                {
+                    public:
+                        explicit RegistryException(const char *message)
+                            : _message(message)
+                        {}
+
+                        const char *what() const noexcept override
+                        {
+                            return _message;
+                        }
+
+                    private:
+                        const char *_message;
+                };
+                World() = default;
+
+            private:
+                size_t _id {0};
+                std::map<std::type_index, std::any> _components;
+                std::map<std::type_index, std::function<void(World &, const std::size_t &)>> _eraseFunctions;
+                std::map<std::type_index, std::function<void(World &, const std::size_t &)>> _addFunctions;
+                std::vector<std::size_t> _reusableIds;
+
+                using systemFunction = std::function<void(World &)>;
+                std::vector<systemFunction> _systems;
+
+<<<<<<< HEAD
+                float _deltaTime = 0;
+=======
+                bool _isRunning {true};
+>>>>>>> 850bf834421281e3a31ccab8c44983d9ac3e6716
             };
-            World() = default;
-
-        private:
-            size_t _id {0};
-            std::map<std::type_index, std::any> _components;
-            std::map<std::type_index, std::function<void(World &, const std::size_t &)>> _eraseFunctions;
-            std::map<std::type_index, std::function<void(World &, const std::size_t &)>> _addFunctions;
-            std::vector<std::size_t> _reusableIds;
-
-            using systemFunction = std::function<void(World &)>;
-            std::vector<systemFunction> _systems;
-
-            float _deltaTime = 0;
-    };
-} // namespace ECS::Core
+    } // namespace ECS::Core
 
 #endif /* !WORLD_HPP_ */
