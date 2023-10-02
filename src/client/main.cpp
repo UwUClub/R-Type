@@ -1,6 +1,7 @@
 #include <boost/asio.hpp>
 #include <iostream>
 #include "ClientNetworkHandler.hpp"
+#include "Components.hpp"
 #include "EventManager.hpp"
 #include "Packets.hpp"
 #include "SDLDisplayClass.hpp"
@@ -14,30 +15,30 @@ int main(int ac, char **av)
     ECS::Core::World &world = ECS::Core::World::getInstance();
     SDLDisplayClass &display = SDLDisplayClass::getInstance();
     ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
-    auto &vec = world.registerComponent<ECS::Utils::Vector2f>();
-    auto &spd = world.registerComponent<ECS::Utils::Speed>();
-    auto &type = world.registerComponent<ECS::Utils::TypeEntity>();
-    auto &sprite = world.registerComponent<ECS::Utils::LoadedSprite>();
-
-    size_t idPlayer = world.createEntity();
-
-    vec.insertAt(idPlayer, ECS::Utils::Vector2f {10, 10});
-    spd.insertAt(idPlayer, ECS::Utils::Speed {10});
-    type.insertAt(idPlayer, ECS::Utils::TypeEntity {true, false, false, false, false});
-    sprite.insertAt(
-        idPlayer,
-        ECS::Utils::LoadedSprite {"assets/sprites/r-typesheet42.png", nullptr, {0, 0, 33, 17}, {300, 15, 33, 17}});
+    world.registerComponent<ECS::Utils::Vector2f>();
+    world.registerComponent<Component::Speed>();
+    world.registerComponent<Component::TypeEntity>();
+    world.registerComponent<Component::LoadedSprite>();
     world.addSystem(ECS::System::getInput);
-    world.addSystem<ECS::Utils::LoadedSprite>(ECS::System::loadTextures);
-    world.addSystem<ECS::Utils::LoadedSprite, ECS::Utils::Vector2f>(ECS::System::displayEntities);
-    world.addSystem<ECS::Utils::Vector2f, ECS::Utils::Speed, ECS::Utils::TypeEntity>(ECS::System::movePlayer);
+    world.addSystem<Component::LoadedSprite>(ECS::System::loadTextures);
+    world.addSystem<Component::LoadedSprite, ECS::Utils::Vector2f>(ECS::System::displayEntities);
+    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::movePlayer);
     world.addSystem(ECS::System::quitSDL);
+
+    display.addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {0},
+                      Component::TypeEntity {false, false, false, false, false, true},
+                      Component::LoadedSprite {BACKGROUND_ASSET, nullptr, {0, 0, 800, 600}, {0, 0, 800, 600}});
+    display.addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {0},
+                      Component::TypeEntity {false, false, false, false, false, true},
+                      Component::LoadedSprite {BACKGROUND_ASSET, nullptr, {0, 0, 800, 600}, {800, 0, 800, 600}});
+    display.addEntity(ECS::Utils::Vector2f {10, 10}, Component::Speed {10},
+                      Component::TypeEntity {true, false, false, false, false, false},
+                      Component::LoadedSprite {PLAYER_ASSET, nullptr, {0, 0, 33, 17}, {300, 15, 33, 17}});
+
     while (world.isRunning()) {
         world.runSystems();
         SDL_RenderPresent(display._renderer);
         eventManager->clearEvents();
-        std::cout << vec[idPlayer].value().x << std::endl;
-        std::cout << vec[idPlayer].value().y << std::endl;
     }
     return 0;
 }
