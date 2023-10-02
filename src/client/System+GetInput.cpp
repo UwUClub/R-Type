@@ -1,14 +1,15 @@
-#include "System.hpp"
 #include <functional>
 #include "EventManager.hpp"
 #include "KeyboardEvent.hpp"
 #include "SDLDisplayClass.hpp"
+#include "System.hpp"
 #include <unordered_map>
 namespace ECS {
-    void System::getInput(Core::World &aWorld) {
+    void System::getInput(Core::World &aWorld)
+    {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         SDL_Event event;
-    
+
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_KEYDOWN && (_keyMap.find(event.key.keysym.sym) != _keyMap.end())) {
                 auto keyEvent = new Event::KeyboardEvent(_keyMap.at(event.key.keysym.sym), Event::KeyState::PRESSED);
@@ -22,4 +23,4 @@ namespace ECS {
             }
         }
     }
-}
+} // namespace ECS

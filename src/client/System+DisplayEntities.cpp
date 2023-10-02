@@ -1,8 +1,7 @@
-#include "System.hpp"
 #include "KeyboardEvent.hpp"
 #include "SDLDisplayClass.hpp"
+#include "System.hpp"
 #include <SDL2/SDL_image.h>
-
 
 namespace ECS {
     void System::displayEntities(Core::World &aWorld, Core::SparseArray<Utils::LoadedSprite> &aSprites,
@@ -21,4 +20,4 @@ namespace ECS {
                            &aSprites[i].value().srcRect);
         }
     }
-}
+} // namespace ECS
