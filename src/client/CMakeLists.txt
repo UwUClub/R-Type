@@ -6,14 +6,11 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
 target_sources(client PRIVATE
         main.cpp
-        System+DisplayEntities.cpp
-        System+GetInput.cpp
-        System+LoadTextures.cpp
-        System+MovePlayer.cpp
         SDLDisplayClass.cpp
 )
 
 add_subdirectory(network)
+add_subdirectory(systems)
 
 if (SDL2_DOWNLOADED)
     target_link_libraries(client

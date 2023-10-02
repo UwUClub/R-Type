@@ -1,24 +1,16 @@
 include(cmake/CPM.cmake)
-include(FetchContent)
-include(cmake/FindSDL2.cmake)
 
 # Done as a function so that updates to variables like
 # CMAKE_CXX_FLAGS don't propagate out to other
 # targets
 function(R_Type_setup_dependencies)
 
-  find_package(Catch2 QUIET)
-  find_package(Boost QUIET COMPONENTS system serialization align assert config core static_assert throw_exception array bind chrono integer move mpl predef asio ratio type_traits typeof utility coroutine date_time function regex smart_ptr preprocessor io QUIET)
-  find_package(SDL2 QUIET)
-  find_package(SDL2_image QUIET)
+  find_package(Catch2)
+  find_package(Boost COMPONENTS system serialization align assert config core static_assert throw_exception array bind chrono integer move mpl predef asio ratio type_traits typeof utility coroutine date_time function regex smart_ptr preprocessor io)
+  find_package(SDL2)
 
   if(NOT TARGET Catch2::Catch2WithMain)
-    CPMAddPackage(
-            NAME Catch2
-            VERSION 3.4.0
-            GITHUB_REPOSITORY catchorg/Catch2
-            GIT_TAG v3.4.0
-    )
+    cpmaddpackage("gh:catchorg/Catch2@3.3.2")
   endif()
 
   if (NOT TARGET Boost::boost)
@@ -27,8 +19,6 @@ function(R_Type_setup_dependencies)
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/boost"
             GIT_TAG "boost-1.83.0"
-            GIT_SHALLOW TRUE
-            GIT_PROGRESS TRUE
     )
   endif()
 
@@ -275,30 +265,13 @@ function(R_Type_setup_dependencies)
     )
   endif()
 
-  if (NOT TARGET SDL2)
-    FetchContent_Declare(
-            SDL2
-            GIT_REPOSITORY https://github.com/libsdl-org/SDL.git
-            GIT_TAG release-2.28.3
-            GIT_SHALLOW TRUE
-            GIT_PROGRESS TRUE
+  if (NOT TARGET SDL2::SDL2)
+    CPMAddPackage(
+            NAME sdl2
+            VERSION 2.28.3
+            GITHUB_REPOSITORY "libsdl-org/SDL"
+            GIT_TAG "release-2.28.3"
     )
   endif()
-  FetchContent_MakeAvailable(SDL2)
-
-  if (NOT TARGET SDL2_image::SDL2_image)
-    FetchContent_Declare(
-            SDL2_image
-            GIT_REPOSITORY https://github.com/libsdl-org/SDL_image.git
-            GIT_TAG release-2.6.3
-            GIT_SHALLOW TRUE
-            GIT_PROGRESS TRUE
-    )
-  endif()
-
-  set(SDL2IMAGE_INSTALL OFF)
-  set(BUILD_SHARED_LIBS FALSE)
-
-  FetchContent_MakeAvailable(SDL2_image)
 
 endfunction()
