@@ -9,6 +9,7 @@
 #define WORLD_HPP_
 
 #include <any>
+#include <chrono>
 #include <cstddef>
 #include <exception>
 #include <functional>
@@ -19,7 +20,6 @@
 #include <typeinfo>
 #include <utility>
 #include <vector>
-#include <chrono>
 #include "SparseArray.hpp"
 #include <boost/container/flat_map.hpp>
 
