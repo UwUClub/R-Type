@@ -11,7 +11,7 @@ namespace ECS {
     {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         auto keyboardEvent = eventManager->getEventsByType(Event::EventType::KEYBOARD);
-        static const std::unordered_map<const Event::KeyIdentifier, std::function<void(float &, Utils::Vector2f &)>>
+        static const std::unordered_map<Event::KeyIdentifier, std::function<void(float &, Utils::Vector2f &)>>
             keyMap = {
                 {Event::KeyIdentifier::UP,
                  [](float &spd, Utils::Vector2f &xy) {
