@@ -11,7 +11,7 @@
 #include "World.hpp"
 #include <SDL_rect.h>
 
-const constexpr float BACKGROUND_SPEED = 3;
+const constexpr float BACKGROUND_SPEED = 300;
 
 int main(int ac, char **av)
 {
@@ -28,6 +28,8 @@ int main(int ac, char **av)
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::movePlayer);
     world.addSystem(ECS::System::quitSDL);
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBackground);
+    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::LoadedSprite>(
+        ECS::System::spawnEnemies);
 
     display.addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {BACKGROUND_SPEED},
                       Component::TypeEntity {false, false, false, false, false, true},
@@ -38,7 +40,7 @@ int main(int ac, char **av)
                       Component::LoadedSprite {BACKGROUND_ASSET, nullptr, nullptr,
                                                new SDL_Rect {400, 15, SCREEN_WIDTH, SCREEN_HEIGHT}});
     display.addEntity(
-        ECS::Utils::Vector2f {10, 10}, Component::Speed {BACKGROUND_SPEED},
+        ECS::Utils::Vector2f {10, 10}, Component::Speed {20},
         Component::TypeEntity {true, false, false, false, false, false},
         Component::LoadedSprite {PLAYER_ASSET, nullptr, new SDL_Rect {0, 0, 33, 17}, new SDL_Rect {300, 15, 33, 17}});
 

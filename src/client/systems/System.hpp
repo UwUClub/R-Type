@@ -60,6 +60,19 @@ namespace ECS {
                                        Core::SparseArray<Component::Speed> &aSpeed,
                                        Core::SparseArray<Component::TypeEntity> &aType);
 
+            /**
+             * @brief Spawn enemies
+             * 
+             * @param aPos SparseArray of all entities position
+             * @param aSpeed SparseArray of all entities speed
+             * @param aType SparseArray of all entities type
+             * @param aSprites SparseArray of all entities sprites
+             */
+            static void spawnEnemies(Core::SparseArray<Utils::Vector2f> &aPos,
+                                     Core::SparseArray<Component::Speed> &aSpeed,
+                                     Core::SparseArray<Component::TypeEntity> &aType,
+                                     Core::SparseArray<Component::LoadedSprite> &aSprites);
+
         private:
             /**
              * @brief Map of all the SDL_Keycode and their equivalent in our ECS

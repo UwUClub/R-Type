@@ -19,6 +19,7 @@
 #include <typeinfo>
 #include <utility>
 #include <vector>
+#include <chrono>
 #include "SparseArray.hpp"
 #include <boost/container/flat_map.hpp>
 
@@ -250,6 +251,15 @@ as Component container
                 _isRunning = true;
             }
 
+            [[nodiscard]] float getDeltaTime()
+            {
+                auto now = std::chrono::steady_clock::now();
+                std::chrono::duration<float> delta = now - _lastTime;
+
+                _lastTime = now;
+                return delta.count();
+            }
+
         private:
             /**
              * @brief Call a system, this is what is stored in the vector of systems
@@ -300,6 +310,7 @@ as Component container
             std::vector<systemFunction> _systems;
 
             bool _isRunning {true};
+            std::chrono::time_point<std::chrono::steady_clock> _lastTime {std::chrono::steady_clock::now()};
     };
 } // namespace ECS::Core
 

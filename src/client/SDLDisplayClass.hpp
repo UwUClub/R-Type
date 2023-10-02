@@ -54,6 +54,7 @@ class SDLDisplayClass
         SDLDisplayClass();
         SDL_Renderer *_renderer;
         SDL_Window *_window;
+        float _elapsedTime;
 
     private:
 };

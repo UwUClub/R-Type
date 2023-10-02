@@ -10,7 +10,7 @@ namespace ECS {
             if (!aType[i].has_value() || !aType[i].value().isBackground) {
                 continue;
             }
-            aPos[i].value().x -= aSpeed[i].value().speed;
+            aPos[i].value().x -= aSpeed[i].value().speed * Core::World::getInstance().getDeltaTime();
             if (aPos[i].value().x <= -SCREEN_WIDTH) {
                 aPos[i].value().x = SCREEN_WIDTH;
             }
