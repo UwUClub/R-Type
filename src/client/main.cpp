@@ -48,6 +48,7 @@ int main(int ac, char **av)
         world.runSystems();
         SDL_RenderPresent(display._renderer);
         eventManager->clearEvents();
+        world.calcDeltaTime();
     }
     return 0;
 }
