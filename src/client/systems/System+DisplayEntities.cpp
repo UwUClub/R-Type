@@ -4,7 +4,7 @@
 #include <SDL_image.h>
 
 namespace ECS {
-    void System::displayEntities(Core::World &, Core::SparseArray<Utils::LoadedSprite> &aSprites,
+    void System::displayEntities(Core::SparseArray<Component::LoadedSprite> &aSprites,
                                  Core::SparseArray<Utils::Vector2f> &aPos)
     {
         SDLDisplayClass &display = SDLDisplayClass::getInstance();
