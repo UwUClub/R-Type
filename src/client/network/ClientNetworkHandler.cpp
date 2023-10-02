@@ -9,10 +9,7 @@ namespace Network {
 
     using boost::asio::ip::udp;
 
-    ClientNetworkHandler::ClientNetworkHandler(std::string &aHost, std::string &aPort)
-        : _resolver(udp::resolver(_ioService)),
-          _socket(udp::socket(_ioService)),
-          _readBuffer()
+    void ClientNetworkHandler::start(std::string &aHost, std::string &aPort)
     {
         _serverEndpoint = *_resolver.resolve(udp::v4(), aHost, aPort).begin();
         _socket.open(udp::v4());

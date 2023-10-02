@@ -14,6 +14,7 @@ target_link_libraries(rtype_protocol
         PRIVATE R_Type::R_Type_options
         R_Type::R_Type_warnings
         ${Boost_LIBRARIES}
+        Boost::asio
         ecs
 )
 

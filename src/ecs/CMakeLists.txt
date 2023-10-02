@@ -21,9 +21,11 @@ target_link_libraries(ecs
 target_include_directories(ecs PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(ecs PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/Event")
 target_include_directories(client PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(server PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(rtype_protocol PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(ecs PRIVATE ${Boost_INCLUDE_DIRS})
 target_include_directories(client PRIVATE "../../build/_deps/sdl2_image-src/include")
+target_include_directories(server PRIVATE "../../build/_deps/sdl2_image-src/include")
 
 
 set_target_properties(ecs PROPERTIES

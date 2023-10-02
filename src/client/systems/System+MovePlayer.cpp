@@ -1,4 +1,5 @@
 #include <functional>
+#include "ClientNetworkHandler.hpp"
 #include "EventManager.hpp"
 #include "KeyboardEvent.hpp"
 #include "SDLDisplayClass.hpp"
@@ -9,25 +10,31 @@ namespace ECS {
     void System::movePlayer(Core::World &world, Core::SparseArray<Utils::Vector2f> &aPos,
                             Core::SparseArray<Utils::Speed> &aSpeed, Core::SparseArray<Utils::TypeEntity> &aType)
     {
+        Network::ClientNetworkHandler &network = Network::ClientNetworkHandler::getInstance();
+
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         auto keyboardEvent = eventManager->getEventsByType(Event::EventType::KEYBOARD);
         static const std::unordered_map<Event::KeyIdentifier, std::function<void(float &, Utils::Vector2f &)>> keyMap =
             {
                 {Event::KeyIdentifier::UP,
-                 [](float &spd, Utils::Vector2f &xy) {
+                 [&network](float &spd, Utils::Vector2f &xy) {
                      xy.y = xy.y <= 0 ? 0 : xy.y -= spd;
+                     network.send(RTypeProtocol::ClientToServerPacket {RTypeProtocol::ServerEventType::MOVE_UP});
                  }},
                 {Event::KeyIdentifier::DOWN,
-                 [](float &spd, Utils::Vector2f &xy) {
+                 [&network](float &spd, Utils::Vector2f &xy) {
                      xy.y = xy.y >= SCREEN_HEIGHT ? SCREEN_HEIGHT : xy.y += spd;
+                     network.send(RTypeProtocol::ClientToServerPacket {RTypeProtocol::ServerEventType::MOVE_DOWN});
                  }},
                 {Event::KeyIdentifier::LEFT,
-                 [](float &spd, Utils::Vector2f &xy) {
+                 [&network](float &spd, Utils::Vector2f &xy) {
                      xy.x = xy.x <= 0 ? 0 : xy.x -= spd;
+                     network.send(RTypeProtocol::ClientToServerPacket {RTypeProtocol::ServerEventType::MOVE_LEFT});
                  }},
                 {Event::KeyIdentifier::RIGHT,
-                 [](float &spd, Utils::Vector2f &xy) {
+                 [&network](float &spd, Utils::Vector2f &xy) {
                      xy.x = xy.x >= SCREEN_WIDTH ? SCREEN_WIDTH : xy.x += spd;
+                     network.send(RTypeProtocol::ClientToServerPacket {RTypeProtocol::ServerEventType::MOVE_RIGHT});
                  }},
             };
 

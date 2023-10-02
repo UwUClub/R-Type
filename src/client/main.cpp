@@ -11,6 +11,11 @@
 
 int main(int ac, char **av)
 {
+    if (ac < 3) {
+        std::cerr << "Usage: " << av[0] << " <host> <port>" << std::endl;
+        return 84;
+    }
+
     ECS::Core::World &world = ECS::Core::World::getInstance();
     SDLDisplayClass &display = SDLDisplayClass::getInstance();
     ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
@@ -32,12 +37,18 @@ int main(int ac, char **av)
     world.addSystem<ECS::Utils::LoadedSprite, ECS::Utils::Vector2f>(ECS::System::displayEntities);
     world.addSystem<ECS::Utils::Vector2f, ECS::Utils::Speed, ECS::Utils::TypeEntity>(ECS::System::movePlayer);
     world.addSystem(ECS::System::quitSDL);
+
+    std::string host(av[1]);
+    std::string port(av[2]);
+    Network::ClientNetworkHandler &network = Network::ClientNetworkHandler::getInstance();
+    network.start(host, port);
+    network.send({RTypeProtocol::ServerEventType::CONNECT});
+
     while (world.isRunning()) {
         world.runSystems();
         SDL_RenderPresent(display._renderer);
         eventManager->clearEvents();
-        std::cout << vec[idPlayer].value().x << std::endl;
-        std::cout << vec[idPlayer].value().y << std::endl;
     }
+    network.stop();
     return 0;
 }

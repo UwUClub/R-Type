@@ -24,10 +24,8 @@ namespace Network {
 
             /**
              * @brief Launch the server
-             * @param aHost The host to listen to
-             * @param aPort The port to listen to
              */
-            explicit ServerNetworkHandler(std::string &, unsigned short);
+            explicit ServerNetworkHandler();
 
             /**
              * @brief Handle a request from a client
@@ -47,16 +45,31 @@ namespace Network {
              * @param aPort The port to listen to
              * @return ServerNetworkHandler & The instance of the singleton
              */
-            static ServerNetworkHandler &getInstance(std::string &aHost, unsigned short aPort)
+            static ServerNetworkHandler &getInstance()
             {
-                static ServerNetworkHandler instance(aHost, aPort);
+                static ServerNetworkHandler instance;
                 return instance;
             }
+
+            /**
+             * @brief Start the server
+             * @param aHost The host to listen to
+             * @param aPort The port to listen to
+             * @return ServerNetworkHandler & The instance of the singleton
+             */
+            void start(std::string &, unsigned short);
 
             /**
              * @brief Listen to clients
              */
             void listen();
+
+            /**
+             * @brief Register a client to the server
+             * @param aClientId The id of the client
+             * @param aEndpoint The endpoint of the client
+             */
+            void addClient(std::size_t, udp::endpoint);
 
             /**
              * @brief Send a message to the server

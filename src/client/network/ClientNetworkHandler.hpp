@@ -15,17 +15,15 @@ namespace Network {
         private:
             boost::asio::io_service _ioService;
             udp::endpoint _serverEndpoint;
-            udp::resolver _resolver;
-            udp::socket _socket;
-            std::array<char, READ_BUFFER_SIZE> _readBuffer;
+            udp::resolver _resolver = udp::resolver(_ioService);
+            udp::socket _socket = udp::socket(_ioService);
+            std::array<char, READ_BUFFER_SIZE> _readBuffer = std::array<char, READ_BUFFER_SIZE>();
             std::thread _ioThread;
 
             /**
-             * @brief Connect to the server
-             * @param aHost The host to connect to
-             * @param aPort The port to connect to
+             * @brief Get the instance of the singleton
              */
-            ClientNetworkHandler(std::string &, std::string &);
+            ClientNetworkHandler() = default;
 
             /**
              * @brief Handle a request from server
@@ -42,15 +40,20 @@ namespace Network {
 
             /**
              * @brief Get the instance of the singleton
-             * @param aHost The host to connect to
-             * @param aPort THe port to connect to
              * @return ClientNetworkHandler & The instance of the singleton
              */
-            static ClientNetworkHandler &getInstance(std::string &aHost, std::string &aPort)
+            static ClientNetworkHandler &getInstance()
             {
-                static ClientNetworkHandler instance(aHost, aPort);
+                static ClientNetworkHandler instance;
                 return instance;
             }
+
+            /**
+             * @brief Run the client
+             * @param aHost The host to connect to
+             * @param aPort THe port to connect to
+             */
+            void start(std::string &, std::string &);
 
             /**
              * @brief Listen to the server
