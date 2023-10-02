@@ -32,7 +32,7 @@ int main(int ac, char **av)
     world.addSystem<ECS::Utils::LoadedSprite, ECS::Utils::Vector2f>(ECS::System::displayEntities);
     world.addSystem<ECS::Utils::Vector2f, ECS::Utils::Speed, ECS::Utils::TypeEntity>(ECS::System::movePlayer);
     world.addSystem(ECS::System::quitSDL);
-    while (1) {
+    while (world.isRunning()) {
         world.runSystems();
         SDL_RenderPresent(display._renderer);
         eventManager->clearEvents();
