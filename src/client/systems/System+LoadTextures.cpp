@@ -1,7 +1,7 @@
 #include "KeyboardEvent.hpp"
 #include "SDLDisplayClass.hpp"
 #include "System.hpp"
-#include <SDL2/SDL_image.h>
+#include <SDL_image.h>
 
 namespace ECS {
     void System::loadTextures(Core::World &aWorld, Core::SparseArray<Utils::LoadedSprite> &aSprites)
