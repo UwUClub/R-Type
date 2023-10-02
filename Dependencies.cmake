@@ -283,8 +283,8 @@ function(R_Type_setup_dependencies)
             GIT_SHALLOW TRUE
             GIT_PROGRESS TRUE
     )
+    endif()
     FetchContent_MakeAvailable(SDL2)
-  endif()
 
   if (NOT TARGET SDL2_image::SDL2_image)
     FetchContent_Declare(
@@ -294,10 +294,10 @@ function(R_Type_setup_dependencies)
             GIT_SHALLOW TRUE
             GIT_PROGRESS TRUE
     )
-    FetchContent_MakeAvailable(SDL2_image)
-  endif()
+    set(SDL2IMAGE_INSTALL OFF)
+    set(BUILD_SHARED_LIBS FALSE)
 
-  set(SDL2IMAGE_INSTALL OFF)
-  set(BUILD_SHARED_LIBS FALSE)
+    FetchContent_MakeAvailable(SDL2_image)
+    endif()
 
 endfunction()
