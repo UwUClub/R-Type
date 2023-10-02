@@ -1,7 +1,6 @@
 #ifndef SYSTEM_HPP_
 #define SYSTEM_HPP_
 
-#include <SDL.h>
 #include "KeyboardEvent.hpp"
 #include "MouseEvent.hpp"
 #include "Utils.hpp"
