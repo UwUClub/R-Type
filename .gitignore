@@ -8,6 +8,8 @@ conan-cache/
 
 # User spesific settings
 CMakeUserPresets.json
+CMakeCache.txt
+CMakeFiles/
 
 # IDE files
 .vs/

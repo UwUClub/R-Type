@@ -1,0 +1,15 @@
+FROM mcr.microsoft.com/windows/servercore:ltsc2019
+
+SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
+RUN Set-ExecutionPolicy Bypass -Scope Process -Force; \
+    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; \
+    iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) \
+
+RUN choco install -y cmake git visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64"
+RUN choco install -y git
+RUN git --version
+RUN setx /M PATH "%PATH%;C:\Program Files\Git\bin"
+RUN choco install -y ccache
+
+RUN net user /add jenkins jenkinsPassword
+USER jenkins
