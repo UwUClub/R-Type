@@ -1,6 +1,7 @@
 #ifndef SYSTEM_HPP_
 #define SYSTEM_HPP_
 
+#include "Components.hpp"
 #include "KeyboardEvent.hpp"
 #include "MouseEvent.hpp"
 #include "Utils.hpp"
@@ -19,9 +20,9 @@ namespace ECS {
              * @param aSpeed Sparsearray of all entities speed
              * @param aType SparseArray of all entities type
              */
-            static void movePlayer(Core::World &aWorld, Core::SparseArray<ECS::Utils::Vector2f> &aPos,
-                                   Core::SparseArray<ECS::Utils::Speed> &aSpeed,
-                                   Core::SparseArray<ECS::Utils::TypeEntity> &aType);
+            static void movePlayer(Core::SparseArray<ECS::Utils::Vector2f> &aPos,
+                                   Core::SparseArray<Component::Speed> &aSpeed,
+                                   Core::SparseArray<Component::TypeEntity> &aType);
 
             /**
              * @brief Get the all the input of the user
@@ -29,14 +30,14 @@ namespace ECS {
              * @param aWorld A reference to the world
              */
 
-            static void getInput(Core::World &aWorld);
+            static void getInput();
 
             /**
              * @brief Close the SDL window
              *
              * @param aWorld A reference to the world
              */
-            static void quitSDL(Core::World &aWorld);
+            static void quitSDL();
 
             /**
              * @brief Load all the textures of the game
@@ -44,7 +45,7 @@ namespace ECS {
              * @param aWorld A reference to the world
              * @param aSprites SparseArray of all the entities sprites
              */
-            static void loadTextures(Core::World &aWorld, Core::SparseArray<Utils::LoadedSprite> &aSprites);
+            static void loadTextures(Core::SparseArray<Component::LoadedSprite> &aSprites);
 
             /**
              * @brief Display all the entities on the screen
@@ -52,15 +53,8 @@ namespace ECS {
              * @param aWorld A reference to the world
              * @param aSprites SparseArray of all the entities sprites
              */
-            static void displayEntities(Core::World &aWorld, Core::SparseArray<Utils::LoadedSprite> &aSprites,
+            static void displayEntities(Core::SparseArray<Component::LoadedSprite> &aSprites,
                                         Core::SparseArray<Utils::Vector2f> &aPos);
-
-            // /**
-            //  * @brief Display the parallax
-            //  *
-            //  * @param aWorld A reference to the world
-            //  */
-            // static void displayParallax(Core::World &aWorld);
 
         private:
             /**

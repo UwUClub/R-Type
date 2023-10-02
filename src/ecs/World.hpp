@@ -219,8 +219,8 @@ as Component container
             template<class... Components, typename Function>
             void addSystem(Function &&aFunction)
             {
-                _systems.push_back([this, func = std::forward<Function>(aFunction)](World &aReg) {
-                    callSystem<Components...>(func, aReg);
+                _systems.push_back([this, func = std::forward<Function>(aFunction)]() {
+                    callSystem<Components...>(func);
                 });
             }
 
@@ -231,7 +231,7 @@ as Component container
             void runSystems()
             {
                 for (auto &system : _systems) {
-                    system(*this);
+                    system();
                 }
             }
 
@@ -260,9 +260,9 @@ as Component container
              * @param aReg The World
              */
             template<typename... Components, typename Function>
-            void callSystem(Function &&aFunction, World &aReg)
+            void callSystem(Function &&aFunction)
             {
-                aFunction(aReg, getComponent<Components>()...);
+                aFunction(getComponent<Components>()...);
             }
 
             //-------------- EXCEPTION --------------//
@@ -294,7 +294,7 @@ as Component container
             std::unordered_map<std::type_index, std::function<void(World &, const std::size_t &)>> _addFunctions;
             std::vector<std::size_t> _reusableIds;
 
-            using systemFunction = std::function<void(World &)>;
+            using systemFunction = std::function<void()>;
             std::vector<systemFunction> _systems;
 
             bool _isRunning {true};
