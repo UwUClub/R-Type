@@ -55,6 +55,13 @@ namespace ECS {
             static void displayEntities(Core::World &aWorld, Core::SparseArray<Utils::LoadedSprite> &aSprites,
                                         Core::SparseArray<Utils::Vector2f> &aPos);
 
+            // /**
+            //  * @brief Display the parallax
+            //  *
+            //  * @param aWorld A reference to the world
+            //  */
+            // static void displayParallax(Core::World &aWorld);
+
         private:
             /**
              * @brief Map of all the SDL_Keycode and their equivalent in our ECS
