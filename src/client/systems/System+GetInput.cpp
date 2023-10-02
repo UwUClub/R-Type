@@ -17,7 +17,6 @@ namespace ECS {
                         new Event::KeyboardEvent(_keyMap.at(event.key.keysym.sym), Event::KeyState::PRESSED);
                     eventManager->pushEvent(keyEvent);
                 } catch (std::exception &e) {
-                    std::cerr << "LOL" << std::endl;
                     std::cerr << e.what() << std::endl;
                 }
             }
