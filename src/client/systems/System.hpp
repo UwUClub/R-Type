@@ -1,6 +1,7 @@
 #ifndef SYSTEM_HPP_
 #define SYSTEM_HPP_
 
+#include "Components.hpp"
 #include "KeyboardEvent.hpp"
 #include "MouseEvent.hpp"
 #include "Utils.hpp"
@@ -20,8 +21,8 @@ namespace ECS {
              * @param aType SparseArray of all entities type
              */
             static void movePlayer(Core::World &aWorld, Core::SparseArray<ECS::Utils::Vector2f> &aPos,
-                                   Core::SparseArray<ECS::Utils::Speed> &aSpeed,
-                                   Core::SparseArray<ECS::Utils::TypeEntity> &aType);
+                                   Core::SparseArray<Component::Speed> &aSpeed,
+                                   Core::SparseArray<Component::TypeEntity> &aType);
 
             /**
              * @brief Get the all the input of the user
@@ -44,7 +45,7 @@ namespace ECS {
              * @param aWorld A reference to the world
              * @param aSprites SparseArray of all the entities sprites
              */
-            static void loadTextures(Core::World &aWorld, Core::SparseArray<Utils::LoadedSprite> &aSprites);
+            static void loadTextures(Core::World &aWorld, Core::SparseArray<Component::LoadedSprite> &aSprites);
 
             /**
              * @brief Display all the entities on the screen
@@ -52,15 +53,12 @@ namespace ECS {
              * @param aWorld A reference to the world
              * @param aSprites SparseArray of all the entities sprites
              */
-            static void displayEntities(Core::World &aWorld, Core::SparseArray<Utils::LoadedSprite> &aSprites,
+            static void displayEntities(Core::World &aWorld, Core::SparseArray<Component::LoadedSprite> &aSprites,
                                         Core::SparseArray<Utils::Vector2f> &aPos);
 
-            // /**
-            //  * @brief Display the parallax
-            //  *
-            //  * @param aWorld A reference to the world
-            //  */
-            // static void displayParallax(Core::World &aWorld);
+            static void moveBackground(Core::World &aWorld, Core::SparseArray<Utils::Vector2f> &aPos,
+                                       Core::SparseArray<Component::Speed> &aSpeed,
+                                       Core::SparseArray<Component::TypeEntity> &aType);
 
         private:
             /**
