@@ -12,8 +12,9 @@ namespace ECS {
     {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         auto keyboardEvent = eventManager->getEventsByType(Event::EventType::KEYBOARD);
-        static const std::unordered_map<Event::KeyIdentifier, std::function<void(float &, Utils::Vector2f &, Core::World &)>> keyMap =
-            {
+        static const std::unordered_map<Event::KeyIdentifier,
+                                        std::function<void(float &, Utils::Vector2f &, Core::World &)>>
+            keyMap = {
                 {Event::KeyIdentifier::UP,
                  [](float &spd, Utils::Vector2f &xy, Core::World &world) {
                      xy.y = xy.y <= 0 ? 0 : xy.y -= spd * world.getDeltaTime();
@@ -28,7 +29,7 @@ namespace ECS {
                  }},
                 {Event::KeyIdentifier::RIGHT,
                  [](float &spd, Utils::Vector2f &xy, Core::World &world) {
-                     xy.x = xy.x >= SCREEN_WIDTH ? SCREEN_WIDTH : xy.x += spd *  world.getDeltaTime();
+                     xy.x = xy.x >= SCREEN_WIDTH ? SCREEN_WIDTH : xy.x += spd * world.getDeltaTime();
                  }},
             };
 
