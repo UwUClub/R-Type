@@ -15,6 +15,8 @@ target_sources(client PRIVATE
         System+MoveBackground.cpp
         System+SpawnEnemies.cpp
         System+MoveEnemies.cpp
+        System+ShootMissiles.cpp
+        System+MoveMissiles.cpp
 )
 
 target_include_directories(client PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

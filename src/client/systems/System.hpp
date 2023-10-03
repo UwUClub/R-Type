@@ -91,6 +91,26 @@ namespace ECS {
                                     Core::SparseArray<Component::Speed> &aSpeed,
                                     Core::SparseArray<Component::TypeEntity> &aType);
 
+            /**
+             * @brief Make player shoot missiles when space is pressed
+             *
+             * @param aPos SparseArray of all entities position
+             * @param aType SparseArray of all entities type
+             */
+            static void shootMissiles(Core::SparseArray<Utils::Vector2f> &aPos,
+                                      Core::SparseArray<Component::TypeEntity> &aType);
+
+            /**
+             * @brief Move missiles on the screen
+             *
+             * @param aPos SparseArray of all entities position
+             * @param aSpeed Sparsearray of all entities speed
+             * @param aType SparseArray of all entities type
+             */
+            static void moveMissiles(Core::SparseArray<Utils::Vector2f> &aPos,
+                                     Core::SparseArray<Component::Speed> &aSpeed,
+                                     Core::SparseArray<Component::TypeEntity> &aType);
+
         private:
             /**
              * @brief Map of all the SDL_Keycode and their equivalent in our ECS

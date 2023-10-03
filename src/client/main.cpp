@@ -41,17 +41,19 @@ int main(int ac, char **av)
     world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::updatePlayerPos);
     world.addSystem(ECS::System::quitSDL);
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBackground);
+    world.addSystem(ECS::System::spawnEnemies);
+    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveEnemies);
+    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::shootMissiles);
+    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveMissiles);
 
-    display.addEntity(
-        ECS::Utils::Vector2f {0, 0}, Component::Speed {BACKGROUND_SPEED},
-        Component::TypeEntity {false, false, false, false, false, false, true},
-        Component::LoadedSprite {BACKGROUND_ASSET, nullptr, nullptr,
-                                 new SDL_Rect {BACKGROUND_X_RES, BACKGROUND_Y_RES, SCREEN_WIDTH, SCREEN_HEIGHT}});
-    display.addEntity(
-        ECS::Utils::Vector2f {SCREEN_WIDTH, 0}, Component::Speed {BACKGROUND_SPEED},
-        Component::TypeEntity {false, false, false, false, false, false, true},
-        Component::LoadedSprite {BACKGROUND_ASSET, nullptr, nullptr,
-                                 new SDL_Rect {BACKGROUND_X_RES, BACKGROUND_Y_RES, SCREEN_WIDTH, SCREEN_HEIGHT}});
+    display.addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {BACKGROUND_SPEED},
+                      Component::TypeEntity {false, false, false, false, false, false, true},
+                      Component::LoadedSprite {BACKGROUND_ASSET, nullptr, nullptr,
+                                               new SDL_Rect {400, 15, SCREEN_WIDTH, SCREEN_HEIGHT}});
+    display.addEntity(ECS::Utils::Vector2f {SCREEN_WIDTH, 0}, Component::Speed {BACKGROUND_SPEED},
+                      Component::TypeEntity {false, false, false, false, false, false, true},
+                      Component::LoadedSprite {BACKGROUND_ASSET, nullptr, nullptr,
+                                               new SDL_Rect {400, 15, SCREEN_WIDTH, SCREEN_HEIGHT}});
 
     while (world.isRunning()) {
         world.runSystems();

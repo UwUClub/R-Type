@@ -36,4 +36,10 @@ const constexpr float PLAYER_SPEED = 3000;
 const constexpr int PLAYER_TEX_WIDTH = 33;
 const constexpr int PLAYER_TEX_HEIGHT = 17;
 
+//------------------ BULLET ------------------//
+static const std::string BULLET_ASSET = "assets/sprites/r-typesheet2.png";
+const constexpr float BULLET_SPEED = 800;
+const constexpr int BULLET_TEX_WIDTH = 25;
+const constexpr int BULLET_TEX_HEIGHT = 13;
+
 #endif /* !VALUES_HPP_ */
