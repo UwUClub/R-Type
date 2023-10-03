@@ -54,7 +54,8 @@ namespace Network {
                 return aPair.second == _readEndpoint;
             });
 
-        if (client == _clients.end() && packet.type == RTypeProtocol::ServerEventType::CONNECT) {
+        if (client == _clients.end() && packet.type == RTypeProtocol::ServerEventType::CONNECT && _clients.size() < 4) {
+            std::cout << "New client connected" << std::endl;
             ECS::Event::EventManager::getInstance()->pushEvent(
                 new RTypeProtocol::ServerGameEvent(RTypeProtocol::ServerEventType::CONNECT, 0, _readEndpoint));
         }
@@ -73,6 +74,11 @@ namespace Network {
         std::cout << "Player " << aClientId << " joined" << std::endl;
     }
 
+    int ServerNetworkHandler::getNumberClients() const
+    {
+        return _clients.size();
+    }
+
     void ServerNetworkHandler::send(const RTypeProtocol::ServerToClientPacket &aPacket, size_t aClientId)
     {
         try {
@@ -84,6 +90,13 @@ namespace Network {
             std::cout << "Sent a request to " << clientEndpoint << " (id " << aClientId << ")" << std::endl;
         } catch (std::exception &e) {
             std::cerr << "ServerNetworkHandler send error: " << e.what() << std::endl;
+        }
+    }
+
+    void ServerNetworkHandler::broadcast(const RTypeProtocol::ServerToClientPacket &aPacket)
+    {
+        for (auto &client : _clients) {
+            send(aPacket, client.first);
         }
     }
 

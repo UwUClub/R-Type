@@ -1,30 +1,36 @@
 #include <iostream>
+#include "Components.hpp"
 #include "EventManager.hpp"
 #include "ServerGameEvent.hpp"
 #include "ServerNetworkHandler.hpp"
 #include "System.hpp"
+#include "World.hpp"
 
 namespace ECS {
-    void System::welcomePlayers(Core::World &world, Core::SparseArray<Utils::Vector2f> &aPos,
-                                Core::SparseArray<Utils::Speed> &aSpeed, Core::SparseArray<Utils::TypeEntity> &aType)
+    void System::welcomePlayers(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
+                                Core::SparseArray<Component::TypeEntity> &aType)
     {
+        ECS::Core::World &world = ECS::Core::World::getInstance();
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
         Network::ServerNetworkHandler &network = Network::ServerNetworkHandler::getInstance();
 
         for (auto &event : eventManager->getEvents()) {
             if (event->getType() == ECS::Event::EventType::GAME) {
                 auto &gameEvent = static_cast<RTypeProtocol::ServerGameEvent &>(*event);
-
                 if (gameEvent.getType() == RTypeProtocol::ServerEventType::CONNECT) {
-                    size_t idPlayer = world.createEntity();
+                    size_t playerId = world.createEntity();
+                    float playerColor = static_cast<float>(network.getNumberClients());
 
-                    aPos.insertAt(idPlayer, ECS::Utils::Vector2f {10, 10});
-                    aSpeed.insertAt(idPlayer, ECS::Utils::Speed {10});
-                    aType.insertAt(idPlayer, ECS::Utils::TypeEntity {true, false, false, false, false});
+                    aPos.insertAt(playerId, ECS::Utils::Vector2f {10, 10});
+                    aSpeed.insertAt(playerId, Component::Speed {10});
+                    aType.insertAt(playerId, Component::TypeEntity {true, false, false, false, false, false});
 
-                    network.addClient(idPlayer, gameEvent.getClientEndpoint());
-
-                    // TODO: send connect packet to every other clients
+                    network.broadcast(
+                        {RTypeProtocol::ClientEventType::PLAYER_CONNECTION, playerId, {0, playerColor, 10, 10}});
+                    network.addClient(playerId, gameEvent.getClientEndpoint());
+                    network.send(
+                        {RTypeProtocol::ClientEventType::PLAYER_CONNECTION, playerId, {1, playerColor, 10, 10}},
+                        playerId);
                 }
             }
         }

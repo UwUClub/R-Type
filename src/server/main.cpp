@@ -1,4 +1,5 @@
 #include <iostream>
+#include "Components.hpp"
 #include "EventManager.hpp"
 #include "ServerNetworkHandler.hpp"
 #include "System.hpp"
@@ -22,11 +23,11 @@ int main(int ac, char **av)
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
 
         auto &vec = world.registerComponent<ECS::Utils::Vector2f>();
-        auto &spd = world.registerComponent<ECS::Utils::Speed>();
-        auto &type = world.registerComponent<ECS::Utils::TypeEntity>();
+        auto &spd = world.registerComponent<Component::Speed>();
+        auto &type = world.registerComponent<Component::TypeEntity>();
 
-        world.addSystem<ECS::Utils::Vector2f, ECS::Utils::Speed, ECS::Utils::TypeEntity>(ECS::System::welcomePlayers);
-        world.addSystem<ECS::Utils::Vector2f, ECS::Utils::Speed, ECS::Utils::TypeEntity>(ECS::System::movePlayer);
+        world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::welcomePlayers);
+        world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::movePlayer);
 
         while (world.isRunning()) {
             world.runSystems();

@@ -9,8 +9,8 @@ constexpr int SCREEN_WIDTH = 1920;
 constexpr int SCREEN_HEIGHT = 1080;
 
 namespace ECS {
-    void System::movePlayer(Core::World &world, Core::SparseArray<Utils::Vector2f> &aPos,
-                            Core::SparseArray<Utils::Speed> &aSpeed, Core::SparseArray<Utils::TypeEntity> &aType)
+    void System::movePlayer(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
+                            Core::SparseArray<Component::TypeEntity> &aType)
     {
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
         Network::ServerNetworkHandler &network = Network::ServerNetworkHandler::getInstance();
@@ -49,11 +49,13 @@ namespace ECS {
                     std::size_t entityId = gameEvent.getEntityId();
                     moveMap.at(gameEvent.getType())(aSpeed[entityId].value().speed, aPos[entityId].value());
 
-                    std::cout << entityId << " pos: " << aPos[gameEvent.getEntityId()].value().x << " "
-                              << aPos[gameEvent.getEntityId()].value().y << std::endl;
-                }
+                    // std::cout << entityId << " pos: " << aPos[gameEvent.getEntityId()].value().x << " "
+                    //           << aPos[gameEvent.getEntityId()].value().y << std::endl;
 
-                // TODO: send player pos to all other players
+                    network.broadcast({RTypeProtocol::ClientEventType::PLAYER_POSITION,
+                                       entityId,
+                                       {aPos[entityId].value().x, aPos[entityId].value().y}});
+                }
             }
         }
     }

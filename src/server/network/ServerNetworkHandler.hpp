@@ -72,11 +72,23 @@ namespace Network {
             void addClient(std::size_t, udp::endpoint);
 
             /**
+             * @brief Get the number of clients connected to the server
+             * @return int The number of clients connected to the server
+             */
+            int getNumberClients() const;
+
+            /**
              * @brief Send a message to the server
              * @param aPacket The packet to send
              * @param aClientId The id of the client to send the message to
              */
             void send(const RTypeProtocol::ServerToClientPacket &, size_t);
+
+            /**
+             * @brief Broadcast a message to all clients
+             * @param aPacket The packet to send
+             */
+            void broadcast(const RTypeProtocol::ServerToClientPacket &);
 
             /**
              * @brief Stop the server
