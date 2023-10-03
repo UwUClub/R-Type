@@ -46,10 +46,11 @@ int main(int ac, char **av)
                       Component::TypeEntity {false, false, false, false, false, true},
                       Component::LoadedSprite {BACKGROUND_ASSET, nullptr, nullptr,
                                                new SDL_Rect {400, 15, SCREEN_WIDTH, SCREEN_HEIGHT}});
-    display.addEntity(
-        ECS::Utils::Vector2f {10, 10}, Component::Speed {PLAYER_SPEED},
-        Component::TypeEntity {true, false, false, false, false, false},
-        Component::LoadedSprite {PLAYER_ASSET, nullptr, new SDL_Rect {0, 0, PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT}, new SDL_Rect {300, 15, PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT}});
+    display.addEntity(ECS::Utils::Vector2f {10, 10}, Component::Speed {PLAYER_SPEED},
+                      Component::TypeEntity {true, false, false, false, false, false},
+                      Component::LoadedSprite {PLAYER_ASSET, nullptr,
+                                               new SDL_Rect {0, 0, PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT},
+                                               new SDL_Rect {300, 15, PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT}});
 
     while (world.isRunning()) {
         world.runSystems();
