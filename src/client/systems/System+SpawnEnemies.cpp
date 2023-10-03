@@ -4,9 +4,7 @@
 #include "WindowEvent.hpp"
 
 namespace ECS {
-    void System::spawnEnemies(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
-                              Core::SparseArray<Component::TypeEntity> &aType,
-                              Core::SparseArray<Component::LoadedSprite> &aSprites)
+    void System::spawnEnemies()
     {
         SDLDisplayClass &display = SDLDisplayClass::getInstance();
         auto &world = Core::World::getInstance();
@@ -16,8 +14,8 @@ namespace ECS {
             return;
         display._elapsedTime = 0;
         display.addEntity(
-            ECS::Utils::Vector2f {static_cast<float>(SCREEN_WIDTH - 30), static_cast<float>(rand() % SCREEN_HEIGHT)},
+            ECS::Utils::Vector2f {static_cast<float>(SCREEN_WIDTH), static_cast<float>(rand() % SCREEN_HEIGHT)},
             Component::Speed {20}, Component::TypeEntity {false, true, false, false, false, false},
-            Component::LoadedSprite {PLAYER_ASSET, nullptr, new SDL_Rect {0, 0, 33, 17}, new SDL_Rect {0, 0, 33, 17}});
+            Component::LoadedSprite {ENEMY_ASSET, nullptr, new SDL_Rect {0, 0, 33, 33}, new SDL_Rect {0, 0, 33, 33}});
     }
 } // namespace ECS
