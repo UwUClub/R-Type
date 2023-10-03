@@ -3,7 +3,7 @@
 #include "SDLDisplayClass.hpp"
 #include "System.hpp"
 
-const constexpr float BACKGROUND_SPEED = 3;
+const constexpr float BACKGROUND_SPEED = 3000;
 
 namespace ECS {
     void System::createPlayer()

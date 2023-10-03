@@ -38,7 +38,7 @@ namespace Network {
         RTypeProtocol::ServerToClientPacket packet;
         RTypeProtocol::unserializePacket<RTypeProtocol::ServerToClientPacket, std::array<char, READ_BUFFER_SIZE>>(
             &packet, _readBuffer);
-        std::cout << "Received type " << static_cast<int>(packet.type) << " from " << _serverEndpoint << std::endl;
+        // std::cout << "Received type " << static_cast<int>(packet.type) << " from " << _serverEndpoint << std::endl;
 
         auto *evt = new RTypeProtocol::ClientGameEvent(packet.type, packet.id, packet.payload);
         ECS::Event::EventManager::getInstance()->pushEvent(evt);
@@ -52,7 +52,7 @@ namespace Network {
             boost::asio::streambuf buf;
             RTypeProtocol::serializePacket<const RTypeProtocol::ClientToServerPacket &>(&buf, aPacket);
             _socket.send_to(buf.data(), _serverEndpoint);
-            std::cout << "Sent something to " << _serverEndpoint << std::endl;
+            // std::cout << "Sent something to " << _serverEndpoint << std::endl;
         } catch (std::exception &e) {
             std::cerr << "ClientNetworkHandler send error: " << e.what() << std::endl;
         }

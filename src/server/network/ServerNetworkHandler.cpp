@@ -87,7 +87,7 @@ namespace Network {
             boost::asio::streambuf buf;
             serializePacket<const RTypeProtocol::ServerToClientPacket &>(&buf, aPacket);
             _socket.send_to(buf.data(), clientEndpoint);
-            std::cout << "Sent a request to " << clientEndpoint << " (id " << aClientId << ")" << std::endl;
+            // std::cout << "Sent a request to " << clientEndpoint << " (id " << aClientId << ")" << std::endl;
         } catch (std::exception &e) {
             std::cerr << "ServerNetworkHandler send error: " << e.what() << std::endl;
         }

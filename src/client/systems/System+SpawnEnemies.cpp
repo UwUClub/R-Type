@@ -15,7 +15,7 @@ namespace ECS {
         display._elapsedTime = 0;
         display.addEntity(
             ECS::Utils::Vector2f {static_cast<float>(SCREEN_WIDTH - 30), static_cast<float>(rand() % SCREEN_HEIGHT)},
-            Component::Speed {200}, Component::TypeEntity {false, true, false, false, false, false},
+            Component::Speed {200}, Component::TypeEntity {false, false, true, false, false, false, false},
             Component::LoadedSprite {ENEMY_ASSET, nullptr, new SDL_Rect {0, 0, 33, 33}, new SDL_Rect {0, 0, 33, 33}});
     }
 } // namespace ECS

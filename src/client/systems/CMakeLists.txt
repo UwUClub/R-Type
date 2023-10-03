@@ -10,6 +10,7 @@ target_sources(client PRIVATE
         System+LoadTextures.cpp
         System+CreatePlayer.cpp
         System+MovePlayer.cpp
+        System+UpdatePlayerPos.cpp
         System+SDLQuit.cpp
         System+MoveBackground.cpp
         System+SpawnEnemies.cpp

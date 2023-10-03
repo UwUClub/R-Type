@@ -28,6 +28,12 @@ namespace ECS {
                                    Core::SparseArray<Component::Speed> &aSpeed,
                                    Core::SparseArray<Component::TypeEntity> &aType);
 
+            /*
+             * @brief Update the player position
+             */
+            static void updatePlayerPos(Core::SparseArray<Utils::Vector2f> &aPos,
+                                        Core::SparseArray<Component::TypeEntity> &aType);
+
             /**
              * @brief Get the all the input of the user
              *
