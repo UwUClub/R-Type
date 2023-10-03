@@ -9,6 +9,7 @@
 #include <algorithm>
 #include "SparseArray.hpp"
 #include "Utils.hpp"
+#include "Values.hpp"
 #include "World.hpp"
 #include <SDL_stdinc.h>
 

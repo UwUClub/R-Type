@@ -3,7 +3,9 @@
 #include "KeyboardEvent.hpp"
 #include "SDLDisplayClass.hpp"
 #include "System.hpp"
+#include "Values.hpp"
 #include <unordered_map>
+
 namespace ECS {
     void System::getInput()
     {
