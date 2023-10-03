@@ -15,6 +15,7 @@ on:
     branches:
       - main
       - dev
+      - RT-50-add-msvc-compilation
 
 env:
   CLANG_TIDY_VERSION: "15.0.2"
@@ -59,6 +60,12 @@ jobs:
           - compiler: llvm-15.0.2
             enable_ipo: Off
             gcov_executable: "llvm-cov gcov"
+
+          - os: windows-2022
+            compiler: msvc
+            generator: "Visual Studio 17 2022"
+            enable_ipo: On
+
 
     steps:
       - name: Check for llvm version mismatches
