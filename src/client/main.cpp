@@ -13,24 +13,6 @@
 
 const constexpr float BACKGROUND_SPEED = 300;
 
-void runNetwork(std::string aHost, std::string aPort)
-{
-    try {
-        Network::ClientNetworkHandler &network = Network::ClientNetworkHandler::getInstance(aHost, aPort);
-
-        RTypeProtocol::ClientToServerPacket packet;
-        packet.type = RTypeProtocol::ServerEventType::MOVE_UP;
-        network.send(packet);
-
-        std::string exitWord;
-        std::cin >> exitWord;
-
-        network.stop();
-    } catch (std::exception &e) {
-        std::cerr << "Exception: " << e.what() << std::endl;
-    }
-}
-
 int main(int ac, char **av)
 {
     /*if (ac < 3) {
@@ -73,8 +55,5 @@ int main(int ac, char **av)
         world.calcDeltaTime();
     }
 
-    // std::string host(av[1]);
-    // std::string port(av[2]);
-    // runNetwork(host, port);
     return 0;
 }
