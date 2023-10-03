@@ -57,6 +57,18 @@ void SDLDisplayClass::addEntity(ECS::Utils::Vector2f aPos, Component::Speed aSpe
     isAlive.insertAt(idx, aIsAlive);
 }
 
+SDL_Texture *SDLDisplayClass::getTexture(const std::string &aPath)
+{
+    if (_textures.find(aPath) == _textures.end()) {
+        _textures[aPath] = IMG_LoadTexture(_renderer, aPath.c_str());
+        if (_textures[aPath] == nullptr) {
+            std::cerr << "Failed to create texture: " << SDL_GetError() << std::endl;
+            return nullptr;
+        }
+    }
+    return _textures[aPath];
+}
+
 SDLDisplayClass::~SDLDisplayClass()
 {
     auto &world = ECS::Core::World::getInstance();
@@ -66,9 +78,11 @@ SDLDisplayClass::~SDLDisplayClass()
         if (!sprite.has_value()) {
             continue;
         }
-        SDL_DestroyTexture(sprite->texture);
         delete sprite->rect;
         delete sprite->srcRect;
+    }
+    for (auto &texture : _textures) {
+        SDL_DestroyTexture(texture.second);
     }
     SDL_DestroyRenderer(_renderer);
     SDL_DestroyWindow(_window);
