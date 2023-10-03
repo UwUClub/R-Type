@@ -42,8 +42,9 @@ namespace ECS {
             };
 
         int eventIndex = 0;
+        auto events = eventManager->getEventsByType(Event::EventType::GAME);
 
-        for (auto &event : eventManager->getEventsByType(Event::EventType::GAME)) {
+        for (auto &event : events) {
             auto &gameEvent = static_cast<RTypeProtocol::ServerGameEvent &>(*event);
 
             if (moveMap.find(gameEvent.getType()) != moveMap.end()) {

@@ -15,8 +15,9 @@ namespace ECS {
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
         Network::ServerNetworkHandler &network = Network::ServerNetworkHandler::getInstance();
         int eventIndex = 0;
+        auto events = eventManager->getEventsByType(Event::EventType::GAME);
 
-        for (auto &event : eventManager->getEventsByType(Event::EventType::GAME)) {
+        for (auto &event : events) {
             auto &gameEvent = static_cast<RTypeProtocol::ServerGameEvent &>(*event);
             if (gameEvent.getType() == RTypeProtocol::ServerEventType::CONNECT) {
                 size_t playerId = world.createEntity();
@@ -32,7 +33,8 @@ namespace ECS {
                 network.send({RTypeProtocol::ClientEventType::PLAYER_CONNECTION, playerId, {1, playerColor, 10, 10}},
                              playerId);
 
-                for (std::size_t i = 0; i < aPos.size(); i++) {
+                int aPosSize = aPos.size();
+                for (std::size_t i = 0; i < aPosSize; i++) {
                     if (i != playerId) {
                         network.send({RTypeProtocol::ClientEventType::PLAYER_CONNECTION,
                                       i,

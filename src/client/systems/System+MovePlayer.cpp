@@ -48,7 +48,6 @@ namespace ECS {
             for (auto &event : keyboardEvent) {
                 auto *keyEvent = static_cast<Event::KeyboardEvent *>(event);
                 if (keyMap.find(keyEvent->_keyId) == keyMap.end()) {
-                    std::cerr << "Key not found" << std::endl;
                     continue;
                 }
                 keyMap.at(keyEvent->_keyId)(aSpeed[i].value().speed, aPos[i].value(), Core::World::getInstance());

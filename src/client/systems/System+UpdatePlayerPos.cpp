@@ -8,10 +8,10 @@ namespace ECS {
                                  Core::SparseArray<Component::TypeEntity> &aType)
     {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
-        SDLDisplayClass &display = SDLDisplayClass::getInstance();
         int eventIndex = 0;
+        auto events = eventManager->getEventsByType(Event::EventType::GAME);
 
-        for (auto &event : eventManager->getEventsByType(Event::EventType::GAME)) {
+        for (auto &event : events) {
             auto &gameEvent = static_cast<RTypeProtocol::ClientGameEvent &>(*event);
 
             if (gameEvent.getType() == RTypeProtocol::ClientEventType::PLAYER_POSITION) {

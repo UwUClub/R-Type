@@ -18,7 +18,7 @@ namespace ECS {
                  [](Utils::Vector2f &xy, SDLDisplayClass &display) {
                      display.addEntity(
                          ECS::Utils::Vector2f {xy.x + 30, xy.y}, Component::Speed {BULLET_SPEED},
-                         Component::TypeEntity {false, false, true, false, false, false},
+                         Component::TypeEntity {false, false, false, true, false, false, false},
                          Component::LoadedSprite {BULLET_ASSET, nullptr,
                                                   new SDL_Rect {207, 10, BULLET_TEX_WIDTH, BULLET_TEX_HEIGHT},
                                                   new SDL_Rect {0, 0, BULLET_TEX_WIDTH, BULLET_TEX_HEIGHT}});
@@ -32,7 +32,6 @@ namespace ECS {
             for (auto &event : keyboardEvent) {
                 auto *keyEvent = static_cast<Event::KeyboardEvent *>(event);
                 if (keyMap.find(keyEvent->_keyId) == keyMap.end()) {
-                    std::cerr << "Key not found" << std::endl;
                     continue;
                 }
                 keyMap.at(keyEvent->_keyId)(aPos[i].value(), SDLDisplayClass::getInstance());
