@@ -9,13 +9,16 @@
 #include "System.hpp"
 #include "Utils.hpp"
 #include "World.hpp"
+#include <SDL_rect.h>
+
+const constexpr float BACKGROUND_SPEED = 3;
 
 int main(int ac, char **av)
 {
-    if (ac < 3) {
-        std::cerr << "Usage: " << av[0] << " <host> <port>" << std::endl;
-        return 84;
-    }
+    // if (ac < 3) {
+    //     std::cerr << "Usage: " << av[0] << " <host> <port>" << std::endl;
+    //     return 84;
+    // }
 
     std::string host(av[1]);
     std::string port(av[2]);
@@ -36,13 +39,21 @@ int main(int ac, char **av)
     world.addSystem<>(ECS::System::createPlayer);
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::movePlayer);
     world.addSystem(ECS::System::quitSDL);
+    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBackground);
 
-    display.addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {0},
+    display.addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {BACKGROUND_SPEED},
                       Component::TypeEntity {false, false, false, false, false, false, true},
-                      Component::LoadedSprite {BACKGROUND_ASSET, nullptr, {0, 0, 800, 600}, {0, 0, 800, 600}});
-    display.addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {0},
+                      Component::LoadedSprite {BACKGROUND_ASSET, nullptr, nullptr,
+                                               new SDL_Rect {400, 15, SCREEN_WIDTH, SCREEN_HEIGHT}});
+    display.addEntity(ECS::Utils::Vector2f {SCREEN_WIDTH, 0}, Component::Speed {BACKGROUND_SPEED},
                       Component::TypeEntity {false, false, false, false, false, false, true},
-                      Component::LoadedSprite {BACKGROUND_ASSET, nullptr, {0, 0, 800, 600}, {800, 0, 800, 600}});
+                      Component::LoadedSprite {BACKGROUND_ASSET, nullptr, nullptr,
+                                               new SDL_Rect {400, 15, SCREEN_WIDTH, SCREEN_HEIGHT}});
+    // display.addEntity(
+    //     ECS::Utils::Vector2f {10, 10}, Component::Speed {BACKGROUND_SPEED},
+    //     Component::TypeEntity {true, false, false, false, false, false},
+    //     Component::LoadedSprite {PLAYER_ASSET, nullptr, new SDL_Rect {0, 0, 33, 17}, new SDL_Rect {300, 15, 33,
+    //     17}});
 
     while (world.isRunning()) {
         world.runSystems();

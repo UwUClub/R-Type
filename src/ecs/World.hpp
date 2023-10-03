@@ -196,12 +196,27 @@ as Component container
              * @param aIdx The index of the entity (index in the sparse array)
              */
             template<class Component>
-            void removeComponent(const std::size_t &aIdx)
+            void removeEntityInComponent(const std::size_t &aIdx)
             {
                 try {
                     auto &componentArray = getComponent<Component>();
 
                     componentArray.erase(aIdx);
+                } catch (const RegistryException &e) {
+                    throw RegistryException("There is no component of this type in the registry");
+                }
+            }
+
+            /**
+             * @brief Remove a component from the World
+             *
+             * @tparam Component The component to remove
+             */
+            template<class Component>
+            void removeComponent()
+            {
+                try {
+                    _components.erase(std::type_index(typeid(Component)));
                 } catch (const RegistryException &e) {
                     throw RegistryException("There is no component of this type in the registry");
                 }
@@ -235,16 +250,30 @@ as Component container
                 }
             }
 
+            /**
+             * @brief Check if the World is running
+             *
+             * @return true if the World is running
+             * @return false if the World is not running
+             */
             [[nodiscard]] bool isRunning() const
             {
                 return _isRunning;
             }
 
+            /**
+             * @brief Stop the World
+             *
+             */
             void stop()
             {
                 _isRunning = false;
             }
 
+            /**
+             * @brief Start the World
+             *
+             */
             void start()
             {
                 _isRunning = true;
