@@ -61,8 +61,9 @@ SDLDisplayClass::~SDLDisplayClass()
             continue;
         }
         SDL_DestroyTexture(sprite->texture);
+        delete sprite->rect;
+        delete sprite->srcRect;
     }
-
     SDL_DestroyRenderer(_renderer);
     SDL_DestroyWindow(_window);
     SDL_Quit();

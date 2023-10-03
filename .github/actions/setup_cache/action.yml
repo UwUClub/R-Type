@@ -22,11 +22,11 @@ runs:
     - name: Cache
       uses: actions/cache@v3
       with:
-        # You might want to add .ccache to your cache configuration?
         path: |
           ~/.cache/pip
           ~/.ccache
-        key: ${{ runner.os }}-${{ inputs.compiler }}-${{ inputs.build_type }}-${{ inputs.generator }}-${{ inputs.packaging_maintainer_mode }}-${{ hashFiles('**/CMakeLists.txt') }}
+          ./build/_deps  # This is the new line to cache downloaded dependencies
+        key: ${{ runner.os }}-${{ inputs.compiler }}-${{ inputs.build_type }}-${{ inputs.generator }}-${{ inputs.packaging_maintainer_mode }}-${{ hashFiles('**/CMakeLists.txt', '**/Dependencies.cmake') }}  # Also added Dependencies.cmake to the hashFiles function
         restore-keys: |
           ${{ runner.os }}-${{ inputs.compiler }}-${{ inputs.build_type }}
 
