@@ -11,8 +11,6 @@ function(R_Type_setup_dependencies)
   find_package(Boost QUIET COMPONENTS system serialization align assert config core static_assert throw_exception array bind chrono integer move mpl predef asio ratio type_traits typeof utility coroutine date_time function regex smart_ptr preprocessor io QUIET)
   find_package(SDL2 QUIET)
   find_package(SDL2_image QUIET)
-  add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-  add_compile_options(/wd4005)
 
 
   if(NOT TARGET Catch2::Catch2WithMain)
