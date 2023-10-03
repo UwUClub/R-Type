@@ -37,6 +37,7 @@ namespace Component {
                   rect(aTextureRect),
                   srcRect(aDisplayRect)
             {}
+
             std::string path;
             SDL_Texture *texture;
             SDL_Rect *rect;

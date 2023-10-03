@@ -11,12 +11,14 @@ namespace ECS {
                                   Core::SparseArray<Component::LoadedSprite> &aSprites)
     {
         auto &world = Core::World::getInstance();
+        auto &display = SDLDisplayClass::getInstance();
 
         for (size_t enemy = 0; enemy < aType.size(); enemy++) {
             if (!aType[enemy].has_value() || !aType[enemy].value().isEnemy) {
                 continue;
             }
             if (!aIsAlive[enemy].value().isAlive && aIsAlive[enemy].value().timeToDie < 0) {
+                display.freeRects(enemy);
                 world.killEntity(enemy);
             } else if (!aIsAlive[enemy].value().isAlive && aIsAlive[enemy].value().timeToDie == 0) {
                 aSprites[enemy].value().path = EXPLOSION_ASSET;

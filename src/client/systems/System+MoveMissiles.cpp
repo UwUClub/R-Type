@@ -19,6 +19,7 @@ namespace ECS {
             if (type.isBullet) {
                 pos.x += speed.speed * world.getDeltaTime();
                 if (pos.x > SCREEN_WIDTH + 30) {
+                    SDLDisplayClass::getInstance().freeRects(idx);
                     world.killEntity(idx);
                 }
             }

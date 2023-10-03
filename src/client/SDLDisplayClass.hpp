@@ -9,6 +9,7 @@
 #define SDLDISPLAYClass_HPP_
 
 #include <SDL2/SDL.h>
+#include <cstddef>
 #include <string>
 #include "Components.hpp"
 #include "KeyboardEvent.hpp"
@@ -46,6 +47,23 @@ class SDLDisplayClass
          */
         SDL_Texture *getTexture(const std::string &path);
 
+        /**
+         * @brief Free the rects of the entity
+         *
+         * @param idx The index of the entity
+         */
+        void freeRects(const std::size_t &idx);
+
+        /**
+         * @brief Create a new entity object
+         *
+         * @param aPos Position of the entity
+         * @param aSpeed Speed of the entity
+         * @param aType Type of the entity
+         * @param aSprite Sprite of the entity
+         * @param aHitBox Hitbox of the entity
+         * @param aIsAlive IsAlive of the entity
+         */
         static void addEntity(ECS::Utils::Vector2f aPos, Component::Speed aSpeed, Component::TypeEntity aType,
                               Component::LoadedSprite aSprite, Component::HitBox aHitBox, Component::IsAlive aIsAlive);
         SDL_Renderer *_renderer;

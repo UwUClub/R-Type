@@ -156,7 +156,7 @@ namespace ECS::Core {
                 if (aPos >= _container.size()) {
                     return;
                 }
-                _container[aPos] = std::nullopt;
+                _container[aPos].reset();
             }
 
             /**

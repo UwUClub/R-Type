@@ -69,6 +69,18 @@ SDL_Texture *SDLDisplayClass::getTexture(const std::string &aPath)
     return _textures[aPath];
 }
 
+void SDLDisplayClass::freeRects(const std::size_t &aIdx)
+{
+    auto &world = ECS::Core::World::getInstance();
+    auto &sprites = world.getComponent<Component::LoadedSprite>();
+
+    if (!sprites[aIdx].has_value()) {
+        return;
+    }
+    delete sprites[aIdx]->rect;
+    delete sprites[aIdx]->srcRect;
+}
+
 SDLDisplayClass::~SDLDisplayClass()
 {
     auto &world = ECS::Core::World::getInstance();
