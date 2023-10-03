@@ -13,9 +13,13 @@ namespace ECS {
     {
         public:
             /**
+             * @brief Create a player
+             */
+            static void createPlayer();
+
+            /**
              * @brief Move the player
              *
-             * @param aWorld A reference to the world
              * @param aPos SparseArray of all entities position
              * @param aSpeed Sparsearray of all entities speed
              * @param aType SparseArray of all entities type
@@ -26,31 +30,23 @@ namespace ECS {
 
             /**
              * @brief Get the all the input of the user
-             *
-             * @param aWorld A reference to the world
              */
 
             static void getInput();
 
             /**
              * @brief Close the SDL window
-             *
-             * @param aWorld A reference to the world
              */
             static void quitSDL();
 
             /**
              * @brief Load all the textures of the game
-             *
-             * @param aWorld A reference to the world
              * @param aSprites SparseArray of all the entities sprites
              */
             static void loadTextures(Core::SparseArray<Component::LoadedSprite> &aSprites);
 
             /**
              * @brief Display all the entities on the screen
-             *
-             * @param aWorld A reference to the world
              * @param aSprites SparseArray of all the entities sprites
              */
             static void displayEntities(Core::SparseArray<Component::LoadedSprite> &aSprites,

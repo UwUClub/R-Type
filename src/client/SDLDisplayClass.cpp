@@ -35,8 +35,8 @@ SDLDisplayClass::SDLDisplayClass()
     }
 }
 
-void SDLDisplayClass::addEntity(ECS::Utils::Vector2f aPos, Component::Speed aSpeed, Component::TypeEntity aType,
-                                Component::LoadedSprite aSprite)
+size_t SDLDisplayClass::addEntity(ECS::Utils::Vector2f aPos, Component::Speed aSpeed, Component::TypeEntity aType,
+                                  Component::LoadedSprite aSprite)
 {
     ECS::Core::World &world = ECS::Core::World::getInstance();
     auto &vec = world.getComponent<ECS::Utils::Vector2f>();
@@ -49,6 +49,7 @@ void SDLDisplayClass::addEntity(ECS::Utils::Vector2f aPos, Component::Speed aSpe
     spd.insertAt(idx, aSpeed);
     type.insertAt(idx, aType);
     sprite.insertAt(idx, aSprite);
+    return idx;
 }
 
 SDLDisplayClass::~SDLDisplayClass()

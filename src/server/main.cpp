@@ -31,7 +31,7 @@ int main(int ac, char **av)
 
         while (world.isRunning()) {
             world.runSystems();
-            eventManager->clearEvents();
+            eventManager->clearNonGameEvents();
         }
 
         network.stop();

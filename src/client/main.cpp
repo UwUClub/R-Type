@@ -17,6 +17,12 @@ int main(int ac, char **av)
         return 84;
     }
 
+    std::string host(av[1]);
+    std::string port(av[2]);
+    Network::ClientNetworkHandler &network = Network::ClientNetworkHandler::getInstance();
+    network.start(host, port);
+    network.send({RTypeProtocol::ServerEventType::CONNECT});
+
     ECS::Core::World &world = ECS::Core::World::getInstance();
     SDLDisplayClass &display = SDLDisplayClass::getInstance();
     ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
@@ -27,29 +33,21 @@ int main(int ac, char **av)
     world.addSystem(ECS::System::getInput);
     world.addSystem<Component::LoadedSprite>(ECS::System::loadTextures);
     world.addSystem<Component::LoadedSprite, ECS::Utils::Vector2f>(ECS::System::displayEntities);
+    world.addSystem<>(ECS::System::createPlayer);
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::movePlayer);
     world.addSystem(ECS::System::quitSDL);
 
-    std::string host(av[1]);
-    std::string port(av[2]);
-    Network::ClientNetworkHandler &network = Network::ClientNetworkHandler::getInstance();
-    network.start(host, port);
-    network.send({RTypeProtocol::ServerEventType::CONNECT});
-
     display.addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {0},
-                      Component::TypeEntity {false, false, false, false, false, true},
+                      Component::TypeEntity {false, false, false, false, false, false, true},
                       Component::LoadedSprite {BACKGROUND_ASSET, nullptr, {0, 0, 800, 600}, {0, 0, 800, 600}});
     display.addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {0},
-                      Component::TypeEntity {false, false, false, false, false, true},
+                      Component::TypeEntity {false, false, false, false, false, false, true},
                       Component::LoadedSprite {BACKGROUND_ASSET, nullptr, {0, 0, 800, 600}, {800, 0, 800, 600}});
-    display.addEntity(ECS::Utils::Vector2f {10, 10}, Component::Speed {10},
-                      Component::TypeEntity {true, false, false, false, false, false},
-                      Component::LoadedSprite {PLAYER_ASSET, nullptr, {0, 0, 33, 17}, {300, 15, 33, 17}});
 
     while (world.isRunning()) {
         world.runSystems();
         SDL_RenderPresent(display._renderer);
-        eventManager->clearEvents();
+        eventManager->clearNonGameEvents();
     }
     network.stop();
     return 0;

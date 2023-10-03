@@ -3,6 +3,7 @@
 #include <boost/bind.hpp>
 #include <iostream>
 #include <string>
+#include "EventManager.hpp"
 #include "Packets.hpp"
 
 namespace Network {
@@ -38,6 +39,10 @@ namespace Network {
         RTypeProtocol::unserializePacket<RTypeProtocol::ServerToClientPacket, std::array<char, READ_BUFFER_SIZE>>(
             &packet, _readBuffer);
         std::cout << "Received type " << static_cast<int>(packet.type) << " from " << _serverEndpoint << std::endl;
+
+        auto *evt = new RTypeProtocol::ClientGameEvent(packet.type, packet.id, packet.payload);
+        ECS::Event::EventManager::getInstance()->pushEvent(evt);
+
         listen();
     }
 

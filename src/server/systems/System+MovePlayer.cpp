@@ -41,21 +41,19 @@ namespace ECS {
                 },
             };
 
-        for (auto &event : eventManager->getEvents()) {
-            if (event->getType() == ECS::Event::EventType::GAME) {
-                auto &gameEvent = static_cast<RTypeProtocol::ServerGameEvent &>(*event);
+        for (auto &event : eventManager->getEventsByType(Event::EventType::GAME)) {
+            auto &gameEvent = static_cast<RTypeProtocol::ServerGameEvent &>(*event);
 
-                if (moveMap.find(gameEvent.getType()) != moveMap.end()) {
-                    std::size_t entityId = gameEvent.getEntityId();
-                    moveMap.at(gameEvent.getType())(aSpeed[entityId].value().speed, aPos[entityId].value());
+            if (moveMap.find(gameEvent.getType()) != moveMap.end()) {
+                std::size_t entityId = gameEvent.getEntityId();
+                moveMap.at(gameEvent.getType())(aSpeed[entityId].value().speed, aPos[entityId].value());
 
-                    // std::cout << entityId << " pos: " << aPos[gameEvent.getEntityId()].value().x << " "
-                    //           << aPos[gameEvent.getEntityId()].value().y << std::endl;
+                // std::cout << entityId << " pos: " << aPos[gameEvent.getEntityId()].value().x << " "
+                //           << aPos[gameEvent.getEntityId()].value().y << std::endl;
 
-                    network.broadcast({RTypeProtocol::ClientEventType::PLAYER_POSITION,
-                                       entityId,
-                                       {aPos[entityId].value().x, aPos[entityId].value().y}});
-                }
+                network.broadcast({RTypeProtocol::ClientEventType::PLAYER_POSITION,
+                                   entityId,
+                                   {aPos[entityId].value().x, aPos[entityId].value().y}});
             }
         }
     }

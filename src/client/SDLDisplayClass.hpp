@@ -45,8 +45,8 @@ class SDLDisplayClass
             return instance;
         }
 
-        static void addEntity(ECS::Utils::Vector2f aPos, Component::Speed aSpeed, Component::TypeEntity aType,
-                              Component::LoadedSprite aSprite);
+        static size_t addEntity(ECS::Utils::Vector2f aPos, Component::Speed aSpeed, Component::TypeEntity aType,
+                                Component::LoadedSprite aSprite);
         /**
          * @brief Construct a new SDLDisplayClass object
          *
