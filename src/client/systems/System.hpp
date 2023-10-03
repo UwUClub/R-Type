@@ -71,7 +71,7 @@ namespace ECS {
 
             /**
              * @brief Move enemies on the screen
-             * 
+             *
              * @param aPos SparseArray of all entities position
              * @param aSpeed Sparsearray of all entities speed
              * @param aType SparseArray of all entities type
