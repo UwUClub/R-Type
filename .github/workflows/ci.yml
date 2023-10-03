@@ -41,10 +41,8 @@ jobs:
           - "Ninja Multi-Config"
         build_type:
           - Release
-          - Debug
         packaging_maintainer_mode:
           - ON
-          - OFF
         build_shared:
           - OFF
 
