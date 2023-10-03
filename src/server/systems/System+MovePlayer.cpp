@@ -41,6 +41,8 @@ namespace ECS {
                 },
             };
 
+        int eventIndex = 0;
+
         for (auto &event : eventManager->getEventsByType(Event::EventType::GAME)) {
             auto &gameEvent = static_cast<RTypeProtocol::ServerGameEvent &>(*event);
 
@@ -54,7 +56,11 @@ namespace ECS {
                 network.broadcast({RTypeProtocol::ClientEventType::PLAYER_POSITION,
                                    entityId,
                                    {aPos[entityId].value().x, aPos[entityId].value().y}});
+
+                eventManager->removeEvent(eventIndex);
+                eventIndex--;
             }
+            eventIndex++;
         }
     }
 } // namespace ECS

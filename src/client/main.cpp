@@ -15,10 +15,10 @@ const constexpr float BACKGROUND_SPEED = 3;
 
 int main(int ac, char **av)
 {
-    // if (ac < 3) {
-    //     std::cerr << "Usage: " << av[0] << " <host> <port>" << std::endl;
-    //     return 84;
-    // }
+    if (ac < 3) {
+        std::cerr << "Usage: " << av[0] << " <host> <port>" << std::endl;
+        return 84;
+    }
 
     std::string host(av[1]);
     std::string port(av[2]);

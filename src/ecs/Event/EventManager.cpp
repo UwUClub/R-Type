@@ -42,10 +42,11 @@ std::vector<ECS::Event::Event *> ECS::Event::EventManager::getEventsByType(const
 
 void ECS::Event::EventManager::clearNonGameEvents()
 {
-    for (auto &event : _events) {
-        if (event->getType() != EventType::GAME) {
-            delete event;
-            _events.erase(std::remove(_events.begin(), _events.end(), event), _events.end());
+    for (int i = 0; i < _events.size(); i++) {
+        if (_events[i]->getType() != EventType::GAME) {
+            delete _events[i];
+            _events.erase(_events.begin() + i);
+            i--;
         }
     }
 }
