@@ -1,6 +1,5 @@
 
 #include <string>
-#include <SDL_render.h>
 
 #ifndef SPEED_HPP
     #define SPEED_HPP
