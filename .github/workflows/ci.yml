@@ -15,7 +15,6 @@ on:
     branches:
       - main
       - dev
-      - RT-48-deploy-release-binaries
 
 env:
   CLANG_TIDY_VERSION: "15.0.2"
@@ -123,14 +122,14 @@ jobs:
           OpenCppCoverage.exe --export_type cobertura:coverage.xml --cover_children -- ctest -C Release
 
       - name: CPack
-        if: ${{ matrix.compiler == 'llvm-15.0.2' }}
+        if: ${{ matrix.compiler == 'llvm-15.0.2' && startsWith(github.ref, 'refs/tags/') }}
         working-directory: ./build
         run: |
           cpack -C Release -G ZIP
 
       - name: Publish Tagged Release
         uses: softprops/action-gh-release@v1
-        if: ${{ matrix.compiler == 'llvm-15.0.2' }}
+        if: ${{ matrix.compiler == 'llvm-15.0.2' && startsWith(github.ref, 'refs/tags/') }}
         with:
           files: |
             build/*-*Release*-*.*
