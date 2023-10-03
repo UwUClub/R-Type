@@ -70,14 +70,6 @@ jobs:
 
       - uses: actions/checkout@v3
 
-      - name: Setup Cache
-        uses: ./.github/actions/setup_cache
-        with:
-          compiler: ${{ matrix.compiler }}
-          build_type: Release
-          packaging_maintainer_mode: Off
-          generator: ${{ matrix.generator }}
-
       - name: Project Name
         uses: cardinalby/export-env-action@v2
         with:
