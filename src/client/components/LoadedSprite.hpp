@@ -12,13 +12,33 @@
     #define LOADEDSPRITE_HPP
 
 namespace Component {
+    /**
+     * @brief Construct a new Loaded Sprite object
+     *
+     * @param aPath path to the sprite
+     * @param aTexture texture of the sprite (once loaded)
+     * @param aTextureRect Size and position of the sprite in the texture
+     * @param aDisplayRect Size and position of the sprite on the screen
+     */
     struct LoadedSprite
     {
+            /**
+             * @brief Construct a new Loaded Sprite object
+             *
+             */
             LoadedSprite()
                 : texture(nullptr),
                   rect(nullptr),
                   srcRect(nullptr)
             {}
+            /**
+             * @brief Construct a new Loaded Sprite object
+             *
+             * @param aPath path to the sprite
+             * @param aTexture texture of the sprite (once loaded)
+             * @param aTextureRect Size and position of the sprite in the texture
+             * @param aDisplayRect Size and position of the sprite on the screen
+             */
             LoadedSprite(std::string aPath, SDL_Texture *aTexture, SDL_Rect *aTextureRect, SDL_Rect *aDisplayRect)
                 : path(std::move(aPath)),
                   texture(aTexture),

@@ -8,9 +8,18 @@
 namespace Component {
     struct Speed
     {
+            /**
+             * @brief Construct a new Speed object
+             *
+             */
             Speed()
                 : speed(0)
             {}
+            /**
+             * @brief Construct a new Speed object
+             *
+             * @param aSpeed The speed of the entity
+             */
             explicit Speed(float aSpeed)
                 : speed(aSpeed)
             {}

@@ -236,16 +236,30 @@ as Component container
                 }
             }
 
+            /**
+             * @brief Check if the World is running
+             *
+             * @return true if the World is running
+             * @return false if the World is not running
+             */
             [[nodiscard]] bool isRunning() const
             {
                 return _isRunning;
             }
 
+            /**
+             * @brief Stop the World
+             *
+             */
             void stop()
             {
                 _isRunning = false;
             }
 
+            /**
+             * @brief Start the World
+             *
+             */
             void start()
             {
                 _isRunning = true;
