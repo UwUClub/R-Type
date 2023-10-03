@@ -12,6 +12,8 @@ function(R_Type_setup_dependencies)
   find_package(SDL2 QUIET)
   find_package(SDL2_image QUIET)
   add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+  add_compile_options(/wd4005)
+
 
   if(NOT TARGET Catch2::Catch2WithMain)
     CPMAddPackage(

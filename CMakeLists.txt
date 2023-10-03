@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.21)
 add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-add_compile_options(/wdXXXX)
+add_compile_options(/wd4005)
 find_package(SDL2)
 
 # This template attempts to be "fetch_content"-able
