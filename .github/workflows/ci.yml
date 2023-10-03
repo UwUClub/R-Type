@@ -123,14 +123,14 @@ jobs:
           OpenCppCoverage.exe --export_type cobertura:coverage.xml --cover_children -- ctest -C Release
 
       - name: CPack
-        if: ${{ matrix.compiler == 'llvm' && startsWith(github.ref, 'refs/tags/') }}
+        if: ${{ matrix.compiler == 'llvm' }}
         working-directory: ./build
         run: |
           cpack -C Release -G ZIP
 
       - name: Publish Tagged Release
         uses: softprops/action-gh-release@v1
-        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        needs: CPack
         with:
           files: |
             build/*-*Release*-*.*
