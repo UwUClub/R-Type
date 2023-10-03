@@ -3,6 +3,8 @@
 #include "SDLDisplayClass.hpp"
 #include "System.hpp"
 
+const constexpr float BACKGROUND_SPEED = 3;
+
 namespace ECS {
     void System::createPlayer()
     {
@@ -27,8 +29,9 @@ namespace ECS {
                 float posY = gameEvent.getPayload()[3];
                 std::cout << "Player with color " << color << " joined" << std::endl;
 
-                display.addEntity(ECS::Utils::Vector2f {posX, posY}, Component::Speed {10}, entityType,
-                                  Component::LoadedSprite {PLAYER_ASSET, nullptr, {0, 0, 33, 17}, {300, 15, 33, 17}});
+                display.addEntity(ECS::Utils::Vector2f {posX, posY}, Component::Speed {BACKGROUND_SPEED}, entityType,
+                                  Component::LoadedSprite {PLAYER_ASSET, nullptr, new SDL_Rect {0, 0, 33, 17},
+                                                           new SDL_Rect {300, 15, 33, 17}});
 
                 eventManager->removeEvent(eventIndex);
                 eventIndex--;
