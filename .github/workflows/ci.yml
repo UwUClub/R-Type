@@ -67,7 +67,16 @@ jobs:
           # Set up preferred package generators, for given build configurations
           - build_type: Release
             packaging_maintainer_mode: OFF
-            package_generator: ZIP
+            package_generator: TBZ2
+
+          # This exists solely to make sure a non-multiconfig build works
+          - os: ubuntu-20.04
+            compiler: gcc-11
+            generator: "Ninja Multi-Config"
+            build_type: Release
+            gcov_executable: gcov
+            packaging_maintainer_mode: On
+            enable_ipo: Off
 
     steps:
       - name: Check for llvm version mismatches
