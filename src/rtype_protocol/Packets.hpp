@@ -1,7 +1,7 @@
 #include <any>
 #include <boost/asio.hpp>
-#include <boost/serialization/array.hpp>
 #include <boost/serialization/serialization.hpp>
+#include <boost/serialization/vector.hpp>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -20,16 +20,14 @@ namespace RTypeProtocol {
     {
             ClientEventType type;
             std::size_t id;
-            bool isYou;
-            std::array<float, 2> position;
+            std::vector<float> payload;
 
             template<typename archive>
             void serialize(archive &ar, const unsigned int /*version*/)
             {
                 ar &type;
                 ar &id;
-                ar &isYou;
-                ar &position;
+                ar &payload;
             }
     };
 
