@@ -40,7 +40,7 @@ class SDLDisplayClass
         }
 
         static void addEntity(ECS::Utils::Vector2f aPos, Component::Speed aSpeed, Component::TypeEntity aType,
-                              Component::LoadedSprite aSprite);
+                              Component::LoadedSprite aSprite, Component::HitBox aHitBox, Component::IsAlive aIsAlive);
         /**
          * @brief Construct a new SDLDisplayClass object
          *
