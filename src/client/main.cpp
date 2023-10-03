@@ -11,7 +11,7 @@
 #include "World.hpp"
 #include <SDL_rect.h>
 
-const constexpr float BACKGROUND_SPEED = 3000;
+const constexpr float BACKGROUND_SPEED = 300;
 
 int main(int ac, char **av)
 {
