@@ -11,14 +11,14 @@
 #include "World.hpp"
 #include <SDL_rect.h>
 
-const constexpr float BACKGROUND_SPEED = 3;
+const constexpr float BACKGROUND_SPEED = 300;
 
 int main(int ac, char **av)
 {
-    // if (ac < 3) {
-    //     std::cerr << "Usage: " << av[0] << " <host> <port>" << std::endl;
-    //     return 84;
-    // }
+    /*if (ac < 3) {
+        std::cerr << "Usage: " << av[0] << " <host> <port>" << std::endl;
+        return 84;
+    }*/
 
     ECS::Core::World &world = ECS::Core::World::getInstance();
     SDLDisplayClass &display = SDLDisplayClass::getInstance();
@@ -33,6 +33,7 @@ int main(int ac, char **av)
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::movePlayer);
     world.addSystem(ECS::System::quitSDL);
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBackground);
+    world.addSystem(ECS::System::spawnEnemies);
 
     display.addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {BACKGROUND_SPEED},
                       Component::TypeEntity {false, false, false, false, false, true},
@@ -43,7 +44,7 @@ int main(int ac, char **av)
                       Component::LoadedSprite {BACKGROUND_ASSET, nullptr, nullptr,
                                                new SDL_Rect {400, 15, SCREEN_WIDTH, SCREEN_HEIGHT}});
     display.addEntity(
-        ECS::Utils::Vector2f {10, 10}, Component::Speed {BACKGROUND_SPEED},
+        ECS::Utils::Vector2f {10, 10}, Component::Speed {3000},
         Component::TypeEntity {true, false, false, false, false, false},
         Component::LoadedSprite {PLAYER_ASSET, nullptr, new SDL_Rect {0, 0, 33, 17}, new SDL_Rect {300, 15, 33, 17}});
 
@@ -51,6 +52,8 @@ int main(int ac, char **av)
         world.runSystems();
         SDL_RenderPresent(display._renderer);
         eventManager->clearEvents();
+        world.calcDeltaTime();
     }
+
     return 0;
 }

@@ -23,6 +23,7 @@ constexpr int SCREEN_HEIGHT = 1080;
 
 static const std::string BACKGROUND_ASSET = "assets/sprites/background.png";
 static const std::string PLAYER_ASSET = "assets/sprites/r-typesheet42.png";
+static const std::string ENEMY_ASSET = "assets/sprites/r-typesheet5.png";
 
 class SDLDisplayClass
 {
@@ -54,6 +55,7 @@ class SDLDisplayClass
         SDLDisplayClass();
         SDL_Renderer *_renderer;
         SDL_Window *_window;
+        float _elapsedTime;
 
     private:
 };
