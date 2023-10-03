@@ -31,6 +31,16 @@ namespace ECS {
                 network.addClient(playerId, gameEvent.getClientEndpoint());
                 network.send({RTypeProtocol::ClientEventType::PLAYER_CONNECTION, playerId, {1, playerColor, 10, 10}},
                              playerId);
+
+                for (std::size_t i = 0; i < aPos.size(); i++) {
+                    if (i != playerId) {
+                        network.send({RTypeProtocol::ClientEventType::PLAYER_CONNECTION,
+                                      i,
+                                      {0, playerColor, aPos[i]->x, aPos[i]->y}},
+                                     playerId);
+                    }
+                }
+
                 eventManager->removeEvent(eventIndex);
                 eventIndex--;
             }
