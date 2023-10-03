@@ -11,7 +11,7 @@
 #include "World.hpp"
 #include <SDL_rect.h>
 
-const constexpr float BACKGROUND_SPEED = 3;
+const constexpr float BACKGROUND_SPEED = 3000;
 
 int main(int ac, char **av)
 {
@@ -40,6 +40,7 @@ int main(int ac, char **av)
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::movePlayer);
     world.addSystem(ECS::System::quitSDL);
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBackground);
+    world.addSystem(ECS::System::spawnEnemies);
 
     display.addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {BACKGROUND_SPEED},
                       Component::TypeEntity {false, false, false, false, false, false, true},
@@ -59,6 +60,7 @@ int main(int ac, char **av)
         world.runSystems();
         SDL_RenderPresent(display._renderer);
         eventManager->clearNonGameEvents();
+        world.calcDeltaTime();
     }
     network.stop();
     return 0;

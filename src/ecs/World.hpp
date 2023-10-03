@@ -9,6 +9,7 @@
 #define WORLD_HPP_
 
 #include <any>
+#include <chrono>
 #include <cstddef>
 #include <exception>
 #include <functional>
@@ -279,6 +280,18 @@ as Component container
                 _isRunning = true;
             }
 
+            void calcDeltaTime()
+            {
+                auto now = std::chrono::steady_clock::now();
+                _delta = now - _lastTime;
+                _lastTime = now;
+            }
+
+            [[nodiscard]] float getDeltaTime() const
+            {
+                return _delta.count();
+            }
+
         private:
             /**
              * @brief Call a system, this is what is stored in the vector of systems
@@ -327,6 +340,8 @@ as Component container
             std::vector<systemFunction> _systems;
 
             bool _isRunning {true};
+            std::chrono::time_point<std::chrono::steady_clock> _lastTime {std::chrono::steady_clock::now()};
+            std::chrono::duration<float> _delta;
     };
 } // namespace ECS::Core
 
