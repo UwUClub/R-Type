@@ -77,8 +77,8 @@ namespace ECS {
              * @param aType SparseArray of all entities type
              */
             static void moveEnemies(Core::SparseArray<Utils::Vector2f> &aPos,
-                                     Core::SparseArray<Component::Speed> &aSpeed,
-                                     Core::SparseArray<Component::TypeEntity> &aType);
+                                    Core::SparseArray<Component::Speed> &aSpeed,
+                                    Core::SparseArray<Component::TypeEntity> &aType);
 
         private:
             /**

@@ -36,5 +36,4 @@ const constexpr float PLAYER_SPEED = 3000;
 const constexpr int PLAYER_TEX_WIDTH = 33;
 const constexpr int PLAYER_TEX_HEIGHT = 17;
 
-
 #endif /* !VALUES_HPP_ */
