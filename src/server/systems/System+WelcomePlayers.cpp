@@ -25,7 +25,7 @@ namespace ECS {
 
                 aPos.insertAt(playerId, ECS::Utils::Vector2f {10, 10});
                 aSpeed.insertAt(playerId, Component::Speed {10});
-                aType.insertAt(playerId, Component::TypeEntity {true, false, false, false, false, false});
+                aType.insertAt(playerId, Component::TypeEntity {true, false, false, false, false, false, false});
 
                 network.broadcast(
                     {RTypeProtocol::ClientEventType::PLAYER_CONNECTION, playerId, {0, playerColor, 10, 10}});

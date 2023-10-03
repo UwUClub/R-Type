@@ -9,7 +9,6 @@ target_sources(server PRIVATE
 
 add_subdirectory(network)
 add_subdirectory(systems)
-add_subdirectory(components)
 
 target_link_libraries(server
         PRIVATE R_Type::R_Type_options

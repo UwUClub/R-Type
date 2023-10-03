@@ -10,6 +10,6 @@ target_sources(ecs PRIVATE
 
 target_include_directories(ecs PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
-target_include_directories(rtype_protocol PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(rtype PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(client PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(server PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

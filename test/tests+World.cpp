@@ -1,7 +1,7 @@
 #include <optional>
-#include "../src/client/components/Speed.hpp"
-#include "../src/client/components/TypeEntity.hpp"
 #include "../src/ecs/World.hpp"
+#include "../src/rtype/components/Speed.hpp"
+#include "../src/rtype/components/TypeEntity.hpp"
 #include "catch2/catch_test_macros.hpp"
 #include <catch2/catch_all.hpp>
 

@@ -14,7 +14,7 @@ target_link_libraries(server
         PRIVATE R_Type::R_Type_options
         R_Type::R_Type_warnings
         ${Boost_LIBRARIES}
-        rtype_protocol
+        rtype
         ecs
         Threads::Threads
 )
