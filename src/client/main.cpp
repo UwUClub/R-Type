@@ -33,10 +33,10 @@ void runNetwork(std::string aHost, std::string aPort)
 
 int main(int ac, char **av)
 {
-    if (ac < 3) {
+    /*if (ac < 3) {
         std::cerr << "Usage: " << av[0] << " <host> <port>" << std::endl;
         return 84;
-    }
+    }*/
 
     ECS::Core::World &world = ECS::Core::World::getInstance();
     SDLDisplayClass &display = SDLDisplayClass::getInstance();
@@ -62,7 +62,7 @@ int main(int ac, char **av)
                       Component::LoadedSprite {BACKGROUND_ASSET, nullptr, nullptr,
                                                new SDL_Rect {400, 15, SCREEN_WIDTH, SCREEN_HEIGHT}});
     display.addEntity(
-        ECS::Utils::Vector2f {10, 10}, Component::Speed {20},
+        ECS::Utils::Vector2f {10, 10}, Component::Speed {3000},
         Component::TypeEntity {true, false, false, false, false, false},
         Component::LoadedSprite {PLAYER_ASSET, nullptr, new SDL_Rect {0, 0, 33, 17}, new SDL_Rect {300, 15, 33, 17}});
 
@@ -73,8 +73,8 @@ int main(int ac, char **av)
         world.calcDeltaTime();
     }
 
-    std::string host(av[1]);
-    std::string port(av[2]);
-    runNetwork(host, port);
+    //std::string host(av[1]);
+    //std::string port(av[2]);
+    //runNetwork(host, port);
     return 0;
 }

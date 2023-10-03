@@ -265,7 +265,7 @@ as Component container
                 _isRunning = true;
             }
 
-            [[nodiscard]] void calcDeltaTime()
+            void calcDeltaTime()
             {
                 auto now = std::chrono::steady_clock::now();
                 _delta = now - _lastTime;
