@@ -103,7 +103,7 @@ namespace ECS {
 
             /**
              * @brief Destroy enemies when they are hit by a missile
-             * 
+             *
              * @param aPos SparseArray of all entities position
              * @param aType SparseArray of all entities type
              */
@@ -114,10 +114,10 @@ namespace ECS {
 
             /**
              * @brief Handle the death of an enemy
-             * 
+             *
              * @param aType SparseArray of all entities type
              * @param aIsAlive SparseArray of all entities isAlive component
-            * @param aSprites SparseArray of all entities sprites
+             * @param aSprites SparseArray of all entities sprites
              */
             static void handleEnemyDeath(Core::SparseArray<Component::TypeEntity> &aType,
                                          Core::SparseArray<Component::IsAlive> &aIsAlive,

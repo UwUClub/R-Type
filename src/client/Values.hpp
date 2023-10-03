@@ -48,5 +48,4 @@ const constexpr float EXPLOSION_SPEED = 0;
 const constexpr int EXPLOSION_TEX_WIDTH = 33;
 const constexpr int EXPLOSION_TEX_HEIGHT = 33;
 
-
 #endif /* !VALUES_HPP_ */
