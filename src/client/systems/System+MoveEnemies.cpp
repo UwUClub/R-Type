@@ -1,7 +1,4 @@
-#include "EventManager.hpp"
-#include "SDLDisplayClass.hpp"
 #include "System.hpp"
-#include "WindowEvent.hpp"
 #include "World.hpp"
 
 namespace ECS {

@@ -1,10 +1,9 @@
 #include <boost/asio.hpp>
 #include "Packets.hpp"
+#include "Values.hpp"
 
 #ifndef CLIENTNETWORKHANDLER_HPP
     #define CLIENTNETWORKHANDLER_HPP
-
-constexpr unsigned short READ_BUFFER_SIZE = 128;
 
 namespace Network {
 

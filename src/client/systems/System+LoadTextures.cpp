@@ -8,12 +8,13 @@ namespace ECS {
     {
         SDLDisplayClass &display = SDLDisplayClass::getInstance();
 
-        for (size_t i = 0; i < aSprites.size(); i++) {
-            if (!aSprites[i].has_value() || aSprites[i].value().texture != nullptr)
+        for (auto &aSprite : aSprites) {
+            if (!aSprite.has_value() || aSprite.value().texture != nullptr) {
                 continue;
-            aSprites[i].value().texture = IMG_LoadTexture(display._renderer, aSprites[i].value().path.c_str());
-            if (aSprites[i].value().texture == nullptr) {
-                std::cerr << "Failed to load texture: " << aSprites[i].value().path << std::endl;
+            }
+            aSprite.value().texture = IMG_LoadTexture(display._renderer, aSprite.value().path.c_str());
+            if (aSprite.value().texture == nullptr) {
+                std::cerr << "Failed to load texture: " << aSprite.value().path << std::endl;
             }
         }
     }
