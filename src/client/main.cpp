@@ -7,6 +7,7 @@
 #include "SDLDisplayClass.hpp"
 #include "ServerGameEvent.hpp"
 #include "System.hpp"
+#include "TypeEntity.hpp"
 #include "Utils.hpp"
 #include "World.hpp"
 #include <SDL_rect.h>
@@ -34,6 +35,7 @@ int main(int ac, char **av)
     world.addSystem(ECS::System::quitSDL);
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBackground);
     world.addSystem(ECS::System::spawnEnemies);
+    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveEnemies);
 
     display.addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {BACKGROUND_SPEED},
                       Component::TypeEntity {false, false, false, false, false, true},
