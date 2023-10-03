@@ -123,14 +123,14 @@ jobs:
           OpenCppCoverage.exe --export_type cobertura:coverage.xml --cover_children -- ctest -C Release
 
       - name: CPack
-        if: ${{ matrix.compiler == 'llvm' }}
+        if: ${{ matrix.compiler == 'llvm-15.0.2' }}
         working-directory: ./build
         run: |
           cpack -C Release -G ZIP
 
       - name: Publish Tagged Release
         uses: softprops/action-gh-release@v1
-        if: ${{ matrix.compiler == 'llvm' }}
+        if: ${{ matrix.compiler == 'llvm-15.0.2' }}
         with:
           files: |
             build/*-*Release*-*.*
