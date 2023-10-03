@@ -8,10 +8,11 @@ on:
       - dev
   push:
     tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+'
+      - '*'
     branches:
       - main
       - dev
+      - RT-48-deploy-release-binaries
 
 env:
   CLANG_TIDY_VERSION: "15.0.2"
