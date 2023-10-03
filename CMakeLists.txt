@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
+add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 find_package(SDL2)
 
 # This template attempts to be "fetch_content"-able
