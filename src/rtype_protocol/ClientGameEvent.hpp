@@ -1,4 +1,5 @@
 #include <cstddef>
+#include <vector>
 #include "Event.hpp"
 
 #ifndef CLIENTGAMEEVENT_HPP
@@ -27,6 +28,7 @@ namespace RTypeProtocol {
         private:
             ClientEventType _type;
             std::size_t _id;
+            std::vector<float> _payload;
 
         public:
             //-------------------CONSTRUCTORS / DESTRUCTOR-------------------//
@@ -36,6 +38,14 @@ namespace RTypeProtocol {
              * @param aId the id of the client who triggers the event
              */
             explicit ClientGameEvent(ClientEventType aType, size_t aId);
+
+            /**
+             * @brief Construct a new Game Event object
+             * @param aType the type of the event
+             * @param aId the id of the client who triggers the event
+             * @param aPayload the payload of the event
+             */
+            explicit ClientGameEvent(ClientEventType aType, size_t aId, std::vector<float> aPayload);
     };
 } // namespace RTypeProtocol
 
