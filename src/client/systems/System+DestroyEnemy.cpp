@@ -1,10 +1,9 @@
-#include "Values.hpp"
 #include "System.hpp"
+#include "Values.hpp"
 #include <SDL_image.h>
 
 namespace ECS {
-    void System::destroyEnemy(Core::SparseArray<Utils::Vector2f> &aPos,
-                              Core::SparseArray<Component::TypeEntity> &aType,
+    void System::destroyEnemy(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::TypeEntity> &aType,
                               Core::SparseArray<Component::HitBox> &aHitBox,
                               Core::SparseArray<Component::IsAlive> &aIsAlive)
     {
@@ -18,15 +17,15 @@ namespace ECS {
                 if (!aType[bullet].has_value() || !aType[bullet].value().isBullet) {
                     continue;
                 }
-                if (aPos[bullet].value().x > aPos[enemy].value().x &&
-                    aPos[bullet].value().x < aPos[enemy].value().x + aHitBox[enemy].value().width &&
-                    aPos[bullet].value().y > aPos[enemy].value().y &&
-                    aPos[bullet].value().y < aPos[enemy].value().y + aHitBox[enemy].value().height) {
+                if (aPos[bullet].value().x > aPos[enemy].value().x
+                    && aPos[bullet].value().x < aPos[enemy].value().x + aHitBox[enemy].value().width
+                    && aPos[bullet].value().y > aPos[enemy].value().y
+                    && aPos[bullet].value().y < aPos[enemy].value().y + aHitBox[enemy].value().height) {
                     aIsAlive[enemy].value().isAlive = false;
                     world.killEntity(bullet);
                     break;
                 }
-            }    
+            }
         }
     }
 } // namespace ECS
