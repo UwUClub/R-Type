@@ -45,12 +45,13 @@ jobs:
           - ON
         build_shared:
           - OFF
-        package_generator:
-          - "ZIP"
 
         exclude:
           - os: windows-2019
             compiler: gcc-11
+
+          - os: Ubuntu-20.04
+            packaging_maintainer_mode: ON
 
         include:
           # Add appropriate variables for gcov version required. This will intentionally break
@@ -66,7 +67,7 @@ jobs:
           # Set up preferred package generators, for given build configurations
           - build_type: Release
             packaging_maintainer_mode: OFF
-            package_generator: TBZ2
+            package_generator: ZIP
 
     steps:
       - name: Check for llvm version mismatches
