@@ -17,8 +17,12 @@ namespace ECS {
             auto &speed = aSpeed[idx].value();
             auto &type = aType[idx].value();
             if (type.isBullet) {
-                pos.x += speed.speed * world.getDeltaTime();
-                if (pos.x > SCREEN_WIDTH + 30) {
+                if (speed.speed == MISSILES_SPEED) {
+                    pos.x -= speed.speed * world.getDeltaTime();
+                } else if (speed.speed == BULLET_SPEED) {
+                    pos.x += speed.speed * world.getDeltaTime();
+                }
+                if (pos.x > SCREEN_WIDTH + 30 || pos.x < -30) {
                     SDLDisplayClass::getInstance().freeRects(idx);
                     world.killEntity(idx);
                 }
