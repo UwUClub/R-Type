@@ -149,7 +149,7 @@ namespace ECS {
 
             /**
              * @brief Kill the player if he is hit by an obstacle
-             * 
+             *
              * @param aPos SparseArray of all entities position
              * @param aType SparseArray of all entities type
              * @param aIsAlive SparseArray of all entities isAlive component
@@ -162,7 +162,7 @@ namespace ECS {
 
             /**
              * @brief Handle the death of the player
-             * 
+             *
              * @param aType SparseArray of all entities type
              * @param aIsAlive SparseArray of all entities isAlive component
              * @param aSprites SparseArray of all entities sprites
@@ -170,6 +170,7 @@ namespace ECS {
             static void handlePlayerDeath(Core::SparseArray<Component::TypeEntity> &aType,
                                           Core::SparseArray<Component::IsAlive> &aIsAlive,
                                           Core::SparseArray<Component::LoadedSprite> &aSprites);
+
         private:
             /**
              * @brief Map of all the SDL_Keycode and their equivalent in our ECS
