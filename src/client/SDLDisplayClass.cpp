@@ -37,8 +37,9 @@ SDLDisplayClass::SDLDisplayClass()
     }
 }
 
-void SDLDisplayClass::addEntity(ECS::Utils::Vector2f aPos, Component::Speed aSpeed, Component::TypeEntity aType,
-                                Component::LoadedSprite aSprite, Component::HitBox aHitBox, Component::IsAlive aIsAlive)
+size_t SDLDisplayClass::addEntity(ECS::Utils::Vector2f aPos, Component::Speed aSpeed, Component::TypeEntity aType,
+                                  Component::LoadedSprite aSprite, Component::HitBox aHitBox,
+                                  Component::IsAlive aIsAlive)
 {
     ECS::Core::World &world = ECS::Core::World::getInstance();
     auto &vec = world.getComponent<ECS::Utils::Vector2f>();
@@ -55,6 +56,7 @@ void SDLDisplayClass::addEntity(ECS::Utils::Vector2f aPos, Component::Speed aSpe
     sprite.insertAt(idx, aSprite);
     hitbox.insertAt(idx, aHitBox);
     isAlive.insertAt(idx, aIsAlive);
+    return idx;
 }
 
 SDL_Texture *SDLDisplayClass::getTexture(const std::string &aPath)

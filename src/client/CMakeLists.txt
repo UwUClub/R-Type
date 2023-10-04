@@ -11,7 +11,6 @@ target_sources(client PRIVATE
 
 add_subdirectory(network)
 add_subdirectory(systems)
-add_subdirectory(components)
 
 if (SDL2_DOWNLOADED)
     target_link_libraries(client
@@ -24,7 +23,7 @@ if (SDL2_DOWNLOADED)
             Boost::serialization
             Threads::Threads
             ecs
-            rtype_protocol
+            rtype
             Boost::asio
             Boost::serialization
     )
@@ -39,7 +38,7 @@ else()
             Boost::serialization
             Threads::Threads
             ecs
-            rtype_protocol
+            rtype
             Boost::asio
             Boost::serialization
     )

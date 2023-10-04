@@ -63,9 +63,11 @@ class SDLDisplayClass
          * @param aSprite Sprite of the entity
          * @param aHitBox Hitbox of the entity
          * @param aIsAlive IsAlive of the entity
+         * @return size_t The index of the entity
          */
-        static void addEntity(ECS::Utils::Vector2f aPos, Component::Speed aSpeed, Component::TypeEntity aType,
-                              Component::LoadedSprite aSprite, Component::HitBox aHitBox, Component::IsAlive aIsAlive);
+        static size_t addEntity(ECS::Utils::Vector2f aPos, Component::Speed aSpeed, Component::TypeEntity aType,
+                                Component::LoadedSprite aSprite, Component::HitBox aHitBox,
+                                Component::IsAlive aIsAlive);
         SDL_Renderer *_renderer;
         SDL_Window *_window;
         float _elapsedTime;

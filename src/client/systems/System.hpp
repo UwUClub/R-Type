@@ -15,6 +15,11 @@ namespace ECS {
     {
         public:
             /**
+             * @brief Create a player
+             */
+            static void createPlayer();
+
+            /**
              * @brief Move the player
              *
              * @param aPos SparseArray of all entities position
@@ -24,6 +29,12 @@ namespace ECS {
             static void movePlayer(Core::SparseArray<ECS::Utils::Vector2f> &aPos,
                                    Core::SparseArray<Component::Speed> &aSpeed,
                                    Core::SparseArray<Component::TypeEntity> &aType);
+
+            /*
+             * @brief Update the player position
+             */
+            static void updatePlayerPos(Core::SparseArray<Utils::Vector2f> &aPos,
+                                        Core::SparseArray<Component::TypeEntity> &aType);
 
             /**
              * @brief Get the all the input of the user
