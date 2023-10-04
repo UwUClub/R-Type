@@ -12,6 +12,7 @@ function(R_Type_setup_dependencies)
   find_package(SDL2 QUIET)
   find_package(SDL2_image QUIET)
 
+
   if(NOT TARGET Catch2::Catch2WithMain)
     CPMAddPackage(
             NAME Catch2

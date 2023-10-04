@@ -60,6 +60,12 @@ jobs:
             enable_ipo: Off
             gcov_executable: "llvm-cov gcov"
 
+          - os: windows-2022
+            compiler: msvc
+            generator: "Visual Studio 17 2022"
+            enable_ipo: On
+
+
     steps:
       - name: Check for llvm version mismatches
         if: ${{ contains(matrix.compiler, 'llvm') && !contains(matrix.compiler, env.CLANG_TIDY_VERSION) }}
