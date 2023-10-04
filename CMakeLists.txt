@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.21)
-if (MSVC)
+if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-  add_compile_options(/wd4005)
+    add_compile_options(/wd4005)
 endif()
 find_package(SDL2)
 
