@@ -20,6 +20,9 @@ namespace ECS {
                 float posY = gameEvent.getPayload()[1];
 
                 for (size_t i = 0; i < aType.size(); i++) {
+                    if (!aType[i].has_value()) {
+                        continue;
+                    }
                     if (aType[i].value().onlineId == onlineEntityId) {
                         aPos[i].value().x = posX;
                         aPos[i].value().y = posY;

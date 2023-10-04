@@ -45,11 +45,13 @@ std::vector<ECS::Event::Event *> ECS::Event::EventManager::getEventsByType(const
 
 void ECS::Event::EventManager::clearNonGameEvents()
 {
-    for (int i = 0; i < _events.size(); i++) {
-        if (_events[i]->getType() != EventType::GAME) {
-            delete _events[i];
-            _events.erase(_events.begin() + i);
-            i--;
+    for (auto &event : _events) {
+        if (event == nullptr) {
+            continue;
+        }
+        if (event->getType() != EventType::GAME) {
+            delete event;
+            event = nullptr;
         }
     }
 }
@@ -60,6 +62,7 @@ void ECS::Event::EventManager::removeEvent(int aIndex)
         throw EventManagerException("Index out of range");
     }
     delete _events[aIndex];
+    _events[aIndex] = nullptr;
     _events.erase(_events.begin() + aIndex);
 }
 
