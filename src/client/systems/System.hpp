@@ -2,6 +2,7 @@
 #define SYSTEM_HPP_
 
 #include "Components.hpp"
+#include "IsAlive.hpp"
 #include "KeyboardEvent.hpp"
 #include "MouseEvent.hpp"
 #include "SparseArray.hpp"
@@ -122,6 +123,16 @@ namespace ECS {
             static void handleEnemyDeath(Core::SparseArray<Component::TypeEntity> &aType,
                                          Core::SparseArray<Component::IsAlive> &aIsAlive,
                                          Core::SparseArray<Component::LoadedSprite> &aSprites);
+
+            /**
+             * @brief Make enemies shoot missiles
+             * 
+             * @param aPos SparseArray of all entities position
+             * @param aType SparseArray of all entities type
+             */
+            static void enemyMissiles(Core::SparseArray<Utils::Vector2f> &aPos,
+                                      Core::SparseArray<Component::TypeEntity> &aType,
+                                      Core::SparseArray<Component::IsAlive> &aIsAlive);
 
         private:
             /**
