@@ -21,7 +21,8 @@ namespace ECS {
                          Component::TypeEntity {false, false, false, true, false, false, false},
                          Component::LoadedSprite {BULLET_ASSET, nullptr,
                                                   new SDL_Rect {207, 10, BULLET_TEX_WIDTH, BULLET_TEX_HEIGHT},
-                                                  new SDL_Rect {0, 0, BULLET_TEX_WIDTH, BULLET_TEX_HEIGHT}});
+                                                  new SDL_Rect {0, 0, BULLET_TEX_WIDTH, BULLET_TEX_HEIGHT}},
+                         Component::HitBox {BULLET_TEX_WIDTH, BULLET_TEX_HEIGHT}, Component::IsAlive {false, 0});
                  }},
             };
 

@@ -4,6 +4,7 @@
 #include "Components.hpp"
 #include "KeyboardEvent.hpp"
 #include "MouseEvent.hpp"
+#include "SparseArray.hpp"
 #include "Utils.hpp"
 #include "WindowEvent.hpp"
 #include "World.hpp"
@@ -110,6 +111,28 @@ namespace ECS {
             static void moveMissiles(Core::SparseArray<Utils::Vector2f> &aPos,
                                      Core::SparseArray<Component::Speed> &aSpeed,
                                      Core::SparseArray<Component::TypeEntity> &aType);
+
+            /**
+             * @brief Destroy enemies when they are hit by a missile
+             *
+             * @param aPos SparseArray of all entities position
+             * @param aType SparseArray of all entities type
+             */
+            static void destroyEnemy(Core::SparseArray<Utils::Vector2f> &aPos,
+                                     Core::SparseArray<Component::TypeEntity> &aType,
+                                     Core::SparseArray<Component::HitBox> &aHitBox,
+                                     Core::SparseArray<Component::IsAlive> &aIsAlive);
+
+            /**
+             * @brief Handle the death of an enemy
+             *
+             * @param aType SparseArray of all entities type
+             * @param aIsAlive SparseArray of all entities isAlive component
+             * @param aSprites SparseArray of all entities sprites
+             */
+            static void handleEnemyDeath(Core::SparseArray<Component::TypeEntity> &aType,
+                                         Core::SparseArray<Component::IsAlive> &aIsAlive,
+                                         Core::SparseArray<Component::LoadedSprite> &aSprites);
 
         private:
             /**

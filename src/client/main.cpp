@@ -3,6 +3,8 @@
 #include "ClientNetworkHandler.hpp"
 #include "Components.hpp"
 #include "EventManager.hpp"
+#include "HitBox.hpp"
+#include "IsAlive.hpp"
 #include "Packets.hpp"
 #include "SDLDisplayClass.hpp"
 #include "ServerGameEvent.hpp"
@@ -33,6 +35,8 @@ int main(int ac, char **av)
     world.registerComponent<Component::Speed>();
     world.registerComponent<Component::TypeEntity>();
     world.registerComponent<Component::LoadedSprite>();
+    world.registerComponent<Component::HitBox>();
+    world.registerComponent<Component::IsAlive>();
     world.addSystem(ECS::System::getInput);
     world.addSystem<Component::LoadedSprite>(ECS::System::loadTextures);
     world.addSystem<Component::LoadedSprite, ECS::Utils::Vector2f>(ECS::System::displayEntities);
@@ -45,15 +49,20 @@ int main(int ac, char **av)
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveEnemies);
     world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::shootMissiles);
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveMissiles);
+    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::HitBox, Component::IsAlive>(
+        ECS::System::destroyEnemy);
+    world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite>(ECS::System::handleEnemyDeath);
 
     display.addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {BACKGROUND_SPEED},
                       Component::TypeEntity {false, false, false, false, false, false, true},
                       Component::LoadedSprite {BACKGROUND_ASSET, nullptr, nullptr,
-                                               new SDL_Rect {400, 15, SCREEN_WIDTH, SCREEN_HEIGHT}});
+                                               new SDL_Rect {400, 15, SCREEN_WIDTH, SCREEN_HEIGHT}},
+                      Component::HitBox {}, Component::IsAlive {false, 0});
     display.addEntity(ECS::Utils::Vector2f {SCREEN_WIDTH, 0}, Component::Speed {BACKGROUND_SPEED},
                       Component::TypeEntity {false, false, false, false, false, false, true},
                       Component::LoadedSprite {BACKGROUND_ASSET, nullptr, nullptr,
-                                               new SDL_Rect {400, 15, SCREEN_WIDTH, SCREEN_HEIGHT}});
+                                               new SDL_Rect {400, 15, SCREEN_WIDTH, SCREEN_HEIGHT}},
+                      Component::HitBox {}, Component::IsAlive {false, 0});
 
     while (world.isRunning()) {
         world.runSystems();

@@ -12,7 +12,7 @@ namespace ECS {
             if (!aSprite.has_value() || aSprite.value().texture != nullptr) {
                 continue;
             }
-            aSprite.value().texture = IMG_LoadTexture(display._renderer, aSprite.value().path.c_str());
+            aSprite.value().texture = display.getTexture(aSprite.value().path);
             if (aSprite.value().texture == nullptr) {
                 std::cerr << "Failed to load texture: " << aSprite.value().path << std::endl;
             }
