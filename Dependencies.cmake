@@ -8,7 +8,7 @@ include(cmake/FindSDL2.cmake)
 function(R_Type_setup_dependencies)
 
   find_package(Catch2 QUIET)
-  find_package(Boost QUIET COMPONENTS system serialization align assert config core static_assert throw_exception array bind chrono integer move mpl predef asio ratio type_traits typeof utility coroutine date_time function regex smart_ptr preprocessor io QUIET)
+  find_package(Boost QUIET COMPONENTS system serialization align assert config core static_assert throw_exception array bind chrono integer move mpl predef asio ratio type_traits typeof utility coroutine date_time function regex smart_ptr preprocessor io uuid QUIET)
   find_package(SDL2 QUIET)
   find_package(SDL2_image QUIET)
 
@@ -271,6 +271,15 @@ function(R_Type_setup_dependencies)
             NAME boost_io
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/io"
+            GIT_TAG "boost-1.83.0"
+    )
+  endif()
+
+  if (NOT TARGET Boost::uuid)
+    CPMAddPackage(
+            NAME boost_uuid
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/uuid"
             GIT_TAG "boost-1.83.0"
     )
   endif()
