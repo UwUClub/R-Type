@@ -6,11 +6,13 @@
 #include "System.hpp"
 #include "Values.hpp"
 #include "World.hpp"
+#include "components/IsAlive.hpp"
 #include <unordered_map>
 
 namespace ECS {
     void System::movePlayer(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
-                            Core::SparseArray<Component::TypeEntity> &aType)
+                            Core::SparseArray<Component::TypeEntity> &aType,
+                            Core::SparseArray<Component::IsAlive> &aIsAlive)
     {
         Network::ClientNetworkHandler &network = Network::ClientNetworkHandler::getInstance();
 
@@ -47,7 +49,7 @@ namespace ECS {
             }
             for (auto &event : keyboardEvent) {
                 auto *keyEvent = static_cast<Event::KeyboardEvent *>(event);
-                if (keyMap.find(keyEvent->_keyId) == keyMap.end()) {
+                if (keyMap.find(keyEvent->_keyId) == keyMap.end() || !aIsAlive[i].value().isAlive) {
                     continue;
                 }
                 keyMap.at(keyEvent->_keyId)(aSpeed[i].value().speed, aPos[i].value(), Core::World::getInstance());
