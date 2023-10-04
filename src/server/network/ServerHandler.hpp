@@ -3,8 +3,8 @@
 #include "Packets.hpp"
 #include <unordered_map>
 
-#ifndef ServerHandler_HPP
-    #define ServerHandler_HPP
+#ifndef SERVERHANDLER_HPP
+    #define SERVERHANDLER_HPP
 
 namespace Network {
 
@@ -22,12 +22,12 @@ namespace Network {
              */
             ServerHandler() = default;
 
+        public:
             /**
              * @brief Destroy the ServerHandler object
              */
             ~ServerHandler() = default;
 
-        public:
             /**
              * @brief Get the instance of the singleton
              * @return ServerHandler & The instance of the singleton

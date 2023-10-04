@@ -6,8 +6,6 @@
 #include "EventManager.hpp"
 #include "NetworkHandler.hpp"
 #include "Packets.hpp"
-#include <boost/archive/binary_iarchive.hpp>
-#include <boost/archive/binary_oarchive.hpp>
 
 namespace Network {
 
@@ -15,16 +13,15 @@ namespace Network {
 
     void ServerHandler::start(std::string &aHost, unsigned short aPort)
     {
-        Network::NetworkHandler &network = Network::NetworkHandler::getInstance();
+        NetworkHandler &network = NetworkHandler::getInstance();
         udp::endpoint endpoint(boost::asio::ip::address::from_string(aHost), aPort);
-
-        network.bind(endpoint);
 
         network.onReceive([this](const RType::Packet &aPacket, udp::endpoint &aClientEndpoint) {
             receivePacket(aPacket, aClientEndpoint);
         });
 
         network.start(endpoint.protocol());
+        network.bind(endpoint);
         std::cout << "Server " << endpoint << " listening" << std::endl;
     }
 

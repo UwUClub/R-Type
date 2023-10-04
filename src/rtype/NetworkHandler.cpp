@@ -11,11 +11,6 @@ namespace Network {
 
     using boost::asio::ip::udp;
 
-    NetworkHandler::~NetworkHandler()
-    {
-        stop();
-    }
-
     void NetworkHandler::start(const boost::asio::basic_socket<boost::asio::ip::udp>::protocol_type &aProtocol)
     {
         _socket.open(aProtocol);
@@ -106,8 +101,11 @@ namespace Network {
     {
         for (auto &sender : _senders) {
             sender.second.second = false;
-            sender.second.first.join();
+            if (sender.second.first.joinable()) {
+                sender.second.first.join();
+            }
         }
+        _ioService.stop();
         if (_ioThread.joinable()) {
             _ioThread.join();
         }

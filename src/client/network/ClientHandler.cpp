@@ -12,10 +12,13 @@ namespace Network {
 
     using boost::asio::ip::udp;
 
+    ClientHandler::ClientHandler()
+        : _resolver(udp::resolver(NetworkHandler::getInstance().getIoService()))
+    {}
+
     void ClientHandler::start(std::string &aHost, std::string &aPort)
     {
-        Network::NetworkHandler &network = Network::NetworkHandler::getInstance();
-        _resolver = udp::resolver(network.getIoService());
+        NetworkHandler &network = NetworkHandler::getInstance();
         _serverEndpoint = *_resolver.resolve(udp::v4(), aHost, aPort).begin();
 
         network.onReceive([this](const RType::Packet &aPacket, udp::endpoint &aEndpoint) {

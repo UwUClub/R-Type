@@ -20,14 +20,14 @@ namespace Network {
             /**
              * @brief Get the instance of the singleton
              */
-            explicit ClientHandler();
+            ClientHandler();
 
+        public:
             /**
              * @brief Destroy the ClientHandler object
              */
             ~ClientHandler() = default;
 
-        public:
             /**
              * @brief Get the instance of the singleton
              * @return ClientHandler & The instance of the singleton

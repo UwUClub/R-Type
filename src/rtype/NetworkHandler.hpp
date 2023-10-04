@@ -4,8 +4,8 @@
 #include "Values.hpp"
 #include <unordered_map>
 
-#ifndef NetworkHandler_HPP
-    #define NetworkHandler_HPP
+#ifndef NETWORKHANDLER_HPP
+    #define NETWORKHANDLER_HPP
 
 namespace Network {
 
@@ -28,7 +28,7 @@ namespace Network {
             /**
              * @brief Launch the server
              */
-            explicit NetworkHandler();
+            NetworkHandler() = default;
 
             /**
              * @brief Handle a request from a client
@@ -41,11 +41,10 @@ namespace Network {
             /**
              * @brief Destroy the NetworkHandler object
              */
-            ~NetworkHandler();
+            ~NetworkHandler() = default;
 
             /**
              * @brief Get the instance of the singleton
-             * @param aPort The port to listen to
              * @return NetworkHandler & The instance of the singleton
              */
             static NetworkHandler &getInstance()
