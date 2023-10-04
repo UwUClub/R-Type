@@ -7,8 +7,8 @@
 
 namespace ECS {
     void System::enemyMissiles(Core::SparseArray<Utils::Vector2f> &aPos,
-                              Core::SparseArray<Component::TypeEntity> &aType,
-                              Core::SparseArray<Component::IsAlive> &aIsAlive)
+                               Core::SparseArray<Component::TypeEntity> &aType,
+                               Core::SparseArray<Component::IsAlive> &aIsAlive)
     {
         auto &world = Core::World::getInstance();
         auto &display = SDLDisplayClass::getInstance();
@@ -20,7 +20,7 @@ namespace ECS {
             auto &pos = aPos[idx].value();
             auto &type = aType[idx].value();
             auto &isAlive = aIsAlive[idx].value();
-            if (type.isEnemy && rand()%PROBABILTY_SHOOT_ENEMY == 0 && isAlive.isAlive) {
+            if (type.isEnemy && rand() % PROBABILTY_SHOOT_ENEMY == 0 && isAlive.isAlive) {
                 display.addEntity(
                     ECS::Utils::Vector2f {static_cast<float>(pos.x - MISSILES_TEX_WIDTH),
                                           static_cast<float>(pos.y + ENEMY_TEX_HEIGHT / 2 - MISSILES_TEX_HEIGHT / 2)},
@@ -30,6 +30,6 @@ namespace ECS {
                                              new SDL_Rect {0, 0, MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT}},
                     Component::HitBox {MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT}, Component::IsAlive {false, 0});
             }
-        }   
+        }
     }
-}
+} // namespace ECS

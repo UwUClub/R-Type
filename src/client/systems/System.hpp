@@ -126,7 +126,7 @@ namespace ECS {
 
             /**
              * @brief Make enemies shoot missiles
-             * 
+             *
              * @param aPos SparseArray of all entities position
              * @param aType SparseArray of all entities type
              */
