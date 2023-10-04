@@ -1,3 +1,4 @@
+#include "IsAlive.hpp"
 #include "SDLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
@@ -21,6 +22,7 @@ namespace ECS {
             Component::Speed {ENEMY_SPEED}, Component::TypeEntity {false, true, false, false, false, false},
             Component::LoadedSprite {ENEMY_ASSET, nullptr,
                                      new SDL_Rect {enemyTextureX, enemyTextureY, ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT},
-                                     new SDL_Rect {0, 0, ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT}});
+                                     new SDL_Rect {0, 0, ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT}},
+            Component::HitBox {ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT}, Component::IsAlive {true, 0});
     }
 } // namespace ECS

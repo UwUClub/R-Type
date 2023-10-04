@@ -7,6 +7,7 @@
 
 #include "SDLDisplayClass.hpp"
 #include <algorithm>
+#include "IsAlive.hpp"
 #include "SparseArray.hpp"
 #include "Utils.hpp"
 #include "Values.hpp"
@@ -37,19 +38,47 @@ SDLDisplayClass::SDLDisplayClass()
 }
 
 void SDLDisplayClass::addEntity(ECS::Utils::Vector2f aPos, Component::Speed aSpeed, Component::TypeEntity aType,
-                                Component::LoadedSprite aSprite)
+                                Component::LoadedSprite aSprite, Component::HitBox aHitBox, Component::IsAlive aIsAlive)
 {
     ECS::Core::World &world = ECS::Core::World::getInstance();
     auto &vec = world.getComponent<ECS::Utils::Vector2f>();
     auto &spd = world.getComponent<Component::Speed>();
     auto &type = world.getComponent<Component::TypeEntity>();
     auto &sprite = world.getComponent<Component::LoadedSprite>();
+    auto &hitbox = world.getComponent<Component::HitBox>();
+    auto &isAlive = world.getComponent<Component::IsAlive>();
     const size_t idx = world.createEntity();
 
     vec.insertAt(idx, aPos);
     spd.insertAt(idx, aSpeed);
     type.insertAt(idx, aType);
     sprite.insertAt(idx, aSprite);
+    hitbox.insertAt(idx, aHitBox);
+    isAlive.insertAt(idx, aIsAlive);
+}
+
+SDL_Texture *SDLDisplayClass::getTexture(const std::string &aPath)
+{
+    if (_textures.find(aPath) == _textures.end()) {
+        _textures[aPath] = IMG_LoadTexture(_renderer, aPath.c_str());
+        if (_textures[aPath] == nullptr) {
+            std::cerr << "Failed to create texture: " << SDL_GetError() << std::endl;
+            return nullptr;
+        }
+    }
+    return _textures[aPath];
+}
+
+void SDLDisplayClass::freeRects(const std::size_t &aIdx)
+{
+    auto &world = ECS::Core::World::getInstance();
+    auto &sprites = world.getComponent<Component::LoadedSprite>();
+
+    if (!sprites[aIdx].has_value()) {
+        return;
+    }
+    delete sprites[aIdx]->rect;
+    delete sprites[aIdx]->srcRect;
 }
 
 SDLDisplayClass::~SDLDisplayClass()
@@ -61,9 +90,11 @@ SDLDisplayClass::~SDLDisplayClass()
         if (!sprite.has_value()) {
             continue;
         }
-        SDL_DestroyTexture(sprite->texture);
         delete sprite->rect;
         delete sprite->srcRect;
+    }
+    for (auto &texture : _textures) {
+        SDL_DestroyTexture(texture.second);
     }
     SDL_DestroyRenderer(_renderer);
     SDL_DestroyWindow(_window);

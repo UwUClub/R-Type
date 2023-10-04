@@ -7,6 +7,8 @@
 
 #ifndef COMPONENTS_HPP_
 #define COMPONENTS_HPP_
+#include "HitBox.hpp"
+#include "IsAlive.hpp"
 #include "LoadedSprite.hpp"
 #include "Speed.hpp"
 #include "TypeEntity.hpp"
