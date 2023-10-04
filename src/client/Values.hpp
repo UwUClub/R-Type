@@ -32,7 +32,7 @@ static const std::string BACKGROUND_ASSET = "assets/sprites/background.png";
 //------------------ PLAYER ------------------//
 
 static const std::string PLAYER_ASSET = "assets/sprites/r-typesheet42.png";
-const constexpr float PLAYER_SPEED = 3000;
+const constexpr float PLAYER_SPEED = 10000;
 const constexpr int PLAYER_TEX_WIDTH = 33;
 const constexpr int PLAYER_TEX_HEIGHT = 17;
 
@@ -41,5 +41,11 @@ static const std::string BULLET_ASSET = "assets/sprites/r-typesheet2.png";
 const constexpr float BULLET_SPEED = 800;
 const constexpr int BULLET_TEX_WIDTH = 25;
 const constexpr int BULLET_TEX_HEIGHT = 13;
+
+//------------------ EXPLOSION ------------------//
+static const std::string EXPLOSION_ASSET = "assets/sprites/r-typesheet2.png";
+const constexpr float EXPLOSION_SPEED = 0;
+const constexpr int EXPLOSION_TEX_WIDTH = 33;
+const constexpr int EXPLOSION_TEX_HEIGHT = 33;
 
 #endif /* !VALUES_HPP_ */
