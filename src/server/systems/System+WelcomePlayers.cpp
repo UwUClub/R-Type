@@ -14,7 +14,6 @@ namespace ECS {
         ECS::Core::World &world = ECS::Core::World::getInstance();
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
         Network::ServerNetworkHandler &network = Network::ServerNetworkHandler::getInstance();
-        int eventIndex = 0;
         auto events = eventManager->getEventsByType(Event::EventType::GAME);
 
         for (auto &event : events) {
@@ -43,10 +42,8 @@ namespace ECS {
                     }
                 }
 
-                eventManager->removeEvent(eventIndex);
-                eventIndex--;
+                eventManager->removeEvent(event);
             }
-            eventIndex++;
         }
     }
 } // namespace ECS

@@ -8,7 +8,7 @@ namespace ECS {
                                  Core::SparseArray<Component::TypeEntity> &aType)
     {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
-        int eventIndex = 0;
+        ;
         auto events = eventManager->getEventsByType(Event::EventType::GAME);
 
         for (auto &event : events) {
@@ -20,6 +20,9 @@ namespace ECS {
                 float posY = gameEvent.getPayload()[1];
 
                 for (size_t i = 0; i < aType.size(); i++) {
+                    if (!aType[i].has_value()) {
+                        continue;
+                    }
                     if (aType[i].value().onlineId == onlineEntityId) {
                         aPos[i].value().x = posX;
                         aPos[i].value().y = posY;
@@ -27,10 +30,8 @@ namespace ECS {
                     }
                 }
 
-                eventManager->removeEvent(eventIndex);
-                eventIndex--;
+                eventManager->removeEvent(event);
             }
-            eventIndex++;
         }
     }
 
