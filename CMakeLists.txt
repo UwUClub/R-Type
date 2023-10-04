@@ -23,18 +23,6 @@ project(
   HOMEPAGE_URL "https://github.com/UwUClub/R-Type"
   LANGUAGES CXX C)
 
-  if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-    add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-    add_compile_options(/wd4005)
-    message("MSVC is used")
-        message(
-      WARNING
-        "MSVC is used"
-    )
-else()
-    message(WARNING "MSVC is not used")
-endif()
-
 include(cmake/PreventInSourceBuilds.cmake)
 include(ProjectOptions.cmake)
 if (NOT TARGET SDL2::SDL2)
