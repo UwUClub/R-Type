@@ -6,8 +6,8 @@
 
 namespace ECS {
     void System::handlePlayerDeath(Core::SparseArray<Component::TypeEntity> &aType,
-                                  Core::SparseArray<Component::IsAlive> &aIsAlive,
-                                  Core::SparseArray<Component::LoadedSprite> &aSprites)
+                                   Core::SparseArray<Component::IsAlive> &aIsAlive,
+                                   Core::SparseArray<Component::LoadedSprite> &aSprites)
     {
         auto &world = Core::World::getInstance();
         auto &display = SDLDisplayClass::getInstance();

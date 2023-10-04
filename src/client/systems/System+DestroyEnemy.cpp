@@ -4,8 +4,7 @@
 #include <SDL_image.h>
 
 namespace ECS {
-    void System::destroyEnemy(Core::SparseArray<Utils::Vector2f> &aPos,
-                              Core::SparseArray<Component::TypeEntity> &aType,
+    void System::destroyEnemy(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::TypeEntity> &aType,
                               Core::SparseArray<Component::HitBox> &aHitBox,
                               Core::SparseArray<Component::IsAlive> &aIsAlive)
     {

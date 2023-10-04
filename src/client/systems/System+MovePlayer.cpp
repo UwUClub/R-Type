@@ -11,7 +11,8 @@
 
 namespace ECS {
     void System::movePlayer(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
-                            Core::SparseArray<Component::TypeEntity> &aType, Core::SparseArray<Component::IsAlive> &aIsAlive)
+                            Core::SparseArray<Component::TypeEntity> &aType,
+                            Core::SparseArray<Component::IsAlive> &aIsAlive)
     {
         Network::ClientNetworkHandler &network = Network::ClientNetworkHandler::getInstance();
 
