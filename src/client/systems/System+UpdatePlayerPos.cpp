@@ -8,7 +8,7 @@ namespace ECS {
                                  Core::SparseArray<Component::TypeEntity> &aType)
     {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
-        int eventIndex = 0;
+        ;
         auto events = eventManager->getEventsByType(Event::EventType::GAME);
 
         for (auto &event : events) {
@@ -30,10 +30,8 @@ namespace ECS {
                     }
                 }
 
-                eventManager->removeEvent(eventIndex);
-                eventIndex--;
+                eventManager->removeEvent(event);
             }
-            eventIndex++;
         }
     }
 

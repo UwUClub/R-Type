@@ -7,16 +7,13 @@ ECS::Event::EventManager::EventManager() = default;
 
 ECS::Event::EventManager::~EventManager()
 {
-    for (auto &event : _events) {
-        delete event;
-    }
     _events.clear();
 }
 
 //-------------------PUBLIC METHODS-------------------//
 void ECS::Event::EventManager::pushEvent(Event *aEvent)
 {
-    _events.push_back(aEvent);
+    _events.push_back(std::unique_ptr<Event>(aEvent));
 }
 
 ECS::Event::EventManager *ECS::Event::EventManager::getInstance()
@@ -26,7 +23,7 @@ ECS::Event::EventManager *ECS::Event::EventManager::getInstance()
     return &instance;
 }
 
-std::vector<ECS::Event::Event *> &ECS::Event::EventManager::getEvents()
+std::vector<std::unique_ptr<ECS::Event::Event>> &ECS::Event::EventManager::getEvents()
 {
     return _events;
 }
@@ -37,7 +34,7 @@ std::vector<ECS::Event::Event *> ECS::Event::EventManager::getEventsByType(const
 
     for (auto &event : _events) {
         if (event->getType() == aEventType) {
-            events.push_back(event);
+            events.push_back(event.get());
         }
     }
     return events;
@@ -45,25 +42,24 @@ std::vector<ECS::Event::Event *> ECS::Event::EventManager::getEventsByType(const
 
 void ECS::Event::EventManager::clearNonGameEvents()
 {
-    for (auto &event : _events) {
-        if (event == nullptr) {
-            continue;
-        }
-        if (event->getType() != EventType::GAME) {
-            delete event;
-            event = nullptr;
+    for (auto it = _events.begin(); it != _events.end();) {
+        if ((*it)->getType() != EventType::GAME) {
+            it = _events.erase(it);
+        } else {
+            ++it;
         }
     }
 }
 
-void ECS::Event::EventManager::removeEvent(int aIndex)
+void ECS::Event::EventManager::removeEvent(Event *aEvent)
 {
-    if (aIndex >= _events.size()) {
-        throw EventManagerException("Index out of range");
+    for (auto it = _events.begin(); it != _events.end();) {
+        if (it->get() == aEvent) {
+            it = _events.erase(it);
+        } else {
+            ++it;
+        }
     }
-    delete _events[aIndex];
-    _events[aIndex] = nullptr;
-    _events.erase(_events.begin() + aIndex);
 }
 
 //-------------------NESTED CLASSES-------------------//

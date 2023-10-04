@@ -41,7 +41,6 @@ namespace ECS {
                 },
             };
 
-        int eventIndex = 0;
         auto events = eventManager->getEventsByType(Event::EventType::GAME);
 
         for (auto &event : events) {
@@ -58,10 +57,8 @@ namespace ECS {
                                    entityId,
                                    {aPos[entityId].value().x, aPos[entityId].value().y}});
 
-                eventManager->removeEvent(eventIndex);
-                eventIndex--;
+                eventManager->removeEvent(event);
             }
-            eventIndex++;
         }
     }
 } // namespace ECS
