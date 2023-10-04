@@ -39,6 +39,12 @@ namespace RType {
                   payload(aPayload)
             {}
 
+            Packet(std::string &aUuid)
+                : uuid(aUuid),
+                  type(-1),
+                  payload()
+            {}
+
             template<typename archive>
             void serialize(archive &ar, const unsigned int /*version*/)
             {

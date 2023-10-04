@@ -10,6 +10,13 @@ namespace Network {
 
     using boost::asio::ip::udp;
 
+    ClientNetworkHandler::~ClientNetworkHandler()
+    {
+        for (auto &sender : _senders) {
+            sender.second.join();
+        }
+    }
+
     void ClientNetworkHandler::start(std::string &aHost, std::string &aPort)
     {
         _serverEndpoint = *_resolver.resolve(udp::v4(), aHost, aPort).begin();
@@ -37,25 +44,35 @@ namespace Network {
 
         RType::Packet packet;
         RType::unserializePacket<std::array<char, READ_BUFFER_SIZE>>(&packet, _readBuffer);
-        // std::cout << "Received type " << static_cast<int>(packet.type) << " from " << _serverEndpoint << std::endl;
-        RType::ClientEventType packetType = static_cast<RType::ClientEventType>(packet.type);
 
-        auto *evt = new RType::ClientGameEvent(packetType, packet.payload);
-        ECS::Event::EventManager::getInstance()->pushEvent(evt);
+        if (packet.type == -1) { // receive aknowledgment
+            if (_senders.find(packet.uuid) != _senders.end() && _senders[packet.uuid].joinable()) {
+                _senders[packet.uuid].join();
+                _senders.erase(packet.uuid);
+            }
+        } else {
+            RType::ClientEventType packetType = static_cast<RType::ClientEventType>(packet.type);
+
+            auto *evt = new RType::ClientGameEvent(packetType, packet.payload);
+            ECS::Event::EventManager::getInstance()->pushEvent(evt);
+
+            send(RType::Packet(packet.uuid)); // send aknowledgment
+        }
 
         listen();
     }
 
     void ClientNetworkHandler::send(const RType::Packet &aPacket)
     {
-        try {
-            boost::asio::streambuf buf;
-            RType::serializePacket(&buf, aPacket);
-            _socket.send_to(buf.data(), _serverEndpoint);
-            // std::cout << "Sent something to " << _serverEndpoint << std::endl;
-        } catch (std::exception &e) {
-            std::cerr << "ClientNetworkHandler send error: " << e.what() << std::endl;
-        }
+        _senders[aPacket.uuid] = std::thread([this, aPacket]() {
+            try {
+                boost::asio::streambuf buf;
+                RType::serializePacket(&buf, aPacket);
+                _socket.send_to(buf.data(), _serverEndpoint);
+            } catch (std::exception &e) {
+                std::cerr << "ClientNetworkHandler send error: " << e.what() << std::endl;
+            }
+        });
     }
 
     void ClientNetworkHandler::stop()

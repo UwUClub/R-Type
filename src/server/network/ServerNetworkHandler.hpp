@@ -1,7 +1,7 @@
 #include <boost/asio.hpp>
 #include <iostream>
-#include <map>
 #include "Packets.hpp"
+#include <unordered_map>
 
 #ifndef ServerNetworkHandler_HPP
     #define ServerNetworkHandler_HPP
@@ -19,8 +19,9 @@ namespace Network {
             udp::socket _socket;
             std::array<char, READ_BUFFER_SIZE> _readBuffer;
             udp::endpoint _readEndpoint;
-            std::map<size_t, udp::endpoint> _clients;
+            std::unordered_map<size_t, udp::endpoint> _clients;
             std::thread _ioThread;
+            std::unordered_map<std::string, std::thread> _senders;
 
             /**
              * @brief Launch the server
@@ -38,7 +39,7 @@ namespace Network {
             /**
              * @brief Destroy the ServerNetworkHandler object
              */
-            ~ServerNetworkHandler() = default;
+            ~ServerNetworkHandler();
 
             /**
              * @brief Get the instance of the singleton
@@ -85,10 +86,18 @@ namespace Network {
             void send(const RType::Packet &, size_t);
 
             /**
-             * @brief Broadcast a message to all clients
+             * @brief Send a message to the server
              * @param aPacket The packet to send
+             * @param aClientEndpoint The endpoint of the client to send the message to
              */
-            void broadcast(const RType::Packet &);
+            void send(const RType::Packet &, udp::endpoint);
+
+            /**
+             * @brief Broadcast a message to all clients
+             * @param aType The packet type to send
+             * @param aPayload The payload to send
+             */
+            void broadcast(int aType, std::vector<float> aPayload);
 
             /**
              * @brief Stop the server

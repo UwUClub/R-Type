@@ -1,6 +1,8 @@
+#include <array>
 #include <boost/asio.hpp>
 #include "Packets.hpp"
 #include "Values.hpp"
+#include <unordered_map>
 
 #ifndef CLIENTNETWORKHANDLER_HPP
     #define CLIENTNETWORKHANDLER_HPP
@@ -18,6 +20,7 @@ namespace Network {
             udp::socket _socket = udp::socket(_ioService);
             std::array<char, READ_BUFFER_SIZE> _readBuffer = std::array<char, READ_BUFFER_SIZE>();
             std::thread _ioThread;
+            std::unordered_map<std::string, std::thread> _senders;
 
             /**
              * @brief Get the instance of the singleton
@@ -35,7 +38,7 @@ namespace Network {
             /**
              * @brief Destroy the ClientNetworkHandler object
              */
-            ~ClientNetworkHandler() = default;
+            ~ClientNetworkHandler();
 
             /**
              * @brief Get the instance of the singleton

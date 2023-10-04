@@ -28,8 +28,8 @@ namespace ECS {
                 aSpeed.insertAt(playerId, Component::Speed {10});
                 aType.insertAt(playerId, Component::TypeEntity {true, false, false, false, false, false, false});
 
-                network.broadcast(RType::Packet(static_cast<int>(RType::ClientEventType::PLAYER_CONNECTION),
-                                                {static_cast<float>(playerId), 0, playerColor, 10, 10}));
+                network.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_CONNECTION),
+                                  {static_cast<float>(playerId), 0, playerColor, 10, 10});
                 network.addClient(playerId, gameEvent.getClientEndpoint());
                 network.send(RType::Packet(static_cast<int>(RType::ClientEventType::PLAYER_CONNECTION),
                                            {static_cast<float>(playerId), 1, playerColor, 10, 10}),

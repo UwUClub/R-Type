@@ -35,9 +35,8 @@ namespace ECS {
                 // std::cout << entityId << " pos: " << aPos[gameEvent.getEntityId()].value().x << " "
                 //           << aPos[gameEvent.getEntityId()].value().y << std::endl;
 
-                network.broadcast(
-                    RType::Packet(static_cast<int>(RType::ClientEventType::PLAYER_POSITION),
-                                  {static_cast<float>(entityId), aPos[entityId].value().x, aPos[entityId].value().y}));
+                network.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_POSITION),
+                                  {static_cast<float>(entityId), aPos[entityId].value().x, aPos[entityId].value().y});
 
                 eventManager->removeEvent(eventIndex);
                 eventIndex--;
