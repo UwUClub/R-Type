@@ -3,16 +3,14 @@
 #include <boost/bind.hpp>
 #include <iostream>
 #include <string>
+#include "EventManager.hpp"
 #include "Packets.hpp"
 
 namespace Network {
 
     using boost::asio::ip::udp;
 
-    ClientNetworkHandler::ClientNetworkHandler(std::string &aHost, std::string &aPort)
-        : _resolver(udp::resolver(_ioService)),
-          _socket(udp::socket(_ioService)),
-          _readBuffer()
+    void ClientNetworkHandler::start(std::string &aHost, std::string &aPort)
     {
         _serverEndpoint = *_resolver.resolve(udp::v4(), aHost, aPort).begin();
         _socket.open(udp::v4());
@@ -40,6 +38,10 @@ namespace Network {
         RTypeProtocol::Packet packet;
         RTypeProtocol::unserializePacket<std::array<char, READ_BUFFER_SIZE>>(&packet, _readBuffer);
         // std::cout << "Received type " << static_cast<int>(packet.type) << " from " << _serverEndpoint << std::endl;
+
+        auto *evt = new RTypeProtocol::ClientGameEvent(packet.type, 0, packet.payload);
+        ECS::Event::EventManager::getInstance()->pushEvent(evt);
+
         listen();
     }
 
@@ -49,7 +51,7 @@ namespace Network {
             boost::asio::streambuf buf;
             RTypeProtocol::serializePacket(&buf, aPacket);
             _socket.send_to(buf.data(), _serverEndpoint);
-            std::cout << "Sent something to " << _serverEndpoint << std::endl;
+            // std::cout << "Sent something to " << _serverEndpoint << std::endl;
         } catch (std::exception &e) {
             std::cerr << "ClientNetworkHandler send error: " << e.what() << std::endl;
         }

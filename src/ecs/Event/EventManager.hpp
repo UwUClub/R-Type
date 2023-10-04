@@ -87,10 +87,17 @@ namespace ECS::Event {
             std::vector<Event *> getEventsByType(const EventType &aEventType);
 
             /**
-             * @brief Clear all the events
+             * @brief Clear non game events
              *
              */
-            void clearEvents();
+            void clearNonGameEvents();
+
+            /**
+             * @brief Remove an event from the queue
+             * @param aIndex The index of the event to remove.
+             *
+             */
+            void removeEvent(int);
 
         private:
             EventManager();

@@ -14,7 +14,7 @@ target_link_libraries(server
         R_Type::R_Type_warnings
         ${Boost_LIBRARIES}
         ecs
-        rtype_protocol
+        rtype
         Boost::asio
         Boost::serialization
         Boost::uuid

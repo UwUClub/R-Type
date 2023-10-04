@@ -7,7 +7,10 @@ ECS::Event::EventManager::EventManager() = default;
 
 ECS::Event::EventManager::~EventManager()
 {
-    clearEvents();
+    for (auto &event : _events) {
+        delete event;
+    }
+    _events.clear();
 }
 
 //-------------------PUBLIC METHODS-------------------//
@@ -40,12 +43,24 @@ std::vector<ECS::Event::Event *> ECS::Event::EventManager::getEventsByType(const
     return events;
 }
 
-void ECS::Event::EventManager::clearEvents()
+void ECS::Event::EventManager::clearNonGameEvents()
 {
-    for (auto &event : _events) {
-        delete event;
+    for (int i = 0; i < _events.size(); i++) {
+        if (_events[i]->getType() != EventType::GAME) {
+            delete _events[i];
+            _events.erase(_events.begin() + i);
+            i--;
+        }
     }
-    _events.clear();
+}
+
+void ECS::Event::EventManager::removeEvent(int aIndex)
+{
+    if (aIndex >= _events.size()) {
+        throw EventManagerException("Index out of range");
+    }
+    delete _events[aIndex];
+    _events.erase(_events.begin() + aIndex);
 }
 
 //-------------------NESTED CLASSES-------------------//
