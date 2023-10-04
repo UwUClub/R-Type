@@ -17,27 +17,27 @@ namespace ECS {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         auto keyboardEvent = eventManager->getEventsByType(Event::EventType::KEYBOARD);
         static const std::unordered_map<Event::KeyIdentifier,
-                                        std::function<void(float &, Utils::Vector2f &, Core::World &)>>
+                                        std::function<void(float &, Utils::Vector2f &, float, Core::World &)>>
             keyMap = {
                 {Event::KeyIdentifier::UP,
-                 [&network](float &spd, Utils::Vector2f &xy, Core::World &world) {
+                 [&network](float &spd, Utils::Vector2f &xy, float onlineId, Core::World &world) {
                      xy.y = xy.y <= 0 ? 0 : xy.y -= spd * world.getDeltaTime();
-                     network.send(RTypeProtocol::ClientToServerPacket {RTypeProtocol::ServerEventType::MOVE_UP});
+                     network.send(RType::Packet(static_cast<int>(RType::ServerEventType::MOVE), {onlineId, 0, 1}));
                  }},
                 {Event::KeyIdentifier::DOWN,
-                 [&network](float &spd, Utils::Vector2f &xy, Core::World &world) {
+                 [&network](float &spd, Utils::Vector2f &xy, float onlineId, Core::World &world) {
                      xy.y = xy.y >= SCREEN_HEIGHT ? SCREEN_HEIGHT : xy.y += spd * world.getDeltaTime();
-                     network.send(RTypeProtocol::ClientToServerPacket {RTypeProtocol::ServerEventType::MOVE_DOWN});
+                     network.send(RType::Packet(static_cast<int>(RType::ServerEventType::MOVE), {onlineId, 0, -1}));
                  }},
                 {Event::KeyIdentifier::LEFT,
-                 [&network](float &spd, Utils::Vector2f &xy, Core::World &world) {
+                 [&network](float &spd, Utils::Vector2f &xy, float onlineId, Core::World &world) {
                      xy.x = xy.x <= 0 ? 0 : xy.x -= spd * world.getDeltaTime();
-                     network.send(RTypeProtocol::ClientToServerPacket {RTypeProtocol::ServerEventType::MOVE_LEFT});
+                     network.send(RType::Packet(static_cast<int>(RType::ServerEventType::MOVE), {onlineId, -1, 0}));
                  }},
                 {Event::KeyIdentifier::RIGHT,
-                 [&network](float &spd, Utils::Vector2f &xy, Core::World &world) {
+                 [&network](float &spd, Utils::Vector2f &xy, float onlineId, Core::World &world) {
                      xy.x = xy.x >= SCREEN_WIDTH ? SCREEN_WIDTH : xy.x += spd * world.getDeltaTime();
-                     network.send(RTypeProtocol::ClientToServerPacket {RTypeProtocol::ServerEventType::MOVE_RIGHT});
+                     network.send(RType::Packet(static_cast<int>(RType::ServerEventType::MOVE), {onlineId, 1, 0}));
                  }},
             };
 
@@ -50,7 +50,9 @@ namespace ECS {
                 if (keyMap.find(keyEvent->_keyId) == keyMap.end()) {
                     continue;
                 }
-                keyMap.at(keyEvent->_keyId)(aSpeed[i].value().speed, aPos[i].value(), Core::World::getInstance());
+                float onlinePlayerId = static_cast<float>(aType[i].value().onlineId.value_or(0));
+                keyMap.at(keyEvent->_keyId)(aSpeed[i].value().speed, aPos[i].value(), onlinePlayerId,
+                                            Core::World::getInstance());
             }
         }
     }

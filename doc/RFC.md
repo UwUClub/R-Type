@@ -106,11 +106,11 @@ Here is an example of a C++ client sending a `MOVE_UP` packet to a C++ server, b
 #include "ServerGameEvent.hpp"
 #include <boost/asio.hpp>
 // ... setup socket and serverEndpoint ...
-RTypeProtocol::ClientToServerPacket packet;
-packet.type = RTypeProtocol::ServerEventType::MOVE_UP;
+RType::ClientToServerPacket packet;
+packet.type = RType::ServerEventType::MOVE_UP;
 boost::asio::streambuf buf;
 
-RTypeProtocol::serializePacket<const RTypeProtocol::ClientToServerPacket &>(&buf, packet);
+RType::serializePacket<const RType::ClientToServerPacket &>(&buf, packet);
 socket.send_to(buf.data(), serverEndpoint);
 // ...
 ```
@@ -125,13 +125,13 @@ constexpr unsigned short READ_BUFFER_SIZE = 128;
 // ...
 std::array<char, READ_BUFFER_SIZE> readBuffer;
 // ... fill readBuffer using Boost Asio ...
-RTypeProtocol::ClientToServerPacket packet;
+RType::ClientToServerPacket packet;
 
-RTypeProtocol::unserializePacket<RTypeProtocol::ClientToServerPacket, std::array<char, READ_BUFFER_SIZE>>(&packet, readBuffer);
+RType::unserializePacket<RType::ClientToServerPacket, std::array<char, READ_BUFFER_SIZE>>(&packet, readBuffer);
 // ... you can access packet here (packet.type is now MOVE_UP) ...
 ```
 
-The idea is the same for sending packets in the other direction with `RTypeProtocol::ServerToClientPacket`.
+The idea is the same for sending packets in the other direction with `RType::ServerToClientPacket`.
 
 ## 5. Author's Addresses
 

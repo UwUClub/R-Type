@@ -17,13 +17,7 @@
 #ifndef PACKETS_HPP
     #define PACKETS_HPP
 
-namespace RTypeProtocol {
-
-    struct ClientToServerPacket
-    {};
-
-    struct ServerToClientPacket
-    {};
+namespace RType {
 
     struct Packet
     {
@@ -31,8 +25,18 @@ namespace RTypeProtocol {
             int type;
             std::vector<float> payload;
 
-            Packet()
-                : uuid(boost::uuids::to_string(boost::uuids::uuid(boost::uuids::random_generator()())))
+            Packet() = default;
+
+            Packet(int aType)
+                : uuid(boost::uuids::to_string(boost::uuids::uuid(boost::uuids::random_generator()()))),
+                  type(aType),
+                  payload()
+            {}
+
+            Packet(int aType, std::vector<float> aPayload)
+                : uuid(boost::uuids::to_string(boost::uuids::uuid(boost::uuids::random_generator()()))),
+                  type(aType),
+                  payload(aPayload)
             {}
 
             template<typename archive>
@@ -64,6 +68,6 @@ namespace RTypeProtocol {
         boost::archive::binary_iarchive archive(archiveStream);
         archive >> *aPacket;
     }
-} // namespace RTypeProtocol
+} // namespace RType
 
 #endif

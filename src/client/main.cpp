@@ -26,7 +26,7 @@ int main(int ac, char **av)
     std::string port(av[2]);
     Network::ClientNetworkHandler &network = Network::ClientNetworkHandler::getInstance();
     network.start(host, port);
-    network.send({RTypeProtocol::ServerEventType::CONNECT});
+    network.send(RType::Packet(static_cast<int>(RType::ServerEventType::CONNECT)));
 
     ECS::Core::World &world = ECS::Core::World::getInstance();
     SDLDisplayClass &display = SDLDisplayClass::getInstance();

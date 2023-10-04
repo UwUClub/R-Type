@@ -82,13 +82,13 @@ namespace Network {
              * @param aPacket The packet to send
              * @param aClientId The id of the client to send the message to
              */
-            void send(const RTypeProtocol::Packet &, size_t);
+            void send(const RType::Packet &, size_t);
 
             /**
              * @brief Broadcast a message to all clients
              * @param aPacket The packet to send
              */
-            void broadcast(const RTypeProtocol::ServerToClientPacket &);
+            void broadcast(const RType::Packet &);
 
             /**
              * @brief Stop the server

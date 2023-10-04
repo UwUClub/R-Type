@@ -45,8 +45,8 @@ namespace Network {
         (void) aError;
         (void) aBytesTransferred;
 
-        RTypeProtocol::Packet packet;
-        RTypeProtocol::unserializePacket<std::array<char, READ_BUFFER_SIZE>>(&packet, _readBuffer);
+        RType::Packet packet;
+        RType::unserializePacket<std::array<char, READ_BUFFER_SIZE>>(&packet, _readBuffer);
         // std::cout << "Received type " << static_cast<int>(packet.type) << " from " << _readEndpoint << std::endl;
 
         auto client =
@@ -54,14 +54,16 @@ namespace Network {
                 return aPair.second == _readEndpoint;
             });
 
-        if (client == _clients.end() && packet.type == RTypeProtocol::ServerEventType::CONNECT && _clients.size() < 4) {
+        auto packetType = static_cast<RType::ServerEventType>(packet.type);
+
+        if (client == _clients.end() && packetType == RType::ServerEventType::CONNECT && _clients.size() < 4) {
             std::cout << "New client connected" << std::endl;
             ECS::Event::EventManager::getInstance()->pushEvent(
-                new RTypeProtocol::ServerGameEvent(RTypeProtocol::ServerEventType::CONNECT, 0, _readEndpoint));
+                new RType::ServerGameEvent(RType::ServerEventType::CONNECT, 0, packet.payload, _readEndpoint));
         }
-        if (client != _clients.end() && packet.type != RTypeProtocol::ServerEventType::CONNECT) {
+        if (client != _clients.end() && packetType != RType::ServerEventType::CONNECT) {
             size_t id = client->first;
-            auto *evt = new RTypeProtocol::ServerGameEvent(packet.type, id, _readEndpoint);
+            auto *evt = new RType::ServerGameEvent(packetType, id, packet.payload, _readEndpoint);
 
             ECS::Event::EventManager::getInstance()->pushEvent(evt);
         }
@@ -79,7 +81,7 @@ namespace Network {
         return _clients.size();
     }
 
-    void ServerNetworkHandler::send(const RTypeProtocol::Packet &aPacket, size_t aClientId)
+    void ServerNetworkHandler::send(const RType::Packet &aPacket, size_t aClientId)
     {
         try {
             udp::endpoint clientEndpoint = _clients[aClientId];
@@ -93,7 +95,7 @@ namespace Network {
         }
     }
 
-    void ServerNetworkHandler::broadcast(const RTypeProtocol::ServerToClientPacket &aPacket)
+    void ServerNetworkHandler::broadcast(const RType::Packet &aPacket)
     {
         for (auto &client : _clients) {
             send(aPacket, client.first);

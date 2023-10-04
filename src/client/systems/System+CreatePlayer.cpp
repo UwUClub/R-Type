@@ -13,20 +13,20 @@ namespace ECS {
         auto events = eventManager->getEventsByType(Event::EventType::GAME);
 
         for (auto &event : events) {
-            auto &gameEvent = static_cast<RTypeProtocol::ClientGameEvent &>(*event);
+            auto &gameEvent = static_cast<RType::ClientGameEvent &>(*event);
 
-            if (gameEvent.getType() == RTypeProtocol::ClientEventType::PLAYER_CONNECTION) {
-                std::size_t onlineEntityId = gameEvent.getOnlineEntityId();
-                bool isLocalPlayer = gameEvent.getPayload()[0] == 1;
+            if (gameEvent.getType() == RType::ClientEventType::PLAYER_CONNECTION) {
+                std::size_t onlineEntityId = static_cast<int>(gameEvent.getPayload()[0]);
+                bool isLocalPlayer = gameEvent.getPayload()[1] == 1;
 
                 Component::TypeEntity entityType {false, true, false, false, false, false, false, onlineEntityId};
                 if (isLocalPlayer) {
                     entityType = {true, false, false, false, false, false, false, onlineEntityId};
                 }
 
-                int color = static_cast<int>(gameEvent.getPayload()[1]);
-                float posX = gameEvent.getPayload()[2];
-                float posY = gameEvent.getPayload()[3];
+                int color = static_cast<int>(gameEvent.getPayload()[2]);
+                float posX = gameEvent.getPayload()[3];
+                float posY = gameEvent.getPayload()[4];
                 std::cout << "Player with color " << color << " joined" << std::endl;
 
                 display.addEntity(ECS::Utils::Vector2f {posX, posY}, Component::Speed {PLAYER_SPEED}, entityType,

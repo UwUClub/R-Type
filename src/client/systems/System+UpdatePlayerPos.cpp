@@ -12,12 +12,12 @@ namespace ECS {
         auto events = eventManager->getEventsByType(Event::EventType::GAME);
 
         for (auto &event : events) {
-            auto &gameEvent = static_cast<RTypeProtocol::ClientGameEvent &>(*event);
+            auto &gameEvent = static_cast<RType::ClientGameEvent &>(*event);
 
-            if (gameEvent.getType() == RTypeProtocol::ClientEventType::PLAYER_POSITION) {
-                std::size_t onlineEntityId = gameEvent.getOnlineEntityId();
-                float posX = gameEvent.getPayload()[0];
-                float posY = gameEvent.getPayload()[1];
+            if (gameEvent.getType() == RType::ClientEventType::PLAYER_POSITION) {
+                std::size_t onlineEntityId = static_cast<int>(gameEvent.getPayload()[0]);
+                float posX = gameEvent.getPayload()[1];
+                float posY = gameEvent.getPayload()[2];
 
                 for (size_t i = 0; i < aType.size(); i++) {
                     if (aType[i].value().onlineId == onlineEntityId) {
