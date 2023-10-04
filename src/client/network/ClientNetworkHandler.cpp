@@ -37,18 +37,17 @@ namespace Network {
         (void) aError;
         (void) aBytesTransferred;
 
-        RTypeProtocol::ServerToClientPacket packet;
-        RTypeProtocol::unserializePacket<RTypeProtocol::ServerToClientPacket, std::array<char, READ_BUFFER_SIZE>>(
-            &packet, _readBuffer);
-        std::cout << "Received type " << static_cast<int>(packet.type) << " from " << _serverEndpoint << std::endl;
+        RTypeProtocol::Packet packet;
+        RTypeProtocol::unserializePacket<std::array<char, READ_BUFFER_SIZE>>(&packet, _readBuffer);
+        // std::cout << "Received type " << static_cast<int>(packet.type) << " from " << _serverEndpoint << std::endl;
         listen();
     }
 
-    void ClientNetworkHandler::send(const RTypeProtocol::ClientToServerPacket &aPacket)
+    void ClientNetworkHandler::send(const RTypeProtocol::Packet &aPacket)
     {
         try {
             boost::asio::streambuf buf;
-            RTypeProtocol::serializePacket<const RTypeProtocol::ClientToServerPacket &>(&buf, aPacket);
+            RTypeProtocol::serializePacket(&buf, aPacket);
             _socket.send_to(buf.data(), _serverEndpoint);
             std::cout << "Sent something to " << _serverEndpoint << std::endl;
         } catch (std::exception &e) {

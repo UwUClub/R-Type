@@ -63,7 +63,7 @@ namespace Network {
              * @param aPacket The packet to send
              * @param aClientId The id of the client to send the message to
              */
-            void send(const RTypeProtocol::ServerToClientPacket &, size_t);
+            void send(const RTypeProtocol::Packet &, size_t);
 
             /**
              * @brief Stop the server

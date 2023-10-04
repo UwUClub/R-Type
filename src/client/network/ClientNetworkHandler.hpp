@@ -60,7 +60,7 @@ namespace Network {
              * @brief Send a message to the server
              * @param aPacket The packet to send
              */
-            void send(const RTypeProtocol::ClientToServerPacket &);
+            void send(const RTypeProtocol::Packet &);
 
             /**
              * @brief Stop the client

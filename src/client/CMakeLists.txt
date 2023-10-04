@@ -1,4 +1,4 @@
-find_package(Boost REQUIRED COMPONENTS system thread serialization)
+find_package(Boost REQUIRED COMPONENTS system thread serialization uuid)
 find_package(Threads REQUIRED)
 find_package(SDL2 REQUIRED)
 
@@ -26,7 +26,7 @@ if (SDL2_DOWNLOADED)
             ecs
             rtype_protocol
             Boost::asio
-            Boost::serialization
+            Boost::uuid
     )
 else()
     target_link_libraries(client
@@ -42,6 +42,7 @@ else()
             rtype_protocol
             Boost::asio
             Boost::serialization
+            Boost::uuid
     )
 endif()
 

@@ -42,13 +42,12 @@ namespace Network {
         (void) aError;
         (void) aBytesTransferred;
 
-        RTypeProtocol::ClientToServerPacket packet;
-        RTypeProtocol::unserializePacket<RTypeProtocol::ClientToServerPacket, std::array<char, READ_BUFFER_SIZE>>(
-            &packet, _readBuffer);
-        std::cout << "Received type " << static_cast<int>(packet.type) << " from " << _readEndpoint << std::endl;
+        RTypeProtocol::Packet packet;
+        RTypeProtocol::unserializePacket<std::array<char, READ_BUFFER_SIZE>>(&packet, _readBuffer);
+        // std::cout << "Received type " << static_cast<int>(packet.type) << " from " << _readEndpoint << std::endl;
 
-        RTypeProtocol::ServerGameEvent *evt = new RTypeProtocol::ServerGameEvent(packet.type, 42);
-        ECS::Event::EventManager::getInstance()->pushEvent(evt);
+        // RTypeProtocol::ServerGameEvent *evt = new RTypeProtocol::ServerGameEvent(packet.type, 42);
+        // ECS::Event::EventManager::getInstance()->pushEvent(evt);
 
         // --- CONNECT event case ---
         // size_t id = 42; // temporary
@@ -63,13 +62,13 @@ namespace Network {
         listen();
     }
 
-    void ServerNetworkHandler::send(const RTypeProtocol::ServerToClientPacket &aPacket, size_t aClientId)
+    void ServerNetworkHandler::send(const RTypeProtocol::Packet &aPacket, size_t aClientId)
     {
         try {
             udp::endpoint clientEndpoint = _clients[aClientId];
 
             boost::asio::streambuf buf;
-            serializePacket<const RTypeProtocol::ServerToClientPacket &>(&buf, aPacket);
+            serializePacket(&buf, aPacket);
             _socket.send_to(buf.data(), clientEndpoint);
             std::cout << "Sent a request to " << clientEndpoint << " (id " << aClientId << ")" << std::endl;
         } catch (std::exception &e) {

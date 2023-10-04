@@ -1,6 +1,6 @@
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
-find_package(Boost REQUIRED COMPONENTS system thread)
+find_package(Boost REQUIRED COMPONENTS system thread serialization uuid)
 
 target_sources(rtype_protocol PRIVATE
         ServerGameEvent.hpp
@@ -14,6 +14,8 @@ target_link_libraries(rtype_protocol
         PRIVATE R_Type::R_Type_options
         R_Type::R_Type_warnings
         ${Boost_LIBRARIES}
+        Boost::serialization
+        Boost::uuid
         ecs
 )
 

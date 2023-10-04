@@ -1,4 +1,4 @@
-find_package(Boost REQUIRED COMPONENTS system thread serialization)
+find_package(Boost REQUIRED COMPONENTS system thread serialization uuid)
 
 find_package(Threads REQUIRED)
 
@@ -17,6 +17,7 @@ target_link_libraries(server
         rtype_protocol
         Boost::asio
         Boost::serialization
+        Boost::uuid
         Threads::Threads
 )
 
