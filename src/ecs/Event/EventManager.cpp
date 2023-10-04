@@ -7,7 +7,10 @@ ECS::Event::EventManager::EventManager() = default;
 
 ECS::Event::EventManager::~EventManager()
 {
-    clearNonGameEvents();
+    for (auto &event : _events) {
+        delete event;
+    }
+    _events.clear();
 }
 
 //-------------------PUBLIC METHODS-------------------//
