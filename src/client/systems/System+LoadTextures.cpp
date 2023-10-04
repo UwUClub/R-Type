@@ -1,4 +1,3 @@
-#include "KeyboardEvent.hpp"
 #include "SDLDisplayClass.hpp"
 #include "System.hpp"
 #include <SDL_image.h>

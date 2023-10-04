@@ -41,18 +41,20 @@ int main(int ac, char **av)
     world.addSystem<Component::LoadedSprite>(ECS::System::loadTextures);
     world.addSystem<Component::LoadedSprite, ECS::Utils::Vector2f>(ECS::System::displayEntities);
     world.addSystem<>(ECS::System::createPlayer);
-    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::movePlayer);
+    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::IsAlive>(ECS::System::movePlayer);
     world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::updatePlayerPos);
     world.addSystem(ECS::System::quitSDL);
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBackground);
     world.addSystem(ECS::System::spawnEnemies);
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveEnemies);
-    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::shootMissiles);
+    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive>(ECS::System::shootMissiles);
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveMissiles);
     world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::HitBox, Component::IsAlive>(
         ECS::System::destroyEnemy);
     world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite>(ECS::System::handleEnemyDeath);
     world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive>(ECS::System::enemyMissiles);
+    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive, Component::HitBox>(ECS::System::killPlayer);
+    world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite>(ECS::System::handlePlayerDeath);
     display.addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {BACKGROUND_SPEED},
                       Component::TypeEntity {false, false, false, false, false, false, true},
                       Component::LoadedSprite {BACKGROUND_ASSET, nullptr, nullptr,

@@ -20,6 +20,8 @@ target_sources(client PRIVATE
         System+DestroyEnemy.cpp
         System+HandleEnemyDeath.cpp
         System+EnemyMissiles.cpp
+        System+PlayerDeath.cpp
+        System+HandlePlayerDeath.cpp
 )
 
 target_include_directories(client PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

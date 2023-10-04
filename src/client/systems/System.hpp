@@ -4,11 +4,11 @@
 #include "Components.hpp"
 #include "IsAlive.hpp"
 #include "KeyboardEvent.hpp"
-#include "MouseEvent.hpp"
 #include "SparseArray.hpp"
 #include "Utils.hpp"
 #include "WindowEvent.hpp"
 #include "World.hpp"
+#include "components/HitBox.hpp"
 
 namespace ECS {
     class System
@@ -28,7 +28,8 @@ namespace ECS {
              */
             static void movePlayer(Core::SparseArray<ECS::Utils::Vector2f> &aPos,
                                    Core::SparseArray<Component::Speed> &aSpeed,
-                                   Core::SparseArray<Component::TypeEntity> &aType);
+                                   Core::SparseArray<Component::TypeEntity> &aType,
+                                   Core::SparseArray<Component::IsAlive> &aIsAlive);
 
             /*
              * @brief Update the player position
@@ -100,7 +101,8 @@ namespace ECS {
              * @param aType SparseArray of all entities type
              */
             static void shootMissiles(Core::SparseArray<Utils::Vector2f> &aPos,
-                                      Core::SparseArray<Component::TypeEntity> &aType);
+                                      Core::SparseArray<Component::TypeEntity> &aType,
+                                      Core::SparseArray<Component::IsAlive> &aIsAlive);
 
             /**
              * @brief Move missiles on the screen
@@ -145,6 +147,29 @@ namespace ECS {
                                       Core::SparseArray<Component::TypeEntity> &aType,
                                       Core::SparseArray<Component::IsAlive> &aIsAlive);
 
+            /**
+             * @brief Kill the player if he is hit by an obstacle
+             * 
+             * @param aPos SparseArray of all entities position
+             * @param aType SparseArray of all entities type
+             * @param aIsAlive SparseArray of all entities isAlive component
+             * @param HitBox SparseArray of all entities hitbox component
+             */
+            static void killPlayer(Core::SparseArray<Utils::Vector2f> &aPos,
+                                   Core::SparseArray<Component::TypeEntity> &aType,
+                                   Core::SparseArray<Component::IsAlive> &aIsAlive,
+                                   Core::SparseArray<Component::HitBox> &HitBox);
+
+            /**
+             * @brief Handle the death of the player
+             * 
+             * @param aType SparseArray of all entities type
+             * @param aIsAlive SparseArray of all entities isAlive component
+             * @param aSprites SparseArray of all entities sprites
+             */
+            static void handlePlayerDeath(Core::SparseArray<Component::TypeEntity> &aType,
+                                          Core::SparseArray<Component::IsAlive> &aIsAlive,
+                                          Core::SparseArray<Component::LoadedSprite> &aSprites);
         private:
             /**
              * @brief Map of all the SDL_Keycode and their equivalent in our ECS

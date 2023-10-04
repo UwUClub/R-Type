@@ -8,7 +8,8 @@
 
 namespace ECS {
     void System::shootMissiles(Core::SparseArray<Utils::Vector2f> &aPos,
-                               Core::SparseArray<Component::TypeEntity> &aType)
+                               Core::SparseArray<Component::TypeEntity> &aType,
+                               Core::SparseArray<Component::IsAlive> &aIsAlive)
     {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         auto keyboardEvent = eventManager->getEventsByType(Event::EventType::KEYBOARD);
@@ -32,7 +33,7 @@ namespace ECS {
             }
             for (auto &event : keyboardEvent) {
                 auto *keyEvent = static_cast<Event::KeyboardEvent *>(event);
-                if (keyMap.find(keyEvent->_keyId) == keyMap.end()) {
+                if (keyMap.find(keyEvent->_keyId) == keyMap.end() || !aIsAlive[i].value().isAlive) {
                     continue;
                 }
                 keyMap.at(keyEvent->_keyId)(aPos[i].value(), SDLDisplayClass::getInstance());
