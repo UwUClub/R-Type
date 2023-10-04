@@ -13,7 +13,6 @@ namespace ECS {
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
         Network::ServerNetworkHandler &network = Network::ServerNetworkHandler::getInstance();
 
-        int eventIndex = 0;
         auto events = eventManager->getEventsByType(Event::EventType::GAME);
 
         for (auto &event : events) {
@@ -38,10 +37,8 @@ namespace ECS {
                 network.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_POSITION),
                                   {static_cast<float>(entityId), aPos[entityId].value().x, aPos[entityId].value().y});
 
-                eventManager->removeEvent(eventIndex);
-                eventIndex--;
+                eventManager->removeEvent(event);
             }
-            eventIndex++;
         }
     }
 } // namespace ECS

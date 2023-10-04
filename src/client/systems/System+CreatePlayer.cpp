@@ -9,7 +9,6 @@ namespace ECS {
     {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         SDLDisplayClass &display = SDLDisplayClass::getInstance();
-        int eventIndex = 0;
         auto events = eventManager->getEventsByType(Event::EventType::GAME);
 
         for (auto &event : events) {
@@ -36,10 +35,8 @@ namespace ECS {
                                   Component::HitBox {PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT},
                                   Component::IsAlive {true, 0});
 
-                eventManager->removeEvent(eventIndex);
-                eventIndex--;
+                eventManager->removeEvent(event);
             }
-            eventIndex++;
         }
     }
 
