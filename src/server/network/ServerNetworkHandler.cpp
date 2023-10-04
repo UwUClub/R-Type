@@ -12,9 +12,12 @@ namespace Network {
 
     using boost::asio::ip::udp;
 
-    ServerNetworkHandler::ServerNetworkHandler(std::string &aHost, unsigned short aPort)
+    ServerNetworkHandler::ServerNetworkHandler()
         : _socket(_ioService),
           _readBuffer()
+    {}
+
+    void ServerNetworkHandler::start(std::string &aHost, unsigned short aPort)
     {
         boost::asio::ip::udp::endpoint endpoint(boost::asio::ip::address::from_string(aHost), aPort);
         _socket.open(endpoint.protocol());
@@ -45,22 +48,35 @@ namespace Network {
         RTypeProtocol::ClientToServerPacket packet;
         RTypeProtocol::unserializePacket<RTypeProtocol::ClientToServerPacket, std::array<char, READ_BUFFER_SIZE>>(
             &packet, _readBuffer);
-        std::cout << "Received type " << static_cast<int>(packet.type) << " from " << _readEndpoint << std::endl;
 
-        RTypeProtocol::ServerGameEvent *evt = new RTypeProtocol::ServerGameEvent(packet.type, 42);
-        ECS::Event::EventManager::getInstance()->pushEvent(evt);
+        auto client =
+            std::find_if(_clients.begin(), _clients.end(), [this](const std::pair<size_t, udp::endpoint> &aPair) {
+                return aPair.second == _readEndpoint;
+            });
 
-        // --- CONNECT event case ---
-        // size_t id = 42; // temporary
-        // if (_clients.find(id) == _clients.end()) {
-        //     std::cout << "New client connected: " << _readEndpoint << " (id " << id << ")" << std::endl;
-        //     _clients[id] = _readEndpoint;
+        if (client == _clients.end() && packet.type == RTypeProtocol::ServerEventType::CONNECT && _clients.size() < 4) {
+            std::cout << "New client connected" << std::endl;
+            ECS::Event::EventManager::getInstance()->pushEvent(
+                new RTypeProtocol::ServerGameEvent(RTypeProtocol::ServerEventType::CONNECT, 0, _readEndpoint));
+        }
+        if (client != _clients.end() && packet.type != RTypeProtocol::ServerEventType::CONNECT) {
+            size_t id = client->first;
+            auto *evt = new RTypeProtocol::ServerGameEvent(packet.type, id, _readEndpoint);
 
-        //     send(boost::asio::buffer("Welcome to the server!"), id);
-        //     send(boost::asio::buffer("How are you ?"), id);
-        // }
-        // --------------------------
+            ECS::Event::EventManager::getInstance()->pushEvent(evt);
+        }
         listen();
+    }
+
+    void ServerNetworkHandler::addClient(std::size_t aClientId, udp::endpoint aEndpoint)
+    {
+        _clients[aClientId] = aEndpoint;
+        std::cout << "Player " << aClientId << " joined" << std::endl;
+    }
+
+    int ServerNetworkHandler::getNumberClients() const
+    {
+        return _clients.size();
     }
 
     void ServerNetworkHandler::send(const RTypeProtocol::ServerToClientPacket &aPacket, size_t aClientId)
@@ -71,9 +87,16 @@ namespace Network {
             boost::asio::streambuf buf;
             serializePacket<const RTypeProtocol::ServerToClientPacket &>(&buf, aPacket);
             _socket.send_to(buf.data(), clientEndpoint);
-            std::cout << "Sent a request to " << clientEndpoint << " (id " << aClientId << ")" << std::endl;
+            // std::cout << "Sent a request to " << clientEndpoint << " (id " << aClientId << ")" << std::endl;
         } catch (std::exception &e) {
             std::cerr << "ServerNetworkHandler send error: " << e.what() << std::endl;
+        }
+    }
+
+    void ServerNetworkHandler::broadcast(const RTypeProtocol::ServerToClientPacket &aPacket)
+    {
+        for (auto &client : _clients) {
+            send(aPacket, client.first);
         }
     }
 
