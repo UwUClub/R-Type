@@ -3,8 +3,8 @@ find_package(Boost REQUIRED COMPONENTS system thread)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
 target_sources(client PRIVATE
-        "${CMAKE_CURRENT_SOURCE_DIR}/ClientNetworkHandler.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/ClientNetworkHandler.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/ClientHandler.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/ClientHandler.cpp"
 )
 
 target_link_libraries(client

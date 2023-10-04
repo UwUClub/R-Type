@@ -20,7 +20,8 @@ namespace ECS {
 
                 Component::TypeEntity entityType {false, true, false, false, false, false, false, onlineEntityId};
                 if (isLocalPlayer) {
-                    entityType = {true, false, false, false, false, false, false, onlineEntityId};
+                    entityType.isPlayer = true;
+                    entityType.isBot = false;
                 }
 
                 int color = static_cast<int>(gameEvent.getPayload()[2]);

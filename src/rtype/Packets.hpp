@@ -39,7 +39,7 @@ namespace RType {
                   payload(aPayload)
             {}
 
-            Packet(std::string &aUuid)
+            Packet(const std::string &aUuid) // answer aknowledgment
                 : uuid(aUuid),
                   type(-1),
                   payload()

@@ -3,8 +3,8 @@
 #include "Packets.hpp"
 #include <unordered_map>
 
-#ifndef ServerNetworkHandler_HPP
-    #define ServerNetworkHandler_HPP
+#ifndef ServerHandler_HPP
+    #define ServerHandler_HPP
 
 namespace Network {
 
@@ -12,43 +12,29 @@ namespace Network {
 
     using boost::asio::ip::udp;
 
-    class ServerNetworkHandler
+    class ServerHandler
     {
         private:
-            boost::asio::io_service _ioService;
-            udp::socket _socket;
-            std::array<char, READ_BUFFER_SIZE> _readBuffer;
-            udp::endpoint _readEndpoint;
             std::unordered_map<size_t, udp::endpoint> _clients;
-            std::thread _ioThread;
-            std::unordered_map<std::string, std::thread> _senders;
 
             /**
              * @brief Launch the server
              */
-            explicit ServerNetworkHandler();
+            ServerHandler() = default;
 
             /**
-             * @brief Handle a request from a client
-             * @param aError The error code
-             * @param aBytesTransferred The number of bytes transferred
+             * @brief Destroy the ServerHandler object
              */
-            void handleRequest(const boost::system::error_code &, std::size_t);
+            ~ServerHandler() = default;
 
         public:
             /**
-             * @brief Destroy the ServerNetworkHandler object
-             */
-            ~ServerNetworkHandler();
-
-            /**
              * @brief Get the instance of the singleton
-             * @param aPort The port to listen to
-             * @return ServerNetworkHandler & The instance of the singleton
+             * @return ServerHandler & The instance of the singleton
              */
-            static ServerNetworkHandler &getInstance()
+            static ServerHandler &getInstance()
             {
-                static ServerNetworkHandler instance;
+                static ServerHandler instance;
                 return instance;
             }
 
@@ -56,14 +42,16 @@ namespace Network {
              * @brief Start the server
              * @param aHost The host to listen to
              * @param aPort The port to listen to
-             * @return ServerNetworkHandler & The instance of the singleton
+             * @return ServerHandler & The instance of the singleton
              */
             void start(std::string &, unsigned short);
 
             /**
-             * @brief Listen to clients
+             * @brief Handle packet reception
+             * @param aPacket The received packet
+             * @param aEndpoint The endpoint of the server
              */
-            void listen();
+            void receivePacket(const RType::Packet &, udp::endpoint &);
 
             /**
              * @brief Register a client to the server
@@ -86,23 +74,11 @@ namespace Network {
             void send(const RType::Packet &, size_t);
 
             /**
-             * @brief Send a message to the server
-             * @param aPacket The packet to send
-             * @param aClientEndpoint The endpoint of the client to send the message to
-             */
-            void send(const RType::Packet &, udp::endpoint);
-
-            /**
              * @brief Broadcast a message to all clients
              * @param aType The packet type to send
              * @param aPayload The payload to send
              */
-            void broadcast(int aType, std::vector<float> aPayload);
-
-            /**
-             * @brief Stop the server
-             */
-            void stop();
+            void broadcast(int, std::vector<float>);
     };
 
 } // namespace Network

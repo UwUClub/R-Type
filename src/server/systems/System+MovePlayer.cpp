@@ -1,7 +1,7 @@
 #include <iostream>
 #include "EventManager.hpp"
 #include "ServerGameEvent.hpp"
-#include "ServerNetworkHandler.hpp"
+#include "ServerHandler.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 #include <unordered_map>
@@ -11,7 +11,7 @@ namespace ECS {
                             Core::SparseArray<Component::TypeEntity> &aType)
     {
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
-        Network::ServerNetworkHandler &network = Network::ServerNetworkHandler::getInstance();
+        Network::ServerHandler &network = Network::ServerHandler::getInstance();
 
         auto events = eventManager->getEventsByType(Event::EventType::GAME);
 

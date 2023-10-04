@@ -9,6 +9,8 @@ target_sources(rtype PRIVATE
         ClientGameEvent.cpp
         Packets.hpp
         Values.hpp
+        NetworkHandler.hpp
+        NetworkHandler.cpp
 )
 
 add_subdirectory(components)

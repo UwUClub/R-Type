@@ -1,5 +1,5 @@
 #include <functional>
-#include "ClientNetworkHandler.hpp"
+#include "ClientHandler.hpp"
 #include "EventManager.hpp"
 #include "KeyboardEvent.hpp"
 #include "SDLDisplayClass.hpp"
@@ -12,7 +12,7 @@ namespace ECS {
     void System::movePlayer(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
                             Core::SparseArray<Component::TypeEntity> &aType)
     {
-        Network::ClientNetworkHandler &network = Network::ClientNetworkHandler::getInstance();
+        Network::ClientHandler &network = Network::ClientHandler::getInstance();
 
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         auto keyboardEvent = eventManager->getEventsByType(Event::EventType::KEYBOARD);
@@ -22,22 +22,26 @@ namespace ECS {
                 {Event::KeyIdentifier::UP,
                  [&network](float &spd, Utils::Vector2f &xy, float onlineId, Core::World &world) {
                      xy.y = xy.y <= 0 ? 0 : xy.y -= spd * world.getDeltaTime();
-                     network.send(RType::Packet(static_cast<int>(RType::ServerEventType::MOVE), {onlineId, 0, 1}));
+                     RType::Packet packet(static_cast<int>(RType::ServerEventType::MOVE), {onlineId, 0, 1});
+                     network.send(packet);
                  }},
                 {Event::KeyIdentifier::DOWN,
                  [&network](float &spd, Utils::Vector2f &xy, float onlineId, Core::World &world) {
                      xy.y = xy.y >= SCREEN_HEIGHT ? SCREEN_HEIGHT : xy.y += spd * world.getDeltaTime();
-                     network.send(RType::Packet(static_cast<int>(RType::ServerEventType::MOVE), {onlineId, 0, -1}));
+                     RType::Packet packet(static_cast<int>(RType::ServerEventType::MOVE), {onlineId, 0, -1});
+                     network.send(packet);
                  }},
                 {Event::KeyIdentifier::LEFT,
                  [&network](float &spd, Utils::Vector2f &xy, float onlineId, Core::World &world) {
                      xy.x = xy.x <= 0 ? 0 : xy.x -= spd * world.getDeltaTime();
-                     network.send(RType::Packet(static_cast<int>(RType::ServerEventType::MOVE), {onlineId, -1, 0}));
+                     RType::Packet packet(static_cast<int>(RType::ServerEventType::MOVE), {onlineId, -1, 0});
+                     network.send(packet);
                  }},
                 {Event::KeyIdentifier::RIGHT,
                  [&network](float &spd, Utils::Vector2f &xy, float onlineId, Core::World &world) {
                      xy.x = xy.x >= SCREEN_WIDTH ? SCREEN_WIDTH : xy.x += spd * world.getDeltaTime();
-                     network.send(RType::Packet(static_cast<int>(RType::ServerEventType::MOVE), {onlineId, 1, 0}));
+                     RType::Packet packet(static_cast<int>(RType::ServerEventType::MOVE), {onlineId, 1, 0});
+                     network.send(packet);
                  }},
             };
 

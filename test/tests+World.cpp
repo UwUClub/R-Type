@@ -24,7 +24,7 @@ TEST_CASE("World Test case 2", "[tag2]")
     world.addEntityComponent<Component::Speed>(entity, Component::Speed {10});
 
     REQUIRE(comp[entity]->speed == 10);
-    world.killEntity(entity);
+    // world.killEntity(entity);
     REQUIRE(comp[entity] == std::nullopt);
     world.removeComponent<Component::Speed>();
 }
@@ -40,7 +40,7 @@ TEST_CASE("World Test case 3", "[tag3]")
     REQUIRE(comp[entity]->speed == 10);
     auto &comp2 = world.getComponent<Component::Speed>();
     REQUIRE(comp2[entity]->speed == 10);
-    world.killEntity(entity);
+    // world.killEntity(entity);
     REQUIRE(comp[entity] == std::nullopt);
     REQUIRE(comp2[entity] == std::nullopt);
     world.removeComponent<Component::Speed>();

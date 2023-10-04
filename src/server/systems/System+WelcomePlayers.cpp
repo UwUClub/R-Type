@@ -4,7 +4,7 @@
 #include "EventManager.hpp"
 #include "Packets.hpp"
 #include "ServerGameEvent.hpp"
-#include "ServerNetworkHandler.hpp"
+#include "ServerHandler.hpp"
 #include "System.hpp"
 #include "World.hpp"
 
@@ -14,7 +14,7 @@ namespace ECS {
     {
         ECS::Core::World &world = ECS::Core::World::getInstance();
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
-        Network::ServerNetworkHandler &network = Network::ServerNetworkHandler::getInstance();
+        Network::ServerHandler &network = Network::ServerHandler::getInstance();
         auto events = eventManager->getEventsByType(Event::EventType::GAME);
 
         for (auto &event : events) {
