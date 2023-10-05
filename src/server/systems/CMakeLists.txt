@@ -9,6 +9,7 @@ target_sources(server PRIVATE
         System+WelcomePlayers.cpp
         System+MovePlayer.cpp
         System+SpawnEnemies.cpp
+        System+MoveEnemies.cpp
 )
 
 target_link_libraries(server

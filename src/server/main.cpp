@@ -35,6 +35,7 @@ int main(int ac, char **av)
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::movePlayer);
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::HitBox,
                         Component::IsAlive>(ECS::System::spawnEnemies);
+        world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveEnemies);
 
         while (world.isRunning()) {
             world.runSystems();

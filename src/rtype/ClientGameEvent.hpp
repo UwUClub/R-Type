@@ -9,15 +9,14 @@ namespace RType {
 
     enum class ClientEventType
     {
-        PLAYER_CONNECTION = 0,
+        PLAYER_SPAWN = 0,
         PLAYER_DISCONNECTION = 1,
         PLAYER_POSITION = 2,
         PLAYER_SHOOT = 3,
         PLAYER_DEATH = 4,
         ENEMY_SPAWN = 5,
         ENEMY_DEATH = 6,
-        ENEMY_POSITION = 7,
-        ENEMY_SHOOT = 8,
+        ENEMY_SHOOT = 7,
     };
 
     /**

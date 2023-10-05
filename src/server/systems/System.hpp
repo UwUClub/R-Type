@@ -48,6 +48,17 @@ namespace ECS {
                                      Core::SparseArray<Component::TypeEntity> &aType,
                                      Core::SparseArray<Component::HitBox> &aHitBox,
                                      Core::SparseArray<Component::IsAlive> &aIsAlive);
+
+            /**
+             * @brief Move enemies
+             *
+             * @param aPos SparseArray of all entities position
+             * @param aSpeed Sparsearray of all entities speed
+             * @param aType SparseArray of all entities type
+             */
+            static void moveEnemies(Core::SparseArray<Utils::Vector2f> &aPos,
+                                    Core::SparseArray<Component::Speed> &aSpeed,
+                                    Core::SparseArray<Component::TypeEntity> &aType);
     };
 } // namespace ECS
 #endif /* !SYSTEM_HPP_ */
