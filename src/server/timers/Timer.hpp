@@ -7,7 +7,7 @@ namespace Timer {
     class Timer
     {
         private:
-            float _value;
+            float _value = 0;
 
         public:
             Timer() = default;

@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Components.hpp"
 #include "EventManager.hpp"
+#include "HitBox.hpp"
 #include "IsAlive.hpp"
 #include "NetworkHandler.hpp"
 #include "ServerHandler.hpp"
@@ -27,6 +28,8 @@ int main(int ac, char **av)
         world.registerComponent<ECS::Utils::Vector2f>();
         world.registerComponent<Component::Speed>();
         world.registerComponent<Component::TypeEntity>();
+        world.registerComponent<Component::HitBox>();
+        world.registerComponent<Component::IsAlive>();
 
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::welcomePlayers);
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::movePlayer);
@@ -36,6 +39,7 @@ int main(int ac, char **av)
         while (world.isRunning()) {
             world.runSystems();
             eventManager->clearNonGameEvents();
+            world.calcDeltaTime();
         }
 
         Network::NetworkHandler::getInstance().stop();

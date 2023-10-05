@@ -36,7 +36,7 @@ namespace ECS {
 
                 int aPosSize = aPos.size();
                 for (std::size_t i = 0; i < aPosSize; i++) {
-                    if (i != playerId) {
+                    if (i != playerId && aType[i]->isPlayer) {
                         network.send(RType::Packet(static_cast<int>(RType::ClientEventType::PLAYER_CONNECTION),
                                                    {static_cast<float>(i), 0, playerColor, aPos[i]->x, aPos[i]->y}),
                                      playerId);

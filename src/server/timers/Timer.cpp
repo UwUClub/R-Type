@@ -13,6 +13,6 @@ namespace Timer {
 
     void Timer::reset()
     {
-        _value = float(0);
+        _value = 0;
     }
 } // namespace Timer
