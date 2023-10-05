@@ -1,10 +1,11 @@
 #include <boost/asio.hpp>
 #include <iostream>
-#include "ClientNetworkHandler.hpp"
+#include "ClientHandler.hpp"
 #include "Components.hpp"
 #include "EventManager.hpp"
 #include "HitBox.hpp"
 #include "IsAlive.hpp"
+#include "NetworkHandler.hpp"
 #include "Packets.hpp"
 #include "SDLDisplayClass.hpp"
 #include "ServerGameEvent.hpp"
@@ -24,9 +25,10 @@ int main(int ac, char **av)
 
     std::string host(av[1]);
     std::string port(av[2]);
-    Network::ClientNetworkHandler &network = Network::ClientNetworkHandler::getInstance();
-    network.start(host, port);
-    network.send({RTypeProtocol::ServerEventType::CONNECT});
+    auto &client = Network::ClientHandler::getInstance();
+    client.start(host, port);
+    RType::Packet connectPacket(static_cast<int>(RType::ServerEventType::CONNECT));
+    client.send(connectPacket);
 
     ECS::Core::World &world = ECS::Core::World::getInstance();
     SDLDisplayClass &display = SDLDisplayClass::getInstance();
@@ -74,6 +76,6 @@ int main(int ac, char **av)
         eventManager->clearNonGameEvents();
         world.calcDeltaTime();
     }
-    network.stop();
+    Network::NetworkHandler::getInstance().stop();
     return 0;
 }

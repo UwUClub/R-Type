@@ -1,17 +1,15 @@
 #include "ClientGameEvent.hpp"
 
-namespace RTypeProtocol {
+namespace RType {
 
-    ClientGameEvent::ClientGameEvent(ClientEventType aType, size_t aOnlineEntityId)
+    ClientGameEvent::ClientGameEvent(ClientEventType aType)
         : ECS::Event::Event(ECS::Event::EventType::GAME),
-          _type(aType),
-          _onlineEntityId(aOnlineEntityId)
+          _type(aType)
     {}
 
-    ClientGameEvent::ClientGameEvent(ClientEventType aType, size_t aOnlineEntityId, std::vector<float> aPayload)
+    ClientGameEvent::ClientGameEvent(ClientEventType aType, std::vector<float> aPayload)
         : ECS::Event::Event(ECS::Event::EventType::GAME),
           _type(aType),
-          _onlineEntityId(aOnlineEntityId),
           _payload(aPayload)
     {}
 
@@ -20,14 +18,9 @@ namespace RTypeProtocol {
         return _type;
     }
 
-    std::size_t ClientGameEvent::getOnlineEntityId() const
-    {
-        return _onlineEntityId;
-    }
-
     std::vector<float> ClientGameEvent::getPayload() const
     {
         return _payload;
     }
 
-} // namespace RTypeProtocol
+} // namespace RType

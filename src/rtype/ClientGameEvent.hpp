@@ -5,7 +5,7 @@
 #ifndef CLIENTGAMEEVENT_HPP
     #define CLIENTGAMEEVENT_HPP
 
-namespace RTypeProtocol {
+namespace RType {
 
     enum class ClientEventType
     {
@@ -27,7 +27,6 @@ namespace RTypeProtocol {
     {
         private:
             ClientEventType _type;
-            std::size_t _onlineEntityId;
             std::vector<float> _payload;
 
         public:
@@ -35,17 +34,15 @@ namespace RTypeProtocol {
             /**
              * @brief Construct a new Game Event object
              * @param aType the type of the event
-             * @param aOnlineEntityId the online id of the entity who triggers the event
              */
-            explicit ClientGameEvent(ClientEventType aType, size_t aOnlineEntityId);
+            explicit ClientGameEvent(ClientEventType aType);
 
             /**
              * @brief Construct a new Game Event object
              * @param aType the type of the event
-             * @param aOnlineEntityId the online id of the entity who triggers the event
              * @param aPayload the payload of the event
              */
-            explicit ClientGameEvent(ClientEventType aType, size_t aOnlineEntityId, std::vector<float> aPayload);
+            explicit ClientGameEvent(ClientEventType aType, std::vector<float> aPayload);
 
             /**
              * @brief Get event type
@@ -54,17 +51,11 @@ namespace RTypeProtocol {
             ClientEventType getType() const;
 
             /**
-             * @brief Get the online id of the entity who triggers the event
-             * @return std::size_t
-             */
-            std::size_t getOnlineEntityId() const;
-
-            /**
              * @brief Get the payload of the event
              * @return std::vector<float>
              */
             std::vector<float> getPayload() const;
     };
-} // namespace RTypeProtocol
+} // namespace RType
 
 #endif // !

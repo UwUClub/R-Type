@@ -4,7 +4,7 @@
 #ifndef SERVERGAMEEVENT_HPP
     #define SERVERGAMEEVENT_HPP
 
-namespace RTypeProtocol {
+namespace RType {
 
     using boost::asio::ip::udp;
 
@@ -13,11 +13,8 @@ namespace RTypeProtocol {
         CONNECT = 0,
         DISCONNECT = 1,
         CRASH = 2,
-        MOVE_LEFT = 3,
-        MOVE_UP = 4,
-        MOVE_RIGHT = 5,
-        MOVE_DOWN = 6,
-        SHOOT = 7
+        MOVE = 3,
+        SHOOT = 4
     };
 
     /**
@@ -27,7 +24,8 @@ namespace RTypeProtocol {
     {
         private:
             ServerEventType _type;
-            std::size_t _entityId;
+            int _entityId;
+            std::vector<float> _payload;
             udp::endpoint _clientEndpoint;
 
         public:
@@ -35,10 +33,12 @@ namespace RTypeProtocol {
             /**
              * @brief Construct a new Game Event object
              * @param aType the type of the event
-             * @param aEntityId the id of the client who triggers the event
+             * @param aEntityId the entity id
+             * @param aPayload the payload
              * @param aClientEndpoint the endpoint of the client who triggers the event
              */
-            explicit ServerGameEvent(ServerEventType aType, size_t aEntityId, udp::endpoint aClientEndpoint);
+            explicit ServerGameEvent(ServerEventType aType, int aEntityId, std::vector<float> aPayload,
+                                     udp::endpoint aClientEndpoint);
 
             /**
              * @brief Get event type
@@ -48,9 +48,15 @@ namespace RTypeProtocol {
 
             /**
              * @brief Get entity id
-             * @return size_t
+             * @return The entity id
              */
-            std::size_t getEntityId() const;
+            int getEntityId() const;
+
+            /**
+             * @brief Get payload
+             * @return The payload
+             */
+            std::vector<float> getPayload() const;
 
             /**
              * @brief Get client endpoint
@@ -58,6 +64,6 @@ namespace RTypeProtocol {
              */
             udp::endpoint getClientEndpoint() const;
     };
-} // namespace RTypeProtocol
+} // namespace RType
 
 #endif // !

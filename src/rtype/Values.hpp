@@ -11,7 +11,7 @@
 
 //------------------ VALUES ------------------//
 
-const constexpr unsigned short READ_BUFFER_SIZE = 128;
+const constexpr unsigned short READ_BUFFER_SIZE = 1024;
 const constexpr int SCREEN_WIDTH = 1920;
 const constexpr int SCREEN_HEIGHT = 1080;
 

@@ -1,5 +1,5 @@
 #include <functional>
-#include "ClientNetworkHandler.hpp"
+#include "ClientHandler.hpp"
 #include "EventManager.hpp"
 #include "KeyboardEvent.hpp"
 #include "SDLDisplayClass.hpp"
@@ -14,32 +14,36 @@ namespace ECS {
                             Core::SparseArray<Component::TypeEntity> &aType,
                             Core::SparseArray<Component::IsAlive> &aIsAlive)
     {
-        Network::ClientNetworkHandler &network = Network::ClientNetworkHandler::getInstance();
+        Network::ClientHandler &network = Network::ClientHandler::getInstance();
 
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         auto keyboardEvent = eventManager->getEventsByType(Event::EventType::KEYBOARD);
         static const std::unordered_map<Event::KeyIdentifier,
-                                        std::function<void(float &, Utils::Vector2f &, Core::World &)>>
+                                        std::function<void(float &, Utils::Vector2f &, float, Core::World &)>>
             keyMap = {
                 {Event::KeyIdentifier::UP,
-                 [&network](float &spd, Utils::Vector2f &xy, Core::World &world) {
+                 [&network](float &spd, Utils::Vector2f &xy, float onlineId, Core::World &world) {
                      xy.y = xy.y <= 0 ? 0 : xy.y -= spd * world.getDeltaTime();
-                     network.send(RTypeProtocol::ClientToServerPacket {RTypeProtocol::ServerEventType::MOVE_UP});
+                     RType::Packet packet(static_cast<int>(RType::ServerEventType::MOVE), {onlineId, 0, 1});
+                     network.send(packet);
                  }},
                 {Event::KeyIdentifier::DOWN,
-                 [&network](float &spd, Utils::Vector2f &xy, Core::World &world) {
+                 [&network](float &spd, Utils::Vector2f &xy, float onlineId, Core::World &world) {
                      xy.y = xy.y >= SCREEN_HEIGHT ? SCREEN_HEIGHT : xy.y += spd * world.getDeltaTime();
-                     network.send(RTypeProtocol::ClientToServerPacket {RTypeProtocol::ServerEventType::MOVE_DOWN});
+                     RType::Packet packet(static_cast<int>(RType::ServerEventType::MOVE), {onlineId, 0, -1});
+                     network.send(packet);
                  }},
                 {Event::KeyIdentifier::LEFT,
-                 [&network](float &spd, Utils::Vector2f &xy, Core::World &world) {
+                 [&network](float &spd, Utils::Vector2f &xy, float onlineId, Core::World &world) {
                      xy.x = xy.x <= 0 ? 0 : xy.x -= spd * world.getDeltaTime();
-                     network.send(RTypeProtocol::ClientToServerPacket {RTypeProtocol::ServerEventType::MOVE_LEFT});
+                     RType::Packet packet(static_cast<int>(RType::ServerEventType::MOVE), {onlineId, -1, 0});
+                     network.send(packet);
                  }},
                 {Event::KeyIdentifier::RIGHT,
-                 [&network](float &spd, Utils::Vector2f &xy, Core::World &world) {
+                 [&network](float &spd, Utils::Vector2f &xy, float onlineId, Core::World &world) {
                      xy.x = xy.x >= SCREEN_WIDTH ? SCREEN_WIDTH : xy.x += spd * world.getDeltaTime();
-                     network.send(RTypeProtocol::ClientToServerPacket {RTypeProtocol::ServerEventType::MOVE_RIGHT});
+                     RType::Packet packet(static_cast<int>(RType::ServerEventType::MOVE), {onlineId, 1, 0});
+                     network.send(packet);
                  }},
             };
 
@@ -52,7 +56,9 @@ namespace ECS {
                 if (keyMap.find(keyEvent->_keyId) == keyMap.end() || !aIsAlive[i].value().isAlive) {
                     continue;
                 }
-                keyMap.at(keyEvent->_keyId)(aSpeed[i].value().speed, aPos[i].value(), Core::World::getInstance());
+                float onlinePlayerId = static_cast<float>(aType[i].value().onlineId.value_or(0));
+                keyMap.at(keyEvent->_keyId)(aSpeed[i].value().speed, aPos[i].value(), onlinePlayerId,
+                                            Core::World::getInstance());
             }
         }
     }
