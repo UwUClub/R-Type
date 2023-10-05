@@ -78,10 +78,10 @@ namespace ECS {
                                        Core::SparseArray<Component::TypeEntity> &aType);
 
             /**
-             * @brief Spawn enemies
+             * @brief Create an enemy
              *
              */
-            static void spawnEnemies();
+            static void createEnemy();
 
             /**
              * @brief Move enemies on the screen

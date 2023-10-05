@@ -61,10 +61,10 @@ Each client is a game player. The protocol defines the following packet types:
 - `PLAYER_POSITION` (2)
 - `PLAYER_SHOOT` (3)
 - `PLAYER_DEATH`(4)
-- `MONSTER_SPAWN` (5)
-- `MONSTER_DEATH` (6)
-- `MONSTER_POSITION` (7)
-- `MONSTER_SHOOT` (8)
+- `ENEMY_SPAWN` (5)
+- `ENEMY_DEATH` (6)
+- `ENEMY_POSITION` (7)
+- `ENEMY_SHOOT` (8)
 
 ### 2.2. Packet Format
 
@@ -74,8 +74,8 @@ Each client is a game player. The protocol defines the following packet types:
    - The `PLAYER_CONNECTION` payload contains one float. If it's `1`, it means that the player designated by the id property is the one who receives the packet. Otherwise, it's not.
    - The following packets have a payload containing a pair of X/Y coordinates for positioning:
      - `PLAYER_POSITION` (2)
-     - `MONSTER_SPAWN` (6)
-     - `MONSTER_POSITION` (8)
+     - `ENEMY_SPAWN` (6)
+     - `ENEMY_POSITION` (8)
    - All the other packets have an empty payload.
 
 ### 2.3. Serialization

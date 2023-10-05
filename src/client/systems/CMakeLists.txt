@@ -13,7 +13,7 @@ target_sources(client PRIVATE
         System+UpdatePlayerPos.cpp
         System+SDLQuit.cpp
         System+MoveBackground.cpp
-        System+SpawnEnemies.cpp
+        System+CreateEnemy.cpp
         System+MoveEnemies.cpp
         System+ShootMissiles.cpp
         System+MoveMissiles.cpp

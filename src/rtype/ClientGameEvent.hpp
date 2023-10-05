@@ -14,10 +14,10 @@ namespace RType {
         PLAYER_POSITION = 2,
         PLAYER_SHOOT = 3,
         PLAYER_DEATH = 4,
-        MONSTER_SPAWN = 5,
-        MONSTER_DEATH = 6,
-        MONSTER_POSITION = 7,
-        MONSTER_SHOOT = 8,
+        ENEMY_SPAWN = 5,
+        ENEMY_DEATH = 6,
+        ENEMY_POSITION = 7,
+        ENEMY_SHOOT = 8,
     };
 
     /**

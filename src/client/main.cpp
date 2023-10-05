@@ -48,7 +48,7 @@ int main(int ac, char **av)
     world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::updatePlayerPos);
     world.addSystem(ECS::System::quitSDL);
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBackground);
-    world.addSystem(ECS::System::spawnEnemies);
+    world.addSystem(ECS::System::createEnemy);
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveEnemies);
     world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive>(ECS::System::shootMissiles);
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveMissiles);
