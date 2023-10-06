@@ -8,7 +8,7 @@ namespace ECS {
         auto &world = Core::World::getInstance();
 
         for (size_t idx = 0; idx < aPos.size(); idx++) {
-            if (!aPos[idx].has_value()) {
+            if (!aPos[idx].has_value() || !aSpeed[idx].has_value() || !aType[idx].has_value()) {
                 continue;
             }
             auto &pos = aPos[idx].value();
