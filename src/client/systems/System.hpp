@@ -14,9 +14,34 @@ namespace ECS {
     {
         public:
             /**
+             * @brief Summon a bonus kill of an enemy
+             * @details The bonus is a sprite that is displayed on the screen for a short amount of time on kill of an enemy
+             * @param aPos The position of the bonus
+             * @param aSprites The sprites of the bonus
+             * @param aSpeed The speed of the bonus
+             * @param aHitBox The hitbox of the bonus
+             */
+            static void Bonus(Core::SparseArray<Utils::Vector2f> &aPos,
+                              Core::SparseArray<Component::LoadedSprite> &aSprites,
+                              Core::SparseArray<Component::Speed> &aSpeed,
+                              Core::SparseArray<Component::HitBox> &aHitBox,
+                              Core::SparseArray<Component::TypeEntity> &aType);
+
+            /**
              * @brief Create a player
              */
             static void createPlayer();
+
+            /**
+             * @brief Handle the move of the bonus
+             * @details The bonus is a sprite that is displayed on the screen for a short amount of time on kill of an enemy
+             * @param aPos The position of the bonus
+             * @param aSpeed The speed of the bonus
+             * @param aType The type of the bonus
+             */
+            static void moveBonus(Core::SparseArray<Utils::Vector2f> &aPos,
+                                  Core::SparseArray<Component::Speed> &aSpeed,
+                                  Core::SparseArray<Component::TypeEntity> &aType);
 
             /**
              * @brief Move the player

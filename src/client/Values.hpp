@@ -48,4 +48,10 @@ const constexpr float EXPLOSION_SPEED = 0;
 const constexpr int EXPLOSION_TEX_WIDTH = 33;
 const constexpr int EXPLOSION_TEX_HEIGHT = 33;
 
+//------------------ BONUS ------------------//
+static const std::string BONUS_ASSET = "assets/sprites/r-typesheet2.png";
+const constexpr float BONUS_SPEED = 200;
+const constexpr int BONUS_TEX_WIDTH = 33;
+const constexpr int BONUS_TEX_HEIGHT = 17;
+
 #endif /* !VALUES_HPP_ */
