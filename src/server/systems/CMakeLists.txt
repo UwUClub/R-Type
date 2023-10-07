@@ -8,8 +8,9 @@ target_sources(server PRIVATE
         System.hpp
         System+WelcomePlayers.cpp
         System+MovePlayer.cpp
-        System+SpawnEnemies.cpp
-        System+MoveEnemies.cpp
+        System+SpawnEnemy.cpp
+        System+MoveEnemy.cpp
+        System+EnemyShoot.cpp
 )
 
 target_link_libraries(server

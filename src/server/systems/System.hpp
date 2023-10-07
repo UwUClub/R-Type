@@ -43,11 +43,11 @@ namespace ECS {
              * @param aHitBox SparseArray of all entities hitbox
              * @param aIsAlive SparseArray of all entities isAlive
              */
-            static void spawnEnemies(Core::SparseArray<Utils::Vector2f> &aPos,
-                                     Core::SparseArray<Component::Speed> &aSpeed,
-                                     Core::SparseArray<Component::TypeEntity> &aType,
-                                     Core::SparseArray<Component::HitBox> &aHitBox,
-                                     Core::SparseArray<Component::IsAlive> &aIsAlive);
+            static void spawnEnemy(Core::SparseArray<Utils::Vector2f> &aPos,
+                                   Core::SparseArray<Component::Speed> &aSpeed,
+                                   Core::SparseArray<Component::TypeEntity> &aType,
+                                   Core::SparseArray<Component::HitBox> &aHitBox,
+                                   Core::SparseArray<Component::IsAlive> &aIsAlive);
 
             /**
              * @brief Move enemies
@@ -56,9 +56,23 @@ namespace ECS {
              * @param aSpeed Sparsearray of all entities speed
              * @param aType SparseArray of all entities type
              */
-            static void moveEnemies(Core::SparseArray<Utils::Vector2f> &aPos,
-                                    Core::SparseArray<Component::Speed> &aSpeed,
-                                    Core::SparseArray<Component::TypeEntity> &aType);
+            static void moveEnemy(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
+                                  Core::SparseArray<Component::TypeEntity> &aType);
+
+            /**
+             * @brief Make enemies shoot
+             *
+             * @param aPos SparseArray of all entities position
+             * @param aSpeed Sparsearray of all entities speed
+             * @param aType SparseArray of all entities type
+             * @param aHitBox SparseArray of all entities hitbox
+             * @param aIsAlive SparseArray of all entities isAlive
+             */
+            static void enemyShoot(Core::SparseArray<Utils::Vector2f> &aPos,
+                                   Core::SparseArray<Component::Speed> &aSpeed,
+                                   Core::SparseArray<Component::TypeEntity> &aType,
+                                   Core::SparseArray<Component::HitBox> &aHitBox,
+                                   Core::SparseArray<Component::IsAlive> &aIsAlive);
     };
 } // namespace ECS
 #endif /* !SYSTEM_HPP_ */

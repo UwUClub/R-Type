@@ -31,9 +31,6 @@ namespace ECS {
                 aPos[entityId].value().x += moveX * speed;
                 aPos[entityId].value().y -= moveY * speed;
 
-                // std::cout << entityId << " pos: " << aPos[gameEvent.getEntityId()].value().x << " "
-                //           << aPos[gameEvent.getEntityId()].value().y << std::endl;
-
                 network.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_POSITION),
                                   {static_cast<float>(entityId), aPos[entityId].value().x, aPos[entityId].value().y});
 

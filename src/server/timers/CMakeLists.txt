@@ -3,7 +3,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 target_sources(server PRIVATE
         Timer.hpp
         Timer.cpp
-        Timer+SpawnEnemies.hpp
+        Timer+SpawnEnemy.hpp
 )
 
 target_include_directories(server PRIVATE
