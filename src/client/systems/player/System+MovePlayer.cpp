@@ -60,7 +60,6 @@ namespace ECS {
                 float onlinePlayerId = static_cast<float>(aType[i].value().onlineId.value_or(0));
                 keyMap.at(keyEvent->_keyId)(aSpeed[i].value().speed, pos, onlinePlayerId, Core::World::getInstance());
 
-                std::cout << pos.x << " " << pos.y << std::endl;
                 if (pos.x < 0) {
                     pos.x = 0;
                 }
