@@ -37,13 +37,13 @@ const constexpr float PLAYER_SPEED = 10;
 const constexpr int PLAYER_TEX_WIDTH = 33;
 const constexpr int PLAYER_TEX_HEIGHT = 17;
 
-//------------------ BULLET ------------------//
+//------------------ BULLET (for players) ------------------//
 static const std::string BULLET_ASSET = "assets/sprites/r-typesheet2.png";
 const constexpr float BULLET_SPEED = 800;
 const constexpr int BULLET_TEX_WIDTH = 25;
 const constexpr int BULLET_TEX_HEIGHT = 13;
 
-//------------------ MISSILES ------------------//
+//------------------ MISSILES (for enemies) ------------------//
 static const std::string MISSILES_ASSET = "assets/sprites/r-typesheet2.png";
 const constexpr float MISSILES_SPEED = 500;
 const constexpr int MISSILES_TEX_WIDTH = 25;

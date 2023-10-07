@@ -5,12 +5,10 @@ find_package(SDL2 REQUIRED)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
 target_sources(client PRIVATE
-        System+CreatePlayer.cpp
         System+MovePlayer.cpp
-        System+UpdatePlayerPos.cpp
+        System+TriggerPlayerShoot.cpp
         System+PlayerDeath.cpp
         System+HandlePlayerDeath.cpp
-        System+ShootMissiles.cpp
 )
 
 target_include_directories(client PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

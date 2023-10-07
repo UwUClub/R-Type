@@ -11,6 +11,7 @@ target_sources(server PRIVATE
         System+SpawnEnemy.cpp
         System+MoveEnemy.cpp
         System+EnemyShoot.cpp
+        System+PlayerShoot.cpp
 )
 
 target_link_libraries(server

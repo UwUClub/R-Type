@@ -15,9 +15,9 @@ namespace ECS {
     {
         public:
             /**
-             * @brief Create a player
+             * @brief Create a bot
              */
-            static void createPlayer();
+            static void createBot();
 
             /**
              * @brief Move the player
@@ -31,17 +31,17 @@ namespace ECS {
                                    Core::SparseArray<Component::TypeEntity> &aType,
                                    Core::SparseArray<Component::IsAlive> &aIsAlive);
 
-            /*
-             * @brief Update the player position
+            /**
+             * @brief Update a bot position
+             *
              */
-            static void updatePlayerPos(Core::SparseArray<Utils::Vector2f> &aPos,
-                                        Core::SparseArray<Component::TypeEntity> &aType);
+            static void updateBotPosition(Core::SparseArray<Utils::Vector2f> &aPos,
+                                          Core::SparseArray<Component::TypeEntity> &aType);
 
             /**
              * @brief Get the all the input of the user
              *
              */
-
             static void getInput();
 
             /**
@@ -98,10 +98,17 @@ namespace ECS {
              *
              * @param aPos SparseArray of all entities position
              * @param aType SparseArray of all entities type
+             * @param aIsAlive SparseArray of all entities isAlive component
              */
-            static void shootMissiles(Core::SparseArray<Utils::Vector2f> &aPos,
-                                      Core::SparseArray<Component::TypeEntity> &aType,
-                                      Core::SparseArray<Component::IsAlive> &aIsAlive);
+            static void triggerPlayerShoot(Core::SparseArray<Utils::Vector2f> &aPos,
+                                           Core::SparseArray<Component::TypeEntity> &aType,
+                                           Core::SparseArray<Component::IsAlive> &aIsAlive);
+
+            /**
+             * @brief Make bots shoot missiles
+             *
+             */
+            static void triggerBotShoot();
 
             /**
              * @brief Move missiles on the screen
@@ -140,7 +147,7 @@ namespace ECS {
              * @brief Make enemies shoot missiles
              *
              */
-            static void enemyShoot();
+            static void triggerEnemyShoot();
 
             /**
              * @brief Kill the player if he is hit by an obstacle

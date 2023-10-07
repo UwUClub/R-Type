@@ -5,7 +5,7 @@
 #include "Values.hpp"
 
 namespace ECS {
-    void System::createPlayer()
+    void System::createBot()
     {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         SDLDisplayClass &display = SDLDisplayClass::getInstance();

@@ -8,7 +8,7 @@
 #include "World.hpp"
 
 namespace ECS {
-    void System::enemyShoot()
+    void System::triggerEnemyShoot()
     {
         auto &display = SDLDisplayClass::getInstance();
         Event::EventManager *eventManager = Event::EventManager::getInstance();
@@ -19,8 +19,8 @@ namespace ECS {
 
             if (gameEvent.getType() == RType::ClientEventType::ENEMY_SHOOT) {
                 std::size_t onlineEntityId = static_cast<int>(gameEvent.getPayload()[0]);
-                float posX = gameEvent.getPayload()[1] - MISSILES_TEX_WIDTH;
-                auto posY = gameEvent.getPayload()[2] + ENEMY_TEX_HEIGHT / 2.0F - MISSILES_TEX_HEIGHT / 2.0F;
+                float posX = gameEvent.getPayload()[1];
+                auto posY = gameEvent.getPayload()[2];
 
                 display.addEntity(
                     ECS::Utils::Vector2f {posX, posY}, Component::Speed {MISSILES_SPEED},

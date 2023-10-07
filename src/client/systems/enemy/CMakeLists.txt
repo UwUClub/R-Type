@@ -9,7 +9,7 @@ target_sources(client PRIVATE
         System+MoveEnemy.cpp
         System+DestroyEnemy.cpp
         System+HandleEnemyDeath.cpp
-        System+EnemyShoot.cpp
+        System+TriggerEnemyShoot.cpp
 )
 
 target_include_directories(client PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
