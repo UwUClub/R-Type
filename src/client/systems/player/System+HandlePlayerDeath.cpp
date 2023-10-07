@@ -17,8 +17,8 @@ namespace ECS {
                 continue;
             }
             if (!aIsAlive[player].value().isAlive && aIsAlive[player].value().timeToDie < 0) {
-                // display.freeRects(player);
-                // world.killEntity(player);
+                display.freeRects(player);
+                world.killEntity(player);
             } else if (!aIsAlive[player].value().isAlive && aIsAlive[player].value().timeToDie == 0) {
                 aSprites[player].value().path = EXPLOSION_ASSET;
                 aSprites[player].value().texture = nullptr;
