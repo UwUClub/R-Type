@@ -84,15 +84,14 @@ namespace ECS {
             static void createEnemy();
 
             /**
-             * @brief Move enemies on the screen
+             * @brief Move enemy on the screen
              *
              * @param aPos SparseArray of all entities position
              * @param aSpeed Sparsearray of all entities speed
              * @param aType SparseArray of all entities type
              */
-            static void moveEnemies(Core::SparseArray<Utils::Vector2f> &aPos,
-                                    Core::SparseArray<Component::Speed> &aSpeed,
-                                    Core::SparseArray<Component::TypeEntity> &aType);
+            static void moveEnemy(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
+                                  Core::SparseArray<Component::TypeEntity> &aType);
 
             /**
              * @brief Make player shoot missiles when space is pressed
@@ -140,12 +139,8 @@ namespace ECS {
             /**
              * @brief Make enemies shoot missiles
              *
-             * @param aPos SparseArray of all entities position
-             * @param aType SparseArray of all entities type
              */
-            static void enemyMissiles(Core::SparseArray<Utils::Vector2f> &aPos,
-                                      Core::SparseArray<Component::TypeEntity> &aType,
-                                      Core::SparseArray<Component::IsAlive> &aIsAlive);
+            static void enemyShoot();
 
             /**
              * @brief Kill the player if he is hit by an obstacle

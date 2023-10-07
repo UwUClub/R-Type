@@ -6,6 +6,7 @@
 #include "ServerGameEvent.hpp"
 #include "ServerHandler.hpp"
 #include "System.hpp"
+#include "Values.hpp"
 #include "World.hpp"
 
 namespace ECS {
@@ -24,7 +25,7 @@ namespace ECS {
                 float playerColor = static_cast<float>(network.getNumberClients());
 
                 aPos.insertAt(playerId, ECS::Utils::Vector2f {10, 10});
-                aSpeed.insertAt(playerId, Component::Speed {10});
+                aSpeed.insertAt(playerId, Component::Speed {PLAYER_SPEED});
                 aType.insertAt(playerId, Component::TypeEntity {true, false, false, false, false, false, false});
 
                 network.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_SPAWN),

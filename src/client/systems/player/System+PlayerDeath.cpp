@@ -33,8 +33,8 @@ namespace ECS {
                         && aPos[player].value().y < aPos[obstacle].value().y + aHitBox[obstacle].value().height)) {
                     aIsAlive[player].value().isAlive = false;
                     if (aType[obstacle].value().isBullet) {
-                        display.freeRects(obstacle);
-                        world.killEntity(obstacle);
+                        // display.freeRects(obstacle);
+                        // world.killEntity(obstacle);
                     }
                     break;
                 }

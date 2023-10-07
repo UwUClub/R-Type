@@ -18,8 +18,8 @@ namespace ECS {
                 continue;
             }
             if (!aIsAlive[enemy].value().isAlive && aIsAlive[enemy].value().timeToDie < 0) {
-                display.freeRects(enemy);
-                world.killEntity(enemy);
+                // display.freeRects(enemy);
+                // world.killEntity(enemy);
             } else if (!aIsAlive[enemy].value().isAlive && aIsAlive[enemy].value().timeToDie == 0) {
                 aSprites[enemy].value().path = EXPLOSION_ASSET;
                 aSprites[enemy].value().texture = nullptr;

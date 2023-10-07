@@ -24,8 +24,8 @@ namespace ECS {
                     && aPos[bullet].value().y > aPos[enemy].value().y
                     && aPos[bullet].value().y < aPos[enemy].value().y + aHitBox[enemy].value().height) {
                     aIsAlive[enemy].value().isAlive = false;
-                    display.freeRects(bullet);
-                    world.killEntity(bullet);
+                    // display.freeRects(bullet);
+                    // world.killEntity(bullet);
                     break;
                 }
             }
