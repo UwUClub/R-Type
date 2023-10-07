@@ -74,7 +74,7 @@ namespace Network {
             void send(const RType::Packet &, size_t);
 
             /**
-             * @brief Broadcast a message to all clients
+             * @brief Broadcast a message to all clients. Each client receives a packet with a unique uuid.
              * @param aType The packet type to send
              * @param aPayload The payload to send
              */

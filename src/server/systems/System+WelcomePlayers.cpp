@@ -27,18 +27,23 @@ namespace ECS {
                 aSpeed.insertAt(playerId, Component::Speed {10});
                 aType.insertAt(playerId, Component::TypeEntity {true, false, false, false, false, false, false});
 
-                network.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_CONNECTION),
+                network.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_SPAWN),
                                   {static_cast<float>(playerId), 0, playerColor, 10, 10});
                 network.addClient(playerId, gameEvent.getClientEndpoint());
-                network.send(RType::Packet(static_cast<int>(RType::ClientEventType::PLAYER_CONNECTION),
+                network.send(RType::Packet(static_cast<int>(RType::ClientEventType::PLAYER_SPAWN),
                                            {static_cast<float>(playerId), 1, playerColor, 10, 10}),
                              playerId);
 
                 int aPosSize = aPos.size();
                 for (std::size_t i = 0; i < aPosSize; i++) {
-                    if (i != playerId) {
-                        network.send(RType::Packet(static_cast<int>(RType::ClientEventType::PLAYER_CONNECTION),
+                    if (i != playerId && aType[i]->isPlayer) {
+                        network.send(RType::Packet(static_cast<int>(RType::ClientEventType::PLAYER_SPAWN),
                                                    {static_cast<float>(i), 0, playerColor, aPos[i]->x, aPos[i]->y}),
+                                     playerId);
+                    }
+                    if (aType[i]->isEnemy) {
+                        network.send(RType::Packet(static_cast<int>(RType::ClientEventType::ENEMY_SPAWN),
+                                                   {static_cast<float>(i), aPos[i]->x, aPos[i]->y}),
                                      playerId);
                     }
                 }

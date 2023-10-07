@@ -5,9 +5,11 @@ find_package(Threads REQUIRED)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
 target_sources(server PRIVATE
-        "${CMAKE_CURRENT_SOURCE_DIR}/System.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/System+WelcomePlayers.cpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/System+MovePlayer.cpp"
+        System.hpp
+        System+WelcomePlayers.cpp
+        System+MovePlayer.cpp
+        System+SpawnEnemies.cpp
+        System+MoveEnemies.cpp
 )
 
 target_link_libraries(server

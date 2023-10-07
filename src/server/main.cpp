@@ -1,6 +1,8 @@
 #include <iostream>
 #include "Components.hpp"
 #include "EventManager.hpp"
+#include "HitBox.hpp"
+#include "IsAlive.hpp"
 #include "NetworkHandler.hpp"
 #include "ServerHandler.hpp"
 #include "System.hpp"
@@ -23,16 +25,22 @@ int main(int ac, char **av)
         ECS::Core::World &world = ECS::Core::World::getInstance();
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
 
-        auto &vec = world.registerComponent<ECS::Utils::Vector2f>();
-        auto &spd = world.registerComponent<Component::Speed>();
-        auto &type = world.registerComponent<Component::TypeEntity>();
+        world.registerComponent<ECS::Utils::Vector2f>();
+        world.registerComponent<Component::Speed>();
+        world.registerComponent<Component::TypeEntity>();
+        world.registerComponent<Component::HitBox>();
+        world.registerComponent<Component::IsAlive>();
 
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::welcomePlayers);
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::movePlayer);
+        world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::HitBox,
+                        Component::IsAlive>(ECS::System::spawnEnemies);
+        world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveEnemies);
 
         while (world.isRunning()) {
             world.runSystems();
             eventManager->clearNonGameEvents();
+            world.calcDeltaTime();
         }
 
         Network::NetworkHandler::getInstance().stop();
