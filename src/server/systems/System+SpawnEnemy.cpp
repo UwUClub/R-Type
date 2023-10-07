@@ -16,7 +16,7 @@ namespace ECS {
 
         // Handle timer
         timer.add(world.getDeltaTime());
-        if (timer.get() < 1) {
+        if (timer.get() < ENEMY_SPAWN_INTERVAL) {
             return;
         }
         timer.reset();
