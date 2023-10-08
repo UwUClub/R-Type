@@ -47,6 +47,28 @@ namespace ECS {
                                     Core::SparseArray<Component::HitBox> &aHitBox);
 
             /**
+             * @brief Handle players who get hit
+             *
+             * @param aPos SparseArray of all entities position
+             * @param aType SparseArray of all entities type
+             * @param aIsAlive SparseArray of all entities isAlive
+             * @param aHitBox SparseArray of all entities hitbox
+             */
+            static void playerHit(Core::SparseArray<Utils::Vector2f> &aPos,
+                                  Core::SparseArray<Component::TypeEntity> &aType,
+                                  Core::SparseArray<Component::IsAlive> &aIsAlive,
+                                  Core::SparseArray<Component::HitBox> &aHitBox);
+
+            /**
+             * @brief Handle players who get hit
+             *
+             * @param aType SparseArray of all entities type
+             * @param aIsAlive SparseArray of all entities isAlive
+             */
+            static void killPlayer(Core::SparseArray<Component::TypeEntity> &aType,
+                                   Core::SparseArray<Component::IsAlive> &aIsAlive);
+
+            /**
              * @brief Spawn enemies
              *
              * @param aPos SparseArray of all entities position

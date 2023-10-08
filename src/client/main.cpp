@@ -52,16 +52,16 @@ int main(int ac, char **av)
 
     // Bot systems
     world.addSystem(ECS::System::createBot);
-    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::IsAlive>(
-        ECS::System::movePlayer);
     world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::updateBotPosition);
     world.addSystem(ECS::System::triggerBotShoot);
+    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive, Component::HitBox>(
+        ECS::System::botHit);
+    world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite>(ECS::System::triggerBotDeath);
 
     // Player systems
+    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::IsAlive>(
+        ECS::System::movePlayer);
     world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive>(ECS::System::triggerPlayerShoot);
-    world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite>(ECS::System::handlePlayerDeath);
-    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive, Component::HitBox>(
-        ECS::System::killPlayer);
 
     // Enemy systems
     world.addSystem(ECS::System::createEnemy);

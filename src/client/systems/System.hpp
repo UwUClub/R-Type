@@ -151,28 +151,28 @@ namespace ECS {
             static void triggerEnemyShoot();
 
             /**
-             * @brief Kill the player if he is hit by an obstacle
+             * @brief Handle bots who get hit (locally)
              *
              * @param aPos SparseArray of all entities position
              * @param aType SparseArray of all entities type
              * @param aIsAlive SparseArray of all entities isAlive component
              * @param HitBox SparseArray of all entities hitbox component
              */
-            static void killPlayer(Core::SparseArray<Utils::Vector2f> &aPos,
-                                   Core::SparseArray<Component::TypeEntity> &aType,
-                                   Core::SparseArray<Component::IsAlive> &aIsAlive,
-                                   Core::SparseArray<Component::HitBox> &HitBox);
+            static void botHit(Core::SparseArray<Utils::Vector2f> &aPos,
+                               Core::SparseArray<Component::TypeEntity> &aType,
+                               Core::SparseArray<Component::IsAlive> &aIsAlive,
+                               Core::SparseArray<Component::HitBox> &HitBox);
 
             /**
-             * @brief Handle the death of the player
+             * @brief Handle the death of a bot (triggered by server)
              *
              * @param aType SparseArray of all entities type
              * @param aIsAlive SparseArray of all entities isAlive component
              * @param aSprites SparseArray of all entities sprites
              */
-            static void handlePlayerDeath(Core::SparseArray<Component::TypeEntity> &aType,
-                                          Core::SparseArray<Component::IsAlive> &aIsAlive,
-                                          Core::SparseArray<Component::LoadedSprite> &aSprites);
+            static void triggerBotDeath(Core::SparseArray<Component::TypeEntity> &aType,
+                                        Core::SparseArray<Component::IsAlive> &aIsAlive,
+                                        Core::SparseArray<Component::LoadedSprite> &aSprites);
 
         private:
             /**

@@ -8,6 +8,8 @@ target_sources(server PRIVATE
         System+WelcomePlayer.cpp
         System+MovePlayer.cpp
         System+PlayerShoot.cpp
+        System+PlayerHit.cpp
+        System+KillPlayer.cpp
 )
 
 target_link_libraries(server
