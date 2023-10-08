@@ -22,8 +22,7 @@ namespace ECS {
                     pos.x += speed.speed * world.getDeltaTime();
                 }
                 if (pos.x > SCREEN_WIDTH + 30 || pos.x < -30) {
-                    // SDLDisplayClass::getInstance().freeRects(idx);
-                    // world.killEntity(idx);
+                    world.killEntity(idx);
                 }
             }
         }

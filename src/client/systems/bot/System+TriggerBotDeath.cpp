@@ -37,8 +37,8 @@ namespace ECS {
             }
             if (!aIsAlive[botId].value().isAlive && aIsAlive[botId].value().timeToDie < 0) {
                 std::cout << "bot " << aType[botId].value().onlineId.value_or(0) << " killed" << std::endl;
-                // display.freeRects(botId);
-                // world.killEntity(botId);
+                display.freeRects(botId);
+                world.killEntity(botId);
             } else if (!aIsAlive[botId].value().isAlive && aIsAlive[botId].value().timeToDie == 0) {
                 aSprites[botId].value().path = EXPLOSION_ASSET;
                 aSprites[botId].value().texture = nullptr;

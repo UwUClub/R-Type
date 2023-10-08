@@ -29,8 +29,8 @@ namespace ECS {
                                < aPos[missileId].value().x + aHitBox[missileId].value().width
                         && aPos[player].value().y > aPos[missileId].value().y
                         && aPos[player].value().y < aPos[missileId].value().y + aHitBox[missileId].value().height)) {
-                    // display.freeRects(missileId);
-                    // world.killEntity(missileId);
+                    display.freeRects(missileId);
+                    world.killEntity(missileId);
                 }
             }
         }
