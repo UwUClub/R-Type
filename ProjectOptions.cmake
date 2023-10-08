@@ -56,7 +56,7 @@ macro(R_Type_setup_options)
     option(R_Type_ENABLE_CLANG_TIDY "Enable clang-tidy" ON)
     option(R_Type_ENABLE_CPPCHECK "Enable cpp-check analysis" OFF)
     option(R_Type_ENABLE_PCH "Enable precompiled headers" OFF)
-    option(R_Type_ENABLE_CACHE "Enable ccache" ON)
+    option(R_Type_ENABLE_CACHE "Enable ccache" OFF)
   endif()
 
   if(NOT PROJECT_IS_TOP_LEVEL)
