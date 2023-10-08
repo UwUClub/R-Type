@@ -10,8 +10,8 @@
 #include "World.hpp"
 
 namespace ECS {
-    void System::welcomePlayers(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
-                                Core::SparseArray<Component::TypeEntity> &aType)
+    void System::welcomePlayer(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
+                               Core::SparseArray<Component::TypeEntity> &aType)
     {
         ECS::Core::World &world = ECS::Core::World::getInstance();
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();

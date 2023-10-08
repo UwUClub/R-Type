@@ -23,6 +23,7 @@ int main(int ac, char **av)
         return 84;
     }
 
+    // Network
     std::string host(av[1]);
     std::string port(av[2]);
     auto &client = Network::ClientHandler::getInstance();
@@ -30,36 +31,50 @@ int main(int ac, char **av)
     RType::Packet connectPacket(static_cast<int>(RType::ServerEventType::CONNECT));
     client.send(connectPacket);
 
+    // Setup ECS / graphic
     ECS::Core::World &world = ECS::Core::World::getInstance();
     SDLDisplayClass &display = SDLDisplayClass::getInstance();
     ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
+
+    // Components
     world.registerComponent<ECS::Utils::Vector2f>();
     world.registerComponent<Component::Speed>();
     world.registerComponent<Component::TypeEntity>();
     world.registerComponent<Component::LoadedSprite>();
     world.registerComponent<Component::HitBox>();
     world.registerComponent<Component::IsAlive>();
+
+    // Graphic systems
     world.addSystem(ECS::System::getInput);
     world.addSystem<Component::LoadedSprite>(ECS::System::loadTextures);
     world.addSystem<Component::LoadedSprite, ECS::Utils::Vector2f>(ECS::System::displayEntities);
+    world.addSystem(ECS::System::quitSDL);
+
+    // Bot systems
     world.addSystem(ECS::System::createBot);
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::IsAlive>(
         ECS::System::movePlayer);
     world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::updateBotPosition);
     world.addSystem(ECS::System::triggerBotShoot);
-    world.addSystem(ECS::System::quitSDL);
-    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBackground);
-    world.addSystem(ECS::System::createEnemy);
-    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveEnemy);
+
+    // Player systems
     world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive>(ECS::System::triggerPlayerShoot);
-    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveMissiles);
-    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::HitBox, Component::IsAlive>(
-        ECS::System::destroyEnemy);
-    world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite>(ECS::System::handleEnemyDeath);
-    world.addSystem(ECS::System::triggerEnemyShoot);
+    world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite>(ECS::System::handlePlayerDeath);
     world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive, Component::HitBox>(
         ECS::System::killPlayer);
-    world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite>(ECS::System::handlePlayerDeath);
+
+    // Enemy systems
+    world.addSystem(ECS::System::createEnemy);
+    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveEnemy);
+    world.addSystem(ECS::System::triggerEnemyShoot);
+    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::HitBox>(ECS::System::enemyHit);
+    world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite>(ECS::System::triggerEnemyDeath);
+
+    // Missile systems
+    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveMissiles);
+
+    // Setup background
+    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBackground);
     display.addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {BACKGROUND_SPEED},
                       Component::TypeEntity {false, false, false, false, false, false, true},
                       Component::LoadedSprite {BACKGROUND_ASSET, nullptr, nullptr,
@@ -71,6 +86,7 @@ int main(int ac, char **av)
                                                new SDL_Rect {400, 15, SCREEN_WIDTH, SCREEN_HEIGHT}},
                       Component::HitBox {}, Component::IsAlive {false, 0});
 
+    // Game loop
     while (world.isRunning()) {
         world.runSystems();
         SDL_RenderPresent(display._renderer);

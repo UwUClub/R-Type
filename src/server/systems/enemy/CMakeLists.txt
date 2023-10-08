@@ -4,11 +4,12 @@ find_package(Threads REQUIRED)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
-add_subdirectory(player)
-add_subdirectory(enemy)
-
 target_sources(server PRIVATE
-        System.hpp
+        System+SpawnEnemy.cpp
+        System+MoveEnemy.cpp
+        System+EnemyShoot.cpp
+        System+EnemyHit.cpp
+        System+KillEnemy.cpp
 )
 
 target_link_libraries(server

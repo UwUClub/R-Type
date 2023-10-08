@@ -1,18 +1,18 @@
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
 find_package(Boost REQUIRED COMPONENTS system thread serialization uuid asio)
+find_package(SDL2 REQUIRED)
 
 target_sources(rtype PRIVATE
-        ServerGameEvent.hpp
-        ServerGameEvent.cpp
-        ClientGameEvent.hpp
-        ClientGameEvent.cpp
         Packets.hpp
         Values.hpp
         NetworkHandler.hpp
         NetworkHandler.cpp
+        TypeUtils.hpp
+        TypeUtils.cpp
 )
 
+add_subdirectory(events)
 add_subdirectory(components)
 
 target_link_libraries(rtype
@@ -23,6 +23,9 @@ target_link_libraries(rtype
         Boost::serialization
         Boost::uuid
         ecs
+        SDL2::SDL2main
+        SDL2::SDL2
+        SDL2_image
 )
 
 target_include_directories(rtype PRIVATE

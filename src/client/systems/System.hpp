@@ -15,12 +15,12 @@ namespace ECS {
     {
         public:
             /**
-             * @brief Create a bot
+             * @brief Create a bot (triggered by server)
              */
             static void createBot();
 
             /**
-             * @brief Move the player
+             * @brief Move the player (locally, send to server)
              *
              * @param aPos SparseArray of all entities position
              * @param aSpeed Sparsearray of all entities speed
@@ -32,33 +32,33 @@ namespace ECS {
                                    Core::SparseArray<Component::IsAlive> &aIsAlive);
 
             /**
-             * @brief Update a bot position
+             * @brief Update a bot position (triggered by server)
              *
              */
             static void updateBotPosition(Core::SparseArray<Utils::Vector2f> &aPos,
                                           Core::SparseArray<Component::TypeEntity> &aType);
 
             /**
-             * @brief Get the all the input of the user
+             * @brief Get the all the input of the user (locally)
              *
              */
             static void getInput();
 
             /**
-             * @brief Close the SDL window
+             * @brief Close the SDL window (locally)
              *
              */
             static void quitSDL();
 
             /**
-             * @brief Load all the textures of the game
+             * @brief Load all the textures of the game (locally)
              *
              * @param aSprites SparseArray of all the entities sprites
              */
             static void loadTextures(Core::SparseArray<Component::LoadedSprite> &aSprites);
 
             /**
-             * @brief Display all the entities on the screen
+             * @brief Display all the entities on the screen (locally)
              *
              * @param aSprites SparseArray of all the entities sprites
              * @param aPos SparseArray of all the entities position
@@ -67,8 +67,9 @@ namespace ECS {
                                         Core::SparseArray<Utils::Vector2f> &aPos);
 
             /**
-             * @brief Handle the background's movements
+             * @brief Handle the background's movements (locally)
              * @details Background are the entities with the TypeEntity::isBackground set to true
+             *
              * @param aPos The position of the background
              * @param aSpeed The speed of the background
              * @param aType The type of the background
@@ -78,13 +79,13 @@ namespace ECS {
                                        Core::SparseArray<Component::TypeEntity> &aType);
 
             /**
-             * @brief Create an enemy
+             * @brief Create an enemy (triggered by server)
              *
              */
             static void createEnemy();
 
             /**
-             * @brief Move enemy on the screen
+             * @brief Move enemy on the screen (locally)
              *
              * @param aPos SparseArray of all entities position
              * @param aSpeed Sparsearray of all entities speed
@@ -94,7 +95,7 @@ namespace ECS {
                                   Core::SparseArray<Component::TypeEntity> &aType);
 
             /**
-             * @brief Make player shoot missiles when space is pressed
+             * @brief Make player shoot missiles when space is pressed (triggered locally, send to server)
              *
              * @param aPos SparseArray of all entities position
              * @param aType SparseArray of all entities type
@@ -105,13 +106,13 @@ namespace ECS {
                                            Core::SparseArray<Component::IsAlive> &aIsAlive);
 
             /**
-             * @brief Make bots shoot missiles
+             * @brief Make bots shoot missiles (triggered by server)
              *
              */
             static void triggerBotShoot();
 
             /**
-             * @brief Move missiles on the screen
+             * @brief Move missiles on the screen (locally)
              *
              * @param aPos SparseArray of all entities position
              * @param aSpeed Sparsearray of all entities speed
@@ -122,29 +123,29 @@ namespace ECS {
                                      Core::SparseArray<Component::TypeEntity> &aType);
 
             /**
-             * @brief Destroy enemies when they are hit by a missile
+             * @brief Handle enemies who get hit (locally)
              *
              * @param aPos SparseArray of all entities position
              * @param aType SparseArray of all entities type
+             * @param aHitBox SparseArray of all entities hitbox
              */
-            static void destroyEnemy(Core::SparseArray<Utils::Vector2f> &aPos,
-                                     Core::SparseArray<Component::TypeEntity> &aType,
-                                     Core::SparseArray<Component::HitBox> &aHitBox,
-                                     Core::SparseArray<Component::IsAlive> &aIsAlive);
+            static void enemyHit(Core::SparseArray<Utils::Vector2f> &aPos,
+                                 Core::SparseArray<Component::TypeEntity> &aType,
+                                 Core::SparseArray<Component::HitBox> &aHitBox);
 
             /**
-             * @brief Handle the death of an enemy
+             * @brief Handle the death of an enemy (triggered by server)
              *
              * @param aType SparseArray of all entities type
              * @param aIsAlive SparseArray of all entities isAlive component
              * @param aSprites SparseArray of all entities sprites
              */
-            static void handleEnemyDeath(Core::SparseArray<Component::TypeEntity> &aType,
-                                         Core::SparseArray<Component::IsAlive> &aIsAlive,
-                                         Core::SparseArray<Component::LoadedSprite> &aSprites);
+            static void triggerEnemyDeath(Core::SparseArray<Component::TypeEntity> &aType,
+                                          Core::SparseArray<Component::IsAlive> &aIsAlive,
+                                          Core::SparseArray<Component::LoadedSprite> &aSprites);
 
             /**
-             * @brief Make enemies shoot missiles
+             * @brief Make enemies shoot missiles (triggered by server)
              *
              */
             static void triggerEnemyShoot();

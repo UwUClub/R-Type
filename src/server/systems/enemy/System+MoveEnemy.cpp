@@ -17,7 +17,7 @@ namespace ECS {
             if (type.isEnemy) {
                 pos.x -= speed.speed * world.getDeltaTime();
                 if (pos.x < -30) {
-                    world.killEntity(idx);
+                    // world.killEntity(idx);
                 }
             }
         }
