@@ -1,15 +1,17 @@
-FROM mcr.microsoft.com/windows/servercore:ltsc2019
+# Use the Visual Studio 2019 Build Tools image
+FROM my-msvc-image
 
-SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
-RUN Set-ExecutionPolicy Bypass -Scope Process -Force; \
-    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; \
-    iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) \
+RUN net user /add jenkins Lov@C1c411 && \
+net localgroup Administrators jenkins /add
 
-RUN choco install -y cmake git visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64"
-RUN choco install -y git
-RUN git --version
-RUN setx /M PATH "%PATH%;C:\Program Files\Git\bin"
-RUN choco install -y ccache
+# Set the working directory in the Docker image
+WORKDIR /usr/src/myapp
 
-RUN net user /add jenkins jenkinsPassword
-USER jenkins
+# Copy the current directory contents into the container at /usr/src/myapp
+COPY . /usr/src/myapp
+
+# Copy the build scripts into the Docker image
+COPY build.bat .
+
+ENTRYPOINT C:\BuildTools\Common7\Tools\VsDevCmd.bat &&
+CMD powershell.exe -NoLogo -ExecutionPolicy Bypass

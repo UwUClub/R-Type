@@ -1,8 +1,18 @@
 pipeline {
-    agent none  // This allows us to specify agents per stage
+    agent none
+    triggers {
+        githubPush()  // This line triggers the job on a push to GitHub
+    }
     stages {
         stage('build and test') {
             matrix {
+                when {
+                    anyOf {
+                        branch 'main'
+                        branch 'dev'
+                        branch 'RT-45-new-cicd'
+                    }
+                }
                 axes {
                     axis {
                         name 'PLATFORM'
@@ -13,17 +23,16 @@ pipeline {
                     stage('build') {
                         agent {
                             dockerfile {
-                                filename "${PLATFORM == 'linux' ? 'Dockerfile' : 'DockerfileWindows'}"
+                                filename "${PLATFORM == 'linux' ? 'DockerfileLinux' : 'DockerfileWindows'}"
                             }
                         }
                         steps {
                             script {
                                 if (PLATFORM == 'linux') {
                                     sh 'cmake -S . -B build'
-                                    sh 'cmake --build build'
+                                    sh 'cmake --build build --config Release -j 8'
                                 } else {
-                                    bat 'cmake -S . -B build'
-                                    bat 'cmake --build build'
+                                    bat '.\\build.bat'
                                 }
                             }
                         }
@@ -31,15 +40,15 @@ pipeline {
                     stage('test') {
                         agent {
                             dockerfile {
-                                filename "${PLATFORM == 'linux' ? 'Dockerfile' : 'DockerfileWindows'}"
+                                filename "${PLATFORM == 'linux' ? 'DockerfileLinux' : 'DockerfileWindows'}"
                             }
                         }
                         steps {
                             script {
                                 if (PLATFORM == 'linux') {
-                                    sh './build/test/tests'
+                                    sh './build/proj'
                                 } else {
-                                    bat '.\\build\\test\\tests.exe'
+                                    bat '.\\build\\Release\\proj.exe'
                                 }
                             }
                         }
