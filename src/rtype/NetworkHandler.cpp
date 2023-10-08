@@ -63,20 +63,24 @@ namespace Network {
 
     void NetworkHandler::send(const RType::Packet &aPacket, udp::endpoint &aClientEndpoint)
     {
-        _senders[aPacket.uuid].second = true;
-        _senders[aPacket.uuid].first = std::thread([this, aPacket, aClientEndpoint]() {
-            try {
-                boost::asio::streambuf buf;
-                RType::serializePacket(&buf, aPacket);
+        boost::asio::streambuf buf;
+        RType::serializePacket(&buf, aPacket);
+        _socket.send_to(buf.data(), aClientEndpoint);
 
-                while (_senders[aPacket.uuid].second.load()) {
-                    _socket.send_to(buf.data(), aClientEndpoint);
-                    std::this_thread::sleep_for(std::chrono::milliseconds(200));
-                }
-            } catch (std::exception &e) {
-                std::cerr << "NetworkHandler send error: " << e.what() << std::endl;
-            }
-        });
+        // _senders[aPacket.uuid].second = true;
+        // _senders[aPacket.uuid].first = std::thread([this, aPacket, aClientEndpoint]() {
+        //     try {
+        //         boost::asio::streambuf buf;
+        //         RType::serializePacket(&buf, aPacket);
+
+        //         while (_senders[aPacket.uuid].second.load()) {
+        //             _socket.send_to(buf.data(), aClientEndpoint);
+        //             std::this_thread::sleep_for(std::chrono::milliseconds(200));
+        //         }
+        //     } catch (std::exception &e) {
+        //         std::cerr << "NetworkHandler send error: " << e.what() << std::endl;
+        //     }
+        // });
     }
 
     void NetworkHandler::answerAknowledgment(const std::string &aPacketUuid, udp::endpoint &aEndpoint)

@@ -27,7 +27,7 @@ namespace ECS {
 
                 // Create entity
                 size_t bulletId = world.createEntity();
-                auto posX = pos.x + BULLET_TEX_WIDTH;
+                auto posX = pos.x + BULLET_TEX_WIDTH; // + PLAYER_TEX_WIDTH;
                 auto posY = pos.y;
                 ECS::Utils::Vector2f entityPos(posX, posY);
                 aPos.insertAt(bulletId, entityPos);
@@ -38,6 +38,9 @@ namespace ECS {
                 // Send packet
                 server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_SHOOT),
                                  {static_cast<float>(bulletId), posX, posY});
+
+                // Delete event
+                eventManager->removeEvent(event);
             }
         }
     }

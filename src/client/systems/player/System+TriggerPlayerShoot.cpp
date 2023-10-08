@@ -24,8 +24,13 @@ namespace ECS {
                 auto *keyEvent = static_cast<Event::KeyboardEvent *>(event);
 
                 if (keyEvent->_keyId == Event::KeyIdentifier::SPACE) {
-                    RType::Packet packet(static_cast<int>(RType::ClientEventType::PLAYER_SHOOT),
-                                         {static_cast<float>(aType[i].value().onlineId.value_or(0))});
+                    std::cout << "shoot!" << std::endl;
+                    int playerOnlineId = aType[i].value().onlineId.value_or(-1);
+                    if (playerOnlineId == -1) {
+                        continue;
+                    }
+                    RType::Packet packet(static_cast<int>(RType::ServerEventType::SHOOT),
+                                         {static_cast<float>(playerOnlineId)});
                     client.send(packet);
                 }
             }

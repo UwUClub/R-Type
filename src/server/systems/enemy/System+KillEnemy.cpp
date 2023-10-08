@@ -16,7 +16,7 @@ namespace ECS {
                 continue;
             }
             if (!aIsAlive[enemyId].value().isAlive) {
-                // world.killEntity(enemy);
+                // world.killEntity(enemyId);
                 server.broadcast(static_cast<int>(RType::ClientEventType::ENEMY_DEATH), {static_cast<float>(enemyId)});
             }
         }
