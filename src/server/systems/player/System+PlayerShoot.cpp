@@ -23,14 +23,16 @@ namespace ECS {
 
             if (gameEvent.getType() == RType::ServerEventType::SHOOT) {
                 size_t playerId = static_cast<size_t>(gameEvent.getPayload()[0]);
-                auto &pos = aPos[playerId].value();
+
+                std::cout << "Player " << playerId << " shoot" << std::endl;
+
+                auto pos = aPos[playerId].value();
 
                 // Create entity
                 size_t bulletId = world.createEntity();
-                auto posX = pos.x + BULLET_TEX_WIDTH; // + PLAYER_TEX_WIDTH;
-                auto posY = pos.y;
-                ECS::Utils::Vector2f entityPos(posX, posY);
-                aPos.insertAt(bulletId, entityPos);
+                float posX = pos.x + BULLET_TEX_WIDTH + PLAYER_TEX_WIDTH;
+                float posY = pos.y;
+                aPos.insertAt(bulletId, ECS::Utils::Vector2f {posX, posY});
                 aSpeed.insertAt(bulletId, Component::Speed {BULLET_SPEED});
                 aType.insertAt(bulletId, Component::TypeEntity {false, false, false, true, false, false, false});
                 aHitBox.insertAt(bulletId, Component::HitBox {BULLET_TEX_WIDTH, BULLET_TEX_HEIGHT});
