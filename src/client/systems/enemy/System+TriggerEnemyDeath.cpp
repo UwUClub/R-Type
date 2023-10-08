@@ -38,6 +38,7 @@ namespace ECS {
                 continue;
             }
             if (!aIsAlive[enemy].value().isAlive && aIsAlive[enemy].value().timeToDie < 0) {
+                std::cout << "enemy " << aType[enemy].value().onlineId.value_or(0) << " killed" << std::endl;
                 // display.freeRects(enemy);
                 // world.killEntity(enemy);
             } else if (!aIsAlive[enemy].value().isAlive && aIsAlive[enemy].value().timeToDie == 0) {

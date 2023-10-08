@@ -48,7 +48,10 @@ int main(int ac, char **av)
                         Component::IsAlive>(ECS::System::enemyShoot);
         world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::HitBox, Component::IsAlive>(
             ECS::System::enemyHit);
-        // world.addSystem<Component::TypeEntity, Component::IsAlive>(ECS::System::killEnemy);
+        world.addSystem<Component::TypeEntity, Component::IsAlive>(ECS::System::killEnemy);
+
+        // Missile systems
+        world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveMissiles);
 
         // Game loop
         while (world.isRunning()) {

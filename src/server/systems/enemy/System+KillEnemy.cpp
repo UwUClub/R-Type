@@ -1,3 +1,4 @@
+#include <iostream>
 #include "HitBox.hpp"
 #include "IsAlive.hpp"
 #include "ServerHandler.hpp"
@@ -17,6 +18,7 @@ namespace ECS {
             }
             if (!aIsAlive[enemyId].value().isAlive) {
                 // world.killEntity(enemyId);
+                std::cout << "enemy " << enemyId << " killed" << std::endl;
                 server.broadcast(static_cast<int>(RType::ClientEventType::ENEMY_DEATH), {static_cast<float>(enemyId)});
             }
         }
