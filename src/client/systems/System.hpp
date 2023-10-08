@@ -15,9 +15,9 @@ namespace ECS {
     {
         public:
             /**
-             * @brief Create a player
+             * @brief Create a bot
              */
-            static void createPlayer();
+            static void createBot();
 
             /**
              * @brief Move the player
@@ -31,17 +31,17 @@ namespace ECS {
                                    Core::SparseArray<Component::TypeEntity> &aType,
                                    Core::SparseArray<Component::IsAlive> &aIsAlive);
 
-            /*
-             * @brief Update the player position
+            /**
+             * @brief Update a bot position
+             *
              */
-            static void updatePlayerPos(Core::SparseArray<Utils::Vector2f> &aPos,
-                                        Core::SparseArray<Component::TypeEntity> &aType);
+            static void updateBotPosition(Core::SparseArray<Utils::Vector2f> &aPos,
+                                          Core::SparseArray<Component::TypeEntity> &aType);
 
             /**
              * @brief Get the all the input of the user
              *
              */
-
             static void getInput();
 
             /**
@@ -84,25 +84,31 @@ namespace ECS {
             static void createEnemy();
 
             /**
-             * @brief Move enemies on the screen
+             * @brief Move enemy on the screen
              *
              * @param aPos SparseArray of all entities position
              * @param aSpeed Sparsearray of all entities speed
              * @param aType SparseArray of all entities type
              */
-            static void moveEnemies(Core::SparseArray<Utils::Vector2f> &aPos,
-                                    Core::SparseArray<Component::Speed> &aSpeed,
-                                    Core::SparseArray<Component::TypeEntity> &aType);
+            static void moveEnemy(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
+                                  Core::SparseArray<Component::TypeEntity> &aType);
 
             /**
              * @brief Make player shoot missiles when space is pressed
              *
              * @param aPos SparseArray of all entities position
              * @param aType SparseArray of all entities type
+             * @param aIsAlive SparseArray of all entities isAlive component
              */
-            static void shootMissiles(Core::SparseArray<Utils::Vector2f> &aPos,
-                                      Core::SparseArray<Component::TypeEntity> &aType,
-                                      Core::SparseArray<Component::IsAlive> &aIsAlive);
+            static void triggerPlayerShoot(Core::SparseArray<Utils::Vector2f> &aPos,
+                                           Core::SparseArray<Component::TypeEntity> &aType,
+                                           Core::SparseArray<Component::IsAlive> &aIsAlive);
+
+            /**
+             * @brief Make bots shoot missiles
+             *
+             */
+            static void triggerBotShoot();
 
             /**
              * @brief Move missiles on the screen
@@ -140,12 +146,8 @@ namespace ECS {
             /**
              * @brief Make enemies shoot missiles
              *
-             * @param aPos SparseArray of all entities position
-             * @param aType SparseArray of all entities type
              */
-            static void enemyMissiles(Core::SparseArray<Utils::Vector2f> &aPos,
-                                      Core::SparseArray<Component::TypeEntity> &aType,
-                                      Core::SparseArray<Component::IsAlive> &aIsAlive);
+            static void triggerEnemyShoot();
 
             /**
              * @brief Kill the player if he is hit by an obstacle

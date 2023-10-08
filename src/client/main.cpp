@@ -42,20 +42,21 @@ int main(int ac, char **av)
     world.addSystem(ECS::System::getInput);
     world.addSystem<Component::LoadedSprite>(ECS::System::loadTextures);
     world.addSystem<Component::LoadedSprite, ECS::Utils::Vector2f>(ECS::System::displayEntities);
-    world.addSystem<>(ECS::System::createPlayer);
+    world.addSystem(ECS::System::createBot);
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::IsAlive>(
         ECS::System::movePlayer);
-    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::updatePlayerPos);
+    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::updateBotPosition);
+    world.addSystem(ECS::System::triggerBotShoot);
     world.addSystem(ECS::System::quitSDL);
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBackground);
     world.addSystem(ECS::System::createEnemy);
-    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveEnemies);
-    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive>(ECS::System::shootMissiles);
+    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveEnemy);
+    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive>(ECS::System::triggerPlayerShoot);
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveMissiles);
     world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::HitBox, Component::IsAlive>(
         ECS::System::destroyEnemy);
     world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite>(ECS::System::handleEnemyDeath);
-    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive>(ECS::System::enemyMissiles);
+    world.addSystem(ECS::System::triggerEnemyShoot);
     world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive, Component::HitBox>(
         ECS::System::killPlayer);
     world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite>(ECS::System::handlePlayerDeath);

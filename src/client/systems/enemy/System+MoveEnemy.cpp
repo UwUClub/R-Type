@@ -1,14 +1,15 @@
+#include "SDLDisplayClass.hpp"
 #include "System.hpp"
 #include "World.hpp"
 
 namespace ECS {
-    void System::moveEnemies(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
-                             Core::SparseArray<Component::TypeEntity> &aType)
+    void System::moveEnemy(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
+                           Core::SparseArray<Component::TypeEntity> &aType)
     {
         auto &world = Core::World::getInstance();
 
         for (size_t idx = 0; idx < aPos.size(); idx++) {
-            if (!aPos[idx].has_value() || !aSpeed[idx].has_value() || !aType[idx].has_value()) {
+            if (!aPos[idx].has_value()) {
                 continue;
             }
             auto &pos = aPos[idx].value();
@@ -17,6 +18,7 @@ namespace ECS {
             if (type.isEnemy) {
                 pos.x -= speed.speed * world.getDeltaTime();
                 if (pos.x < -30) {
+                    SDLDisplayClass::getInstance().freeRects(idx);
                     world.killEntity(idx);
                 }
             }

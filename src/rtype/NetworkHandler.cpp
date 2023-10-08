@@ -70,7 +70,6 @@ namespace Network {
                 RType::serializePacket(&buf, aPacket);
 
                 while (_senders[aPacket.uuid].second.load()) {
-                    // std::cout << "send packet " << aPacket.uuid << " of type " << aPacket.type << std::endl;
                     _socket.send_to(buf.data(), aClientEndpoint);
                     std::this_thread::sleep_for(std::chrono::milliseconds(200));
                 }

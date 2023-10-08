@@ -4,17 +4,12 @@ find_package(SDL2 REQUIRED)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
-add_subdirectory(player)
-add_subdirectory(bot)
-add_subdirectory(enemy)
-add_subdirectory(missile)
-
 target_sources(client PRIVATE
-        System+DisplayEntities.cpp
-        System+GetInput.cpp
-        System+LoadTextures.cpp
-        System+SDLQuit.cpp
-        System+MoveBackground.cpp
+        System+CreateEnemy.cpp
+        System+MoveEnemy.cpp
+        System+DestroyEnemy.cpp
+        System+HandleEnemyDeath.cpp
+        System+TriggerEnemyShoot.cpp
 )
 
 target_include_directories(client PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

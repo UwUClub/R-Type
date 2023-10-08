@@ -7,8 +7,7 @@
 #include <unordered_map>
 
 namespace ECS {
-    void System::movePlayer(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
-                            Core::SparseArray<Component::TypeEntity> &aType)
+    void System::movePlayer(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed)
     {
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
         Network::ServerHandler &network = Network::ServerHandler::getInstance();
@@ -24,18 +23,30 @@ namespace ECS {
                 float moveY = gameEvent.getPayload()[2];
                 float speed = aSpeed[entityId].value().speed;
 
-                if (moveX < -1 || moveY > 1 || moveY < -1 || moveY > 1) {
+                auto &pos = aPos[entityId].value();
+
+                if (moveX < -1 || moveX > 1 || moveY < -1 || moveY > 1) {
                     continue;
                 }
 
-                aPos[entityId].value().x += moveX * speed;
-                aPos[entityId].value().y -= moveY * speed;
+                pos.x += moveX * speed;
+                pos.y -= moveY * speed;
 
-                // std::cout << entityId << " pos: " << aPos[gameEvent.getEntityId()].value().x << " "
-                //           << aPos[gameEvent.getEntityId()].value().y << std::endl;
+                if (pos.x < 0) {
+                    pos.x = 0;
+                }
+                if (pos.x > SCREEN_WIDTH) {
+                    pos.x = SCREEN_WIDTH;
+                }
+                if (pos.y < 0) {
+                    pos.y = 0;
+                }
+                if (pos.y > SCREEN_HEIGHT) {
+                    pos.y = SCREEN_HEIGHT;
+                }
 
                 network.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_POSITION),
-                                  {static_cast<float>(entityId), aPos[entityId].value().x, aPos[entityId].value().y});
+                                  {static_cast<float>(entityId), pos.x, pos.y});
 
                 eventManager->removeEvent(event);
             }

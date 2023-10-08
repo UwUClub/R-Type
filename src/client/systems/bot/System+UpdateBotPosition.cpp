@@ -4,8 +4,8 @@
 #include "System.hpp"
 
 namespace ECS {
-    void System::updatePlayerPos(Core::SparseArray<Utils::Vector2f> &aPos,
-                                 Core::SparseArray<Component::TypeEntity> &aType)
+    void System::updateBotPosition(Core::SparseArray<Utils::Vector2f> &aPos,
+                                   Core::SparseArray<Component::TypeEntity> &aType)
     {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         ;

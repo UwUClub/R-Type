@@ -2,21 +2,21 @@
 #include "ServerHandler.hpp"
 #include "System.hpp"
 #include "Values.hpp"
-#include "Timer+SpawnEnemies.hpp"
+#include "Timer+SpawnEnemy.hpp"
 
 namespace ECS {
-    void System::spawnEnemies(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
-                              Core::SparseArray<Component::TypeEntity> &aType,
-                              Core::SparseArray<Component::HitBox> &aHitBox,
-                              Core::SparseArray<Component::IsAlive> &aIsAlive)
+    void System::spawnEnemy(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
+                            Core::SparseArray<Component::TypeEntity> &aType,
+                            Core::SparseArray<Component::HitBox> &aHitBox,
+                            Core::SparseArray<Component::IsAlive> &aIsAlive)
     {
         Network::ServerHandler &server = Network::ServerHandler::getInstance();
-        Timer::TimerSpawnEnemies &timer = Timer::TimerSpawnEnemies::getInstance();
+        Timer::TimerSpawnEnemy &timer = Timer::TimerSpawnEnemy::getInstance();
         auto &world = Core::World::getInstance();
 
         // Handle timer
         timer.add(world.getDeltaTime());
-        if (timer.get() < 1) {
+        if (timer.get() < ENEMY_SPAWN_INTERVAL) {
             return;
         }
         timer.reset();

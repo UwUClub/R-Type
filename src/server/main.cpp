@@ -32,10 +32,14 @@ int main(int ac, char **av)
         world.registerComponent<Component::IsAlive>();
 
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::welcomePlayers);
-        world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::movePlayer);
+        world.addSystem<ECS::Utils::Vector2f, Component::Speed>(ECS::System::movePlayer);
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::HitBox,
-                        Component::IsAlive>(ECS::System::spawnEnemies);
-        world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveEnemies);
+                        Component::IsAlive>(ECS::System::spawnEnemy);
+        world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveEnemy);
+        world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::HitBox,
+                        Component::IsAlive>(ECS::System::enemyShoot);
+        world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::HitBox>(
+            ECS::System::playerShoot);
 
         while (world.isRunning()) {
             world.runSystems();
