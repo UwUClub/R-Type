@@ -1,14 +1,13 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "System.hpp"
 #include "SDLDisplayClass.hpp"
+#include "System.hpp"
 
 namespace ECS {
-    void System::triggerBonus(Core::SparseArray<Utils::Vector2f> &aPos,
-                                  Core::SparseArray<Component::TypeEntity> &aType,
-                                  Core::SparseArray<Component::IsAlive> &aIsAlive,
-                                  Core::SparseArray<Component::HitBox> &aHitBox)
+    void System::triggerBonus(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::TypeEntity> &aType,
+                              Core::SparseArray<Component::IsAlive> &aIsAlive,
+                              Core::SparseArray<Component::HitBox> &aHitBox)
     {
         auto &world = Core::World::getInstance();
         auto &display = SDLDisplayClass::getInstance();
@@ -38,4 +37,4 @@ namespace ECS {
             }
         }
     }
-}
+} // namespace ECS

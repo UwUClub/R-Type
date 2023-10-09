@@ -30,12 +30,14 @@ namespace ECS {
                 aSprites[enemy].value().rect->y = 46;
                 aIsAlive[enemy].value().timeToDie = 1;
                 if ((rand() % 3) != 0) {
-                    display.addEntity(
-                    ECS::Utils::Vector2f {aPos[enemy].value().x, aPos[enemy].value().y},
-                    Component::Speed {BONUS_SPEED}, Component::TypeEntity {false, false, false, false, false, true, false},
-                    Component::LoadedSprite {BONUS_ASSET, nullptr, new SDL_Rect {0, 0, BONUS_TEX_WIDTH, BONUS_TEX_HEIGHT},
-                                             new SDL_Rect {0, 0, BONUS_TEX_WIDTH, BONUS_TEX_HEIGHT}},
-                    Component::HitBox {BONUS_TEX_WIDTH, BONUS_TEX_HEIGHT}, Component::IsAlive {true, 0});
+                    display.addEntity(ECS::Utils::Vector2f {aPos[enemy].value().x, aPos[enemy].value().y},
+                                      Component::Speed {BONUS_SPEED},
+                                      Component::TypeEntity {false, false, false, false, false, true, false},
+                                      Component::LoadedSprite {BONUS_ASSET, nullptr,
+                                                               new SDL_Rect {0, 0, BONUS_TEX_WIDTH, BONUS_TEX_HEIGHT},
+                                                               new SDL_Rect {0, 0, BONUS_TEX_WIDTH, BONUS_TEX_HEIGHT}},
+                                      Component::HitBox {BONUS_TEX_WIDTH, BONUS_TEX_HEIGHT},
+                                      Component::IsAlive {true, 0});
                 }
             } else if (!aIsAlive[enemy].value().isAlive) {
                 aIsAlive[enemy].value().timeToDie -= world.getDeltaTime();

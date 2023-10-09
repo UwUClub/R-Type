@@ -37,10 +37,10 @@ namespace ECS {
              * @param aIsAlive The isAlive of the bonus
              * @param aHitBox The hitbox of the bonus
              */
-             static void triggerBonus(Core::SparseArray<Utils::Vector2f> &aPos,
-                                  Core::SparseArray<Component::TypeEntity> &aType,
-                                  Core::SparseArray<Component::IsAlive> &aIsAlive,
-                                  Core::SparseArray<Component::HitBox> &aHitBox);
+            static void triggerBonus(Core::SparseArray<Utils::Vector2f> &aPos,
+                                     Core::SparseArray<Component::TypeEntity> &aType,
+                                     Core::SparseArray<Component::IsAlive> &aIsAlive,
+                                     Core::SparseArray<Component::HitBox> &aHitBox);
 
             /**
              * @brief Move the player
