@@ -5,15 +5,16 @@
 
 namespace ECS {
     bool checkHitBox(size_t playerId, size_t obstacleId, Core::SparseArray<Utils::Vector2f> &aPos,
-                    Core::SparseArray<Component::HitBox> &aHitBox) {
+                     Core::SparseArray<Component::HitBox> &aHitBox)
+    {
         if (aPos[playerId].value().x > aPos[obstacleId].value().x
             && aPos[playerId].value().x < aPos[obstacleId].value().x + aHitBox[obstacleId].value().width
             && aPos[playerId].value().y > aPos[obstacleId].value().y
             && aPos[playerId].value().y < aPos[obstacleId].value().y + aHitBox[obstacleId].value().height) {
-            return(true);
+            return (true);
         } else if ((aPos[playerId].value().x + aHitBox[playerId].value().width > aPos[obstacleId].value().x
                     && aPos[playerId].value().x + aHitBox[playerId].value().width
-                            < aPos[obstacleId].value().x + aHitBox[obstacleId].value().width
+                           < aPos[obstacleId].value().x + aHitBox[obstacleId].value().width
                     && aPos[playerId].value().y > aPos[obstacleId].value().y
                     && aPos[playerId].value().y < aPos[obstacleId].value().y + aHitBox[obstacleId].value().height)) {
             return (true);
@@ -22,8 +23,8 @@ namespace ECS {
                    && aPos[obstacleId].value().y > aPos[playerId].value().y
                    && aPos[obstacleId].value().y < aPos[playerId].value().y + aHitBox[playerId].value().height) {
             return (true);
-       }
-       return (false);
+        }
+        return (false);
     }
 
     void System::playerHit(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::TypeEntity> &aType,
@@ -37,7 +38,8 @@ namespace ECS {
                 continue;
             }
             for (size_t obstacleId = 0; obstacleId < aPos.size(); obstacleId++) {
-                if (!aType[obstacleId].has_value() || (!aType[obstacleId].value().isBullet && !aType[obstacleId].value().isEnemy)) {
+                if (!aType[obstacleId].has_value()
+                    || (!aType[obstacleId].value().isBullet && !aType[obstacleId].value().isEnemy)) {
                     continue;
                 }
                 if (checkHitBox(playerId, obstacleId, aPos, aHitBox)) {
