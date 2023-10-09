@@ -9,6 +9,7 @@ R-Type is an iconic series of horizontal-scrolling shoot 'em up video games deve
 - Maxence LABOUREL
 
 *Epitech Toulouse, promo 2026*
+
 *September 2023*
 
 ## Copyright Notice
@@ -26,10 +27,10 @@ Copyright (c) The persons identified as the game developers.  All rights reserve
 
    2.3. [Reception Aknowledgment](#23-reception-aknowledgment)
 
-   2.4. [Serialization](#23-serialization)
+   2.4. [Serialization](#24-serialization)
 
 3. [Security Considerations](#3-security-considerations)
-5. [Author's Addresses](#5-authors-addresses)
+4. [Author's Addresses](#5-authors-addresses)
 
 ## 1. Introduction
 
@@ -40,7 +41,7 @@ events, including player interactions and monster behavior.
 
 ## 2. Protocol Specification
 
-Each client is a game player who gets user inputs, send actions to the server and calculates some game logic on its side. The server centralizes the main game logic and defines what happens in the game. It always have the last word on clients.
+Each client is a game player that listens to user inputs, sends actions to the server and calculates some game logic on its side. The server centralizes the main game logic and defines what happens in the game. It always has the last word on clients.
 
 ### 2.1. Packet Format
 
@@ -76,7 +77,7 @@ A packet has the following properties:
   - payload:
      - Entity id
      - Is packet receiver the concerned player (`1` for yes, otherwise no)
-     - Player color
+     - Player color (goes from `0` to `3`)
      - Entity horizontal position
      - Entity vertical position
 - `PLAYER_DISCONNECTION`
@@ -109,13 +110,17 @@ A packet has the following properties:
 - `ENEMY_SHOOT`
    - value: `7`
    - payload:
-      - id of the entity who shoots
+      - Id of the entity who shoots
 
 If packet type is `-1`, then it's a reception aknowledgment. Its uuid property is the one of the received packet. Its payload is empty.
 
 The first packet sent by a client to its server **must** be of type `CONNECT`. Otherwise, the server will not listen to any of its packets.
 
-### 2.3 Reception Aknowledgment
+When a client connects he server must:
+   - send `PLAYER_SPAWN` packets to the connecting client, for each player already present in the server
+   - send `ENEMY_SPAWN` packets to the connecting client, for each enemy already present in the server
+
+### 2.3. Reception Aknowledgment
 
 A client or server receiving a packet whose type is `>= 0` must send back an aknowledgment packet (type `-1`). With the received packet uuid as uuid.
 
@@ -129,7 +134,7 @@ Implementations of this protocol should consider security aspects to protect aga
 
 Remember that the server should always have the last word on the client.
 
-## 5. Author's Addresses
+## 4. Author's Addresses
 
 Our email addresses:
 - valentin.gegoux@epitech.eu
