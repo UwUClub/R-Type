@@ -15,21 +15,6 @@ namespace ECS {
     {
         public:
             /**
-             * @brief Summon a bonus kill of an enemy
-             * @details The bonus is a sprite that is displayed on the screen for a short amount of time on kill of an
-             * enemy
-             * @param aPos The position of the bonus
-             * @param aSprites The sprites of the bonus
-             * @param aSpeed The speed of the bonus
-             * @param aHitBox The hitbox of the bonus
-             */
-            static void Bonus(Core::SparseArray<Utils::Vector2f> &aPos,
-                              Core::SparseArray<Component::LoadedSprite> &aSprites,
-                              Core::SparseArray<Component::Speed> &aSpeed,
-                              Core::SparseArray<Component::HitBox> &aHitBox,
-                              Core::SparseArray<Component::TypeEntity> &aType);
-
-            /**
              * @brief Create a bot
              */
             static void createBot();
@@ -44,6 +29,18 @@ namespace ECS {
              */
             static void moveBonus(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
                                   Core::SparseArray<Component::TypeEntity> &aType);
+
+            /**
+             * @brief Handle the trigger of the bonus
+             * @param aPos The position of the bonus
+             * @param aType The type of the bonus
+             * @param aIsAlive The isAlive of the bonus
+             * @param aHitBox The hitbox of the bonus
+             */
+             static void triggerBonus(Core::SparseArray<Utils::Vector2f> &aPos,
+                                  Core::SparseArray<Component::TypeEntity> &aType,
+                                  Core::SparseArray<Component::IsAlive> &aIsAlive,
+                                  Core::SparseArray<Component::HitBox> &aHitBox);
 
             /**
              * @brief Move the player
@@ -167,7 +164,8 @@ namespace ECS {
              */
             static void handleEnemyDeath(Core::SparseArray<Component::TypeEntity> &aType,
                                          Core::SparseArray<Component::IsAlive> &aIsAlive,
-                                         Core::SparseArray<Component::LoadedSprite> &aSprites);
+                                         Core::SparseArray<Component::LoadedSprite> &aSprites,
+                                         Core::SparseArray<Utils::Vector2f> &aPos);
 
             /**
              * @brief Make enemies shoot missiles

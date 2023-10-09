@@ -55,11 +55,13 @@ int main(int ac, char **av)
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveMissiles);
     world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::HitBox, Component::IsAlive>(
         ECS::System::destroyEnemy);
-    world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite>(ECS::System::handleEnemyDeath);
+    world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite, ECS::Utils::Vector2f>(ECS::System::handleEnemyDeath);
     world.addSystem(ECS::System::triggerEnemyShoot);
     world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive, Component::HitBox>(
         ECS::System::killPlayer);
     world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite>(ECS::System::handlePlayerDeath);
+    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBonus);
+    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive, Component::HitBox>(ECS::System::triggerBonus);
     display.addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {BACKGROUND_SPEED},
                       Component::TypeEntity {false, false, false, false, false, false, true},
                       Component::LoadedSprite {BACKGROUND_ASSET, nullptr, nullptr,

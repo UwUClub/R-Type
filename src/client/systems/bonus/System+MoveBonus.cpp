@@ -1,5 +1,5 @@
+#include "../System.hpp"
 #include "SDLDisplayClass.hpp"
-#include "System.hpp"
 #include "Values.hpp"
 #include "World.hpp"
 
