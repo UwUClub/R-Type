@@ -15,12 +15,6 @@ target_sources(client PRIVATE
         System+LoadTextures.cpp
         System+SDLQuit.cpp
         System+MoveBackground.cpp
-        System+SpawnEnemies.cpp
-        System+MoveEnemies.cpp
-        System+ShootMissiles.cpp
-        System+MoveMissiles.cpp
-        System+DestroyEnemy.cpp
-        System+HandleEnemyDeath.cpp
         System+CreateBonus.cpp
         System+MoveBonus.cpp
         System+GrabBonus.cpp
