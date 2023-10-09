@@ -3,8 +3,8 @@
 #include "World.hpp"
 
 namespace ECS {
-    void System::moveEnemies(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
-                             Core::SparseArray<Component::TypeEntity> &aType)
+    void System::moveEnemy(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
+                           Core::SparseArray<Component::TypeEntity> &aType)
     {
         auto &world = Core::World::getInstance();
 

@@ -2,9 +2,11 @@
 #include "Components.hpp"
 #include "Event.hpp"
 #include "EventManager.hpp"
+#include "Packets.hpp"
 #include "ServerGameEvent.hpp"
-#include "ServerNetworkHandler.hpp"
+#include "ServerHandler.hpp"
 #include "System.hpp"
+#include "Values.hpp"
 #include "World.hpp"
 
 namespace ECS {
@@ -13,40 +15,42 @@ namespace ECS {
     {
         ECS::Core::World &world = ECS::Core::World::getInstance();
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
-        Network::ServerNetworkHandler &network = Network::ServerNetworkHandler::getInstance();
-        int eventIndex = 0;
+        Network::ServerHandler &network = Network::ServerHandler::getInstance();
         auto events = eventManager->getEventsByType(Event::EventType::GAME);
 
         for (auto &event : events) {
-            auto &gameEvent = static_cast<RTypeProtocol::ServerGameEvent &>(*event);
-            if (gameEvent.getType() == RTypeProtocol::ServerEventType::CONNECT) {
+            auto &gameEvent = static_cast<RType::ServerGameEvent &>(*event);
+            if (gameEvent.getType() == RType::ServerEventType::CONNECT) {
                 size_t playerId = world.createEntity();
                 float playerColor = static_cast<float>(network.getNumberClients());
 
                 aPos.insertAt(playerId, ECS::Utils::Vector2f {10, 10});
-                aSpeed.insertAt(playerId, Component::Speed {10});
+                aSpeed.insertAt(playerId, Component::Speed {PLAYER_SPEED});
                 aType.insertAt(playerId, Component::TypeEntity {true, false, false, false, false, false, false});
 
-                network.broadcast(
-                    {RTypeProtocol::ClientEventType::PLAYER_CONNECTION, playerId, {0, playerColor, 10, 10}});
+                network.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_SPAWN),
+                                  {static_cast<float>(playerId), 0, playerColor, 10, 10});
                 network.addClient(playerId, gameEvent.getClientEndpoint());
-                network.send({RTypeProtocol::ClientEventType::PLAYER_CONNECTION, playerId, {1, playerColor, 10, 10}},
+                network.send(RType::Packet(static_cast<int>(RType::ClientEventType::PLAYER_SPAWN),
+                                           {static_cast<float>(playerId), 1, playerColor, 10, 10}),
                              playerId);
 
                 int aPosSize = aPos.size();
                 for (std::size_t i = 0; i < aPosSize; i++) {
-                    if (i != playerId) {
-                        network.send({RTypeProtocol::ClientEventType::PLAYER_CONNECTION,
-                                      i,
-                                      {0, playerColor, aPos[i]->x, aPos[i]->y}},
+                    if (i != playerId && aType[i]->isPlayer) {
+                        network.send(RType::Packet(static_cast<int>(RType::ClientEventType::PLAYER_SPAWN),
+                                                   {static_cast<float>(i), 0, playerColor, aPos[i]->x, aPos[i]->y}),
+                                     playerId);
+                    }
+                    if (aType[i]->isEnemy) {
+                        network.send(RType::Packet(static_cast<int>(RType::ClientEventType::ENEMY_SPAWN),
+                                                   {static_cast<float>(i), aPos[i]->x, aPos[i]->y}),
                                      playerId);
                     }
                 }
 
-                eventManager->removeEvent(eventIndex);
-                eventIndex--;
+                eventManager->removeEvent(event);
             }
-            eventIndex++;
         }
     }
 } // namespace ECS

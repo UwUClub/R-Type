@@ -1,12 +1,12 @@
-find_package(Boost REQUIRED COMPONENTS system thread serialization)
+find_package(Boost REQUIRED COMPONENTS system thread serialization uuid)
 
 find_package(Threads REQUIRED)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
 target_sources(server PRIVATE
-        "${CMAKE_CURRENT_SOURCE_DIR}/ServerNetworkHandler.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/ServerNetworkHandler.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/ServerHandler.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/ServerHandler.cpp"
 )
 
 target_link_libraries(server
@@ -17,6 +17,7 @@ target_link_libraries(server
         rtype
         Boost::asio
         Boost::serialization
+        Boost::uuid
         Threads::Threads
 )
 

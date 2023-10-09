@@ -30,6 +30,7 @@ namespace Component {
              * @brief Construct a new Type Entity object
              *
              * @param aIsPlayer a boolean to know if the entity is a player
+             * @param aIsBot a boolean to know if the entity is a bot
              * @param aIsEnemy a boolean to know if the entity is an enemy
              * @param aIsBullet a boolean to know if the entity is a bullet
              * @param aIsWall a boolean to know if the entity is a wall
@@ -50,6 +51,7 @@ namespace Component {
              * @brief Construct a new Type Entity object
              *
              * @param aIsPlayer a boolean to know if the entity is a player
+             * @param aIsBot a boolean to know if the entity is a bot
              * @param aIsEnemy a boolean to know if the entity is an enemy
              * @param aIsBullet a boolean to know if the entity is a bullet
              * @param aIsWall a boolean to know if the entity is a wall

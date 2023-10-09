@@ -61,10 +61,10 @@ Each client is a game player. The protocol defines the following packet types:
 - `PLAYER_POSITION` (2)
 - `PLAYER_SHOOT` (3)
 - `PLAYER_DEATH`(4)
-- `MONSTER_SPAWN` (5)
-- `MONSTER_DEATH` (6)
-- `MONSTER_POSITION` (7)
-- `MONSTER_SHOOT` (8)
+- `ENEMY_SPAWN` (5)
+- `ENEMY_DEATH` (6)
+- `ENEMY_POSITION` (7)
+- `ENEMY_SHOOT` (8)
 
 ### 2.2. Packet Format
 
@@ -74,8 +74,8 @@ Each client is a game player. The protocol defines the following packet types:
    - The `PLAYER_CONNECTION` payload contains one float. If it's `1`, it means that the player designated by the id property is the one who receives the packet. Otherwise, it's not.
    - The following packets have a payload containing a pair of X/Y coordinates for positioning:
      - `PLAYER_POSITION` (2)
-     - `MONSTER_SPAWN` (6)
-     - `MONSTER_POSITION` (8)
+     - `ENEMY_SPAWN` (6)
+     - `ENEMY_POSITION` (8)
    - All the other packets have an empty payload.
 
 ### 2.3. Serialization
@@ -106,11 +106,11 @@ Here is an example of a C++ client sending a `MOVE_UP` packet to a C++ server, b
 #include "ServerGameEvent.hpp"
 #include <boost/asio.hpp>
 // ... setup socket and serverEndpoint ...
-RTypeProtocol::ClientToServerPacket packet;
-packet.type = RTypeProtocol::ServerEventType::MOVE_UP;
+RType::ClientToServerPacket packet;
+packet.type = RType::ServerEventType::MOVE_UP;
 boost::asio::streambuf buf;
 
-RTypeProtocol::serializePacket<const RTypeProtocol::ClientToServerPacket &>(&buf, packet);
+RType::serializePacket<const RType::ClientToServerPacket &>(&buf, packet);
 socket.send_to(buf.data(), serverEndpoint);
 // ...
 ```
@@ -125,13 +125,13 @@ constexpr unsigned short READ_BUFFER_SIZE = 128;
 // ...
 std::array<char, READ_BUFFER_SIZE> readBuffer;
 // ... fill readBuffer using Boost Asio ...
-RTypeProtocol::ClientToServerPacket packet;
+RType::ClientToServerPacket packet;
 
-RTypeProtocol::unserializePacket<RTypeProtocol::ClientToServerPacket, std::array<char, READ_BUFFER_SIZE>>(&packet, readBuffer);
+RType::unserializePacket<RType::ClientToServerPacket, std::array<char, READ_BUFFER_SIZE>>(&packet, readBuffer);
 // ... you can access packet here (packet.type is now MOVE_UP) ...
 ```
 
-The idea is the same for sending packets in the other direction with `RTypeProtocol::ServerToClientPacket`.
+The idea is the same for sending packets in the other direction with `RType::ServerToClientPacket`.
 
 ## 5. Author's Addresses
 

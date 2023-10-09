@@ -25,8 +25,8 @@ namespace ECS {
                 aSprites[enemy].value().texture = nullptr;
                 aSprites[enemy].value().rect->h = EXPLOSION_TEX_HEIGHT;
                 aSprites[enemy].value().rect->w = EXPLOSION_TEX_WIDTH;
-                aSprites[enemy].value().rect->x = 117;
-                aSprites[enemy].value().rect->y = 0;
+                aSprites[enemy].value().rect->x = 146;
+                aSprites[enemy].value().rect->y = 46;
                 aIsAlive[enemy].value().timeToDie = 1;
             } else if (!aIsAlive[enemy].value().isAlive) {
                 aIsAlive[enemy].value().timeToDie -= world.getDeltaTime();

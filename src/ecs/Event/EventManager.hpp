@@ -78,7 +78,7 @@ namespace ECS::Event {
              *
              * @return std::vector<Event>& A reference to the vector of events.
              */
-            [[nodiscard]] std::vector<Event *> &getEvents();
+            [[nodiscard]] std::vector<std::unique_ptr<Event>> &getEvents();
 
             /**
              * @brief Get all the events of a specific type
@@ -97,11 +97,11 @@ namespace ECS::Event {
              * @param aIndex The index of the event to remove.
              *
              */
-            void removeEvent(int);
+            void removeEvent(Event *aEvent);
 
         private:
             EventManager();
-            std::vector<Event *> _events;
+            std::vector<std::unique_ptr<Event>> _events;
 
         private:
             //-------------------EXCEPTIONS-------------------//
