@@ -20,16 +20,15 @@ Copyright (c) The persons identified as the game developers.  All rights reserve
 1. [Introduction](#1-introduction)
 2. [Protocol Specification](#2-protocol-specification)
 
-   2.1. [Packet Types](#21-packet-types)
+   2.1. [Packet Format](#21-packet-format)
 
-   2.2. [Packet Format](#22-packet-format)
+   2.2. [Packet Type](#22-packet-type)
 
-   2.3. [Serialization](#23-serialization)
+   2.3. [Reception Aknowledgment](#23-reception-aknowledgment)
 
-   2.4. [R-Type Protocol Library](#24-r-type-protocol-library)
+   2.4. [Serialization](#23-serialization)
 
 3. [Security Considerations](#3-security-considerations)
-4. [Examples](#4-examples)
 5. [Author's Addresses](#5-authors-addresses)
 
 ## 1. Introduction
@@ -41,97 +40,94 @@ events, including player interactions and monster behavior.
 
 ## 2. Protocol Specification
 
-### 2.1. Packet Types
+Each client is a game player who gets user inputs, send actions to the server and calculates some game logic on its side. The server centralizes the main game logic and defines what happens in the game. It always have the last word on clients.
 
-Each client is a game player. The protocol defines the following packet types:
+### 2.1. Packet Format
+
+A packet has the following properties:
+- `uuid` *16-byte string* Unique id to identify the packet. See part 2.3 to learn about reception aknowledgment.
+- `type` *4-byte int* See part 2.2 to get the list of packet types
+- `payload` *vector of float* The size and meaning of each value depends on packet type (check part 2.2)
+
+### 2.2 Packet Type
 
 **Client to Server Packets:**
-- `CONNECT` (0)
-- `DISCONNECT` (1)
-- `CRASH` (2)
-- `MOVE_LEFT` (3)
-- `MOVE_UP` (4)
-- `MOVE_RIGHT` (5)
-- `MOVE_DOWN` (6)
-- `SHOOT` (7)
+- `CONNECT`
+   - value: `0`
+   - payload: *empty*
+- `DISCONNECT`
+   - value: `1`
+   - payload: *empty*
+- `CRASH`
+   - value: `2`
+   - payload: *empty*
+- `MOVE`
+   - value: `3`
+   - payload:
+      - Move shift on horizontal axis (negative being left, positive being right, max absolute value is 1)
+      - Move shift on vertical axis (negative being bottom, positive being top, max absolute value is 1)
+- `SHOOT`
+   - value: `4`
+   - payload: *empty*
 
 **Server to Client Packets:**
-- `PLAYER_CONNECTION` (0)
-- `PLAYER_DISCONNECTION` (1)
-- `PLAYER_POSITION` (2)
-- `PLAYER_SHOOT` (3)
-- `PLAYER_DEATH`(4)
-- `MONSTER_SPAWN` (5)
-- `MONSTER_DEATH` (6)
-- `MONSTER_POSITION` (7)
-- `MONSTER_SHOOT` (8)
+- `PLAYER_SPAWN`
+  - value: `0`
+  - payload:
+     - Entity id
+     - Is packet receiver the concerned player (`1` for yes, otherwise no)
+     - Player color
+     - Entity horizontal position
+     - Entity vertical position
+- `PLAYER_DISCONNECTION`
+  - value: `1`
+  - payload:
+     - Id of the entity who leaves
+- `PLAYER_POSITION`
+  - value: `2`
+  - payload:
+     - Entity horizontal position
+     - Entity vertical position
+- `PLAYER_SHOOT`
+   - value: `3`
+   - payload:
+      - Id of the entity who shoots
+- `PLAYER_DEATH`
+   - value: `4`
+   - payload:
+      - Id of the dying entity
+- `ENEMY_SPAWN`
+   - value: `5`
+   - payload:
+      - Id of the spawning entity
+      - Entity horizontal position
+      - Entity vertical position
+- `ENEMY_DEATH`
+   - value: `6`
+   - payload:
+      - Id of the dying entity
+- `ENEMY_SHOOT`
+   - value: `7`
+   - payload:
+      - id of the entity who shoots
 
-### 2.2. Packet Format
+If packet type is `-1`, then it's a reception aknowledgment. Its uuid property is the one of the received packet. Its payload is empty.
 
-- Each packet has a 4 bytes (*int*) `type` property. It contains the packet type.
-- Each *Server to Client* packet has an 8 bytes (*size_t*) `id` property to identify the entity concerned by the packet. Entity ids should naturally be synced between clients and server.
-- Each *Server to Client* packet has a `payload` property. It's a vector of *float* that contains a set of details:
-   - The `PLAYER_CONNECTION` payload contains one float. If it's `1`, it means that the player designated by the id property is the one who receives the packet. Otherwise, it's not.
-   - The following packets have a payload containing a pair of X/Y coordinates for positioning:
-     - `PLAYER_POSITION` (2)
-     - `MONSTER_SPAWN` (6)
-     - `MONSTER_POSITION` (8)
-   - All the other packets have an empty payload.
+The first packet sent by a client to its server **must** be of type `CONNECT`. Otherwise, the server will not listen to any of its packets.
 
-### 2.3. Serialization
+### 2.3 Reception Aknowledgment
 
-The protocol is binary, so packets must be serialized to binary format before being sent. It must naturally be unserialized from binary format before being read.
+A client or server receiving a packet whose type is `>= 0` must send back an aknowledgment packet (type `-1`). With the received packet uuid as uuid.
 
-### 2.4 R-Type Protocol Library
+### 2.4. Serialization
 
-We made a C++ library commonly usable by client and server programs. It requires [Boost Asio](https://www.boost.org/doc/libs/1_83_0/doc/html/boost_asio.html). It defines:
-- `ServerToClientPacket` and `ClientToServerPacket` structs,
-- `ClientGameEvent` and `ServerGameEvent` classes compatible with our ECS
-- `serializePacket` and `unserializePacket` functions (see examples).
-All under a namespace called `RTypeProtocol`.
+The protocol is binary, so packets must be serialized to binary format before being sent. It must be unserialized from binary format before being read.
 
 ## 3. Security Considerations
 
 Implementations of this protocol should consider security aspects to protect against unauthorized access, cheating, and other potential vulnerabilities.
 
 Remember that the server should always have the last word on the client.
-
-## 4. Examples
-
-Here is an example of a C++ client sending a `MOVE_UP` packet to a C++ server, both using our RType protocol library and [Boost Asio](https://www.boost.org/doc/libs/1_83_0/doc/html/boost_asio.html):
-
-**Client side**:
-```C++
-#include "Packets.hpp"
-#include "ServerGameEvent.hpp"
-#include <boost/asio.hpp>
-// ... setup socket and serverEndpoint ...
-RTypeProtocol::ClientToServerPacket packet;
-packet.type = RTypeProtocol::ServerEventType::MOVE_UP;
-boost::asio::streambuf buf;
-
-RTypeProtocol::serializePacket<const RTypeProtocol::ClientToServerPacket &>(&buf, packet);
-socket.send_to(buf.data(), serverEndpoint);
-// ...
-```
-
-**Server side**:
-```C++
-#include "Packets.hpp"
-#include "ServerGameEvent.hpp"
-#include <boost/asio.hpp>
-// ...
-constexpr unsigned short READ_BUFFER_SIZE = 128;
-// ...
-std::array<char, READ_BUFFER_SIZE> readBuffer;
-// ... fill readBuffer using Boost Asio ...
-RTypeProtocol::ClientToServerPacket packet;
-
-RTypeProtocol::unserializePacket<RTypeProtocol::ClientToServerPacket, std::array<char, READ_BUFFER_SIZE>>(&packet, readBuffer);
-// ... you can access packet here (packet.type is now MOVE_UP) ...
-```
-
-The idea is the same for sending packets in the other direction with `RTypeProtocol::ServerToClientPacket`.
 
 ## 5. Author's Addresses
 
