@@ -19,6 +19,7 @@ function(R_Type_setup_dependencies)
             VERSION 3.4.0
             GITHUB_REPOSITORY catchorg/Catch2
             GIT_TAG v3.4.0
+            GIT_SHALLOW TRUE
     )
   endif()
 
@@ -39,6 +40,7 @@ function(R_Type_setup_dependencies)
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/system"
             GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
     )
   endif()
 
@@ -48,6 +50,7 @@ function(R_Type_setup_dependencies)
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/serialization"
             GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
     )
   endif()
 
@@ -57,6 +60,7 @@ function(R_Type_setup_dependencies)
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/assert"
             GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
     )
   endif()
 
@@ -66,6 +70,7 @@ function(R_Type_setup_dependencies)
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/config"
             GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
     )
   endif()
 
@@ -75,6 +80,7 @@ function(R_Type_setup_dependencies)
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/core"
             GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
     )
   endif()
 
@@ -84,6 +90,7 @@ function(R_Type_setup_dependencies)
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/align"
             GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
     )
   endif()
 
@@ -93,6 +100,7 @@ function(R_Type_setup_dependencies)
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/static_assert"
             GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
     )
   endif()
 
@@ -102,6 +110,7 @@ function(R_Type_setup_dependencies)
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/throw_exception"
             GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
     )
   endif()
 
@@ -111,6 +120,7 @@ function(R_Type_setup_dependencies)
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/array"
             GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
     )
   endif()
 
@@ -120,6 +130,7 @@ function(R_Type_setup_dependencies)
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/bind"
             GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
     )
   endif()
 
@@ -129,6 +140,7 @@ function(R_Type_setup_dependencies)
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/chrono"
             GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
     )
   endif()
 
@@ -138,6 +150,7 @@ function(R_Type_setup_dependencies)
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/integer"
             GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
     )
   endif()
 
@@ -147,6 +160,7 @@ function(R_Type_setup_dependencies)
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/move"
             GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
     )
   endif()
 
@@ -156,6 +170,7 @@ function(R_Type_setup_dependencies)
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/mpl"
             GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
     )
   endif()
 
@@ -165,6 +180,7 @@ function(R_Type_setup_dependencies)
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/predef"
             GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
     )
   endif()
 
@@ -174,6 +190,7 @@ function(R_Type_setup_dependencies)
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/asio"
             GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
     )
   endif()
 
@@ -183,6 +200,7 @@ function(R_Type_setup_dependencies)
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/ratio"
             GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
     )
   endif()
 
@@ -192,6 +210,7 @@ function(R_Type_setup_dependencies)
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/type_traits"
             GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
     )
   endif()
 
@@ -201,6 +220,7 @@ function(R_Type_setup_dependencies)
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/typeof"
             GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
     )
   endif()
 
@@ -210,6 +230,7 @@ function(R_Type_setup_dependencies)
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/utility"
             GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
     )
   endif()
 
@@ -219,6 +240,7 @@ function(R_Type_setup_dependencies)
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/coroutine"
             GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
     )
   endif()
 
@@ -228,6 +250,7 @@ function(R_Type_setup_dependencies)
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/date_time"
             GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
     )
   endif()
 
@@ -237,6 +260,7 @@ function(R_Type_setup_dependencies)
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/function"
             GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
     )
   endif()
 
@@ -246,6 +270,7 @@ function(R_Type_setup_dependencies)
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/regex"
             GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
     )
   endif()
 
@@ -255,6 +280,7 @@ function(R_Type_setup_dependencies)
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/smart_ptr"
             GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
     )
   endif()
 
@@ -264,6 +290,7 @@ function(R_Type_setup_dependencies)
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/preprocessor"
             GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
     )
   endif()
 
@@ -273,6 +300,7 @@ function(R_Type_setup_dependencies)
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/io"
             GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
     )
   endif()
 
@@ -282,6 +310,187 @@ function(R_Type_setup_dependencies)
             VERSION 1.83.0
             GITHUB_REPOSITORY "boostorg/uuid"
             GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::container_hash)
+    CPMAddPackage(
+            NAME boost_container_hash
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/container_hash"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::describe)
+    CPMAddPackage(
+            NAME boost_describe
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/describe"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::numeric_conversion)
+    CPMAddPackage(
+            NAME boost_numeric_conversion
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/numeric_conversion"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::mp11)
+    CPMAddPackage(
+            NAME boost_mp11
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/mp11"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::random)
+    CPMAddPackage(
+            NAME boost_random
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/random"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::conversion)
+    CPMAddPackage(
+            NAME boost_conversion
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/conversion"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::dynamic_bitset)
+    CPMAddPackage(
+            NAME boost_dynamic_bitset
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/dynamic_bitset"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::tti)
+    CPMAddPackage(
+            NAME boost_tti
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/tti"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::function_types)
+    CPMAddPackage(
+            NAME boost_function_types
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/function_types"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::winapi)
+    CPMAddPackage(
+            NAME boost_winapi
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/winapi"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::detail)
+    CPMAddPackage(
+            NAME boost_detail
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/detail"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::range)
+    CPMAddPackage(
+            NAME boost_range
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/range"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::concept_check)
+    CPMAddPackage(
+            NAME boost_concept_check
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/concept_check"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::iterator)
+    CPMAddPackage(
+            NAME boost_iterator
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/iterator"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::fusion)
+    CPMAddPackage(
+            NAME boost_fusion
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/fusion"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::optional)
+    CPMAddPackage(
+            NAME boost_optional
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/optional"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::tuple)
+    CPMAddPackage(
+            NAME boost_tuple
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/tuple"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::functional)
+    CPMAddPackage(
+            NAME boost_functional
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/functional"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
     )
   endif()
 
