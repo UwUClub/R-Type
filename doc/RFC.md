@@ -30,7 +30,7 @@ Copyright (c) The persons identified as the game developers.  All rights reserve
    2.4. [Serialization](#24-serialization)
 
 3. [Security Considerations](#3-security-considerations)
-4. [Author's Addresses](#5-authors-addresses)
+4. [Author's Addresses](#4-authors-addresses)
 
 ## 1. Introduction
 
@@ -46,84 +46,53 @@ Each client is a game player that listens to user inputs, sends actions to the s
 ### 2.1. Packet Format
 
 A packet has the following properties:
-- `uuid` *16-byte string* Unique id to identify the packet. See [part 2.3](#23-reception-aknowledgment) to learn about its utility
-- `type` *4-byte int* See part 2.2 to get the list of packet types
-- `payload` *vector of float* The size and meaning of each value depends on packet type, check [part 2.2](#22-packet-type).
+| Name | Kind | Description |
+| - | - | - |
+| `uuid` | 16-byte string | Unique id to identify the packet. See [part 2.3](#23-reception-aknowledgment) to learn about its utility |
+| `type` | 4-byte int | Packet type. See [part 2.2](#22-packet-type) to get the list of packet types |
+| `payload` | vector of float | Data carried by the packet. The size and meaning of each value depends on packet type, check [part 2.2](#22-packet-type) |
 
 ### 2.2 Packet Type
 
-**Client to Server Packets:**
-- `CONNECT`
-   - type: `0`
-   - payload: *empty*
-- `DISCONNECT`
-   - type: `1`
-   - payload: *empty*
-- `CRASH`
-   - type: `2`
-   - payload: *empty*
-- `MOVE`
-   - type: `3`
-   - payload:
-      - Move shift on horizontal axis (negative being left, positive being right, max absolute value is 1)
-      - Move shift on vertical axis (negative being bottom, positive being top, max absolute value is 1)
-- `SHOOT`
-   - type: `4`
-   - payload: *empty*
+Packets sent by client:
 
-**Server to Client Packets:**
+| Name | Type | Bounds to | Payload format |
+| - | - | - | - |
+| `CONNECT` | `0` | Server | empty |
+| `DISCONNECT` | `1` | Server | empty |
+| `MOVE` | `2` | Server | <ol><li>Move shift on horizontal axis (negative being left, positive being right, max absolute value is 1)</li><li>Move shift on vertical axis (negative being bottom, positive being top, max absolute value is 1)</li></ol> |
+| `SHOOT` | `3` | Server | empty |
 
-- `PLAYER_SPAWN`
-  - type: `0`
-  - payload:
-     - Entity id
-     - Is packet receiver the concerned player (`1` for yes, otherwise no)
-     - Player color (goes from `0` to `3`)
-     - Entity horizontal position
-     - Entity vertical position
-- `PLAYER_DISCONNECTION`
-  - type: `1`
-  - payload:
-     - Id of the entity who leaves
-- `PLAYER_POSITION`
-  - type: `2`
-  - payload:
-     - Entity horizontal position
-     - Entity vertical position
-- `PLAYER_SHOOT`
-   - type: `3`
-   - payload:
-      - Id of the entity who shoots
-- `PLAYER_DEATH`
-   - type: `4`
-   - payload:
-      - Id of the dying entity
-- `ENEMY_SPAWN`
-   - type: `5`
-   - payload:
-      - Id of the spawning entity
-      - Entity horizontal position
-      - Entity vertical position
-- `ENEMY_DEATH`
-   - type: `6`
-   - payload:
-      - Id of the dying entity
-- `ENEMY_SHOOT`
-   - type: `7`
-   - payload:
-      - Id of the entity who shoots
+Packets sent by server:
 
-If packet type is `-1`, then it's a reception aknowledgment. Its uuid property is the one of the received packet. Its payload is empty.
+| Name | Type | Bounds to | Payload format |
+| - | - | - | - |
+| `PLAYER_SPAWN` | `0` | Client | <ol><li>Entity id</li><li>Is packet receiver the concerned player (`1` for yes, otherwise no)</li><li>Player color (goes from `0` to `3`)</li><li>Entity horizontal position</li><li>Entity vertical position</li></ol> |
+| `PLAYER_DISCONNECTION` | `1` | Client | <ol><li>Id of the entity who leaves</li></ol> |
+| `PLAYER_POSITION` | `2` | Client | <ol><li>Entity id</li><li>Entity horizontal position</li><li>Entity vertical position</li></ol> |
+| `PLAYER_SHOOT` | `3` | Client | <ol><li>Shooting entity id</li></ol> |
+| `PLAYER_DEATH` | `4` | Client | <ol><li>Dying entity id</li></ol> |
+| `ENEMY_SPAWN` | `5` | Client | <ol><li>Spawning entity id</li><li>Entity horizontal position</li><li>Entity vertical position</li></ol> |
+| `ENEMY_SHOOT` | `6` | Client | <ol><li>Shooting entity id</li></ol> |
+| `ENEMY_DEATH` | `7` | Client | <ol><li>Dying entity id</li></ol> |
+
+Packets sent by both:
+
+| Name | Type | Bounds to | Payload format |
+| - | - | - | - |
+| `RECEPTION_AKNOWLEDGMENT` | `-1` | Client & Server | empty |
 
 The first packet sent by a client to its server **must** be of type `CONNECT`. Otherwise, the server will not listen to any of its packets.
 
-When a client connects he server must:
+When a client connects the server should:
    - send `PLAYER_SPAWN` packets to the connecting client, for each player already present in the server
    - send `ENEMY_SPAWN` packets to the connecting client, for each enemy already present in the server
 
+This way the connecting client is aware of what is going during the gameplay.
+
 ### 2.3. Reception Aknowledgment
 
-A client or server receiving a packet whose type is `>= 0` must send back an aknowledgment packet (type `-1`). With the received packet uuid as uuid.
+A client or server receiving a packet whose type is `>= 0` must send back an aknowledgment packet (type `-1`). Its uuid must be the same as the one of the received packet.
 
 ### 2.4. Serialization
 
