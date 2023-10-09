@@ -8,13 +8,11 @@ add_subdirectory(player)
 add_subdirectory(bot)
 add_subdirectory(enemy)
 add_subdirectory(missile)
+add_subdirectory(background)
+add_subdirectory(graphic)
 
 target_sources(client PRIVATE
-        System+DisplayEntities.cpp
-        System+GetInput.cpp
-        System+LoadTextures.cpp
-        System+SDLQuit.cpp
-        System+MoveBackground.cpp
+        System.hpp
 )
 
 target_include_directories(client PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

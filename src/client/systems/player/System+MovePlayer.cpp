@@ -18,29 +18,28 @@ namespace ECS {
 
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         auto keyboardEvent = eventManager->getEventsByType(Event::EventType::KEYBOARD);
-        static const std::unordered_map<Event::KeyIdentifier,
-                                        std::function<void(float &, Utils::Vector2f &, float, Core::World &)>>
+        static const std::unordered_map<Event::KeyIdentifier, std::function<void(float &, Utils::Vector2f &, float)>>
             keyMap = {
                 {Event::KeyIdentifier::UP,
-                 [&network](float &spd, Utils::Vector2f &xy, float onlineId, Core::World &world) {
+                 [&network](float &spd, Utils::Vector2f &xy, float onlineId) {
                      xy.y -= spd;
                      RType::Packet packet(static_cast<int>(RType::ServerEventType::MOVE), {onlineId, 0, 1});
                      network.send(packet);
                  }},
                 {Event::KeyIdentifier::DOWN,
-                 [&network](float &spd, Utils::Vector2f &xy, float onlineId, Core::World &world) {
+                 [&network](float &spd, Utils::Vector2f &xy, float onlineId) {
                      xy.y += spd;
                      RType::Packet packet(static_cast<int>(RType::ServerEventType::MOVE), {onlineId, 0, -1});
                      network.send(packet);
                  }},
                 {Event::KeyIdentifier::LEFT,
-                 [&network](float &spd, Utils::Vector2f &xy, float onlineId, Core::World &world) {
+                 [&network](float &spd, Utils::Vector2f &xy, float onlineId) {
                      xy.x -= spd;
                      RType::Packet packet(static_cast<int>(RType::ServerEventType::MOVE), {onlineId, -1, 0});
                      network.send(packet);
                  }},
                 {Event::KeyIdentifier::RIGHT,
-                 [&network](float &spd, Utils::Vector2f &xy, float onlineId, Core::World &world) {
+                 [&network](float &spd, Utils::Vector2f &xy, float onlineId) {
                      xy.x += spd;
                      RType::Packet packet(static_cast<int>(RType::ServerEventType::MOVE), {onlineId, 1, 0});
                      network.send(packet);
@@ -57,8 +56,11 @@ namespace ECS {
                     continue;
                 }
                 auto &pos = aPos[i].value();
-                float onlinePlayerId = static_cast<float>(aType[i].value().onlineId.value_or(0));
-                keyMap.at(keyEvent->_keyId)(aSpeed[i].value().speed, pos, onlinePlayerId, Core::World::getInstance());
+                float onlinePlayerId = static_cast<float>(aType[i].value().onlineId.value_or(-1));
+                if (onlinePlayerId == -1) {
+                    continue;
+                }
+                keyMap.at(keyEvent->_keyId)(aSpeed[i].value().speed, pos, onlinePlayerId);
 
                 if (pos.x < 0) {
                     pos.x = 0;

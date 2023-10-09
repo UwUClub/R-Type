@@ -10,8 +10,8 @@
 #include "World.hpp"
 
 namespace ECS {
-    void System::welcomePlayers(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
-                                Core::SparseArray<Component::TypeEntity> &aType)
+    void System::welcomePlayer(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
+                               Core::SparseArray<Component::TypeEntity> &aType)
     {
         ECS::Core::World &world = ECS::Core::World::getInstance();
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
@@ -37,6 +37,9 @@ namespace ECS {
 
                 int aPosSize = aPos.size();
                 for (std::size_t i = 0; i < aPosSize; i++) {
+                    if (!aType[i].has_value() || !aPos[i].has_value()) {
+                        continue;
+                    }
                     if (i != playerId && aType[i]->isPlayer) {
                         network.send(RType::Packet(static_cast<int>(RType::ClientEventType::PLAYER_SPAWN),
                                                    {static_cast<float>(i), 0, playerColor, aPos[i]->x, aPos[i]->y}),

@@ -1,4 +1,3 @@
-#include "SDLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 #include "World.hpp"
@@ -23,7 +22,6 @@ namespace ECS {
                     pos.x += speed.speed * world.getDeltaTime();
                 }
                 if (pos.x > SCREEN_WIDTH + 30 || pos.x < -30) {
-                    SDLDisplayClass::getInstance().freeRects(idx);
                     world.killEntity(idx);
                 }
             }

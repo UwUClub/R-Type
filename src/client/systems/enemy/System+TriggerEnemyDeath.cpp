@@ -1,23 +1,44 @@
+#include "ClientGameEvent.hpp"
+#include "EventManager.hpp"
 #include "HitBox.hpp"
 #include "IsAlive.hpp"
 #include "SDLDisplayClass.hpp"
 #include "System.hpp"
+#include "TypeUtils.hpp"
 #include "Values.hpp"
+#include "World.hpp"
 #include <SDL_image.h>
 
 namespace ECS {
-    void System::handleEnemyDeath(Core::SparseArray<Component::TypeEntity> &aType,
-                                  Core::SparseArray<Component::IsAlive> &aIsAlive,
-                                  Core::SparseArray<Component::LoadedSprite> &aSprites)
+    void System::triggerEnemyDeath(Core::SparseArray<Component::TypeEntity> &aType,
+                                   Core::SparseArray<Component::IsAlive> &aIsAlive,
+                                   Core::SparseArray<Component::LoadedSprite> &aSprites)
     {
         auto &world = Core::World::getInstance();
         auto &display = SDLDisplayClass::getInstance();
+        Event::EventManager *eventManager = Event::EventManager::getInstance();
+        auto events = eventManager->getEventsByType(Event::EventType::GAME);
 
+        // Receive death event from server
+        for (auto &event : events) {
+            auto &gameEvent = static_cast<RType::ClientGameEvent &>(*event);
+
+            if (gameEvent.getType() == RType::ClientEventType::ENEMY_DEATH) {
+                size_t onlineEnemyId = static_cast<size_t>(gameEvent.getPayload()[0]);
+                size_t localEnemyId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(aType, onlineEnemyId);
+                aIsAlive[localEnemyId].value().isAlive = false;
+
+                eventManager->removeEvent(event);
+            }
+        }
+
+        // Explosion + entity removal
         for (size_t enemy = 0; enemy < aType.size(); enemy++) {
             if (!aType[enemy].has_value() || !aType[enemy].value().isEnemy) {
                 continue;
             }
             if (!aIsAlive[enemy].value().isAlive && aIsAlive[enemy].value().timeToDie < 0) {
+                std::cout << "enemy " << aType[enemy].value().onlineId.value_or(0) << " killed" << std::endl;
                 display.freeRects(enemy);
                 world.killEntity(enemy);
             } else if (!aIsAlive[enemy].value().isAlive && aIsAlive[enemy].value().timeToDie == 0) {
