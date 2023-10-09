@@ -50,37 +50,37 @@ A packet has the following properties:
 | - | - | - |
 | `uuid` | 16-byte string | Unique id to identify the packet. See [part 2.3](#23-reception-aknowledgment) to learn about its utility |
 | `type` | 4-byte int | Packet type. See [part 2.2](#22-packet-type) to get the list of packet types |
-| `payload` | vector of float | Data carried by the packet. The size and meaning of each value depends on packet type, check [part 2.2](#22-packet-type) |
+| `payload` | vector of float (variable size) | Data carried by the packet. The size and meaning of each value depends on packet type, check [part 2.2](#22-packet-type) |
 
 ### 2.2 Packet Type
 
 Packets sent by client:
 
-| Name | Type | Bounds to | Payload format |
-| - | - | - | - |
-| `CONNECT` | `0` | Server | empty |
-| `DISCONNECT` | `1` | Server | empty |
-| `MOVE` | `2` | Server | <ol><li>Move shift on horizontal axis (negative being left, positive being right, max absolute value is 1)</li><li>Move shift on vertical axis (negative being bottom, positive being top, max absolute value is 1)</li></ol> |
-| `SHOOT` | `3` | Server | empty |
+| Name | Type | Bounds to | Payload format | Payload size |
+| - | - | - | - | - |
+| `CONNECT` | `0` | Server | empty | 0 bytes |
+| `DISCONNECT` | `1` | Server | empty | 0 bytes |
+| `MOVE` | `2` | Server | <ol><li>Move shift on horizontal axis (negative being left, positive being right, max absolute value is 1)</li><li>Move shift on vertical axis (negative being bottom, positive being top, max absolute value is 1)</li></ol> | 8 bytes |
+| `SHOOT` | `3` | Server | empty | 0 bytes |
 
 Packets sent by server:
 
-| Name | Type | Bounds to | Payload format |
-| - | - | - | - |
-| `PLAYER_SPAWN` | `0` | Client | <ol><li>Entity id</li><li>Is packet receiver the concerned player (`1` for yes, otherwise no)</li><li>Player color (goes from `0` to `3`)</li><li>Entity horizontal position</li><li>Entity vertical position</li></ol> |
-| `PLAYER_DISCONNECTION` | `1` | Client | <ol><li>Id of the entity who leaves</li></ol> |
-| `PLAYER_POSITION` | `2` | Client | <ol><li>Entity id</li><li>Entity horizontal position</li><li>Entity vertical position</li></ol> |
-| `PLAYER_SHOOT` | `3` | Client | <ol><li>Shooting entity id</li></ol> |
-| `PLAYER_DEATH` | `4` | Client | <ol><li>Dying entity id</li></ol> |
-| `ENEMY_SPAWN` | `5` | Client | <ol><li>Spawning entity id</li><li>Entity horizontal position</li><li>Entity vertical position</li></ol> |
-| `ENEMY_SHOOT` | `6` | Client | <ol><li>Shooting entity id</li></ol> |
-| `ENEMY_DEATH` | `7` | Client | <ol><li>Dying entity id</li></ol> |
+| Name | Type | Bounds to | Payload format | Payload size |
+| - | - | - | - | - |
+| `PLAYER_SPAWN` | `0` | Client | <ol><li>Entity id</li><li>Is packet receiver the concerned player (`1` for yes, otherwise no)</li><li>Player color (goes from `0` to `3`)</li><li>Entity horizontal position</li><li>Entity vertical position</li></ol> | 20 bytes |
+| `PLAYER_DISCONNECTION` | `1` | Client | <ol><li>Id of the entity who leaves</li></ol> | 4 bytes |
+| `PLAYER_POSITION` | `2` | Client | <ol><li>Entity id</li><li>Entity horizontal position</li><li>Entity vertical position</li></ol> | 12 bytes |
+| `PLAYER_SHOOT` | `3` | Client | <ol><li>Shooting entity id</li></ol> | 4 bytes |
+| `PLAYER_DEATH` | `4` | Client | <ol><li>Dying entity id</li></ol> | 4 bytes |
+| `ENEMY_SPAWN` | `5` | Client | <ol><li>Spawning entity id</li><li>Entity horizontal position</li><li>Entity vertical position</li></ol> | 12 bytes |
+| `ENEMY_SHOOT` | `6` | Client | <ol><li>Shooting entity id</li></ol> | 4 bytes |
+| `ENEMY_DEATH` | `7` | Client | <ol><li>Dying entity id</li></ol> | 4 bytes |
 
 Packets sent by both:
 
-| Name | Type | Bounds to | Payload format |
-| - | - | - | - |
-| `RECEPTION_AKNOWLEDGMENT` | `-1` | Client & Server | empty |
+| Name | Type | Bounds to | Payload format | Payload size |
+| - | - | - | - | - |
+| `RECEPTION_AKNOWLEDGMENT` | `-1` | Client & Server | empty | 0 bytes |
 
 The first packet sent by a client to its server **must** be of type `CONNECT`. Otherwise, the server will not listen to any of its packets.
 
