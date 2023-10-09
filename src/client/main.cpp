@@ -57,6 +57,7 @@ int main(int ac, char **av)
     world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive, Component::HitBox>(
         ECS::System::botHit);
     world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite>(ECS::System::triggerBotDeath);
+    world.addSystem<Component::TypeEntity>(ECS::System::triggerBotDisconnect);
 
     // Player systems
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::IsAlive>(
