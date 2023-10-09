@@ -9,6 +9,7 @@
 #define WORLD_HPP_
 
 #include <any>
+#include <chrono>
 #include <cstddef>
 #include <exception>
 #include <functional>
@@ -20,7 +21,7 @@
 #include <utility>
 #include <vector>
 #include "SparseArray.hpp"
-#include <boost/container/flat_map.hpp>
+#include <unordered_map>
 
 namespace ECS::Core {
     /**
@@ -196,12 +197,27 @@ as Component container
              * @param aIdx The index of the entity (index in the sparse array)
              */
             template<class Component>
-            void removeComponent(const std::size_t &aIdx)
+            void removeEntityInComponent(const std::size_t &aIdx)
             {
                 try {
                     auto &componentArray = getComponent<Component>();
 
                     componentArray.erase(aIdx);
+                } catch (const RegistryException &e) {
+                    throw RegistryException("There is no component of this type in the registry");
+                }
+            }
+
+            /**
+             * @brief Remove a component from the World
+             *
+             * @tparam Component The component to remove
+             */
+            template<class Component>
+            void removeComponent()
+            {
+                try {
+                    _components.erase(std::type_index(typeid(Component)));
                 } catch (const RegistryException &e) {
                     throw RegistryException("There is no component of this type in the registry");
                 }
@@ -219,8 +235,8 @@ as Component container
             template<class... Components, typename Function>
             void addSystem(Function &&aFunction)
             {
-                _systems.push_back([this, func = std::forward<Function>(aFunction)](World &aReg) {
-                    callSystem<Components...>(func, aReg);
+                _systems.push_back([this, func = std::forward<Function>(aFunction)]() {
+                    callSystem<Components...>(func);
                 });
             }
 
@@ -231,23 +247,49 @@ as Component container
             void runSystems()
             {
                 for (auto &system : _systems) {
-                    system(*this);
+                    system();
                 }
             }
 
+            /**
+             * @brief Check if the World is running
+             *
+             * @return true if the World is running
+             * @return false if the World is not running
+             */
             [[nodiscard]] bool isRunning() const
             {
                 return _isRunning;
             }
 
+            /**
+             * @brief Stop the World
+             *
+             */
             void stop()
             {
                 _isRunning = false;
             }
 
+            /**
+             * @brief Start the World
+             *
+             */
             void start()
             {
                 _isRunning = true;
+            }
+
+            void calcDeltaTime()
+            {
+                auto now = std::chrono::steady_clock::now();
+                _delta = now - _lastTime;
+                _lastTime = now;
+            }
+
+            [[nodiscard]] float getDeltaTime() const
+            {
+                return _delta.count();
             }
 
         private:
@@ -260,9 +302,9 @@ as Component container
              * @param aReg The World
              */
             template<typename... Components, typename Function>
-            void callSystem(Function &&aFunction, World &aReg)
+            void callSystem(Function &&aFunction)
             {
-                aFunction(aReg, getComponent<Components>()...);
+                aFunction(getComponent<Components>()...);
             }
 
             //-------------- EXCEPTION --------------//
@@ -289,17 +331,17 @@ as Component container
 
         private:
             size_t _id {0};
-            boost::container::flat_map<std::type_index, std::any> _components;
-            boost::container::flat_map<std::type_index, std::function<void(World &, const std::size_t &)>>
-                _eraseFunctions;
-            boost::container::flat_map<std::type_index, std::function<void(World &, const std::size_t &)>>
-                _addFunctions;
+            std::unordered_map<std::type_index, std::any> _components;
+            std::unordered_map<std::type_index, std::function<void(World &, const std::size_t &)>> _eraseFunctions;
+            std::unordered_map<std::type_index, std::function<void(World &, const std::size_t &)>> _addFunctions;
             std::vector<std::size_t> _reusableIds;
 
-            using systemFunction = std::function<void(World &)>;
+            using systemFunction = std::function<void()>;
             std::vector<systemFunction> _systems;
 
             bool _isRunning {true};
+            std::chrono::time_point<std::chrono::steady_clock> _lastTime {std::chrono::steady_clock::now()};
+            std::chrono::duration<float> _delta;
     };
 } // namespace ECS::Core
 

@@ -1,43 +1,98 @@
 #include <boost/asio.hpp>
 #include <iostream>
-#include "ClientNetworkHandler.hpp"
+#include "ClientHandler.hpp"
+#include "Components.hpp"
 #include "EventManager.hpp"
+#include "HitBox.hpp"
+#include "IsAlive.hpp"
+#include "NetworkHandler.hpp"
 #include "Packets.hpp"
 #include "SDLDisplayClass.hpp"
 #include "ServerGameEvent.hpp"
 #include "System.hpp"
+#include "TypeEntity.hpp"
 #include "Utils.hpp"
+#include "Values.hpp"
 #include "World.hpp"
+#include <SDL_rect.h>
 
 int main(int ac, char **av)
 {
+    if (ac < 3) {
+        std::cerr << "Usage: " << av[0] << " <host> <port>" << std::endl;
+        return 84;
+    }
+
+    // Network
+    std::string host(av[1]);
+    std::string port(av[2]);
+    auto &client = Network::ClientHandler::getInstance();
+    client.start(host, port);
+    RType::Packet connectPacket(static_cast<int>(RType::ServerEventType::CONNECT));
+    client.send(connectPacket);
+
+    // Setup ECS / graphic
     ECS::Core::World &world = ECS::Core::World::getInstance();
     SDLDisplayClass &display = SDLDisplayClass::getInstance();
     ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
-    auto &vec = world.registerComponent<ECS::Utils::Vector2f>();
-    auto &spd = world.registerComponent<ECS::Utils::Speed>();
-    auto &type = world.registerComponent<ECS::Utils::TypeEntity>();
-    auto &sprite = world.registerComponent<ECS::Utils::LoadedSprite>();
 
-    size_t idPlayer = world.createEntity();
+    // Components
+    world.registerComponent<ECS::Utils::Vector2f>();
+    world.registerComponent<Component::Speed>();
+    world.registerComponent<Component::TypeEntity>();
+    world.registerComponent<Component::LoadedSprite>();
+    world.registerComponent<Component::HitBox>();
+    world.registerComponent<Component::IsAlive>();
 
-    vec.insertAt(idPlayer, ECS::Utils::Vector2f {10, 10});
-    spd.insertAt(idPlayer, ECS::Utils::Speed {10});
-    type.insertAt(idPlayer, ECS::Utils::TypeEntity {true, false, false, false, false});
-    sprite.insertAt(
-        idPlayer,
-        ECS::Utils::LoadedSprite {"assets/sprites/r-typesheet42.png", nullptr, {0, 0, 33, 17}, {300, 15, 33, 17}});
+    // Graphic systems
     world.addSystem(ECS::System::getInput);
-    world.addSystem<ECS::Utils::LoadedSprite>(ECS::System::loadTextures);
-    world.addSystem<ECS::Utils::LoadedSprite, ECS::Utils::Vector2f>(ECS::System::displayEntities);
-    world.addSystem<ECS::Utils::Vector2f, ECS::Utils::Speed, ECS::Utils::TypeEntity>(ECS::System::movePlayer);
+    world.addSystem<Component::LoadedSprite>(ECS::System::loadTextures);
+    world.addSystem<Component::LoadedSprite, ECS::Utils::Vector2f>(ECS::System::displayEntities);
     world.addSystem(ECS::System::quitSDL);
+
+    // Bot systems
+    world.addSystem(ECS::System::createBot);
+    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::updateBotPosition);
+    world.addSystem(ECS::System::triggerBotShoot);
+    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive, Component::HitBox>(
+        ECS::System::botHit);
+    world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite>(ECS::System::triggerBotDeath);
+
+    // Player systems
+    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::IsAlive>(
+        ECS::System::movePlayer);
+    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive>(ECS::System::triggerPlayerShoot);
+
+    // Enemy systems
+    world.addSystem(ECS::System::createEnemy);
+    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveEnemy);
+    world.addSystem(ECS::System::triggerEnemyShoot);
+    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::HitBox>(ECS::System::enemyHit);
+    world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite>(ECS::System::triggerEnemyDeath);
+
+    // Missile systems
+    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveMissiles);
+
+    // Setup background
+    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBackground);
+    display.addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {BACKGROUND_SPEED},
+                      Component::TypeEntity {false, false, false, false, false, false, true},
+                      Component::LoadedSprite {BACKGROUND_ASSET, nullptr, nullptr,
+                                               new SDL_Rect {400, 15, SCREEN_WIDTH, SCREEN_HEIGHT}},
+                      Component::HitBox {}, Component::IsAlive {false, 0});
+    display.addEntity(ECS::Utils::Vector2f {SCREEN_WIDTH, 0}, Component::Speed {BACKGROUND_SPEED},
+                      Component::TypeEntity {false, false, false, false, false, false, true},
+                      Component::LoadedSprite {BACKGROUND_ASSET, nullptr, nullptr,
+                                               new SDL_Rect {400, 15, SCREEN_WIDTH, SCREEN_HEIGHT}},
+                      Component::HitBox {}, Component::IsAlive {false, 0});
+
+    // Game loop
     while (world.isRunning()) {
         world.runSystems();
         SDL_RenderPresent(display._renderer);
-        eventManager->clearEvents();
-        std::cout << vec[idPlayer].value().x << std::endl;
-        std::cout << vec[idPlayer].value().y << std::endl;
+        eventManager->clearNonGameEvents();
+        world.calcDeltaTime();
     }
+    Network::NetworkHandler::getInstance().stop();
     return 0;
 }

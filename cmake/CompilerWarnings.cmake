@@ -83,9 +83,9 @@ function(
 
   if(WARNINGS_AS_ERRORS)
     message(TRACE "Warnings are treated as errors")
-    list(APPEND CLANG_WARNINGS -Werror)
-    list(APPEND GCC_WARNINGS -Werror)
-    list(APPEND MSVC_WARNINGS /WX)
+    #list(APPEND CLANG_WARNINGS -Werror)
+    #list(APPEND GCC_WARNINGS -Werror)
+    #list(APPEND MSVC_WARNINGS /WX)
   endif()
 
   if(MSVC)

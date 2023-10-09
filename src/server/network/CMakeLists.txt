@@ -5,8 +5,8 @@ find_package(Threads REQUIRED)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
 target_sources(server PRIVATE
-        "${CMAKE_CURRENT_SOURCE_DIR}/ServerNetworkHandler.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/ServerNetworkHandler.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/ServerHandler.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/ServerHandler.cpp"
 )
 
 target_link_libraries(server
@@ -14,9 +14,10 @@ target_link_libraries(server
         R_Type::R_Type_warnings
         ${Boost_LIBRARIES}
         ecs
-        rtype_protocol
+        rtype
         Boost::asio
         Boost::serialization
+        Boost::uuid
         Threads::Threads
 )
 

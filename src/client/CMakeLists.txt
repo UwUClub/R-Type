@@ -23,9 +23,9 @@ if (SDL2_DOWNLOADED)
             Boost::serialization
             Threads::Threads
             ecs
-            rtype_protocol
+            rtype
             Boost::asio
-            Boost::serialization
+            Boost::uuid
     )
 else()
     target_link_libraries(client
@@ -38,9 +38,10 @@ else()
             Boost::serialization
             Threads::Threads
             ecs
-            rtype_protocol
+            rtype
             Boost::asio
             Boost::serialization
+            Boost::uuid
     )
 endif()
 

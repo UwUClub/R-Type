@@ -1,66 +1,178 @@
 #ifndef SYSTEM_HPP_
 #define SYSTEM_HPP_
 
+#include "Components.hpp"
+#include "IsAlive.hpp"
 #include "KeyboardEvent.hpp"
-#include "MouseEvent.hpp"
+#include "SparseArray.hpp"
 #include "Utils.hpp"
 #include "WindowEvent.hpp"
 #include "World.hpp"
+#include "components/HitBox.hpp"
 
 namespace ECS {
     class System
     {
         public:
             /**
-             * @brief Move the player
+             * @brief Create a bot (triggered by server)
+             */
+            static void createBot();
+
+            /**
+             * @brief Move the player (locally, send to server)
              *
-             * @param aWorld A reference to the world
              * @param aPos SparseArray of all entities position
              * @param aSpeed Sparsearray of all entities speed
              * @param aType SparseArray of all entities type
              */
-            static void movePlayer(Core::World &aWorld, Core::SparseArray<ECS::Utils::Vector2f> &aPos,
-                                   Core::SparseArray<ECS::Utils::Speed> &aSpeed,
-                                   Core::SparseArray<ECS::Utils::TypeEntity> &aType);
+            static void movePlayer(Core::SparseArray<ECS::Utils::Vector2f> &aPos,
+                                   Core::SparseArray<Component::Speed> &aSpeed,
+                                   Core::SparseArray<Component::TypeEntity> &aType,
+                                   Core::SparseArray<Component::IsAlive> &aIsAlive);
 
             /**
-             * @brief Get the all the input of the user
+             * @brief Update a bot position (triggered by server)
              *
-             * @param aWorld A reference to the world
              */
-
-            static void getInput(Core::World &aWorld);
+            static void updateBotPosition(Core::SparseArray<Utils::Vector2f> &aPos,
+                                          Core::SparseArray<Component::TypeEntity> &aType);
 
             /**
-             * @brief Close the SDL window
+             * @brief Get the all the input of the user (locally)
              *
-             * @param aWorld A reference to the world
              */
-            static void quitSDL(Core::World &aWorld);
+            static void getInput();
 
             /**
-             * @brief Load all the textures of the game
+             * @brief Close the SDL window (locally)
              *
-             * @param aWorld A reference to the world
+             */
+            static void quitSDL();
+
+            /**
+             * @brief Load all the textures of the game (locally)
+             *
              * @param aSprites SparseArray of all the entities sprites
              */
-            static void loadTextures(Core::World &aWorld, Core::SparseArray<Utils::LoadedSprite> &aSprites);
+            static void loadTextures(Core::SparseArray<Component::LoadedSprite> &aSprites);
 
             /**
-             * @brief Display all the entities on the screen
+             * @brief Display all the entities on the screen (locally)
              *
-             * @param aWorld A reference to the world
              * @param aSprites SparseArray of all the entities sprites
+             * @param aPos SparseArray of all the entities position
              */
-            static void displayEntities(Core::World &aWorld, Core::SparseArray<Utils::LoadedSprite> &aSprites,
+            static void displayEntities(Core::SparseArray<Component::LoadedSprite> &aSprites,
                                         Core::SparseArray<Utils::Vector2f> &aPos);
 
-            // /**
-            //  * @brief Display the parallax
-            //  *
-            //  * @param aWorld A reference to the world
-            //  */
-            // static void displayParallax(Core::World &aWorld);
+            /**
+             * @brief Handle the background's movements (locally)
+             * @details Background are the entities with the TypeEntity::isBackground set to true
+             *
+             * @param aPos The position of the background
+             * @param aSpeed The speed of the background
+             * @param aType The type of the background
+             */
+            static void moveBackground(Core::SparseArray<Utils::Vector2f> &aPos,
+                                       Core::SparseArray<Component::Speed> &aSpeed,
+                                       Core::SparseArray<Component::TypeEntity> &aType);
+
+            /**
+             * @brief Create an enemy (triggered by server)
+             *
+             */
+            static void createEnemy();
+
+            /**
+             * @brief Move enemy on the screen (locally)
+             *
+             * @param aPos SparseArray of all entities position
+             * @param aSpeed Sparsearray of all entities speed
+             * @param aType SparseArray of all entities type
+             */
+            static void moveEnemy(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
+                                  Core::SparseArray<Component::TypeEntity> &aType);
+
+            /**
+             * @brief Make player shoot missiles when space is pressed (triggered locally, send to server)
+             *
+             * @param aPos SparseArray of all entities position
+             * @param aType SparseArray of all entities type
+             * @param aIsAlive SparseArray of all entities isAlive component
+             */
+            static void triggerPlayerShoot(Core::SparseArray<Utils::Vector2f> &aPos,
+                                           Core::SparseArray<Component::TypeEntity> &aType,
+                                           Core::SparseArray<Component::IsAlive> &aIsAlive);
+
+            /**
+             * @brief Make bots shoot missiles (triggered by server)
+             *
+             */
+            static void triggerBotShoot();
+
+            /**
+             * @brief Move missiles on the screen (locally)
+             *
+             * @param aPos SparseArray of all entities position
+             * @param aSpeed Sparsearray of all entities speed
+             * @param aType SparseArray of all entities type
+             */
+            static void moveMissiles(Core::SparseArray<Utils::Vector2f> &aPos,
+                                     Core::SparseArray<Component::Speed> &aSpeed,
+                                     Core::SparseArray<Component::TypeEntity> &aType);
+
+            /**
+             * @brief Handle enemies who get hit (locally)
+             *
+             * @param aPos SparseArray of all entities position
+             * @param aType SparseArray of all entities type
+             * @param aHitBox SparseArray of all entities hitbox
+             */
+            static void enemyHit(Core::SparseArray<Utils::Vector2f> &aPos,
+                                 Core::SparseArray<Component::TypeEntity> &aType,
+                                 Core::SparseArray<Component::HitBox> &aHitBox);
+
+            /**
+             * @brief Handle the death of an enemy (triggered by server)
+             *
+             * @param aType SparseArray of all entities type
+             * @param aIsAlive SparseArray of all entities isAlive component
+             * @param aSprites SparseArray of all entities sprites
+             */
+            static void triggerEnemyDeath(Core::SparseArray<Component::TypeEntity> &aType,
+                                          Core::SparseArray<Component::IsAlive> &aIsAlive,
+                                          Core::SparseArray<Component::LoadedSprite> &aSprites);
+
+            /**
+             * @brief Make enemies shoot missiles (triggered by server)
+             *
+             */
+            static void triggerEnemyShoot();
+
+            /**
+             * @brief Handle bots who get hit (locally)
+             *
+             * @param aPos SparseArray of all entities position
+             * @param aType SparseArray of all entities type
+             * @param aIsAlive SparseArray of all entities isAlive component
+             * @param HitBox SparseArray of all entities hitbox component
+             */
+            static void botHit(Core::SparseArray<Utils::Vector2f> &aPos,
+                               Core::SparseArray<Component::TypeEntity> &aType,
+                               Core::SparseArray<Component::IsAlive> &aIsAlive,
+                               Core::SparseArray<Component::HitBox> &HitBox);
+
+            /**
+             * @brief Handle the death of a bot (triggered by server)
+             *
+             * @param aType SparseArray of all entities type
+             * @param aIsAlive SparseArray of all entities isAlive component
+             * @param aSprites SparseArray of all entities sprites
+             */
+            static void triggerBotDeath(Core::SparseArray<Component::TypeEntity> &aType,
+                                        Core::SparseArray<Component::IsAlive> &aIsAlive,
+                                        Core::SparseArray<Component::LoadedSprite> &aSprites);
 
         private:
             /**
