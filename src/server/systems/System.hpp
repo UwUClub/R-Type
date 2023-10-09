@@ -2,8 +2,10 @@
 #define SYSTEM_HPP_
 
 #include "Components.hpp"
+#include "HitBox.hpp"
 #include "KeyboardEvent.hpp"
 #include "MouseEvent.hpp"
+#include "SparseArray.hpp"
 #include "Utils.hpp"
 #include "WindowEvent.hpp"
 #include "World.hpp"
@@ -18,10 +20,12 @@ namespace ECS {
              * @param aPos SparseArray of all entities position
              * @param aSpeed Sparsearray of all entities speed
              * @param aType SparseArray of all entities type
+             * @param aHitBox SparseArray of all entities hitbox
              */
             static void welcomePlayer(Core::SparseArray<ECS::Utils::Vector2f> &aPos,
                                       Core::SparseArray<Component::Speed> &aSpeed,
-                                      Core::SparseArray<Component::TypeEntity> &aType);
+                                      Core::SparseArray<Component::TypeEntity> &aType,
+                                      Core::SparseArray<Component::HitBox> &aHitBox);
 
             /**
              * @brief Move the player
