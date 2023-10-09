@@ -46,34 +46,34 @@ Each client is a game player that listens to user inputs, sends actions to the s
 ### 2.1. Packet Format
 
 A packet has the following properties:
-- `uuid` *16-byte string* Unique id to identify the packet. See part 2.3 to learn about reception aknowledgment.
+- `uuid` *16-byte string* Unique id to identify the packet. See [part 2.3](#23-reception-aknowledgment) to learn about its utility
 - `type` *4-byte int* See part 2.2 to get the list of packet types
-- `payload` *vector of float* The size and meaning of each value depends on packet type (check part 2.2)
+- `payload` *vector of float* The size and meaning of each value depends on packet type, check [part 2.2](#22-packet-type).
 
 ### 2.2 Packet Type
 
 **Client to Server Packets:**
 - `CONNECT`
-   - value: `0`
+   - type: `0`
    - payload: *empty*
 - `DISCONNECT`
-   - value: `1`
+   - type: `1`
    - payload: *empty*
 - `CRASH`
-   - value: `2`
+   - type: `2`
    - payload: *empty*
 - `MOVE`
-   - value: `3`
+   - type: `3`
    - payload:
       - Move shift on horizontal axis (negative being left, positive being right, max absolute value is 1)
       - Move shift on vertical axis (negative being bottom, positive being top, max absolute value is 1)
 - `SHOOT`
-   - value: `4`
+   - type: `4`
    - payload: *empty*
 
 **Server to Client Packets:**
 - `PLAYER_SPAWN`
-  - value: `0`
+  - type: `0`
   - payload:
      - Entity id
      - Is packet receiver the concerned player (`1` for yes, otherwise no)
@@ -81,34 +81,34 @@ A packet has the following properties:
      - Entity horizontal position
      - Entity vertical position
 - `PLAYER_DISCONNECTION`
-  - value: `1`
+  - type: `1`
   - payload:
      - Id of the entity who leaves
 - `PLAYER_POSITION`
-  - value: `2`
+  - type: `2`
   - payload:
      - Entity horizontal position
      - Entity vertical position
 - `PLAYER_SHOOT`
-   - value: `3`
+   - type: `3`
    - payload:
       - Id of the entity who shoots
 - `PLAYER_DEATH`
-   - value: `4`
+   - type: `4`
    - payload:
       - Id of the dying entity
 - `ENEMY_SPAWN`
-   - value: `5`
+   - type: `5`
    - payload:
       - Id of the spawning entity
       - Entity horizontal position
       - Entity vertical position
 - `ENEMY_DEATH`
-   - value: `6`
+   - type: `6`
    - payload:
       - Id of the dying entity
 - `ENEMY_SHOOT`
-   - value: `7`
+   - type: `7`
    - payload:
       - Id of the entity who shoots
 
