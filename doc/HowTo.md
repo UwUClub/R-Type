@@ -9,6 +9,7 @@
 - [Create an Entity](#create-an-entity)
 - [Add a Component to an Entity](#add-a-component-to-an-entity)
 - [Kill an Entity](#kill-an-entity)
+- [Conclusion](#conclusion)
 
 
 ## Introduction
