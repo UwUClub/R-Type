@@ -93,6 +93,10 @@ int main(int ac, char **av)
         eventManager->clearNonGameEvents();
         world.calcDeltaTime();
     }
+
+    // Quit server properly
+    RType::Packet disconnectPacket(static_cast<int>(RType::ServerEventType::DISCONNECT));
+    client.send(disconnectPacket);
     Network::NetworkHandler::getInstance().stop();
     return 0;
 }

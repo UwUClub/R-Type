@@ -69,6 +69,11 @@ namespace ECS {
                                    Core::SparseArray<Component::IsAlive> &aIsAlive);
 
             /**
+             * @brief Disconnect the player from the server
+             */
+            static void disconnectPlayer();
+
+            /**
              * @brief Spawn enemies
              *
              * @param aPos SparseArray of all entities position

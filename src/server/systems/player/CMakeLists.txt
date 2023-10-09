@@ -10,6 +10,7 @@ target_sources(server PRIVATE
         System+PlayerShoot.cpp
         System+PlayerHit.cpp
         System+KillPlayer.cpp
+        System+DisconnectPlayer.cpp
 )
 
 target_link_libraries(server
