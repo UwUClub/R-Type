@@ -72,6 +72,7 @@ A packet has the following properties:
    - payload: *empty*
 
 **Server to Client Packets:**
+
 - `PLAYER_SPAWN`
   - type: `0`
   - payload:
