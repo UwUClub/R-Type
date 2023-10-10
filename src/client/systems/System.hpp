@@ -174,6 +174,11 @@ namespace ECS {
                                         Core::SparseArray<Component::IsAlive> &aIsAlive,
                                         Core::SparseArray<Component::LoadedSprite> &aSprites);
 
+            /**
+             * @brief Handle the disconnection of a player (triggered by server)
+             */
+            static void triggerBotDisconnect(Core::SparseArray<Component::TypeEntity> &aType);
+
         private:
             /**
              * @brief Map of all the SDL_Keycode and their equivalent in our ECS

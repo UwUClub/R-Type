@@ -61,6 +61,12 @@ namespace Network {
             void addClient(std::size_t, udp::endpoint);
 
             /**
+             * @brief Remove a client from the server
+             * @param aClientId The id of the client to remove
+             */
+            void removeClient(std::size_t);
+
+            /**
              * @brief Get the number of clients connected to the server
              * @return int The number of clients connected to the server
              */

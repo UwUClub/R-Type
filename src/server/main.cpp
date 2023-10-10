@@ -35,13 +35,15 @@ int main(int ac, char **av)
         world.registerComponent<Component::IsAlive>();
 
         // Player systems
-        world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::welcomePlayer);
+        world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::HitBox>(
+            ECS::System::welcomePlayer);
         world.addSystem<ECS::Utils::Vector2f, Component::Speed>(ECS::System::movePlayer);
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::HitBox>(
             ECS::System::playerShoot);
         world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive, Component::HitBox>(
             ECS::System::playerHit);
         world.addSystem<Component::TypeEntity, Component::IsAlive>(ECS::System::killPlayer);
+        world.addSystem(ECS::System::disconnectPlayer);
 
         // Enemy systems
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::HitBox,
