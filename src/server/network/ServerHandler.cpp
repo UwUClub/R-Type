@@ -60,26 +60,36 @@ namespace Network {
 
     RType::PLAYER_COLOR ServerHandler::addClientColor(size_t aClientId)
     {
-        RType::PLAYER_COLOR color = RType::PLAYER_COLOR::RED;
-        for (auto &player : _clientColors) {
-            if (player != 0) {
-                _clientColors[aClientId] = color;
+        RType::PLAYER_COLOR color = RType::PLAYER_COLOR::NONE;
+
+        for (int i = 0; i < MAX_NUMBER_PLAYER; i++) {
+            color = static_cast<RType::PLAYER_COLOR>(i);
+            if (_clientColors[i] == -1) {
+                _clientColors[i] = aClientId;
                 return color;
             }
-            static_cast<RType::PLAYER_COLOR>(static_cast<int>(color) + 1);
         }
         return RType::PLAYER_COLOR::NONE;
     }
 
     RType::PLAYER_COLOR ServerHandler::getClientColor(size_t aClientId)
     {
-        return _clientColors[aClientId];
+        for (int i = 0; i < MAX_NUMBER_PLAYER; i++) {
+            if (_clientColors[i] == aClientId) {
+                return static_cast<RType::PLAYER_COLOR>(i);
+            }
+        }
+        return RType::PLAYER_COLOR::NONE;
     }
 
     void ServerHandler::removeClient(size_t aClientId)
     {
         _clients.erase(aClientId);
-        _clientColors[aClientId] = RType::PLAYER_COLOR::NONE;
+        for (int i = 0; i < MAX_NUMBER_PLAYER; i++) {
+            if (_clientColors[i] == aClientId) {
+                _clientColors[i] = -1;
+            }
+        }
     }
 
     int ServerHandler::getNumberClients() const

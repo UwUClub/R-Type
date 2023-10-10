@@ -5,10 +5,10 @@ namespace RType {
     enum PLAYER_COLOR
     {
         NONE = -1,
-        RED = 0,
-        BLUE = 1,
+        BLUE = 0,
+        PURPLE = 1,
         GREEN = 2,
-        YELLOW = 3
+        RED = 3
     };
 }
 

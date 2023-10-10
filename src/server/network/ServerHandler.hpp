@@ -18,7 +18,7 @@ namespace Network {
     {
         private:
             std::unordered_map<size_t, udp::endpoint> _clients;
-            std::array<RType::PLAYER_COLOR, MAX_NUMBER_PLAYER> _clientColors;
+            std::array<int, MAX_NUMBER_PLAYER> _clientColors;
 
             /**
              * @brief Launch the server
