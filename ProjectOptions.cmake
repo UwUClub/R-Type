@@ -145,12 +145,6 @@ macro(R_Type_local_options)
       <utility>)
   endif()
 
-  if(R_Type_ENABLE_CACHE)
-    message(WARNINGS "cache")
-    include(cmake/Cache.cmake)
-    R_Type_enable_cache()
-  endif()
-
   include(cmake/StaticAnalyzers.cmake)
   if(R_Type_ENABLE_CLANG_TIDY)
     R_Type_enable_clang_tidy(R_Type_options ${R_Type_WARNINGS_AS_ERRORS})
