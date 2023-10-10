@@ -2,17 +2,20 @@
 #include "Components.hpp"
 #include "Event.hpp"
 #include "EventManager.hpp"
+#include "HitBox.hpp"
 #include "Packets.hpp"
 #include "PlayerColor.hpp"
 #include "ServerGameEvent.hpp"
 #include "ServerHandler.hpp"
+#include "SparseArray.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 #include "World.hpp"
 
 namespace ECS {
     void System::welcomePlayer(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
-                               Core::SparseArray<Component::TypeEntity> &aType)
+                               Core::SparseArray<Component::TypeEntity> &aType,
+                               Core::SparseArray<Component::HitBox> &aHitBox)
     {
         ECS::Core::World &world = ECS::Core::World::getInstance();
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
@@ -33,6 +36,7 @@ namespace ECS {
                 aPos.insertAt(playerId, ECS::Utils::Vector2f {10, 10});
                 aSpeed.insertAt(playerId, Component::Speed {PLAYER_SPEED});
                 aType.insertAt(playerId, Component::TypeEntity {true, false, false, false, false, false, false});
+                aHitBox.insertAt(playerId, Component::HitBox {PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT});
 
                 server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_SPAWN),
                                  {static_cast<float>(playerId), 0, static_cast<float>(playerColor), 10, 10});
