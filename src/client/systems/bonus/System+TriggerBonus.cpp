@@ -45,4 +45,4 @@ namespace ECS {
             }
         }
     }
-}
+} // namespace ECS
