@@ -15,9 +15,9 @@ namespace ECS {
     {
         public:
             /**
-             * @brief Create a player (triggered by server)
+             * @brief Create local background once connected to server (triggered by server)
              */
-            static void createPlayer();
+            static void createBackground();
 
             /**
              * @brief Handle the move of the bonus

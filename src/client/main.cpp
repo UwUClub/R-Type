@@ -51,6 +51,10 @@ int main(int ac, char **av)
         world.addSystem<Component::LoadedSprite, ECS::Utils::Vector2f>(ECS::System::displayEntities);
         world.addSystem(ECS::System::quitSDL);
 
+        // Background systems
+        world.addSystem(ECS::System::createBackground);
+        world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBackground);
+
         // Player systems
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::IsAlive>(
             ECS::System::movePlayer);
@@ -83,9 +87,6 @@ int main(int ac, char **av)
 
         // Missile systems
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveMissiles);
-
-        // Background system
-        world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBackground);
 
         // Error message system
         world.addSystem(ECS::System::createServerFullErrorMessage);

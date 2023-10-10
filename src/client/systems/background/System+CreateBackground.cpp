@@ -7,7 +7,7 @@
 #include "World.hpp"
 
 namespace ECS {
-    void System::createPlayer()
+    void System::createBackground()
     {
         auto &world = ECS::Core::World::getInstance();
         Event::EventManager *eventManager = Event::EventManager::getInstance();
