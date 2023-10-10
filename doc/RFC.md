@@ -1,20 +1,8 @@
 # Game Protocol for Multiplayer R-Type Game
 
+*October 2023*
+
 R-Type is an iconic series of horizontal-scrolling shoot 'em up video games developed by Irem, which began in 1987 in arcades. It is likely inspired by Konami's Gradius series, the first installment of which was released two years earlier.
-
-**A game developed by:**
-- Valentin GEGOUX
-- Mathéo MARTIN
-- Baptiste LARAN
-- Maxence LABOUREL
-
-*Epitech Toulouse, promo 2026*
-
-*September 2023*
-
-## Copyright Notice
-
-Copyright (c) The persons identified as the game developers.  All rights reserved.
 
 ## Table of Contents
 
@@ -30,7 +18,7 @@ Copyright (c) The persons identified as the game developers.  All rights reserve
    2.4. [Serialization](#24-serialization)
 
 3. [Security Considerations](#3-security-considerations)
-4. [Author's Addresses](#4-authors-addresses)
+4. [Authors](#4-authors)
 
 ## 1. Introduction
 
@@ -104,10 +92,16 @@ Implementations of this protocol should consider security aspects to protect aga
 
 Remember that the server should always have the last word on the client.
 
-## 4. Author's Addresses
+## 4. Authors
 
-Our email addresses:
-- valentin.gegoux@epitech.eu
-- matheo.martin@epitech.eu
-- baptiste.laran@epitech.eu
-- maxence.labourel@epitech.eu
+**A game developed by:**
+- Valentin GEGOUX (valentin.gegoux@epitech.eu)
+- Mathéo MARTIN (matheo.martin@epitech.eu)
+- Baptiste LARAN (baptiste.laran@epitech.eu)
+- Maxence LABOUREL (maxence.labourel@epitech.eu)
+
+*Epitech Toulouse, promo 2026*
+
+## Copyright Notice
+
+Copyright (c) The persons identified as the game developers.  All rights reserved.
