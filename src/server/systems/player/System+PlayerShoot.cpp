@@ -22,7 +22,21 @@ namespace ECS {
             auto &gameEvent = static_cast<RType::ServerGameEvent &>(*event);
 
             if (gameEvent.getType() == RType::ServerEventType::SHOOT) {
-                size_t playerId = static_cast<size_t>(gameEvent.getPayload()[0]);
+                if (gameEvent.getPayload().size() != 1) {
+                    eventManager->removeEvent(event);
+                    continue;
+                }
+
+                int playerId = static_cast<int>(gameEvent.getPayload()[0]);
+
+                if (playerId < 0 || playerId >= aPos.size()) {
+                    eventManager->removeEvent(event);
+                    continue;
+                }
+                if (!aPos[playerId].has_value()) {
+                    eventManager->removeEvent(event);
+                    continue;
+                }
 
                 std::cout << "Player " << playerId << " shoot" << std::endl;
 
