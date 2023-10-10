@@ -1,3 +1,4 @@
+#include <iostream>
 #include "SDLDisplayClass.hpp"
 #include "SparseArray.hpp"
 #include "System.hpp"
@@ -20,15 +21,10 @@ namespace ECS {
                 if (!aType[missileId].has_value() || !aType[missileId].value().isBullet) {
                     continue;
                 }
-                if ((aPos[player].value().x > aPos[missileId].value().x
-                     && aPos[player].value().x < aPos[missileId].value().x + aHitBox[missileId].value().width
-                     && aPos[player].value().y > aPos[missileId].value().y
-                     && aPos[player].value().y < aPos[missileId].value().y + aHitBox[missileId].value().height)
-                    || (aPos[player].value().x + aHitBox[player].value().width > aPos[missileId].value().x
-                        && aPos[player].value().x + aHitBox[player].value().width
-                               < aPos[missileId].value().x + aHitBox[missileId].value().width
-                        && aPos[player].value().y > aPos[missileId].value().y
-                        && aPos[player].value().y < aPos[missileId].value().y + aHitBox[missileId].value().height)) {
+                if ((aPos[missileId].value().x > aPos[player].value().x
+                     && aPos[missileId].value().x < aPos[player].value().x + aHitBox[player].value().width
+                     && aPos[missileId].value().y > aPos[player].value().y
+                     && aPos[missileId].value().y < aPos[player].value().y + aHitBox[player].value().height)) {
                     display.freeRects(missileId);
                     world.killEntity(missileId);
                 }
