@@ -7,9 +7,11 @@ RUN apt-get update && apt-get install -y \
     ccache \
     && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /home/jenkins/.cache/ccache/tmp
-RUN chown -R jenkins:jenkins /home/jenkins/.cache/ccache
+RUN useradd jenkins --shell /bin/bash --create-home
+
+RUN mkdir -p /home/jenkins/.cache/ccache/tmp \
+    && chown -R jenkins:jenkins /home/jenkins/.cache/ccache
+
 ENV CCACHE_DIR /home/jenkins/.cache/ccache
 
-RUN useradd jenkins --shell /bin/bash --create-home
 USER jenkins
