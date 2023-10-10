@@ -206,6 +206,11 @@ namespace ECS {
             static void triggerBotBonus(Core::SparseArray<Component::Speed> &aSpeed,
                                         Core::SparseArray<Component::TypeEntity> &aType);
 
+            /**
+             * @brief Handle the disconnection of a player (triggered by server)
+             */
+            static void triggerBotDisconnect(Core::SparseArray<Component::TypeEntity> &aType);
+
         private:
             /**
              * @brief Map of all the SDL_Keycode and their equivalent in our ECS

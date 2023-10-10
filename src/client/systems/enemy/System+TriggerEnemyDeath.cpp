@@ -50,7 +50,7 @@ namespace ECS {
                 aSprites[enemy].value().rect->x = 146;
                 aSprites[enemy].value().rect->y = 46;
                 aIsAlive[enemy].value().timeToDie = 1;
-                if (rand() % 8 == 0) {
+                if (rand() % 5 == 0) {
                     display.addEntity(
                     ECS::Utils::Vector2f {aPos[enemy].value().x, aPos[enemy].value().y},
                     Component::Speed {BONUS_SPEED}, Component::TypeEntity {false, false, false, false, false, true, false},
