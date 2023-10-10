@@ -13,7 +13,7 @@ int main(int ac, char **av)
 {
     if (ac < 3) {
         std::cerr << "Usage: " << av[0] << " <host> <port>" << std::endl;
-        return 84;
+        return FAILURE;
     }
 
     try {
@@ -68,7 +68,9 @@ int main(int ac, char **av)
 
         Network::NetworkHandler::getInstance().stop();
     } catch (std::exception &e) {
-        std::cerr << "Exception: " << e.what() << std::endl;
+        Network::NetworkHandler::getInstance().stop();
+        std::cout << "[RType server exception] " << e.what() << std::endl;
+        return FAILURE;
     }
-    return 0;
+    return SUCCESS;
 }
