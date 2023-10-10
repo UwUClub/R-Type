@@ -1,6 +1,8 @@
 #include <boost/asio.hpp>
 #include <iostream>
 #include "Packets.hpp"
+#include "PlayerColor.hpp"
+#include "Values.hpp"
 #include <unordered_map>
 
 #ifndef SERVERHANDLER_HPP
@@ -16,6 +18,7 @@ namespace Network {
     {
         private:
             std::unordered_map<size_t, udp::endpoint> _clients;
+            std::array<RType::PLAYER_COLOR, MAX_NUMBER_PLAYER> _clientColors;
 
             /**
              * @brief Launch the server
@@ -58,13 +61,28 @@ namespace Network {
              * @param aClientId The id of the client
              * @param aEndpoint The endpoint of the client
              */
-            void addClient(std::size_t, udp::endpoint);
+            void addClient(size_t, udp::endpoint);
+
+            /**
+             * @brief Get the client color
+             * @param aClientId The id of the client
+             * @return int The client color
+             */
+            RType::PLAYER_COLOR getClientColor(size_t);
+
+            /**
+             * @brief Add a client to the client color list
+             *
+             * @param aClientId The id of the client to add
+             * @return The client color (if -1, the server is full and the client is not added)
+             */
+            RType::PLAYER_COLOR addClientColor(size_t);
 
             /**
              * @brief Remove a client from the server
              * @param aClientId The id of the client to remove
              */
-            void removeClient(std::size_t);
+            void removeClient(size_t);
 
             /**
              * @brief Get the number of clients connected to the server

@@ -1,11 +1,12 @@
 #include "ServerHandler.hpp"
-#include <algorithm>
 #include <boost/bind.hpp>
 #include <boost/serialization/serialization.hpp>
 #include <iostream>
 #include "EventManager.hpp"
 #include "NetworkHandler.hpp"
 #include "Packets.hpp"
+#include "PlayerColor.hpp"
+#include "Values.hpp"
 
 namespace Network {
 
@@ -15,6 +16,10 @@ namespace Network {
     {
         NetworkHandler &network = NetworkHandler::getInstance();
         udp::endpoint endpoint(boost::asio::ip::address::from_string(aHost), aPort);
+
+        for (int i = 0; i < MAX_NUMBER_PLAYER; i++) {
+            _clientColors[i] = RType::PLAYER_COLOR::NONE;
+        }
 
         network.onReceive([this](const RType::Packet &aPacket, udp::endpoint &aClientEndpoint) {
             receivePacket(aPacket, aClientEndpoint);
@@ -47,15 +52,34 @@ namespace Network {
         }
     }
 
-    void ServerHandler::addClient(std::size_t aClientId, udp::endpoint aEndpoint)
+    void ServerHandler::addClient(size_t aClientId, udp::endpoint aEndpoint)
     {
         _clients[aClientId] = aEndpoint;
         std::cout << "Player " << aClientId << " joined" << std::endl;
     }
 
-    void ServerHandler::removeClient(std::size_t aClientId)
+    RType::PLAYER_COLOR ServerHandler::addClientColor(size_t aClientId)
+    {
+        RType::PLAYER_COLOR color = RType::PLAYER_COLOR::RED;
+        for (auto &player : _clientColors) {
+            if (player != 0) {
+                _clientColors[aClientId] = color;
+                return color;
+            }
+            static_cast<RType::PLAYER_COLOR>(static_cast<int>(color) + 1);
+        }
+        return RType::PLAYER_COLOR::NONE;
+    }
+
+    RType::PLAYER_COLOR ServerHandler::getClientColor(size_t aClientId)
+    {
+        return _clientColors[aClientId];
+    }
+
+    void ServerHandler::removeClient(size_t aClientId)
     {
         _clients.erase(aClientId);
+        _clientColors[aClientId] = RType::PLAYER_COLOR::NONE;
     }
 
     int ServerHandler::getNumberClients() const

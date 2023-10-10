@@ -21,7 +21,7 @@ const constexpr float ENEMY_SPEED = 200;
 const constexpr int ENEMY_TEX_WIDTH = 33;
 const constexpr int ENEMY_TEX_HEIGHT = 33;
 static const std::string ENEMY_ASSET = "assets/sprites/r-typesheet5.png";
-const constexpr int PROBABILTY_SHOOT_ENEMY = 200000;
+const constexpr int PROBABILTY_SHOOT_ENEMY = 2000;
 const constexpr int ENEMY_SPAWN_INTERVAL = 5; // in seconds
 
 //------------------ BACKGROUND ------------------//
@@ -37,6 +37,7 @@ static const std::string PLAYER_ASSET = "assets/sprites/r-typesheet42.png";
 const constexpr float PLAYER_SPEED = 10;
 const constexpr int PLAYER_TEX_WIDTH = 33;
 const constexpr int PLAYER_TEX_HEIGHT = 17;
+const constexpr int MAX_NUMBER_PLAYER = 4;
 
 //------------------ BULLET (for players) ------------------//
 static const std::string BULLET_ASSET = "assets/sprites/r-typesheet2.png";
