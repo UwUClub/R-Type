@@ -13,11 +13,12 @@ namespace RType {
         PLAYER_DISCONNECTION = 1,
         PLAYER_POSITION = 2,
         PLAYER_SHOOT = 3,
-        PLAYER_DEATH = 4,
-        ENEMY_SPAWN = 5,
-        ENEMY_DEATH = 6,
-        ENEMY_SHOOT = 7,
-        PLAYER_BONUS = 8,
+        PLAYER_BONUS = 4,
+        PLAYER_DEATH = 5,
+        ENEMY_SPAWN = 6,
+        ENEMY_DEATH = 7,
+        ENEMY_SHOOT = 8,
+        SERVER_FULL = 9,
     };
 
     /**

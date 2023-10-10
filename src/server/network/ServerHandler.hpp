@@ -91,7 +91,7 @@ namespace Network {
             int getNumberClients() const;
 
             /**
-             * @brief Send a message to the server
+             * @brief Send a packet to a client
              * @param aPacket The packet to send
              * @param aClientId The id of the client to send the message to
              */
@@ -103,6 +103,12 @@ namespace Network {
              * @param aPayload The payload to send
              */
             void broadcast(int, std::vector<float>);
+
+            /**
+             * @brief Check if the server is full
+             * @return true if the server is full, false otherwise
+             */
+            [[nodiscard]] bool isFull() const;
     };
 
 } // namespace Network
