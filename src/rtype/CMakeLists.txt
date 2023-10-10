@@ -10,6 +10,7 @@ target_sources(rtype PRIVATE
         NetworkHandler.cpp
         TypeUtils.hpp
         TypeUtils.cpp
+        PlayerColor.hpp
 )
 
 add_subdirectory(events)

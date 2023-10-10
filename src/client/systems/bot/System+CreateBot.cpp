@@ -30,9 +30,10 @@ namespace ECS {
                 std::cout << "Player with color " << color << " joined" << std::endl;
 
                 display.addEntity(ECS::Utils::Vector2f {posX, posY}, Component::Speed {PLAYER_SPEED}, entityType,
-                                  Component::LoadedSprite {PLAYER_ASSET, nullptr,
-                                                           new SDL_Rect {0, 0, PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT},
-                                                           new SDL_Rect {0, 0, PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT}},
+                                  Component::LoadedSprite {
+                                      PLAYER_ASSET, nullptr,
+                                      new SDL_Rect {0, color * PLAYER_TEX_HEIGHT, PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT},
+                                      new SDL_Rect {0, 0, PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT}},
                                   Component::HitBox {PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT},
                                   Component::IsAlive {true, 0});
 
