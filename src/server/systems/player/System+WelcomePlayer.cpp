@@ -1,8 +1,10 @@
+#include <boost/asio.hpp>
 #include <iostream>
 #include "Components.hpp"
 #include "Event.hpp"
 #include "EventManager.hpp"
 #include "HitBox.hpp"
+#include "NetworkHandler.hpp"
 #include "Packets.hpp"
 #include "PlayerColor.hpp"
 #include "ServerGameEvent.hpp"
@@ -13,6 +15,9 @@
 #include "World.hpp"
 
 namespace ECS {
+
+    using boost::asio::ip::udp;
+
     void System::welcomePlayer(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
                                Core::SparseArray<Component::TypeEntity> &aType,
                                Core::SparseArray<Component::HitBox> &aHitBox)
@@ -20,11 +25,19 @@ namespace ECS {
         ECS::Core::World &world = ECS::Core::World::getInstance();
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
         Network::ServerHandler &server = Network::ServerHandler::getInstance();
+        Network::NetworkHandler &network = Network::NetworkHandler::getInstance();
         auto events = eventManager->getEventsByType(Event::EventType::GAME);
 
         for (auto &event : events) {
             auto &gameEvent = static_cast<RType::ServerGameEvent &>(*event);
             if (gameEvent.getType() == RType::ServerEventType::CONNECT) {
+                if (server.isFull()) {
+                    udp::endpoint cliEndpoint = gameEvent.getClientEndpoint();
+                    network.send(RType::Packet(static_cast<int>(RType::ClientEventType::SERVER_FULL)), cliEndpoint);
+                    eventManager->removeEvent(event);
+                    continue;
+                }
+
                 size_t playerId = world.createEntity();
                 RType::PLAYER_COLOR playerColor = server.addClientColor(playerId);
 

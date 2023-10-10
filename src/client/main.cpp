@@ -85,13 +85,16 @@ int main(int ac, char **av)
     // Background system
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBackground);
 
+    // Error message system
+    world.addSystem(ECS::System::createServerFullErrorMessage);
+
     // Loading message
     display.addEntity(
         ECS::Utils::Vector2f {SCREEN_WIDTH / 2 - LOADING_MESSAGE_TEX_WIDTH / 2,
                               SCREEN_HEIGHT / 2 - LOADING_MESSAGE_TEX_HEIGHT / 2},
         Component::Speed {0}, Component::TypeEntity {false, false, false, false, false, false, false},
         Component::LoadedSprite {LOADING_MESSAGE_ASSET, nullptr, nullptr,
-                                 new SDL_Rect {400, 15, LOADING_MESSAGE_TEX_WIDTH, LOADING_MESSAGE_TEX_HEIGHT}},
+                                 new SDL_Rect {0, 0, LOADING_MESSAGE_TEX_WIDTH, LOADING_MESSAGE_TEX_HEIGHT}},
         Component::HitBox {}, Component::IsAlive {false, 0});
 
     // Game loop

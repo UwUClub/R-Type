@@ -216,6 +216,11 @@ namespace ECS {
              */
             static void triggerBotDisconnect(Core::SparseArray<Component::TypeEntity> &aType);
 
+            /**
+             * @brief Display error message in case server is full (triggered by server)
+             */
+            static void createServerFullErrorMessage();
+
         private:
             /**
              * @brief Map of all the SDL_Keycode and their equivalent in our ECS

@@ -9,6 +9,7 @@ target_sources(client PRIVATE
         System+GetInput.cpp
         System+LoadTextures.cpp
         System+SDLQuit.cpp
+        System+CreateServerFullErrorMessage.cpp
 )
 
 target_include_directories(client PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

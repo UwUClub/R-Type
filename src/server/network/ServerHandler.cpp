@@ -109,4 +109,9 @@ namespace Network {
         }
     }
 
+    bool ServerHandler::isFull() const
+    {
+        return _clients.size() >= MAX_NUMBER_PLAYER;
+    }
+
 } // namespace Network

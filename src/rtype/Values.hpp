@@ -68,4 +68,9 @@ static const std::string LOADING_MESSAGE_ASSET = "assets/sprites/loading-message
 const constexpr int LOADING_MESSAGE_TEX_WIDTH = 700;
 const constexpr int LOADING_MESSAGE_TEX_HEIGHT = 400;
 
+// ------------------ SERVER FULL MESSAGE ------------------ //
+static const std::string SERVER_FULL_MESSAGE = "assets/sprites/server-full-message.png";
+const constexpr int SERVER_FULL_MESSAGE_TEX_WIDTH = 556;
+const constexpr int SERVER_FULL_MESSAGE_TEX_HEIGHT = 95;
+
 #endif /* !VALUES_HPP_ */

@@ -4,10 +4,12 @@
 #include "SDLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
+#include "World.hpp"
 
 namespace ECS {
     void System::createPlayer()
     {
+        auto &world = ECS::Core::World::getInstance();
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         SDLDisplayClass &display = SDLDisplayClass::getInstance();
         auto events = eventManager->getEventsByType(Event::EventType::GAME);
@@ -19,7 +21,8 @@ namespace ECS {
                 bool isLocalPlayer = gameEvent.getPayload()[1] == 1;
 
                 if (isLocalPlayer) {
-                    // Setup background
+                    display.freeRects(0);
+                    world.killEntity(0);
                     display.addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {BACKGROUND_SPEED},
                                       Component::TypeEntity {false, false, false, false, false, false, true},
                                       Component::LoadedSprite {BACKGROUND_ASSET, nullptr, nullptr,
