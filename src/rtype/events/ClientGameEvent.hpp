@@ -15,8 +15,9 @@ namespace RType {
         PLAYER_SHOOT = 3,
         PLAYER_DEATH = 4,
         ENEMY_SPAWN = 5,
-        ENEMY_SHOOT = 6,
-        ENEMY_DEATH = 7,
+        ENEMY_DEATH = 6,
+        ENEMY_SHOOT = 7,
+        PLAYER_BONUS = 8,
     };
 
     /**

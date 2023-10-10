@@ -20,6 +20,30 @@ namespace ECS {
             static void createBot();
 
             /**
+             * @brief Handle the move of the bonus
+             * @details The bonus is a sprite that is displayed on the screen for a short amount of time on kill of an
+             * enemy
+             * @param aPos The position of the bonus
+             * @param aSpeed The speed of the bonus
+             * @param aType The type of the bonus
+             */
+            static void moveBonus(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
+                                  Core::SparseArray<Component::TypeEntity> &aType);
+
+            /**
+             * @brief Handle the trigger of the bonus
+             * @param aPos The position of the bonus
+             * @param aType The type of the bonus
+             * @param aIsAlive The isAlive of the bonus
+             * @param aHitBox The hitbox of the bonus
+             */
+            static void triggerBonus(Core::SparseArray<Utils::Vector2f> &aPos,
+                                     Core::SparseArray<Component::TypeEntity> &aType,
+                                     Core::SparseArray<Component::IsAlive> &aIsAlive,
+                                     Core::SparseArray<Component::HitBox> &aHitBox);
+
+            /**
+             * @brief Move the player
              * @brief Move the player (locally, send to server)
              *
              * @param aPos SparseArray of all entities position
@@ -142,7 +166,8 @@ namespace ECS {
              */
             static void triggerEnemyDeath(Core::SparseArray<Component::TypeEntity> &aType,
                                           Core::SparseArray<Component::IsAlive> &aIsAlive,
-                                          Core::SparseArray<Component::LoadedSprite> &aSprites);
+                                          Core::SparseArray<Component::LoadedSprite> &aSprites,
+                                          Core::SparseArray<Utils::Vector2f> &aPos);
 
             /**
              * @brief Make enemies shoot missiles (triggered by server)
@@ -173,6 +198,13 @@ namespace ECS {
             static void triggerBotDeath(Core::SparseArray<Component::TypeEntity> &aType,
                                         Core::SparseArray<Component::IsAlive> &aIsAlive,
                                         Core::SparseArray<Component::LoadedSprite> &aSprites);
+
+            /**
+             * @brief Handle the death of a player (triggered by server)
+             * @param aSpeed
+             */
+            static void triggerBotBonus(Core::SparseArray<Component::Speed> &aSpeed,
+                                        Core::SparseArray<Component::TypeEntity> &aType);
 
             /**
              * @brief Handle the disconnection of a player (triggered by server)

@@ -8,6 +8,7 @@ add_subdirectory(player)
 add_subdirectory(bot)
 add_subdirectory(enemy)
 add_subdirectory(missile)
+add_subdirectory(bonus)
 add_subdirectory(background)
 add_subdirectory(graphic)
 
