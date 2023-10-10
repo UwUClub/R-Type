@@ -63,4 +63,7 @@ const constexpr float BONUS_SPEED = 800;
 const constexpr int BONUS_TEX_WIDTH = 250;
 const constexpr int BONUS_TEX_HEIGHT = 280;
 
+// ------------------ LOADING MESSAGE ------------------ //
+static const std::string LOADING_MESSAGE_ASSET = "assets/sprites/loading-message.png";
+
 #endif /* !VALUES_HPP_ */

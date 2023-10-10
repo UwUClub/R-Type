@@ -50,6 +50,12 @@ int main(int ac, char **av)
     world.addSystem<Component::LoadedSprite, ECS::Utils::Vector2f>(ECS::System::displayEntities);
     world.addSystem(ECS::System::quitSDL);
 
+    // Player systems
+    world.addSystem(ECS::System::createPlayer);
+    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::IsAlive>(
+        ECS::System::movePlayer);
+    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive>(ECS::System::triggerPlayerShoot);
+
     // Bot systems
     world.addSystem(ECS::System::createBot);
     world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::updateBotPosition);
@@ -59,18 +65,12 @@ int main(int ac, char **av)
     world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite>(ECS::System::triggerBotDeath);
     world.addSystem<Component::TypeEntity>(ECS::System::triggerBotDisconnect);
 
-    // Player systems
-    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::IsAlive>(
-        ECS::System::movePlayer);
-    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive>(ECS::System::triggerPlayerShoot);
-
     // Enemy systems
     world.addSystem(ECS::System::createEnemy);
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveEnemy);
     world.addSystem(ECS::System::triggerEnemyShoot);
     world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::HitBox>(ECS::System::enemyHit);
-    world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite, ECS::Utils::Vector2f>(
-        ECS::System::triggerEnemyDeath);
+    world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite>(ECS::System::triggerEnemyDeath);
 
     // Bonus systems
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBonus);
@@ -81,16 +81,13 @@ int main(int ac, char **av)
     // Missile systems
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveMissiles);
 
-    // Setup background
+    // Background systems
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBackground);
-    display.addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {BACKGROUND_SPEED},
-                      Component::TypeEntity {false, false, false, false, false, false, true},
-                      Component::LoadedSprite {BACKGROUND_ASSET, nullptr, nullptr,
-                                               new SDL_Rect {400, 15, SCREEN_WIDTH, SCREEN_HEIGHT}},
-                      Component::HitBox {}, Component::IsAlive {false, 0});
-    display.addEntity(ECS::Utils::Vector2f {SCREEN_WIDTH, 0}, Component::Speed {BACKGROUND_SPEED},
-                      Component::TypeEntity {false, false, false, false, false, false, true},
-                      Component::LoadedSprite {BACKGROUND_ASSET, nullptr, nullptr,
+
+    // Loading message
+    display.addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {0},
+                      Component::TypeEntity {false, false, false, false, false, false, false},
+                      Component::LoadedSprite {LOADING_MESSAGE_ASSET, nullptr, nullptr,
                                                new SDL_Rect {400, 15, SCREEN_WIDTH, SCREEN_HEIGHT}},
                       Component::HitBox {}, Component::IsAlive {false, 0});
 

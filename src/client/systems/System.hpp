@@ -15,9 +15,9 @@ namespace ECS {
     {
         public:
             /**
-             * @brief Create a bot (triggered by server)
+             * @brief Create a player (triggered by server)
              */
-            static void createBot();
+            static void createPlayer();
 
             /**
              * @brief Handle the move of the bonus
@@ -54,6 +54,11 @@ namespace ECS {
                                    Core::SparseArray<Component::Speed> &aSpeed,
                                    Core::SparseArray<Component::TypeEntity> &aType,
                                    Core::SparseArray<Component::IsAlive> &aIsAlive);
+
+            /**
+             * @brief Create a bot (triggered by server)
+             */
+            static void createBot();
 
             /**
              * @brief Update a bot position (triggered by server)
@@ -200,7 +205,7 @@ namespace ECS {
                                         Core::SparseArray<Component::LoadedSprite> &aSprites);
 
             /**
-             * @brief Handle the death of a player (triggered by server)
+             * @brief Handle the death of a bot (triggered by server)
              * @param aSpeed
              */
             static void triggerBotBonus(Core::SparseArray<Component::Speed> &aSpeed,
