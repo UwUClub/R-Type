@@ -69,11 +69,13 @@ int main(int ac, char **av)
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveEnemy);
     world.addSystem(ECS::System::triggerEnemyShoot);
     world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::HitBox>(ECS::System::enemyHit);
-    world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite, ECS::Utils::Vector2f>(ECS::System::triggerEnemyDeath);
+    world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite, ECS::Utils::Vector2f>(
+        ECS::System::triggerEnemyDeath);
 
     // Bonus systems
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBonus);
-    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive, Component::HitBox>(ECS::System::triggerBonus);
+    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive, Component::HitBox>(
+        ECS::System::triggerBonus);
     world.addSystem<Component::Speed, Component::TypeEntity>(ECS::System::triggerBotBonus);
 
     // Missile systems
