@@ -5,9 +5,11 @@
 ** LoadedSprite
 */
 
+#include <cstddef>
 #include <string>
 #include <utility>
 #include <SDL_render.h>
+
 #ifndef LOADEDSPRITE_HPP
     #define LOADEDSPRITE_HPP
 

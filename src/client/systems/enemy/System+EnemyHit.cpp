@@ -4,9 +4,8 @@
 #include <SDL_image.h>
 
 namespace ECS {
-    void System::destroyEnemy(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::TypeEntity> &aType,
-                              Core::SparseArray<Component::HitBox> &aHitBox,
-                              Core::SparseArray<Component::IsAlive> &aIsAlive)
+    void System::enemyHit(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::TypeEntity> &aType,
+                          Core::SparseArray<Component::HitBox> &aHitBox)
     {
         auto &world = Core::World::getInstance();
         auto &display = SDLDisplayClass::getInstance();
@@ -23,7 +22,6 @@ namespace ECS {
                     && aPos[bullet].value().x < aPos[enemy].value().x + aHitBox[enemy].value().width
                     && aPos[bullet].value().y > aPos[enemy].value().y
                     && aPos[bullet].value().y < aPos[enemy].value().y + aHitBox[enemy].value().height) {
-                    aIsAlive[enemy].value().isAlive = false;
                     display.freeRects(bullet);
                     world.killEntity(bullet);
                     break;
