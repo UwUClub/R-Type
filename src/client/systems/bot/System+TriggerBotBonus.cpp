@@ -1,12 +1,12 @@
 #include "ClientGameEvent.hpp"
 #include "EventManager.hpp"
-#include "TypeUtils.hpp"
 #include "System.hpp"
 #include "TypeUtils.hpp"
 
 namespace ECS {
     void System::triggerBotBonus(Core::SparseArray<Component::Speed> &aSpeed,
-                                 Core::SparseArray<Component::TypeEntity> &aType) {
+                                 Core::SparseArray<Component::TypeEntity> &aType)
+    {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         auto events = eventManager->getEventsByType(Event::EventType::GAME);
         auto &typeUtils = RType::TypeUtils::getInstance();
@@ -26,4 +26,4 @@ namespace ECS {
             }
         }
     }
-}
+} // namespace ECS

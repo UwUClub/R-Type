@@ -8,8 +8,9 @@
 #include "World.hpp"
 
 namespace ECS {
-    void System::moveSpeedUp(Core::SparseArray<Component::Speed> &aSpeed) {
-        ECS::Core::World  const &world = ECS::Core::World::getInstance();
+    void System::moveSpeedUp(Core::SparseArray<Component::Speed> &aSpeed)
+    {
+        ECS::Core::World const &world = ECS::Core::World::getInstance();
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
         Network::ServerHandler &network = Network::ServerHandler::getInstance();
         auto events = eventManager->getEventsByType(Event::EventType::GAME);
@@ -29,4 +30,4 @@ namespace ECS {
             }
         }
     }
-}
+} // namespace ECS
