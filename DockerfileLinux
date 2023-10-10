@@ -4,20 +4,4 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     cmake \
     git \
-    ccache \
     && rm -rf /var/lib/apt/lists/*
-
-RUN useradd jenkins --shell /bin/bash --create-home
-
-# Create the directory as the root user
-RUN mkdir -p /home/jenkins/.cache/ccache/tmp
-
-# Change the owner of the directory to jenkins
-RUN chown -R jenkins:jenkins /home/jenkins/.cache/ccache
-
-# Set the necessary permissions
-RUN chmod -R 755 /home/jenkins/.cache/ccache
-
-ENV CCACHE_DIR /home/jenkins/.cache/ccache
-
-USER jenkins
