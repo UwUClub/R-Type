@@ -15,6 +15,10 @@ namespace ECS {
             auto &gameEvent = static_cast<RType::ClientGameEvent &>(*event);
 
             if (gameEvent.getType() == RType::ClientEventType::ENEMY_SPAWN) {
+                if (gameEvent.getPayload().size() != 3) {
+                    eventManager->removeEvent(event);
+                    continue;
+                }
                 std::size_t onlineEntityId = static_cast<std::size_t>(gameEvent.getPayload()[0]);
                 float posX = gameEvent.getPayload()[1];
                 float posY = gameEvent.getPayload()[2];

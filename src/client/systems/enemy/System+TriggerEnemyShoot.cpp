@@ -18,6 +18,10 @@ namespace ECS {
             auto &gameEvent = static_cast<RType::ClientGameEvent &>(*event);
 
             if (gameEvent.getType() == RType::ClientEventType::ENEMY_SHOOT) {
+                if (gameEvent.getPayload().size() != 3) {
+                    eventManager->removeEvent(event);
+                    continue;
+                }
                 std::size_t onlineMissileId = static_cast<int>(gameEvent.getPayload()[0]);
                 float posX = gameEvent.getPayload()[1];
                 auto posY = gameEvent.getPayload()[2];

@@ -25,8 +25,16 @@ namespace ECS {
             auto &gameEvent = static_cast<RType::ClientGameEvent &>(*event);
 
             if (gameEvent.getType() == RType::ClientEventType::ENEMY_DEATH) {
+                if (gameEvent.getPayload().size() != 1) {
+                    eventManager->removeEvent(event);
+                    continue;
+                }
                 size_t onlineEnemyId = static_cast<size_t>(gameEvent.getPayload()[0]);
                 size_t localEnemyId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(aType, onlineEnemyId);
+                if (!aIsAlive[localEnemyId].has_value()) {
+                    eventManager->removeEvent(event);
+                    continue;
+                }
                 aIsAlive[localEnemyId].value().isAlive = false;
 
                 eventManager->removeEvent(event);
@@ -39,9 +47,9 @@ namespace ECS {
                 continue;
             }
             if (!aIsAlive[enemy].value().isAlive && aIsAlive[enemy].value().timeToDie < 0) {
-                std::cout << "enemy " << aType[enemy].value().onlineId.value_or(0) << " killed" << std::endl;
-                display.freeRects(enemy);
-                world.killEntity(enemy);
+                std::cout << "Enemy " << aType[enemy].value().onlineId.value_or(0) << " killed" << std::endl;
+                // display.freeRects(enemy);
+                // world.killEntity(enemy);
             } else if (!aIsAlive[enemy].value().isAlive && aIsAlive[enemy].value().timeToDie == 0) {
                 aSprites[enemy].value().path = EXPLOSION_ASSET;
                 aSprites[enemy].value().texture = nullptr;

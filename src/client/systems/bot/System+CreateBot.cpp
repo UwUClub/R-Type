@@ -15,10 +15,15 @@ namespace ECS {
             auto &gameEvent = static_cast<RType::ClientGameEvent &>(*event);
 
             if (gameEvent.getType() == RType::ClientEventType::PLAYER_SPAWN) {
-                std::size_t onlineEntityId = static_cast<int>(gameEvent.getPayload()[0]);
-                bool isLocalPlayer = gameEvent.getPayload()[1] == 1;
+                if (gameEvent.getPayload().size() != 5) {
+                    eventManager->removeEvent(event);
+                    continue;
+                }
 
+                size_t onlineEntityId = static_cast<int>(gameEvent.getPayload()[0]);
                 Component::TypeEntity entityType {false, true, false, false, false, false, false, onlineEntityId};
+
+                bool isLocalPlayer = gameEvent.getPayload()[1] == 1;
                 if (isLocalPlayer) {
                     entityType.isPlayer = true;
                     entityType.isBot = false;
