@@ -56,4 +56,8 @@ const constexpr float EXPLOSION_SPEED = 0;
 const constexpr int EXPLOSION_TEX_WIDTH = 23;
 const constexpr int EXPLOSION_TEX_HEIGHT = 23;
 
+// ------------------ RETURN STATUS ------------------ //
+const constexpr int SUCCESS = 0;
+const constexpr int FAILURE = 84;
+
 #endif /* !VALUES_HPP_ */
