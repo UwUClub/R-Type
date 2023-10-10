@@ -1,4 +1,3 @@
-#include <cctype>
 #include <iostream>
 #include "Components.hpp"
 #include "EventManager.hpp"
@@ -68,7 +67,8 @@ int main(int ac, char **av)
 
         Network::NetworkHandler::getInstance().stop();
     } catch (std::exception &e) {
-        std::cerr << "[RType server exception] " << e.what() << std::endl;
+        Network::NetworkHandler::getInstance().stop();
+        std::cout << "[RType server exception] " << e.what() << std::endl;
         return FAILURE;
     }
     return SUCCESS;

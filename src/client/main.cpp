@@ -104,6 +104,7 @@ int main(int ac, char **av)
         client.send(disconnectPacket);
         Network::NetworkHandler::getInstance().stop();
     } catch (std::exception &e) {
+        Network::NetworkHandler::getInstance().stop();
         std::cerr << "[RType client exception] " << e.what() << std::endl;
         return FAILURE;
     }
