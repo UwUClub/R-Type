@@ -5,10 +5,10 @@ RUN net user /add jenkins Lov@C1c411 && \
 net localgroup Administrators jenkins /add
 
 # Set the working directory in the Docker image
-WORKDIR /usr/src/myapp
+WORKDIR /home/jenkins/
 
 # Copy the current directory contents into the container at /usr/src/myapp
-COPY . /usr/src/myapp
+COPY . /home/jenkins/
 
 # Copy the build scripts into the Docker image
 COPY build.bat .
