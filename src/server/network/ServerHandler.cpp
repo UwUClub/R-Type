@@ -53,6 +53,11 @@ namespace Network {
         std::cout << "Player " << aClientId << " joined" << std::endl;
     }
 
+    void ServerHandler::removeClient(std::size_t aClientId)
+    {
+        _clients.erase(aClientId);
+    }
+
     int ServerHandler::getNumberClients() const
     {
         return _clients.size();
