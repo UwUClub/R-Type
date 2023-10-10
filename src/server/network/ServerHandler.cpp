@@ -18,7 +18,7 @@ namespace Network {
         udp::endpoint endpoint(boost::asio::ip::address::from_string(aHost), aPort);
 
         for (int i = 0; i < MAX_NUMBER_PLAYER; i++) {
-            _clientColors[i] = RType::PLAYER_COLOR::NONE;
+            _clientColors[i] = -1;
         }
 
         network.onReceive([this](const RType::Packet &aPacket, udp::endpoint &aClientEndpoint) {
