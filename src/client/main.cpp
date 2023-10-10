@@ -70,7 +70,8 @@ int main(int ac, char **av)
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveEnemy);
     world.addSystem(ECS::System::triggerEnemyShoot);
     world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::HitBox>(ECS::System::enemyHit);
-    world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite>(ECS::System::triggerEnemyDeath);
+    world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite, ECS::Utils::Vector2f>(
+        ECS::System::triggerEnemyDeath);
 
     // Bonus systems
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBonus);
@@ -81,15 +82,17 @@ int main(int ac, char **av)
     // Missile systems
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveMissiles);
 
-    // Background systems
+    // Background system
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBackground);
 
     // Loading message
-    display.addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {0},
-                      Component::TypeEntity {false, false, false, false, false, false, false},
-                      Component::LoadedSprite {LOADING_MESSAGE_ASSET, nullptr, nullptr,
-                                               new SDL_Rect {400, 15, SCREEN_WIDTH, SCREEN_HEIGHT}},
-                      Component::HitBox {}, Component::IsAlive {false, 0});
+    display.addEntity(
+        ECS::Utils::Vector2f {SCREEN_WIDTH / 2 - LOADING_MESSAGE_TEX_WIDTH / 2,
+                              SCREEN_HEIGHT / 2 - LOADING_MESSAGE_TEX_HEIGHT / 2},
+        Component::Speed {0}, Component::TypeEntity {false, false, false, false, false, false, false},
+        Component::LoadedSprite {LOADING_MESSAGE_ASSET, nullptr, nullptr,
+                                 new SDL_Rect {400, 15, LOADING_MESSAGE_TEX_WIDTH, LOADING_MESSAGE_TEX_HEIGHT}},
+        Component::HitBox {}, Component::IsAlive {false, 0});
 
     // Game loop
     while (world.isRunning()) {

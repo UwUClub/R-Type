@@ -65,5 +65,7 @@ const constexpr int BONUS_TEX_HEIGHT = 280;
 
 // ------------------ LOADING MESSAGE ------------------ //
 static const std::string LOADING_MESSAGE_ASSET = "assets/sprites/loading-message.png";
+const constexpr int LOADING_MESSAGE_TEX_WIDTH = 700;
+const constexpr int LOADING_MESSAGE_TEX_HEIGHT = 400;
 
 #endif /* !VALUES_HPP_ */

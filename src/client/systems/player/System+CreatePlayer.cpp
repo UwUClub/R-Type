@@ -8,7 +8,6 @@
 namespace ECS {
     void System::createPlayer()
     {
-        ECS::Core::World &world = ECS::Core::World::getInstance();
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         SDLDisplayClass &display = SDLDisplayClass::getInstance();
         auto events = eventManager->getEventsByType(Event::EventType::GAME);
@@ -20,10 +19,7 @@ namespace ECS {
                 bool isLocalPlayer = gameEvent.getPayload()[1] == 1;
 
                 if (isLocalPlayer) {
-                    std::cout << "should setup background" << std::endl;
                     // Setup background
-                    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(
-                        ECS::System::moveBackground);
                     display.addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {BACKGROUND_SPEED},
                                       Component::TypeEntity {false, false, false, false, false, false, true},
                                       Component::LoadedSprite {BACKGROUND_ASSET, nullptr, nullptr,
