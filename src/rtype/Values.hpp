@@ -37,6 +37,7 @@ static const std::string PLAYER_ASSET = "assets/sprites/r-typesheet42.png";
 const constexpr float PLAYER_SPEED = 10;
 const constexpr int PLAYER_TEX_WIDTH = 33;
 const constexpr int PLAYER_TEX_HEIGHT = 17;
+const constexpr int MAX_NUMBER_PLAYER = 4;
 
 //------------------ BULLET (for players) ------------------//
 static const std::string BULLET_ASSET = "assets/sprites/r-typesheet2.png";

@@ -4,6 +4,7 @@
 #include "EventManager.hpp"
 #include "HitBox.hpp"
 #include "Packets.hpp"
+#include "PlayerColor.hpp"
 #include "ServerGameEvent.hpp"
 #include "ServerHandler.hpp"
 #include "SparseArray.hpp"
@@ -18,26 +19,31 @@ namespace ECS {
     {
         ECS::Core::World &world = ECS::Core::World::getInstance();
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
-        Network::ServerHandler &network = Network::ServerHandler::getInstance();
+        Network::ServerHandler &server = Network::ServerHandler::getInstance();
         auto events = eventManager->getEventsByType(Event::EventType::GAME);
 
         for (auto &event : events) {
             auto &gameEvent = static_cast<RType::ServerGameEvent &>(*event);
             if (gameEvent.getType() == RType::ServerEventType::CONNECT) {
                 size_t playerId = world.createEntity();
-                float playerColor = static_cast<float>(network.getNumberClients());
+                RType::PLAYER_COLOR playerColor = server.addClientColor(playerId);
+
+                if (playerColor == RType::PLAYER_COLOR::NONE) {
+                    world.killEntity(playerId);
+                    continue;
+                }
 
                 aPos.insertAt(playerId, ECS::Utils::Vector2f {10, 10});
                 aSpeed.insertAt(playerId, Component::Speed {PLAYER_SPEED});
                 aType.insertAt(playerId, Component::TypeEntity {true, false, false, false, false, false, false});
                 aHitBox.insertAt(playerId, Component::HitBox {PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT});
 
-                network.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_SPAWN),
-                                  {static_cast<float>(playerId), 0, playerColor, 10, 10});
-                network.addClient(playerId, gameEvent.getClientEndpoint());
-                network.send(RType::Packet(static_cast<int>(RType::ClientEventType::PLAYER_SPAWN),
-                                           {static_cast<float>(playerId), 1, playerColor, 10, 10}),
-                             playerId);
+                server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_SPAWN),
+                                 {static_cast<float>(playerId), 0, static_cast<float>(playerColor), 10, 10});
+                server.addClient(playerId, gameEvent.getClientEndpoint());
+                server.send(RType::Packet(static_cast<int>(RType::ClientEventType::PLAYER_SPAWN),
+                                          {static_cast<float>(playerId), 1, static_cast<float>(playerColor), 10, 10}),
+                            playerId);
 
                 int aPosSize = aPos.size();
                 for (std::size_t i = 0; i < aPosSize; i++) {
@@ -45,14 +51,15 @@ namespace ECS {
                         continue;
                     }
                     if (i != playerId && aType[i]->isPlayer) {
-                        network.send(RType::Packet(static_cast<int>(RType::ClientEventType::PLAYER_SPAWN),
-                                                   {static_cast<float>(i), 0, playerColor, aPos[i]->x, aPos[i]->y}),
-                                     playerId);
+                        float color = static_cast<float>(server.getClientColor(i));
+                        server.send(RType::Packet(static_cast<int>(RType::ClientEventType::PLAYER_SPAWN),
+                                                  {static_cast<float>(i), 0, color, aPos[i]->x, aPos[i]->y}),
+                                    playerId);
                     }
                     if (aType[i]->isEnemy) {
-                        network.send(RType::Packet(static_cast<int>(RType::ClientEventType::ENEMY_SPAWN),
-                                                   {static_cast<float>(i), aPos[i]->x, aPos[i]->y}),
-                                     playerId);
+                        server.send(RType::Packet(static_cast<int>(RType::ClientEventType::ENEMY_SPAWN),
+                                                  {static_cast<float>(i), aPos[i]->x, aPos[i]->y}),
+                                    playerId);
                     }
                 }
 
