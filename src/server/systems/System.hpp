@@ -51,6 +51,12 @@ namespace ECS {
                                     Core::SparseArray<Component::HitBox> &aHitBox);
 
             /**
+             * @brief Move the player speed up
+             * @param aSpeed
+             */
+            static void moveSpeedUp(Core::SparseArray<Component::Speed> &aSpeed);
+
+            /**
              * @brief Handle players who get hit
              *
              * @param aPos SparseArray of all entities position

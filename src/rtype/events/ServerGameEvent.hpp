@@ -12,8 +12,10 @@ namespace RType {
     {
         CONNECT = 0,
         DISCONNECT = 1,
-        MOVE = 2,
-        SHOOT = 3
+        CRASH = 2,
+        MOVE = 3,
+        SHOOT = 4,
+        BONUS = 5
     };
 
     /**

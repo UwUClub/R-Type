@@ -57,4 +57,10 @@ const constexpr float EXPLOSION_SPEED = 0;
 const constexpr int EXPLOSION_TEX_WIDTH = 23;
 const constexpr int EXPLOSION_TEX_HEIGHT = 23;
 
+//------------------ BONUS ------------------//
+static const std::string BONUS_ASSET = "assets/sprites/powerup.png";
+const constexpr float BONUS_SPEED = 800;
+const constexpr int BONUS_TEX_WIDTH = 250;
+const constexpr int BONUS_TEX_HEIGHT = 280;
+
 #endif /* !VALUES_HPP_ */

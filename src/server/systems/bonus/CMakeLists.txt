@@ -1,16 +1,10 @@
 find_package(Boost REQUIRED COMPONENTS system thread serialization)
-
 find_package(Threads REQUIRED)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
-add_subdirectory(player)
-add_subdirectory(enemy)
-add_subdirectory(missile)
-add_subdirectory(bonus)
-
 target_sources(server PRIVATE
-        System.hpp
+        System+MoveSpeed.cpp
 )
 
 target_link_libraries(server
