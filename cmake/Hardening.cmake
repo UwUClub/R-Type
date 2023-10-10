@@ -13,7 +13,7 @@ macro(
     message(STATUS "*** MSVC flags: /sdl /DYNAMICBASE /guard:cf /NXCOMPAT /CETCOMPAT")
     set(NEW_LINK_OPTIONS "${NEW_LINK_OPTIONS} /NXCOMPAT /CETCOMPAT")
     add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-    add_compile_options(/wd4005)
+    #add_compile_options(/wd4005)
 
   elseif(CMAKE_CXX_COMPILER_ID MATCHES ".*Clang|GNU")
     set(NEW_CXX_DEFINITIONS "${NEW_CXX_DEFINITIONS} -D_GLIBCXX_ASSERTIONS")
