@@ -20,94 +20,101 @@ int main(int ac, char **av)
 {
     if (ac < 3) {
         std::cerr << "Usage: " << av[0] << " <host> <port>" << std::endl;
-        return 84;
+        return FAILURE;
     }
 
-    // Network
-    std::string host(av[1]);
-    std::string port(av[2]);
-    auto &client = Network::ClientHandler::getInstance();
-    client.start(host, port);
-    RType::Packet connectPacket(static_cast<int>(RType::ServerEventType::CONNECT));
-    client.send(connectPacket);
+    try {
+        // Network
+        std::string host(av[1]);
+        std::string port(av[2]);
+        auto &client = Network::ClientHandler::getInstance();
+        client.start(host, port);
+        RType::Packet connectPacket(static_cast<int>(RType::ServerEventType::CONNECT));
+        client.send(connectPacket);
 
-    // Setup ECS / graphic
-    ECS::Core::World &world = ECS::Core::World::getInstance();
-    SDLDisplayClass &display = SDLDisplayClass::getInstance();
-    ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
+        // Setup ECS / graphic
+        ECS::Core::World &world = ECS::Core::World::getInstance();
+        SDLDisplayClass &display = SDLDisplayClass::getInstance();
+        ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
 
-    // Components
-    world.registerComponent<ECS::Utils::Vector2f>();
-    world.registerComponent<Component::Speed>();
-    world.registerComponent<Component::TypeEntity>();
-    world.registerComponent<Component::LoadedSprite>();
-    world.registerComponent<Component::HitBox>();
-    world.registerComponent<Component::IsAlive>();
+        // Components
+        world.registerComponent<ECS::Utils::Vector2f>();
+        world.registerComponent<Component::Speed>();
+        world.registerComponent<Component::TypeEntity>();
+        world.registerComponent<Component::LoadedSprite>();
+        world.registerComponent<Component::HitBox>();
+        world.registerComponent<Component::IsAlive>();
 
-    // Graphic systems
-    world.addSystem(ECS::System::getInput);
-    world.addSystem<Component::LoadedSprite>(ECS::System::loadTextures);
-    world.addSystem<Component::LoadedSprite, ECS::Utils::Vector2f>(ECS::System::displayEntities);
-    world.addSystem(ECS::System::quitSDL);
+        // Graphic systems
+        world.addSystem(ECS::System::getInput);
+        world.addSystem<Component::LoadedSprite>(ECS::System::loadTextures);
+        world.addSystem<Component::LoadedSprite, ECS::Utils::Vector2f>(ECS::System::displayEntities);
+        world.addSystem(ECS::System::quitSDL);
 
-    // Player systems
-    world.addSystem(ECS::System::createPlayer);
-    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::IsAlive>(
-        ECS::System::movePlayer);
-    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive>(ECS::System::triggerPlayerShoot);
+        // Player systems
+        world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::IsAlive>(
+            ECS::System::movePlayer);
+        world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive>(
+            ECS::System::triggerPlayerShoot);
 
-    // Bot systems
-    world.addSystem(ECS::System::createBot);
-    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::updateBotPosition);
-    world.addSystem(ECS::System::triggerBotShoot);
-    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive, Component::HitBox>(
-        ECS::System::botHit);
-    world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite>(ECS::System::triggerBotDeath);
-    world.addSystem<Component::TypeEntity>(ECS::System::triggerBotDisconnect);
+        // Bot systems
+        world.addSystem(ECS::System::createBot);
+        world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::updateBotPosition);
+        world.addSystem(ECS::System::triggerBotShoot);
+        world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive, Component::HitBox>(
+            ECS::System::botHit);
+        world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite>(
+            ECS::System::triggerBotDeath);
+        world.addSystem<Component::TypeEntity>(ECS::System::triggerBotDisconnect);
 
-    // Enemy systems
-    world.addSystem(ECS::System::createEnemy);
-    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveEnemy);
-    world.addSystem(ECS::System::triggerEnemyShoot);
-    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::HitBox>(ECS::System::enemyHit);
-    world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite, ECS::Utils::Vector2f>(
-        ECS::System::triggerEnemyDeath);
+        // Enemy systems
+        world.addSystem(ECS::System::createEnemy);
+        world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveEnemy);
+        world.addSystem(ECS::System::triggerEnemyShoot);
+        world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::HitBox>(ECS::System::enemyHit);
+        world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite, ECS::Utils::Vector2f>(
+            ECS::System::triggerEnemyDeath);
 
-    // Bonus systems
-    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBonus);
-    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive, Component::HitBox>(
-        ECS::System::triggerBonus);
-    world.addSystem<Component::Speed, Component::TypeEntity>(ECS::System::triggerBotBonus);
+        // Bonus systems
+        world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBonus);
+        world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive, Component::HitBox>(
+            ECS::System::triggerBonus);
+        world.addSystem<Component::Speed, Component::TypeEntity>(ECS::System::triggerBotBonus);
 
-    // Missile systems
-    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveMissiles);
+        // Missile systems
+        world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveMissiles);
 
-    // Background system
-    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBackground);
+        // Background system
+        world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBackground);
 
-    // Error message system
-    world.addSystem(ECS::System::createServerFullErrorMessage);
+        // Error message system
+        world.addSystem(ECS::System::createServerFullErrorMessage);
 
-    // Loading message
-    display.addEntity(
-        ECS::Utils::Vector2f {SCREEN_WIDTH / 2 - LOADING_MESSAGE_TEX_WIDTH / 2,
-                              SCREEN_HEIGHT / 2 - LOADING_MESSAGE_TEX_HEIGHT / 2},
-        Component::Speed {0}, Component::TypeEntity {false, false, false, false, false, false, false},
-        Component::LoadedSprite {LOADING_MESSAGE_ASSET, nullptr, nullptr,
-                                 new SDL_Rect {0, 0, LOADING_MESSAGE_TEX_WIDTH, LOADING_MESSAGE_TEX_HEIGHT}},
-        Component::HitBox {}, Component::IsAlive {false, 0});
+        // Loading message
+        display.addEntity(
+            ECS::Utils::Vector2f {SCREEN_WIDTH / 2 - LOADING_MESSAGE_TEX_WIDTH / 2,
+                                  SCREEN_HEIGHT / 2 - LOADING_MESSAGE_TEX_HEIGHT / 2},
+            Component::Speed {0}, Component::TypeEntity {false, false, false, false, false, false, false},
+            Component::LoadedSprite {LOADING_MESSAGE_ASSET, nullptr, nullptr,
+                                     new SDL_Rect {0, 0, LOADING_MESSAGE_TEX_WIDTH, LOADING_MESSAGE_TEX_HEIGHT}},
+            Component::HitBox {}, Component::IsAlive {false, 0});
 
-    // Game loop
-    while (world.isRunning()) {
-        world.runSystems();
-        SDL_RenderPresent(display._renderer);
-        eventManager->clearNonGameEvents();
-        world.calcDeltaTime();
+        // Game loop
+        while (world.isRunning()) {
+            world.runSystems();
+            SDL_RenderPresent(display._renderer);
+            eventManager->clearNonGameEvents();
+            world.calcDeltaTime();
+        }
+
+        // Quit server properly
+        RType::Packet disconnectPacket(static_cast<int>(RType::ServerEventType::DISCONNECT));
+        client.send(disconnectPacket);
+        Network::NetworkHandler::getInstance().stop();
+    } catch (std::exception &e) {
+        Network::NetworkHandler::getInstance().stop();
+        std::cerr << "[RType client exception] " << e.what() << std::endl;
+        return FAILURE;
     }
-
-    // Quit server properly
-    RType::Packet disconnectPacket(static_cast<int>(RType::ServerEventType::DISCONNECT));
-    client.send(disconnectPacket);
-    Network::NetworkHandler::getInstance().stop();
-    return 0;
+    return SUCCESS;
 }
