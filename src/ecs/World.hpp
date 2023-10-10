@@ -327,7 +327,9 @@ as Component container
                 private:
                     const char *_message;
             };
-            World() = default;
+            World()
+                : _delta(0)
+            {}
 
         private:
             size_t _id {0};
