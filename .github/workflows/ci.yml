@@ -10,6 +10,7 @@ on:
     branches:
       - main
       - dev
+      - RT-58-create-release
 
 env:
   CLANG_TIDY_VERSION: "15.0.2"
@@ -107,19 +108,12 @@ jobs:
         run: |
           OpenCppCoverage.exe --export_type cobertura:coverage.xml --cover_children -- ctest -C Release
 
-      - name: Push binary Windows to server
-        if: runner.os == 'Windows && runner.event == 'push' && matrix.compiler == 'msvc'
-        uses: actions/upload-artifact@v2
+      - name: Publish Tagged Release
+        uses: softprops/action-gh-release@v1
+        if: ${{ startsWith(github.ref, 'refs/tags/')}}
         with:
-          name: ${{ env.PROJECT_NAME }}-windows
-          path: ./build/_CPack_Packages/win64/ZIP/*.zip
-
-      - name: Push binary Linux to server
-        if: runner.os == 'Linux && runner.event == 'push' && matrix.compiler == 'gcc-11'
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ env.PROJECT_NAME }}-linux
-          path: ./build/_CPack_Packages/Linux/ZIP/*.zip
+          files: |
+            build/*-*${{ matrix.build_type }}*-*.*
 
       - name: Publish to codecov
         uses: codecov/codecov-action@v2
