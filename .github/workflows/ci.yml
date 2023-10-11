@@ -110,14 +110,11 @@ jobs:
         run: |
           OpenCppCoverage.exe --export_type cobertura:coverage.xml --cover_children -- ctest -C Release
 
-<<<<<<< HEAD
       - name: CPack
         working-directory: ./build
         run: |
           cpack -C Release
 
-=======
->>>>>>> 422e21ace5e3a7134aea9ecc2383418f88b2a440
       - name: Publish Tagged Release
         uses: softprops/action-gh-release@v1
         if: ${{ startsWith(github.ref, 'refs/tags/') }}
