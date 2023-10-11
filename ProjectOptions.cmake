@@ -29,7 +29,7 @@ macro(R_Type_setup_options)
 
   R_Type_supports_sanitizers()
 
-  if(NOT PROJECT_IS_TOP_LEVEL OR R_Type_PACKAGING_MAINTAINER_MODE OR CMAKE_BUILD_TYPE STREQUAL "Release")
+  if(NOT PROJECT_IS_TOP_LEVEL OR R_Type_PACKAGING_MAINTAINER_MODE)
     option(R_Type_ENABLE_IPO "Enable IPO/LTO" ON)
     option(R_Type_WARNINGS_AS_ERRORS "Treat Warnings As Errors" OFF)
     option(R_Type_ENABLE_USER_LINKER "Enable user-selected linker" OFF)

@@ -125,7 +125,7 @@ set(CPACK_PACKAGE_INSTALL_DIRECTORY "RTYPE")
 if(WIN32)
     set(CPACK_GENERATOR "NSIS64")
 else()
-    set(CPACK_GENERATOR "TGZ")
+    set(CPACK_GENERATOR "DEB;RPM")
 endif()
 
 include(CPack)
