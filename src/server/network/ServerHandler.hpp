@@ -1,7 +1,9 @@
 #include <boost/asio.hpp>
 #include <iostream>
+#include "Components.hpp"
 #include "Packets.hpp"
 #include "PlayerColor.hpp"
+#include "SparseArray.hpp"
 #include "Values.hpp"
 #include <unordered_map>
 
@@ -95,14 +97,15 @@ namespace Network {
              * @param aPacket The packet to send
              * @param aClientId The id of the client to send the message to
              */
-            void send(const RType::Packet &, size_t);
+            void send(const RType::Packet &, size_t, ECS::Core::SparseArray<Component::Connection> &);
 
             /**
              * @brief Broadcast a message to all clients. Each client receives a packet with a unique uuid.
              * @param aType The packet type to send
              * @param aPayload The payload to send
+             * @param aConnections Connection components of clients
              */
-            void broadcast(int, std::vector<float>);
+            void broadcast(int, std::vector<float>, ECS::Core::SparseArray<Component::Connection> &);
 
             /**
              * @brief Check if the server is full
