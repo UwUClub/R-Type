@@ -58,9 +58,6 @@ add_library(R_Type::R_Type_warnings ALIAS R_Type_warnings)
 #add_library(R_Type::R_Type_options INTERFACE IMPORTED)
 #add_library(R_Type::R_Type_warnings INTERFACE IMPORTED)
 
-# configure files based on CMake configuration options
-add_subdirectory(configured_files)
-
 # Adding the src:
 add_subdirectory(src)
 
