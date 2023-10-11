@@ -11,6 +11,7 @@ on:
       - main
       - dev
       - RT-58-create-release
+      - RT-Urgent-Mirror-Fix
 
 env:
   CLANG_TIDY_VERSION: "15.0.2"
