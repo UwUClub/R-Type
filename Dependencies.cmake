@@ -11,8 +11,6 @@ function(R_Type_setup_dependencies)
   find_package(Boost QUIET COMPONENTS system serialization align assert config core static_assert throw_exception array bind chrono integer move mpl predef asio ratio type_traits typeof utility coroutine date_time function regex smart_ptr preprocessor io uuid QUIET)
   find_package(SDL2 QUIET)
   find_package(SDL2_image QUIET)
-  set(BUILD_SHARED_LIBS FALSE)
-
 
   if(NOT TARGET Catch2::Catch2WithMain)
     CPMAddPackage(
@@ -717,6 +715,7 @@ function(R_Type_setup_dependencies)
             CMAKE_ARGS -DBUILD_SHARED_LIBS=OFF -DSDL_STATIC=ON
     )
     set(SDL2IMAGE_INSTALL OFF)
+    set(BUILD_SHARED_LIBS FALSE)
     FetchContent_MakeAvailable(SDL2_image)
   endif()
 
