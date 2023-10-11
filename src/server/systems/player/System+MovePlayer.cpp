@@ -18,16 +18,31 @@ namespace ECS {
             auto &gameEvent = static_cast<RType::ServerGameEvent &>(*event);
 
             if (gameEvent.getType() == RType::ServerEventType::MOVE) {
-                std::size_t entityId = static_cast<size_t>(gameEvent.getPayload()[0]);
-                float moveX = gameEvent.getPayload()[1];
-                float moveY = gameEvent.getPayload()[2];
-                float speed = aSpeed[entityId].value().speed;
-
-                auto &pos = aPos[entityId].value();
-
-                if (moveX < -1 || moveX > 1 || moveY < -1 || moveY > 1) {
+                // Check payload size
+                if (gameEvent.getPayload().size() != 3) {
+                    eventManager->removeEvent(event);
                     continue;
                 }
+
+                // Get and check entity ID
+                int entityId = static_cast<int>(gameEvent.getPayload()[0]);
+                if (entityId < 0 || entityId >= aPos.size() || !aPos[entityId].has_value()
+                    || !aSpeed[entityId].has_value()) {
+                    eventManager->removeEvent(event);
+                    continue;
+                }
+
+                // Get and check move values
+                float moveX = gameEvent.getPayload()[1];
+                float moveY = gameEvent.getPayload()[2];
+                if (moveX < -1 || moveX > 1 || moveY < -1 || moveY > 1) {
+                    eventManager->removeEvent(event);
+                    continue;
+                }
+
+                // Move player
+                float speed = aSpeed[entityId].value().speed;
+                auto &pos = aPos[entityId].value();
 
                 pos.x += moveX * speed;
                 pos.y -= moveY * speed;

@@ -24,7 +24,7 @@ namespace ECS {
                 auto *keyEvent = static_cast<Event::KeyboardEvent *>(event);
 
                 if (keyEvent->_keyId == Event::KeyIdentifier::SPACE) {
-                    std::cout << "shoot!" << std::endl;
+                    std::cout << "Shoot !" << std::endl;
                     int playerOnlineId = aType[i].value().onlineId.value_or(-1);
                     if (playerOnlineId == -1) {
                         continue;

@@ -22,8 +22,18 @@ namespace ECS {
             auto &gameEvent = static_cast<RType::ClientGameEvent &>(*event);
 
             if (gameEvent.getType() == RType::ClientEventType::PLAYER_DEATH) {
+                if (gameEvent.getPayload().size() != 1) {
+                    eventManager->removeEvent(event);
+                    continue;
+                }
+
                 size_t onlineBotId = static_cast<size_t>(gameEvent.getPayload()[0]);
                 size_t localBotId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(aType, onlineBotId);
+                if (!aIsAlive[localBotId].has_value()) {
+                    eventManager->removeEvent(event);
+                    continue;
+                }
+
                 aIsAlive[localBotId].value().isAlive = false;
 
                 eventManager->removeEvent(event);
@@ -36,7 +46,7 @@ namespace ECS {
                 continue;
             }
             if (!aIsAlive[botId].value().isAlive && aIsAlive[botId].value().timeToDie < 0) {
-                std::cout << "bot " << aType[botId].value().onlineId.value_or(0) << " killed" << std::endl;
+                std::cout << "Bot " << aType[botId].value().onlineId.value_or(0) << " killed" << std::endl;
                 display.freeRects(botId);
                 world.killEntity(botId);
             } else if (!aIsAlive[botId].value().isAlive && aIsAlive[botId].value().timeToDie == 0) {
