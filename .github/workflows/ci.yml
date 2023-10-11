@@ -10,7 +10,6 @@ on:
     branches:
       - main
       - dev
-      - RT-58-create-release
 
 env:
   CLANG_TIDY_VERSION: "15.0.2"
@@ -108,16 +107,19 @@ jobs:
         run: |
           OpenCppCoverage.exe --export_type cobertura:coverage.xml --cover_children -- ctest -C Release
 
-      - name: Extract branch or tag name
-        id: extract_ref
-        run: echo "::set-output name=ref::$(echo ${GITHUB_REF#refs/*/})"
-
-      - name: Project-release
-        uses: softprops/action-gh-release@v1
+      - name: Push binary Windows to server
+        if: runner.os == 'Windows && runner.event == 'push' && matrix.compiler == 'msvc'
+        uses: actions/upload-artifact@v2
         with:
-          tag_name: ${{ steps.extract_ref.outputs.ref }}
-          files: |
-            build/*-*Release*-*.*
+          name: ${{ env.PROJECT_NAME }}-windows
+          path: ./build/_CPack_Packages/win64/ZIP/*.zip
+
+      - name: Push binary Linux to server
+        if: runner.os == 'Linux && runner.event == 'push' && matrix.compiler == 'gcc-11'
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.PROJECT_NAME }}-linux
+          path: ./build/_CPack_Packages/Linux/ZIP/*.zip
 
       - name: Publish to codecov
         uses: codecov/codecov-action@v2
