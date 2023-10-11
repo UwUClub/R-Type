@@ -1,0 +1,179 @@
+\hypertarget{classECS_1_1Event_1_1EventManager}{}\doxysection{ECS\+::Event\+::Event\+Manager Class Reference}
+\label{classECS_1_1Event_1_1EventManager}\index{ECS::Event::EventManager@{ECS::Event::EventManager}}
+
+
+\mbox{\hyperlink{classECS_1_1Event_1_1EventManager}{Event\+Manager}} class is a singleton that manage all events.  
+
+
+
+
+{\ttfamily \#include $<$Event\+Manager.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classECS_1_1Event_1_1EventManager_a85e55a717318574516f06215f9511f84}\label{classECS_1_1Event_1_1EventManager_a85e55a717318574516f06215f9511f84}} 
+\mbox{\hyperlink{classECS_1_1Event_1_1EventManager_a85e55a717318574516f06215f9511f84}{$\sim$\+Event\+Manager}} ()
+\begin{DoxyCompactList}\small\item\em Destroy the \mbox{\hyperlink{classECS_1_1Event_1_1Event}{Event}} Manager object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classECS_1_1Event_1_1EventManager_a5e908d35f86a2f6ed36790e84f3e2433}{Event\+Manager}} (const \mbox{\hyperlink{classECS_1_1Event_1_1EventManager}{Event\+Manager}} \&a\+Other)=delete
+\begin{DoxyCompactList}\small\item\em Copy assignment operator, delete because singleton. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classECS_1_1Event_1_1EventManager_a5ac6f8a29f3680257f850fa16ff7b100}{Event\+Manager}} (\mbox{\hyperlink{classECS_1_1Event_1_1EventManager}{Event\+Manager}} \&\&a\+Other) noexcept=delete
+\begin{DoxyCompactList}\small\item\em Move assignment operator, delete because singleton. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classECS_1_1Event_1_1EventManager}{Event\+Manager}} \& \mbox{\hyperlink{classECS_1_1Event_1_1EventManager_a7be2654b84f04673fe739870d7ada36f}{operator=}} (const \mbox{\hyperlink{classECS_1_1Event_1_1EventManager}{Event\+Manager}} \&a\+Other)=delete
+\begin{DoxyCompactList}\small\item\em Copy assignment operator, delete because singleton. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classECS_1_1Event_1_1EventManager}{Event\+Manager}} \& \mbox{\hyperlink{classECS_1_1Event_1_1EventManager_ad61fb139fde1533ff9810058a5ca0988}{operator=}} (\mbox{\hyperlink{classECS_1_1Event_1_1EventManager}{Event\+Manager}} \&\&a\+Other) noexcept=delete
+\begin{DoxyCompactList}\small\item\em Move assignment operator, delete because singleton. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classECS_1_1Event_1_1EventManager_afa2386fd1dae1ed1cb2976e0d51952dd}{push\+Event}} (\mbox{\hyperlink{classECS_1_1Event_1_1Event}{Event}} $\ast$a\+Event)
+\begin{DoxyCompactList}\small\item\em Push an event to the queue. \end{DoxyCompactList}\item 
+std\+::vector$<$ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classECS_1_1Event_1_1Event}{Event}} $>$ $>$ \& \mbox{\hyperlink{classECS_1_1Event_1_1EventManager_afeebafd5422a0a6d67cae063145e9976}{get\+Events}} ()
+\begin{DoxyCompactList}\small\item\em Get the Events object. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classECS_1_1Event_1_1EventManager_ab923e313d2040ba6a59e3bfd41ab468b}\label{classECS_1_1Event_1_1EventManager_ab923e313d2040ba6a59e3bfd41ab468b}} 
+std\+::vector$<$ \mbox{\hyperlink{classECS_1_1Event_1_1Event}{Event}} $\ast$ $>$ \mbox{\hyperlink{classECS_1_1Event_1_1EventManager_ab923e313d2040ba6a59e3bfd41ab468b}{get\+Events\+By\+Type}} (const Event\+Type \&a\+Event\+Type)
+\begin{DoxyCompactList}\small\item\em Get all the events of a specific type. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classECS_1_1Event_1_1EventManager_a5fa2ef439955593e272924154793974d}\label{classECS_1_1Event_1_1EventManager_a5fa2ef439955593e272924154793974d}} 
+void \mbox{\hyperlink{classECS_1_1Event_1_1EventManager_a5fa2ef439955593e272924154793974d}{clear\+Non\+Game\+Events}} ()
+\begin{DoxyCompactList}\small\item\em Clear non game events. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classECS_1_1Event_1_1EventManager_a5b6a38a041d754a37c7f068ac75e7659}{remove\+Event}} (\mbox{\hyperlink{classECS_1_1Event_1_1Event}{Event}} $\ast$a\+Event)
+\begin{DoxyCompactList}\small\item\em Remove an event from the queue. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{classECS_1_1Event_1_1EventManager}{Event\+Manager}} $\ast$ \mbox{\hyperlink{classECS_1_1Event_1_1EventManager_a88129272e718c5d27023f83bcfb0590f}{get\+Instance}} ()
+\begin{DoxyCompactList}\small\item\em Get the Instance object (singleton) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{classECS_1_1Event_1_1EventManager}{Event\+Manager}} class is a singleton that manage all events. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classECS_1_1Event_1_1EventManager_a5e908d35f86a2f6ed36790e84f3e2433}\label{classECS_1_1Event_1_1EventManager_a5e908d35f86a2f6ed36790e84f3e2433}} 
+\index{ECS::Event::EventManager@{ECS::Event::EventManager}!EventManager@{EventManager}}
+\index{EventManager@{EventManager}!ECS::Event::EventManager@{ECS::Event::EventManager}}
+\doxysubsubsection{\texorpdfstring{EventManager()}{EventManager()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily ECS\+::\+Event\+::\+Event\+Manager\+::\+Event\+Manager (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classECS_1_1Event_1_1EventManager}{Event\+Manager}} \&}]{a\+Other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+Copy assignment operator, delete because singleton. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a\+Other} & The \mbox{\hyperlink{classECS_1_1Event_1_1EventManager}{Event\+Manager}} to copy. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classECS_1_1Event_1_1EventManager_a5ac6f8a29f3680257f850fa16ff7b100}\label{classECS_1_1Event_1_1EventManager_a5ac6f8a29f3680257f850fa16ff7b100}} 
+\index{ECS::Event::EventManager@{ECS::Event::EventManager}!EventManager@{EventManager}}
+\index{EventManager@{EventManager}!ECS::Event::EventManager@{ECS::Event::EventManager}}
+\doxysubsubsection{\texorpdfstring{EventManager()}{EventManager()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily ECS\+::\+Event\+::\+Event\+Manager\+::\+Event\+Manager (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Event_1_1EventManager}{Event\+Manager}} \&\&}]{a\+Other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}, {\ttfamily [noexcept]}}
+
+
+
+Move assignment operator, delete because singleton. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a\+Other} & The \mbox{\hyperlink{classECS_1_1Event_1_1EventManager}{Event\+Manager}} to move. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classECS_1_1Event_1_1EventManager_afeebafd5422a0a6d67cae063145e9976}\label{classECS_1_1Event_1_1EventManager_afeebafd5422a0a6d67cae063145e9976}} 
+\index{ECS::Event::EventManager@{ECS::Event::EventManager}!getEvents@{getEvents}}
+\index{getEvents@{getEvents}!ECS::Event::EventManager@{ECS::Event::EventManager}}
+\doxysubsubsection{\texorpdfstring{getEvents()}{getEvents()}}
+{\footnotesize\ttfamily std\+::vector$<$ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classECS_1_1Event_1_1Event}{ECS\+::\+Event\+::\+Event}} $>$ $>$ \& ECS\+::\+Event\+::\+Event\+Manager\+::get\+Events (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get the Events object. 
+
+\begin{DoxyReturn}{Returns}
+std\+::vector$<$\+Event$>$\& A reference to the vector of events. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classECS_1_1Event_1_1EventManager_a88129272e718c5d27023f83bcfb0590f}\label{classECS_1_1Event_1_1EventManager_a88129272e718c5d27023f83bcfb0590f}} 
+\index{ECS::Event::EventManager@{ECS::Event::EventManager}!getInstance@{getInstance}}
+\index{getInstance@{getInstance}!ECS::Event::EventManager@{ECS::Event::EventManager}}
+\doxysubsubsection{\texorpdfstring{getInstance()}{getInstance()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classECS_1_1Event_1_1EventManager}{ECS\+::\+Event\+::\+Event\+Manager}} $\ast$ ECS\+::\+Event\+::\+Event\+Manager\+::get\+Instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Get the Instance object (singleton) 
+
+\begin{DoxyReturn}{Returns}
+Event\+Manager$\ast$ A pointer to the \mbox{\hyperlink{classECS_1_1Event_1_1EventManager}{Event\+Manager}}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classECS_1_1Event_1_1EventManager_a7be2654b84f04673fe739870d7ada36f}\label{classECS_1_1Event_1_1EventManager_a7be2654b84f04673fe739870d7ada36f}} 
+\index{ECS::Event::EventManager@{ECS::Event::EventManager}!operator=@{operator=}}
+\index{operator=@{operator=}!ECS::Event::EventManager@{ECS::Event::EventManager}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classECS_1_1Event_1_1EventManager}{Event\+Manager}}\& ECS\+::\+Event\+::\+Event\+Manager\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classECS_1_1Event_1_1EventManager}{Event\+Manager}} \&}]{a\+Other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+Copy assignment operator, delete because singleton. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a\+Other} & The \mbox{\hyperlink{classECS_1_1Event_1_1EventManager}{Event\+Manager}} to copy. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{classECS_1_1Event_1_1EventManager}{Event\+Manager}}\& A reference to the \mbox{\hyperlink{classECS_1_1Event_1_1EventManager}{Event\+Manager}}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classECS_1_1Event_1_1EventManager_ad61fb139fde1533ff9810058a5ca0988}\label{classECS_1_1Event_1_1EventManager_ad61fb139fde1533ff9810058a5ca0988}} 
+\index{ECS::Event::EventManager@{ECS::Event::EventManager}!operator=@{operator=}}
+\index{operator=@{operator=}!ECS::Event::EventManager@{ECS::Event::EventManager}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classECS_1_1Event_1_1EventManager}{Event\+Manager}}\& ECS\+::\+Event\+::\+Event\+Manager\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Event_1_1EventManager}{Event\+Manager}} \&\&}]{a\+Other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}, {\ttfamily [noexcept]}}
+
+
+
+Move assignment operator, delete because singleton. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a\+Other} & The \mbox{\hyperlink{classECS_1_1Event_1_1EventManager}{Event\+Manager}} to move. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{classECS_1_1Event_1_1EventManager}{Event\+Manager}}\& A reference to the \mbox{\hyperlink{classECS_1_1Event_1_1EventManager}{Event\+Manager}}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classECS_1_1Event_1_1EventManager_afa2386fd1dae1ed1cb2976e0d51952dd}\label{classECS_1_1Event_1_1EventManager_afa2386fd1dae1ed1cb2976e0d51952dd}} 
+\index{ECS::Event::EventManager@{ECS::Event::EventManager}!pushEvent@{pushEvent}}
+\index{pushEvent@{pushEvent}!ECS::Event::EventManager@{ECS::Event::EventManager}}
+\doxysubsubsection{\texorpdfstring{pushEvent()}{pushEvent()}}
+{\footnotesize\ttfamily void ECS\+::\+Event\+::\+Event\+Manager\+::push\+Event (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Event_1_1Event}{Event}} $\ast$}]{a\+Event }\end{DoxyParamCaption})}
+
+
+
+Push an event to the queue. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a\+Event} & The event to push. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classECS_1_1Event_1_1EventManager_a5b6a38a041d754a37c7f068ac75e7659}\label{classECS_1_1Event_1_1EventManager_a5b6a38a041d754a37c7f068ac75e7659}} 
+\index{ECS::Event::EventManager@{ECS::Event::EventManager}!removeEvent@{removeEvent}}
+\index{removeEvent@{removeEvent}!ECS::Event::EventManager@{ECS::Event::EventManager}}
+\doxysubsubsection{\texorpdfstring{removeEvent()}{removeEvent()}}
+{\footnotesize\ttfamily void ECS\+::\+Event\+::\+Event\+Manager\+::remove\+Event (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Event_1_1Event}{Event}} $\ast$}]{a\+Event }\end{DoxyParamCaption})}
+
+
+
+Remove an event from the queue. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a\+Index} & The index of the event to remove. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/ecs/\+Event/Event\+Manager.\+hpp\item 
+src/ecs/\+Event/Event\+Manager.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,106 @@
+\hypertarget{classSDLDisplayClass}{}\doxysection{SDLDisplay\+Class Class Reference}
+\label{classSDLDisplayClass}\index{SDLDisplayClass@{SDLDisplayClass}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classSDLDisplayClass_acaf4e8c94108f1c79bd580442ea0469c}\label{classSDLDisplayClass_acaf4e8c94108f1c79bd580442ea0469c}} 
+\mbox{\hyperlink{classSDLDisplayClass_acaf4e8c94108f1c79bd580442ea0469c}{$\sim$\+SDLDisplay\+Class}} ()
+\begin{DoxyCompactList}\small\item\em Destroy the \mbox{\hyperlink{classSDLDisplayClass}{SDLDisplay\+Class}} object. \end{DoxyCompactList}\item 
+SDL\+\_\+\+Texture $\ast$ \mbox{\hyperlink{classSDLDisplayClass_af55cb002c95779e1a28ef19ea7837544}{get\+Texture}} (const std\+::string \&path)
+\begin{DoxyCompactList}\small\item\em Get the texture object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classSDLDisplayClass_a840093243cc53036d3d90d55cc2f49c5}{free\+Rects}} (const std\+::size\+\_\+t \&idx)
+\begin{DoxyCompactList}\small\item\em Free the rects of the entity. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{classSDLDisplayClass}{SDLDisplay\+Class}} \& \mbox{\hyperlink{classSDLDisplayClass_a87bdd028e008cfe11628f45127b77157}{get\+Instance}} ()
+\begin{DoxyCompactList}\small\item\em Get an Instance of the \mbox{\hyperlink{classSDLDisplayClass}{SDLDisplay\+Class}} (singleton) \end{DoxyCompactList}\item 
+static size\+\_\+t \mbox{\hyperlink{classSDLDisplayClass_aee155e1a496e673d687d9d1b96691398}{add\+Entity}} (\mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{ECS\+::\+Utils\+::\+Vector2f}} a\+Pos, \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} a\+Speed, \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} a\+Type, \mbox{\hyperlink{structComponent_1_1LoadedSprite}{Component\+::\+Loaded\+Sprite}} a\+Sprite, \mbox{\hyperlink{structComponent_1_1HitBox}{Component\+::\+Hit\+Box}} a\+Hit\+Box, \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} a\+Is\+Alive)
+\begin{DoxyCompactList}\small\item\em Create a new entity object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classSDLDisplayClass_a8ff8c262728a037e4456d1f77637f250}\label{classSDLDisplayClass_a8ff8c262728a037e4456d1f77637f250}} 
+SDL\+\_\+\+Renderer $\ast$ {\bfseries \+\_\+renderer}
+\item 
+\mbox{\Hypertarget{classSDLDisplayClass_aab4fd038adf1a167274169c21fc633f9}\label{classSDLDisplayClass_aab4fd038adf1a167274169c21fc633f9}} 
+SDL\+\_\+\+Window $\ast$ {\bfseries \+\_\+window}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classSDLDisplayClass_aee155e1a496e673d687d9d1b96691398}\label{classSDLDisplayClass_aee155e1a496e673d687d9d1b96691398}} 
+\index{SDLDisplayClass@{SDLDisplayClass}!addEntity@{addEntity}}
+\index{addEntity@{addEntity}!SDLDisplayClass@{SDLDisplayClass}}
+\doxysubsubsection{\texorpdfstring{addEntity()}{addEntity()}}
+{\footnotesize\ttfamily size\+\_\+t SDLDisplay\+Class\+::add\+Entity (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{ECS\+::\+Utils\+::\+Vector2f}}}]{a\+Pos,  }\item[{\mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}}}]{a\+Speed,  }\item[{\mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}}}]{a\+Type,  }\item[{\mbox{\hyperlink{structComponent_1_1LoadedSprite}{Component\+::\+Loaded\+Sprite}}}]{a\+Sprite,  }\item[{\mbox{\hyperlink{structComponent_1_1HitBox}{Component\+::\+Hit\+Box}}}]{a\+Hit\+Box,  }\item[{\mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}}}]{a\+Is\+Alive }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Create a new entity object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a\+Pos} & Position of the entity \\
+\hline
+{\em a\+Speed} & Speed of the entity \\
+\hline
+{\em a\+Type} & Type of the entity \\
+\hline
+{\em a\+Sprite} & Sprite of the entity \\
+\hline
+{\em a\+Hit\+Box} & Hitbox of the entity \\
+\hline
+{\em a\+Is\+Alive} & Is\+Alive of the entity \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+size\+\_\+t The index of the entity 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classSDLDisplayClass_a840093243cc53036d3d90d55cc2f49c5}\label{classSDLDisplayClass_a840093243cc53036d3d90d55cc2f49c5}} 
+\index{SDLDisplayClass@{SDLDisplayClass}!freeRects@{freeRects}}
+\index{freeRects@{freeRects}!SDLDisplayClass@{SDLDisplayClass}}
+\doxysubsubsection{\texorpdfstring{freeRects()}{freeRects()}}
+{\footnotesize\ttfamily void SDLDisplay\+Class\+::free\+Rects (\begin{DoxyParamCaption}\item[{const std\+::size\+\_\+t \&}]{idx }\end{DoxyParamCaption})}
+
+
+
+Free the rects of the entity. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em idx} & The index of the entity \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classSDLDisplayClass_a87bdd028e008cfe11628f45127b77157}\label{classSDLDisplayClass_a87bdd028e008cfe11628f45127b77157}} 
+\index{SDLDisplayClass@{SDLDisplayClass}!getInstance@{getInstance}}
+\index{getInstance@{getInstance}!SDLDisplayClass@{SDLDisplayClass}}
+\doxysubsubsection{\texorpdfstring{getInstance()}{getInstance()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{classSDLDisplayClass}{SDLDisplay\+Class}}\& SDLDisplay\+Class\+::get\+Instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Get an Instance of the \mbox{\hyperlink{classSDLDisplayClass}{SDLDisplay\+Class}} (singleton) 
+
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{classSDLDisplayClass}{SDLDisplay\+Class}}\& 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classSDLDisplayClass_af55cb002c95779e1a28ef19ea7837544}\label{classSDLDisplayClass_af55cb002c95779e1a28ef19ea7837544}} 
+\index{SDLDisplayClass@{SDLDisplayClass}!getTexture@{getTexture}}
+\index{getTexture@{getTexture}!SDLDisplayClass@{SDLDisplayClass}}
+\doxysubsubsection{\texorpdfstring{getTexture()}{getTexture()}}
+{\footnotesize\ttfamily SDL\+\_\+\+Texture $\ast$ SDLDisplay\+Class\+::get\+Texture (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{path }\end{DoxyParamCaption})}
+
+
+
+Get the texture object. 
+
+\begin{DoxyReturn}{Returns}
+SDL\+\_\+\+Texture$\ast$ 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/client/SDLDisplay\+Class.\+hpp\item 
+src/client/SDLDisplay\+Class.\+cpp\end{DoxyCompactItemize}

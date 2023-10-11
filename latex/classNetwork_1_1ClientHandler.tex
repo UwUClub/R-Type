@@ -1,0 +1,88 @@
+\hypertarget{classNetwork_1_1ClientHandler}{}\doxysection{Network\+::Client\+Handler Class Reference}
+\label{classNetwork_1_1ClientHandler}\index{Network::ClientHandler@{Network::ClientHandler}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classNetwork_1_1ClientHandler_a358d2ade4573dbfe3253da5d4db58688}\label{classNetwork_1_1ClientHandler_a358d2ade4573dbfe3253da5d4db58688}} 
+\mbox{\hyperlink{classNetwork_1_1ClientHandler_a358d2ade4573dbfe3253da5d4db58688}{$\sim$\+Client\+Handler}} ()=default
+\begin{DoxyCompactList}\small\item\em Destroy the \mbox{\hyperlink{classNetwork_1_1ClientHandler}{Client\+Handler}} object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classNetwork_1_1ClientHandler_a067fde1beb7988d19eea39fa73f00b0f}{start}} (std\+::string \&, std\+::string \&)
+\begin{DoxyCompactList}\small\item\em Run the client. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classNetwork_1_1ClientHandler_adea083daf4ab674994b1649d87688711}{receive\+Packet}} (const \mbox{\hyperlink{structRType_1_1Packet}{RType\+::\+Packet}} \&)
+\begin{DoxyCompactList}\small\item\em Handle packet reception. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classNetwork_1_1ClientHandler_a19ad140fbc8c6e53561cd95c31ab13e6}{send}} (\mbox{\hyperlink{structRType_1_1Packet}{RType\+::\+Packet}} \&a\+Packet)
+\begin{DoxyCompactList}\small\item\em Send a packet to the server. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{classNetwork_1_1ClientHandler}{Client\+Handler}} \& \mbox{\hyperlink{classNetwork_1_1ClientHandler_a3977b255dd04d585aa8c73dd1a55268a}{get\+Instance}} ()
+\begin{DoxyCompactList}\small\item\em Get the instance of the singleton. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classNetwork_1_1ClientHandler_a3977b255dd04d585aa8c73dd1a55268a}\label{classNetwork_1_1ClientHandler_a3977b255dd04d585aa8c73dd1a55268a}} 
+\index{Network::ClientHandler@{Network::ClientHandler}!getInstance@{getInstance}}
+\index{getInstance@{getInstance}!Network::ClientHandler@{Network::ClientHandler}}
+\doxysubsubsection{\texorpdfstring{getInstance()}{getInstance()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{classNetwork_1_1ClientHandler}{Client\+Handler}}\& Network\+::\+Client\+Handler\+::get\+Instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Get the instance of the singleton. 
+
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{classNetwork_1_1ClientHandler}{Client\+Handler}} \& The instance of the singleton 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classNetwork_1_1ClientHandler_adea083daf4ab674994b1649d87688711}\label{classNetwork_1_1ClientHandler_adea083daf4ab674994b1649d87688711}} 
+\index{Network::ClientHandler@{Network::ClientHandler}!receivePacket@{receivePacket}}
+\index{receivePacket@{receivePacket}!Network::ClientHandler@{Network::ClientHandler}}
+\doxysubsubsection{\texorpdfstring{receivePacket()}{receivePacket()}}
+{\footnotesize\ttfamily void Network\+::\+Client\+Handler\+::receive\+Packet (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structRType_1_1Packet}{RType\+::\+Packet}} \&}]{a\+Packet }\end{DoxyParamCaption})}
+
+
+
+Handle packet reception. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a\+Packet} & The received packet \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classNetwork_1_1ClientHandler_a19ad140fbc8c6e53561cd95c31ab13e6}\label{classNetwork_1_1ClientHandler_a19ad140fbc8c6e53561cd95c31ab13e6}} 
+\index{Network::ClientHandler@{Network::ClientHandler}!send@{send}}
+\index{send@{send}!Network::ClientHandler@{Network::ClientHandler}}
+\doxysubsubsection{\texorpdfstring{send()}{send()}}
+{\footnotesize\ttfamily void Network\+::\+Client\+Handler\+::send (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structRType_1_1Packet}{RType\+::\+Packet}} \&}]{a\+Packet }\end{DoxyParamCaption})}
+
+
+
+Send a packet to the server. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a\+Packet} & The packet to send \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classNetwork_1_1ClientHandler_a067fde1beb7988d19eea39fa73f00b0f}\label{classNetwork_1_1ClientHandler_a067fde1beb7988d19eea39fa73f00b0f}} 
+\index{Network::ClientHandler@{Network::ClientHandler}!start@{start}}
+\index{start@{start}!Network::ClientHandler@{Network::ClientHandler}}
+\doxysubsubsection{\texorpdfstring{start()}{start()}}
+{\footnotesize\ttfamily void Network\+::\+Client\+Handler\+::start (\begin{DoxyParamCaption}\item[{std\+::string \&}]{a\+Host,  }\item[{std\+::string \&}]{a\+Port }\end{DoxyParamCaption})}
+
+
+
+Run the client. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a\+Host} & The host to connect to \\
+\hline
+{\em a\+Port} & THe port to connect to \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/client/network/Client\+Handler.\+hpp\item 
+src/client/network/Client\+Handler.\+cpp\end{DoxyCompactItemize}

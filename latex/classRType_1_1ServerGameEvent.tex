@@ -1,0 +1,119 @@
+\hypertarget{classRType_1_1ServerGameEvent}{}\doxysection{RType\+::Server\+Game\+Event Class Reference}
+\label{classRType_1_1ServerGameEvent}\index{RType::ServerGameEvent@{RType::ServerGameEvent}}
+
+
+Game event class is the base class of all game events.  
+
+
+
+
+{\ttfamily \#include $<$Server\+Game\+Event.\+hpp$>$}
+
+Inheritance diagram for RType\+::Server\+Game\+Event\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classRType_1_1ServerGameEvent}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classRType_1_1ServerGameEvent_a00ba712dbf40bc85cff8a1f7ac09d0d9}{Server\+Game\+Event}} (Server\+Event\+Type a\+Type, int a\+Entity\+Id, std\+::vector$<$ float $>$ a\+Payload, udp\+::endpoint a\+Client\+Endpoint)
+\begin{DoxyCompactList}\small\item\em Construct a new Game Event object. \end{DoxyCompactList}\item 
+Server\+Event\+Type \mbox{\hyperlink{classRType_1_1ServerGameEvent_ad8eb9ab04331dcbfe6863a8e43807df5}{get\+Type}} () const
+\begin{DoxyCompactList}\small\item\em Get event type. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classRType_1_1ServerGameEvent_a95e014a7c567c05a99d1597e5d9b631f}{get\+Entity\+Id}} () const
+\begin{DoxyCompactList}\small\item\em Get entity id. \end{DoxyCompactList}\item 
+std\+::vector$<$ float $>$ \mbox{\hyperlink{classRType_1_1ServerGameEvent_a572ab968b326a1a0ddfc19309461469b}{get\+Payload}} () const
+\begin{DoxyCompactList}\small\item\em Get payload. \end{DoxyCompactList}\item 
+udp\+::endpoint \mbox{\hyperlink{classRType_1_1ServerGameEvent_a008ebc9f458a120ea479b54c17ab0ba3}{get\+Client\+Endpoint}} () const
+\begin{DoxyCompactList}\small\item\em Get client endpoint. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Game event class is the base class of all game events. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classRType_1_1ServerGameEvent_a00ba712dbf40bc85cff8a1f7ac09d0d9}\label{classRType_1_1ServerGameEvent_a00ba712dbf40bc85cff8a1f7ac09d0d9}} 
+\index{RType::ServerGameEvent@{RType::ServerGameEvent}!ServerGameEvent@{ServerGameEvent}}
+\index{ServerGameEvent@{ServerGameEvent}!RType::ServerGameEvent@{RType::ServerGameEvent}}
+\doxysubsubsection{\texorpdfstring{ServerGameEvent()}{ServerGameEvent()}}
+{\footnotesize\ttfamily RType\+::\+Server\+Game\+Event\+::\+Server\+Game\+Event (\begin{DoxyParamCaption}\item[{Server\+Event\+Type}]{a\+Type,  }\item[{int}]{a\+Entity\+Id,  }\item[{std\+::vector$<$ float $>$}]{a\+Payload,  }\item[{udp\+::endpoint}]{a\+Client\+Endpoint }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Construct a new Game Event object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a\+Type} & the type of the event \\
+\hline
+{\em a\+Entity\+Id} & the entity id \\
+\hline
+{\em a\+Payload} & the payload \\
+\hline
+{\em a\+Client\+Endpoint} & the endpoint of the client who triggers the event \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classRType_1_1ServerGameEvent_a008ebc9f458a120ea479b54c17ab0ba3}\label{classRType_1_1ServerGameEvent_a008ebc9f458a120ea479b54c17ab0ba3}} 
+\index{RType::ServerGameEvent@{RType::ServerGameEvent}!getClientEndpoint@{getClientEndpoint}}
+\index{getClientEndpoint@{getClientEndpoint}!RType::ServerGameEvent@{RType::ServerGameEvent}}
+\doxysubsubsection{\texorpdfstring{getClientEndpoint()}{getClientEndpoint()}}
+{\footnotesize\ttfamily udp\+::endpoint RType\+::\+Server\+Game\+Event\+::get\+Client\+Endpoint (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get client endpoint. 
+
+\begin{DoxyReturn}{Returns}
+udp\+::endpoint 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classRType_1_1ServerGameEvent_a95e014a7c567c05a99d1597e5d9b631f}\label{classRType_1_1ServerGameEvent_a95e014a7c567c05a99d1597e5d9b631f}} 
+\index{RType::ServerGameEvent@{RType::ServerGameEvent}!getEntityId@{getEntityId}}
+\index{getEntityId@{getEntityId}!RType::ServerGameEvent@{RType::ServerGameEvent}}
+\doxysubsubsection{\texorpdfstring{getEntityId()}{getEntityId()}}
+{\footnotesize\ttfamily int RType\+::\+Server\+Game\+Event\+::get\+Entity\+Id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get entity id. 
+
+\begin{DoxyReturn}{Returns}
+The entity id 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classRType_1_1ServerGameEvent_a572ab968b326a1a0ddfc19309461469b}\label{classRType_1_1ServerGameEvent_a572ab968b326a1a0ddfc19309461469b}} 
+\index{RType::ServerGameEvent@{RType::ServerGameEvent}!getPayload@{getPayload}}
+\index{getPayload@{getPayload}!RType::ServerGameEvent@{RType::ServerGameEvent}}
+\doxysubsubsection{\texorpdfstring{getPayload()}{getPayload()}}
+{\footnotesize\ttfamily std\+::vector$<$ float $>$ RType\+::\+Server\+Game\+Event\+::get\+Payload (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get payload. 
+
+\begin{DoxyReturn}{Returns}
+The payload 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classRType_1_1ServerGameEvent_ad8eb9ab04331dcbfe6863a8e43807df5}\label{classRType_1_1ServerGameEvent_ad8eb9ab04331dcbfe6863a8e43807df5}} 
+\index{RType::ServerGameEvent@{RType::ServerGameEvent}!getType@{getType}}
+\index{getType@{getType}!RType::ServerGameEvent@{RType::ServerGameEvent}}
+\doxysubsubsection{\texorpdfstring{getType()}{getType()}}
+{\footnotesize\ttfamily Server\+Event\+Type RType\+::\+Server\+Game\+Event\+::get\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get event type. 
+
+\begin{DoxyReturn}{Returns}
+Event\+Type 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/rtype/events/Server\+Game\+Event.\+hpp\item 
+src/rtype/events/Server\+Game\+Event.\+cpp\end{DoxyCompactItemize}

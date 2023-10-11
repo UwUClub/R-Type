@@ -1,0 +1,102 @@
+\hypertarget{classRType_1_1ClientGameEvent}{}\doxysection{RType\+::Client\+Game\+Event Class Reference}
+\label{classRType_1_1ClientGameEvent}\index{RType::ClientGameEvent@{RType::ClientGameEvent}}
+
+
+Game event class is the base class of all game events.  
+
+
+
+
+{\ttfamily \#include $<$Client\+Game\+Event.\+hpp$>$}
+
+Inheritance diagram for RType\+::Client\+Game\+Event\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classRType_1_1ClientGameEvent}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classRType_1_1ClientGameEvent_a755028bb1d6d8a9ed89b337c048a8647}{Client\+Game\+Event}} (Client\+Event\+Type a\+Type)
+\begin{DoxyCompactList}\small\item\em Construct a new Game Event object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classRType_1_1ClientGameEvent_a93b9d1959a7c6764f92131e56fde3eab}{Client\+Game\+Event}} (Client\+Event\+Type a\+Type, std\+::vector$<$ float $>$ a\+Payload)
+\begin{DoxyCompactList}\small\item\em Construct a new Game Event object. \end{DoxyCompactList}\item 
+Client\+Event\+Type \mbox{\hyperlink{classRType_1_1ClientGameEvent_aa35410fdf01d5b38331954ff9ca97a2a}{get\+Type}} () const
+\begin{DoxyCompactList}\small\item\em Get event type. \end{DoxyCompactList}\item 
+std\+::vector$<$ float $>$ \mbox{\hyperlink{classRType_1_1ClientGameEvent_a75cd9987eaf6b1a83db59900ce409b0b}{get\+Payload}} () const
+\begin{DoxyCompactList}\small\item\em Get the payload of the event. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Game event class is the base class of all game events. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classRType_1_1ClientGameEvent_a755028bb1d6d8a9ed89b337c048a8647}\label{classRType_1_1ClientGameEvent_a755028bb1d6d8a9ed89b337c048a8647}} 
+\index{RType::ClientGameEvent@{RType::ClientGameEvent}!ClientGameEvent@{ClientGameEvent}}
+\index{ClientGameEvent@{ClientGameEvent}!RType::ClientGameEvent@{RType::ClientGameEvent}}
+\doxysubsubsection{\texorpdfstring{ClientGameEvent()}{ClientGameEvent()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily RType\+::\+Client\+Game\+Event\+::\+Client\+Game\+Event (\begin{DoxyParamCaption}\item[{Client\+Event\+Type}]{a\+Type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Construct a new Game Event object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a\+Type} & the type of the event \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classRType_1_1ClientGameEvent_a93b9d1959a7c6764f92131e56fde3eab}\label{classRType_1_1ClientGameEvent_a93b9d1959a7c6764f92131e56fde3eab}} 
+\index{RType::ClientGameEvent@{RType::ClientGameEvent}!ClientGameEvent@{ClientGameEvent}}
+\index{ClientGameEvent@{ClientGameEvent}!RType::ClientGameEvent@{RType::ClientGameEvent}}
+\doxysubsubsection{\texorpdfstring{ClientGameEvent()}{ClientGameEvent()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily RType\+::\+Client\+Game\+Event\+::\+Client\+Game\+Event (\begin{DoxyParamCaption}\item[{Client\+Event\+Type}]{a\+Type,  }\item[{std\+::vector$<$ float $>$}]{a\+Payload }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Construct a new Game Event object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a\+Type} & the type of the event \\
+\hline
+{\em a\+Payload} & the payload of the event \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classRType_1_1ClientGameEvent_a75cd9987eaf6b1a83db59900ce409b0b}\label{classRType_1_1ClientGameEvent_a75cd9987eaf6b1a83db59900ce409b0b}} 
+\index{RType::ClientGameEvent@{RType::ClientGameEvent}!getPayload@{getPayload}}
+\index{getPayload@{getPayload}!RType::ClientGameEvent@{RType::ClientGameEvent}}
+\doxysubsubsection{\texorpdfstring{getPayload()}{getPayload()}}
+{\footnotesize\ttfamily std\+::vector$<$ float $>$ RType\+::\+Client\+Game\+Event\+::get\+Payload (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the payload of the event. 
+
+\begin{DoxyReturn}{Returns}
+std\+::vector$<$float$>$ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classRType_1_1ClientGameEvent_aa35410fdf01d5b38331954ff9ca97a2a}\label{classRType_1_1ClientGameEvent_aa35410fdf01d5b38331954ff9ca97a2a}} 
+\index{RType::ClientGameEvent@{RType::ClientGameEvent}!getType@{getType}}
+\index{getType@{getType}!RType::ClientGameEvent@{RType::ClientGameEvent}}
+\doxysubsubsection{\texorpdfstring{getType()}{getType()}}
+{\footnotesize\ttfamily Client\+Event\+Type RType\+::\+Client\+Game\+Event\+::get\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get event type. 
+
+\begin{DoxyReturn}{Returns}
+Client\+Event\+Type 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/rtype/events/Client\+Game\+Event.\+hpp\item 
+src/rtype/events/Client\+Game\+Event.\+cpp\end{DoxyCompactItemize}
