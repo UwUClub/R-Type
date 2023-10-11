@@ -8,47 +8,49 @@
 #include <SDL_image.h>
 
 namespace ECS {
-    void System::triggerBotDeath(Core::SparseArray<Component::TypeEntity> &aType,
-                                 Core::SparseArray<Component::IsAlive> &aIsAlive,
-                                 Core::SparseArray<Component::LoadedSprite> &aSprites)
+    void System::triggerBotDeath(RType::ClientGameEvent *aEvent)
     {
         auto &world = Core::World::getInstance();
         auto &display = SDLDisplayClass::getInstance();
-        Event::EventManager *eventManager = Event::EventManager::getInstance();
-        auto events = eventManager->getEventsByType(Event::EventType::GAME);
+        auto &typeComp = world.getComponent<Component::TypeEntity>();
+        auto &isAliveComp = world.getComponent<Component::IsAlive>();
+        auto &spriteComp = world.getComponent<Component::LoadedSprite>();
+        auto &aType = world.getComponent<Component::TypeEntity>();
 
-        // Receive death event from server
-        for (auto &event : events) {
-            auto &gameEvent = static_cast<RType::ClientGameEvent &>(*event);
+        if (aEvent->getType() == RType::ClientEventType::PLAYER_DEATH) {
+            const auto payload = aEvent->getPayload();
+            auto onlineBotId = static_cast<size_t>(payload[0]);
+            std::size_t localBotId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(typeComp, onlineBotId);
 
-            if (gameEvent.getType() == RType::ClientEventType::PLAYER_DEATH) {
-                size_t onlineBotId = static_cast<size_t>(gameEvent.getPayload()[0]);
-                size_t localBotId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(aType, onlineBotId);
-                aIsAlive[localBotId].value().isAlive = false;
-
-                eventManager->removeEvent(event);
+            if (isAliveComp[localBotId].has_value()) {
+                isAliveComp[localBotId].value().isAlive = false;
             }
         }
 
         // Explosion + entity removal
         for (size_t botId = 0; botId < aType.size(); botId++) {
-            if (!aType[botId].has_value() || (!aType[botId].value().isBot && !aType[botId].value().isPlayer)) {
+            if (!aType[botId].has_value() || isAliveComp[botId].has_value() || !spriteComp[botId].has_value()
+                || (!aType[botId].value().isBot && !aType[botId].value().isPlayer)) {
                 continue;
             }
-            if (!aIsAlive[botId].value().isAlive && aIsAlive[botId].value().timeToDie < 0) {
-                std::cout << "bot " << aType[botId].value().onlineId.value_or(0) << " killed" << std::endl;
+            if (!isAliveComp[botId].value().isAlive && isAliveComp[botId].value().timeToDie < 0) {
                 display.freeRects(botId);
                 world.killEntity(botId);
-            } else if (!aIsAlive[botId].value().isAlive && aIsAlive[botId].value().timeToDie == 0) {
-                aSprites[botId].value().path = EXPLOSION_ASSET;
-                aSprites[botId].value().texture = nullptr;
-                aSprites[botId].value().rect->h = EXPLOSION_TEX_HEIGHT;
-                aSprites[botId].value().rect->w = EXPLOSION_TEX_WIDTH;
-                aSprites[botId].value().rect->x = 146;
-                aSprites[botId].value().rect->y = 46;
-                aIsAlive[botId].value().timeToDie = 1;
-            } else if (!aIsAlive[botId].value().isAlive) {
-                aIsAlive[botId].value().timeToDie -= world.getDeltaTime();
+                continue;
+            }
+            if (!isAliveComp[botId].value().isAlive && isAliveComp[botId].value().timeToDie == 0) {
+                spriteComp[botId].value().path = EXPLOSION_ASSET;
+                spriteComp[botId].value().texture = nullptr;
+                spriteComp[botId].value().rect->h = EXPLOSION_TEX_HEIGHT;
+                spriteComp[botId].value().rect->w = EXPLOSION_TEX_WIDTH;
+                spriteComp[botId].value().rect->x = 146;
+                spriteComp[botId].value().rect->y = 46;
+                isAliveComp[botId].value().timeToDie = 1;
+                continue;
+            }
+            if (!isAliveComp[botId].value().isAlive) {
+                isAliveComp[botId].value().timeToDie -= world.getDeltaTime();
+                continue;
             }
         }
     }

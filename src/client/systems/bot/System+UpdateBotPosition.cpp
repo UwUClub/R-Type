@@ -5,27 +5,26 @@
 #include "TypeUtils.hpp"
 
 namespace ECS {
-    void System::updateBotPosition(Core::SparseArray<Utils::Vector2f> &aPos,
-                                   Core::SparseArray<Component::TypeEntity> &aType)
+    void System::updateBotPosition(RType::ClientGameEvent *aEvent)
     {
-        Event::EventManager *eventManager = Event::EventManager::getInstance();
-        ;
-        auto events = eventManager->getEventsByType(Event::EventType::GAME);
+        auto &world = ECS::Core::World::getInstance();
+        auto &posComp = world.getComponent<Utils::Vector2f>();
+        auto &typeComp = world.getComponent<Component::TypeEntity>();
 
-        for (auto &event : events) {
-            auto &gameEvent = static_cast<RType::ClientGameEvent &>(*event);
+        auto &gameEvent = static_cast<RType::ClientGameEvent &>(*aEvent);
 
-            if (gameEvent.getType() == RType::ClientEventType::PLAYER_POSITION) {
-                std::size_t onlineBotId = static_cast<int>(gameEvent.getPayload()[0]);
-                float posX = gameEvent.getPayload()[1];
-                float posY = gameEvent.getPayload()[2];
+        if (gameEvent.getType() == RType::ClientEventType::PLAYER_POSITION) {
+            const auto payload = gameEvent.getPayload();
+            auto onlineBotId = static_cast<std::size_t>(payload[0]);
+            size_t localBotId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(typeComp, onlineBotId);
+            float posX = payload[1];
+            float posY = payload[2];
 
-                size_t localBotId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(aType, onlineBotId);
-                aPos[localBotId].value().x = posX;
-                aPos[localBotId].value().y = posY;
-
-                eventManager->removeEvent(event);
+            if (!posComp[localBotId].has_value()) {
+                return;
             }
+            posComp[localBotId].value().x = posX;
+            posComp[localBotId].value().y = posY;
         }
     }
 

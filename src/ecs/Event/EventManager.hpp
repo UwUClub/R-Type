@@ -1,122 +1,124 @@
-#ifndef EVENTMANAGER_HPP
-#define EVENTMANAGER_HPP
+/*
+** EPITECH PROJECT, 2023
+** R-Type
+** File description:
+** EventManagerTest
+*/
 
+#ifndef _EVENTMANAGERTEST_HPP_
+#define _EVENTMANAGERTEST_HPP_
+
+#include <any>
 #include <functional>
+#include <iostream>
 #include <memory>
-#include <queue>
-#include <string>
 #include <typeindex>
 #include <vector>
-#include "Event.hpp"
-#include <unordered_map>
 
 namespace ECS::Event {
-    class Event;
 
     /**
-     * @brief EventManager class is a singleton that manage all events
+     * @brief A singleton class that manages the events
      *
      */
-    class EventManager final
+    class EventManager
     {
+        private:
+            using Callback = std::function<void(std::any)>;
+            using CallbackPair = std::pair<std::type_index, Callback>;
+            using Callbacks = std::vector<CallbackPair>;
+
+            std::unordered_map<std::type_index, Callbacks> _callbacks;
+
+            //-------------------CONSTRUCTOR / DESTRUCTOR-------------------//
+            EventManager() = default;
+            ~EventManager() = default;
+
         public:
-            //------------------- DESTRUCTOR-------------------//
-            /**
-             * @brief Destroy the Event Manager object
-             *
-             */
-            ~EventManager();
-
             //-------------------OPERATORS-------------------//
-            /**
-             * @brief Copy assignment operator, delete because singleton.
-             *
-             * @param aOther The EventManager to copy.
-             */
-            EventManager(const EventManager &aOther) = delete;
-
-            /**
-             * @brief Move assignment operator, delete because singleton.
-             *
-             * @param aOther The EventManager to move.
-             */
-            EventManager(EventManager &&aOther) noexcept = delete;
-
-            /**
-             * @brief Copy assignment operator, delete because singleton.
-             *
-             * @param aOther The EventManager to copy.
-             * @return EventManager& A reference to the EventManager.
-             */
-            EventManager &operator=(const EventManager &aOther) = delete;
-
-            /**
-             * @brief Move assignment operator, delete because singleton.
-             *
-             * @param aOther The EventManager to move.
-             * @return EventManager& A reference to the EventManager.
-             */
-            EventManager &operator=(EventManager &&aOther) noexcept = delete;
+            EventManager(EventManager const &) = delete;
+            EventManager &operator=(EventManager const &) = delete;
+            EventManager(EventManager &&) = delete;
+            EventManager &operator=(EventManager &&) = delete;
 
             //-------------------METHODS-------------------//
             /**
-             * @brief Get the Instance object (singleton)
+             * @brief Get the Instance object of the singleton
              *
-             * @return EventManager* A pointer to the EventManager.
+             * @return EventManager* A pointer to the instance of the singleton
              */
             static EventManager *getInstance();
 
             /**
-             * @brief Push an event to the queue
+             * @brief Subscribe to an event, the callback will be called when the event is published
              *
-             * @param aEvent The event to push.
+             * @tparam Event The type of the event to subscribe to
+             * @param aCallback The callback to call when the event is published, it takes a pointer to the event as
+             * parameter
              */
-            void pushEvent(Event *aEvent);
-
-            /**
-             * @brief Get the Events object
-             *
-             * @return std::vector<Event>& A reference to the vector of events.
-             */
-            [[nodiscard]] std::vector<std::unique_ptr<Event>> &getEvents();
-
-            /**
-             * @brief Get all the events of a specific type
-             *
-             */
-            std::vector<Event *> getEventsByType(const EventType &aEventType);
-
-            /**
-             * @brief Clear non game events
-             *
-             */
-            void clearNonGameEvents();
-
-            /**
-             * @brief Remove an event from the queue
-             * @param aIndex The index of the event to remove.
-             *
-             */
-            void removeEvent(Event *aEvent);
-
-        private:
-            EventManager();
-            std::vector<std::unique_ptr<Event>> _events;
-
-        private:
-            //-------------------EXCEPTIONS-------------------//
-            class EventManagerException : public std::exception
+            template<typename Event>
+            void subscribe(std::function<void(Event *)> aCallback)
             {
-                public:
-                    explicit EventManagerException(const std::string &aMessage);
-                    ~EventManagerException() override = default;
+                auto type = std::type_index(typeid(Event));
+                auto typeFunc = std::type_index(typeid(aCallback));
 
-                    [[nodiscard]] const char *what() const noexcept override;
+                CallbackPair callbackPair(typeFunc, [=](std::any aEvent) {
+                    aCallback(std::any_cast<Event *>(aEvent));
+                });
 
-                private:
-                    std::string _message;
-            };
+                if (_callbacks.find(type) == _callbacks.end()) {
+                    _callbacks[type] = Callbacks();
+                }
+
+                _callbacks[type].push_back(callbackPair);
+            }
+
+            /**
+             * @brief Unsubscribe from an event
+             *
+             * @tparam Event The type of the event to unsubscribe from
+             * @param aCallback The callback to unsubscribe
+             */
+            template<typename Event>
+            void unsubscribe(std::function<void(Event *)> aCallback)
+            {
+                auto type = std::type_index(typeid(Event));
+                auto typeFunc = std::type_index(typeid(aCallback));
+
+                if (_callbacks.find(type) == _callbacks.end()) {
+                    return;
+                }
+
+                for (auto it = _callbacks[type].begin(); it != _callbacks[type].end(); ++it) {
+                    if (it->first == typeFunc) {
+                        _callbacks[type].erase(it);
+                        break;
+                    }
+                }
+            }
+
+            /**
+             * @brief Publish an event, all the callbacks subscribed to this event will be called
+             *
+             * @tparam Event The type of the event to publish
+             * @param aEvent The event to publish
+             */
+            template<typename Event>
+            void publish(Event *aEvent)
+            {
+                auto type = std::type_index(typeid(Event));
+                auto eventSmartPtr = std::unique_ptr<Event>(aEvent);
+
+                if (_callbacks.find(type) == _callbacks.end()) {
+                    return;
+                }
+
+                for (auto &callback : _callbacks[type]) {
+                    callback.second(eventSmartPtr.get());
+                }
+            }
+
+        private:
     };
 } // namespace ECS::Event
-
 #endif // !

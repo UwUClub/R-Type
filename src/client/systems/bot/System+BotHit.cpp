@@ -8,16 +8,17 @@
 
 namespace ECS {
     void System::botHit(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::TypeEntity> &aType,
-                        Core::SparseArray<Component::IsAlive> &aIsAlive, Core::SparseArray<Component::HitBox> &aHitBox)
+                        Core::SparseArray<Component::HitBox> &aHitBox)
     {
         auto &world = Core::World::getInstance();
         auto &display = SDLDisplayClass::getInstance();
+        const auto size = aType.size();
 
-        for (size_t player = 0; player < aType.size(); player++) {
+        for (size_t player = 0; player < size; player++) {
             if (!aType[player].has_value() || !aType[player].value().isPlayer) {
                 continue;
             }
-            for (size_t missileId = 0; missileId < aPos.size(); missileId++) {
+            for (size_t missileId = 0; missileId < size; missileId++) {
                 if (!aType[missileId].has_value() || !aType[missileId].value().isBullet) {
                     continue;
                 }

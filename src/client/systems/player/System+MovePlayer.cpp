@@ -10,14 +10,16 @@
 #include <unordered_map>
 
 namespace ECS {
-    void System::movePlayer(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
-                            Core::SparseArray<Component::TypeEntity> &aType,
-                            Core::SparseArray<Component::IsAlive> &aIsAlive)
+    void System::movePlayer(Event::KeyboardEvent *aEvent)
     {
         Network::ClientHandler &network = Network::ClientHandler::getInstance();
+        auto &world = ECS::Core::World::getInstance();
+        auto &posComp = world.getComponent<Utils::Vector2f>();
+        auto &speedComp = world.getComponent<Component::Speed>();
+        auto &typeComp = world.getComponent<Component::TypeEntity>();
+        auto &isAliveComp = world.getComponent<Component::IsAlive>();
+        const auto size = posComp.size();
 
-        Event::EventManager *eventManager = Event::EventManager::getInstance();
-        auto keyboardEvent = eventManager->getEventsByType(Event::EventType::KEYBOARD);
         static const std::unordered_map<Event::KeyIdentifier, std::function<void(float &, Utils::Vector2f &, float)>>
             keyMap = {
                 {Event::KeyIdentifier::UP,
@@ -46,34 +48,32 @@ namespace ECS {
                  }},
             };
 
-        for (size_t i = 0; i < aPos.size(); i++) {
-            if (!aType[i].has_value() || !aType[i].value().isPlayer) {
+        for (size_t i = 0; i < size; i++) {
+            if (!typeComp[i].has_value() || !speedComp[i].has_value() || !isAliveComp[i].has_value()
+                || posComp[i].has_value() || !typeComp[i].value().isPlayer) {
                 continue;
             }
-            for (auto &event : keyboardEvent) {
-                auto *keyEvent = static_cast<Event::KeyboardEvent *>(event);
-                if (keyMap.find(keyEvent->_keyId) == keyMap.end() || !aIsAlive[i].value().isAlive) {
-                    continue;
-                }
-                auto &pos = aPos[i].value();
-                float onlinePlayerId = static_cast<float>(aType[i].value().onlineId.value_or(-1));
-                if (onlinePlayerId == -1) {
-                    continue;
-                }
-                keyMap.at(keyEvent->_keyId)(aSpeed[i].value().speed, pos, onlinePlayerId);
+            if (keyMap.find(aEvent->_keyId) == keyMap.end() || !isAliveComp[i].value().isAlive) {
+                continue;
+            }
+            auto &pos = posComp[i].value();
+            float onlinePlayerId = static_cast<float>(typeComp[i].value().onlineId.value_or(-1));
+            if (onlinePlayerId == -1) {
+                continue;
+            }
+            keyMap.at(aEvent->_keyId)(speedComp[i].value().speed, pos, onlinePlayerId);
 
-                if (pos.x < 0) {
-                    pos.x = 0;
-                }
-                if (pos.x > SCREEN_WIDTH) {
-                    pos.x = SCREEN_WIDTH;
-                }
-                if (pos.y < 0) {
-                    pos.y = 0;
-                }
-                if (pos.y > SCREEN_HEIGHT) {
-                    pos.y = SCREEN_HEIGHT;
-                }
+            if (pos.x < 0) {
+                pos.x = 0;
+            }
+            if (pos.x > SCREEN_WIDTH) {
+                pos.x = SCREEN_WIDTH;
+            }
+            if (pos.y < 0) {
+                pos.y = 0;
+            }
+            if (pos.y > SCREEN_HEIGHT) {
+                pos.y = SCREEN_HEIGHT;
             }
         }
     }

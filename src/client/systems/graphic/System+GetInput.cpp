@@ -17,7 +17,7 @@ namespace ECS {
                 try {
                     auto *keyEvent =
                         new Event::KeyboardEvent(_keyMap.at(event.key.keysym.sym), Event::KeyState::PRESSED);
-                    eventManager->pushEvent(keyEvent);
+                    eventManager->publish(keyEvent);
                 } catch (std::exception &e) {
                     std::cerr << e.what() << std::endl;
                 }
@@ -26,7 +26,7 @@ namespace ECS {
                 auto *windowEvent = new Event::WindowEvent(
                     SCREEN_WIDTH, SCREEN_WIDTH, 0, 0, ECS::Event::WindowDisplayState::FULLSCREEN,
                     ECS::Event::WindowFocusState::FOCUSED, _windowEventMap.at(event.window.event));
-                eventManager->pushEvent(windowEvent);
+                eventManager->publish(windowEvent);
             }
         }
     }

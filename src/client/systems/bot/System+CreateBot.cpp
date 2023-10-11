@@ -5,40 +5,31 @@
 #include "Values.hpp"
 
 namespace ECS {
-    void System::createBot()
+    void System::createBot(RType::ClientGameEvent *aEvent)
     {
-        Event::EventManager *eventManager = Event::EventManager::getInstance();
         SDLDisplayClass &display = SDLDisplayClass::getInstance();
-        auto events = eventManager->getEventsByType(Event::EventType::GAME);
 
-        for (auto &event : events) {
-            auto &gameEvent = static_cast<RType::ClientGameEvent &>(*event);
+        if (aEvent->getType() == RType::ClientEventType::PLAYER_SPAWN) {
+            const auto payload = aEvent->getPayload();
+            auto onlineEntityId = static_cast<std::size_t>(payload[0]);
+            bool isLocalPlayer = payload[1] == 1;
 
-            if (gameEvent.getType() == RType::ClientEventType::PLAYER_SPAWN) {
-                std::size_t onlineEntityId = static_cast<int>(gameEvent.getPayload()[0]);
-                bool isLocalPlayer = gameEvent.getPayload()[1] == 1;
-
-                Component::TypeEntity entityType {false, true, false, false, false, false, false, onlineEntityId};
-                if (isLocalPlayer) {
-                    entityType.isPlayer = true;
-                    entityType.isBot = false;
-                }
-
-                int color = static_cast<int>(gameEvent.getPayload()[2]);
-                float posX = gameEvent.getPayload()[3];
-                float posY = gameEvent.getPayload()[4];
-                std::cout << "Player with color " << color << " joined" << std::endl;
-
-                display.addEntity(ECS::Utils::Vector2f {posX, posY}, Component::Speed {PLAYER_SPEED}, entityType,
-                                  Component::LoadedSprite {
-                                      PLAYER_ASSET, nullptr,
-                                      new SDL_Rect {0, color * PLAYER_TEX_HEIGHT, PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT},
-                                      new SDL_Rect {0, 0, PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT}},
-                                  Component::HitBox {PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT},
-                                  Component::IsAlive {true, 0});
-
-                eventManager->removeEvent(event);
+            Component::TypeEntity entityType {false, true, false, false, false, false, false, onlineEntityId};
+            if (isLocalPlayer) {
+                entityType.isPlayer = true;
+                entityType.isBot = false;
             }
+
+            int color = static_cast<int>(payload[2]);
+            float posX = payload[3];
+            float posY = payload[4];
+
+            display.addEntity(ECS::Utils::Vector2f {posX, posY}, Component::Speed {PLAYER_SPEED}, entityType,
+                              Component::LoadedSprite {
+                                  PLAYER_ASSET, nullptr,
+                                  new SDL_Rect {0, color * PLAYER_TEX_HEIGHT, PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT},
+                                  new SDL_Rect {0, 0, PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT}},
+                              Component::HitBox {PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT}, Component::IsAlive {true, 0});
         }
     }
 

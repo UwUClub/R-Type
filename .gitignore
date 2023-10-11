@@ -23,6 +23,7 @@ CMakeFiles/
 *~
 _ReSharper*
 *.log
+.test
 
 # OS Generated Files
 .DS_Store

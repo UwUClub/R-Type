@@ -9,13 +9,15 @@ namespace ECS {
     {
         auto &world = Core::World::getInstance();
         auto &display = SDLDisplayClass::getInstance();
+        const auto size = aPos.size();
 
-        for (size_t enemy = 0; enemy < aType.size(); enemy++) {
+        for (std::size_t enemy = 0; enemy < size; enemy++) {
             if (!aType[enemy].has_value() || !aType[enemy].value().isEnemy) {
                 continue;
             }
-            for (size_t bullet = 0; bullet < aPos.size(); bullet++) {
-                if (!aType[bullet].has_value() || !aType[bullet].value().isBullet) {
+            for (std::size_t bullet = 0; bullet < size; bullet++) {
+                if (!aType[bullet].has_value() || !aPos[bullet].has_value() || !aHitBox[enemy].has_value()
+                    || !aType[bullet].value().isBullet) {
                     continue;
                 }
                 if (aPos[bullet].value().x > aPos[enemy].value().x

@@ -13,6 +13,7 @@
 #include "TypeEntity.hpp"
 #include "Utils.hpp"
 #include "Values.hpp"
+#include "WindowEvent.hpp"
 #include "World.hpp"
 #include <SDL_rect.h>
 
@@ -37,7 +38,7 @@ int main(int ac, char **av)
         SDLDisplayClass &display = SDLDisplayClass::getInstance();
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
 
-        // Components
+        //-------Components
         world.registerComponent<ECS::Utils::Vector2f>();
         world.registerComponent<Component::Speed>();
         world.registerComponent<Component::TypeEntity>();
@@ -45,39 +46,37 @@ int main(int ac, char **av)
         world.registerComponent<Component::HitBox>();
         world.registerComponent<Component::IsAlive>();
 
+        //-------Events subscription
+        eventManager->subscribe<ECS::Event::WindowEvent>(ECS::System::quitSDL);
+        // Player systems subscription
+        eventManager->subscribe<ECS::Event::KeyboardEvent>(ECS::System::movePlayer);
+        eventManager->subscribe<ECS::Event::KeyboardEvent>(ECS::System::triggerPlayerShoot);
+        // Bot systems subscription
+        eventManager->subscribe<RType::ClientGameEvent>(ECS::System::createBot);
+        eventManager->subscribe<RType::ClientGameEvent>(ECS::System::updateBotPosition);
+        eventManager->subscribe<RType::ClientGameEvent>(ECS::System::triggerBotShoot);
+        eventManager->subscribe<RType::ClientGameEvent>(ECS::System::triggerBotDeath);
+        eventManager->subscribe<RType::ClientGameEvent>(ECS::System::triggerBotDisconnect);
+        // Enemy systems subscription
+        eventManager->subscribe<RType::ClientGameEvent>(ECS::System::createEnemy);
+        eventManager->subscribe<RType::ClientGameEvent>(ECS::System::triggerEnemyShoot);
+        eventManager->subscribe<RType::ClientGameEvent>(ECS::System::triggerEnemyDeath);
+
         // Graphic systems
         world.addSystem(ECS::System::getInput);
         world.addSystem<Component::LoadedSprite>(ECS::System::loadTextures);
         world.addSystem<Component::LoadedSprite, ECS::Utils::Vector2f>(ECS::System::displayEntities);
-        world.addSystem(ECS::System::quitSDL);
 
         // Background systems
         world.addSystem(ECS::System::createBackground);
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBackground);
 
-        // Player systems
-        world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::IsAlive>(
-            ECS::System::movePlayer);
-        world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive>(
-            ECS::System::triggerPlayerShoot);
-
         // Bot systems
-        world.addSystem(ECS::System::createBot);
-        world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::updateBotPosition);
-        world.addSystem(ECS::System::triggerBotShoot);
-        world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive, Component::HitBox>(
-            ECS::System::botHit);
-        world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite>(
-            ECS::System::triggerBotDeath);
-        world.addSystem<Component::TypeEntity>(ECS::System::triggerBotDisconnect);
+        world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::HitBox>(ECS::System::botHit);
 
         // Enemy systems
-        world.addSystem(ECS::System::createEnemy);
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveEnemy);
-        world.addSystem(ECS::System::triggerEnemyShoot);
         world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::HitBox>(ECS::System::enemyHit);
-        world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite, ECS::Utils::Vector2f>(
-            ECS::System::triggerEnemyDeath);
 
         // Bonus systems
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBonus);
@@ -104,7 +103,6 @@ int main(int ac, char **av)
         while (world.isRunning()) {
             world.runSystems();
             SDL_RenderPresent(display._renderer);
-            eventManager->clearNonGameEvents();
             world.calcDeltaTime();
         }
 

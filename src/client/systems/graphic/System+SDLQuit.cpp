@@ -3,17 +3,11 @@
 #include "System.hpp"
 #include "WindowEvent.hpp"
 
-void ECS::System::quitSDL()
+void ECS::System::quitSDL(Event::WindowEvent *aEvent)
 {
     auto &world = ECS::Core::World::getInstance();
-    Event::EventManager *eventManager = Event::EventManager::getInstance();
-    auto windowEvent = eventManager->getEventsByType(Event::EventType::WINDOW);
 
-    for (auto &idx : windowEvent) {
-        auto *event = static_cast<Event::WindowEvent *>(idx);
-        if (event->_windowEventType == Event::WindowEventType::CLOSED) {
-            world.stop();
-            break;
-        }
+    if (aEvent->_windowEventType == Event::WindowEventType::CLOSED) {
+        world.stop();
     }
 }

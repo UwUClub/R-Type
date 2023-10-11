@@ -8,30 +8,23 @@
 #include "World.hpp"
 
 namespace ECS {
-    void System::triggerEnemyShoot()
+    void System::triggerEnemyShoot(RType::ClientGameEvent *aEvent)
     {
         auto &display = SDLDisplayClass::getInstance();
-        Event::EventManager *eventManager = Event::EventManager::getInstance();
-        auto events = eventManager->getEventsByType(Event::EventType::GAME);
 
-        for (auto &event : events) {
-            auto &gameEvent = static_cast<RType::ClientGameEvent &>(*event);
+        if (aEvent->getType() == RType::ClientEventType::ENEMY_SHOOT) {
+            const auto payload = aEvent->getPayload();
+            auto onlineMissileId = static_cast<std::size_t>(payload[0]);
+            float posX = payload[1];
+            auto posY = payload[2];
 
-            if (gameEvent.getType() == RType::ClientEventType::ENEMY_SHOOT) {
-                std::size_t onlineMissileId = static_cast<int>(gameEvent.getPayload()[0]);
-                float posX = gameEvent.getPayload()[1];
-                auto posY = gameEvent.getPayload()[2];
-
-                display.addEntity(
-                    ECS::Utils::Vector2f {posX, posY}, Component::Speed {MISSILES_SPEED},
-                    Component::TypeEntity {false, false, false, true, false, false, false, onlineMissileId},
-                    Component::LoadedSprite {MISSILES_ASSET, nullptr,
-                                             new SDL_Rect {304, 10, MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT},
-                                             new SDL_Rect {0, 0, MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT}},
-                    Component::HitBox {MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT}, Component::IsAlive {false, 0});
-
-                eventManager->removeEvent(event);
-            }
+            display.addEntity(ECS::Utils::Vector2f {posX, posY}, Component::Speed {MISSILES_SPEED},
+                              Component::TypeEntity {false, false, false, true, false, false, false, onlineMissileId},
+                              Component::LoadedSprite {MISSILES_ASSET, nullptr,
+                                                       new SDL_Rect {304, 10, MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT},
+                                                       new SDL_Rect {0, 0, MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT}},
+                              Component::HitBox {MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT},
+                              Component::IsAlive {false, 0});
         }
     }
 } // namespace ECS

@@ -4,23 +4,17 @@
 #include "TypeUtils.hpp"
 
 namespace ECS {
-    void System::triggerBotDisconnect(Core::SparseArray<Component::TypeEntity> &aType)
+    void System::triggerBotDisconnect(RType::ClientGameEvent *aEvent)
     {
         auto &world = Core::World::getInstance();
-        Event::EventManager *eventManager = Event::EventManager::getInstance();
-        auto events = eventManager->getEventsByType(Event::EventType::GAME);
+        auto &typeComp = world.getComponent<Component::TypeEntity>();
 
-        for (auto &event : events) {
-            auto &gameEvent = static_cast<RType::ClientGameEvent &>(*event);
+        if (aEvent->getType() == RType::ClientEventType::PLAYER_DISCONNECTION) {
+            const auto payload = aEvent->getPayload();
+            auto onlineBotId = static_cast<size_t>(payload[0]);
+            std::size_t localBotId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(typeComp, onlineBotId);
 
-            if (gameEvent.getType() == RType::ClientEventType::PLAYER_DISCONNECTION) {
-                size_t onlineBotId = static_cast<size_t>(gameEvent.getPayload()[0]);
-                size_t localBotId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(aType, onlineBotId);
-                world.killEntity(localBotId);
-
-                eventManager->removeEvent(event);
-                std::cout << "Player " << onlineBotId << " disconnected" << std::endl;
-            }
+            world.killEntity(localBotId);
         }
     }
 } // namespace ECS
