@@ -58,9 +58,6 @@ add_library(R_Type::R_Type_warnings ALIAS R_Type_warnings)
 #add_library(R_Type::R_Type_options INTERFACE IMPORTED)
 #add_library(R_Type::R_Type_warnings INTERFACE IMPORTED)
 
-# configure files based on CMake configuration options
-add_subdirectory(configured_files)
-
 # Adding the src:
 add_subdirectory(src)
 
@@ -107,9 +104,29 @@ R_Type_package_project(
 # Experience shows that explicit package naming can help make it easier to sort
 # out potential ABI related issues before they start, while helping you
 # track a build to a specific GIT SHA
+install(DIRECTORY "./assets/sprites" DESTINATION "assets")
+install(TARGETS server client
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
+
+include(InstallRequiredSystemLibraries)
+
+set(CPACK_PACKAGE_NAME "RTYPE")
+if(NOT DEFINED CPACK_PACKAGE_VERSION)
+    set(CPACK_PACKAGE_VERSION ${CMAKE_PROJECT_VERSION})
+endif()
 set(CPACK_PACKAGE_FILE_NAME
     "${CMAKE_PROJECT_NAME}-${CMAKE_PROJECT_VERSION}-${GIT_SHORT_SHA}-${CMAKE_SYSTEM_NAME}-${CMAKE_BUILD_TYPE}-${CMAKE_CXX_COMPILER_ID}-${CMAKE_CXX_COMPILER_VERSION}"
 )
+set(CPACK_PACKAGE_INSTALL_DIRECTORY "RTYPE")
+
+if(WIN32)
+    set(CPACK_GENERATOR "NSIS64")
+else()
+    set(CPACK_GENERATOR "DEB;RPM")
+endif()
 
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/assets" DESTINATION ${CMAKE_INSTALL_BINDIR})
 

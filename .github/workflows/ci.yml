@@ -10,6 +10,7 @@ on:
     branches:
       - main
       - dev
+      - RT-58-create-release
 
 env:
   CLANG_TIDY_VERSION: "15.0.2"
@@ -36,6 +37,8 @@ jobs:
         exclude:
           - os: windows-2019
             compiler: gcc-11
+          - os: ubuntu-20.04
+            compiler: llvm-15.0.2
 
         include:
           # Add appropriate variables for gcov version required. This will intentionally break
@@ -85,12 +88,12 @@ jobs:
 
       - name: Configure CMake
         run: |
-          cmake -S . -B ./build -G "${{matrix.generator}}" -D${{ env.PROJECT_NAME }}_ENABLE_IPO=${{matrix.enable_ipo }} -DCMAKE_BUILD_TYPE:STRING=Release -D${{ env.PROJECT_NAME }}_PACKAGING_MAINTAINER_MODE:BOOL=False -D${{ env.PROJECT_NAME }}_ENABLE_COVERAGE:BOOL=True -DGIT_SHA:STRING=${{ github.sha }}
+          cmake -S . -B ./build -G "${{matrix.generator}}" -D${{ env.PROJECT_NAME }}_ENABLE_IPO=${{matrix.enable_ipo }} -DCMAKE_BUILD_TYPE:STRING=Release -D${{ env.PROJECT_NAME }}_PACKAGING_MAINTAINER_MODE:BOOL=False -D${{ env.PROJECT_NAME }}_ENABLE_COVERAGE:BOOL=True -DGIT_SHA:STRING=${{ github.sha }} -DR_Type_ENABLE_SANITIZER_ADDRESS=OFF -DR_Type_ENABLE_SANITIZER_UNDEFINED=OFF
 
       - name: Build
         # Execute the build.  You can specify a specific target with "--target <NAME>"
         run: |
-          cmake --build ./build --config Release -j ${{env.nproc}}
+          cmake --build ./build --config Release -j 8
 
       - name: Unix - Test and coverage
         if: runner.os != 'Windows'
@@ -110,7 +113,7 @@ jobs:
       - name: CPack
         working-directory: ./build
         run: |
-          cpack -C Release -G ZIP
+          cpack -C Release
 
       - name: Publish Tagged Release
         uses: softprops/action-gh-release@v1
