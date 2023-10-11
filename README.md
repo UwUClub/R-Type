@@ -30,8 +30,6 @@
 
 ### SSH
 
-> G++ 20+ is required
-
 ```bash
 git clone git@github.com:UwUClub/R-Type.git
 ```

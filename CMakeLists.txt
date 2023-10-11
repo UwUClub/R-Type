@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
-find_package(SDL2)
+find_package(SDL2 QUIET)
 
 # This template attempts to be "fetch_content"-able
 # so that it works well with tools like CPM or other
@@ -110,6 +110,11 @@ install(TARGETS server client
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
+install(TARGETS SDL2
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
 
 include(InstallRequiredSystemLibraries)
 
@@ -121,6 +126,7 @@ set(CPACK_PACKAGE_FILE_NAME
     "${CMAKE_PROJECT_NAME}-${CMAKE_PROJECT_VERSION}-${GIT_SHORT_SHA}-${CMAKE_SYSTEM_NAME}-${CMAKE_BUILD_TYPE}-${CMAKE_CXX_COMPILER_ID}-${CMAKE_CXX_COMPILER_VERSION}"
 )
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "RTYPE")
+set(CPACK_PACKAGE_CONTACT "UwU Club")
 
 if(WIN32)
     set(CPACK_GENERATOR "NSIS64")
