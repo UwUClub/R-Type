@@ -52,14 +52,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Setup Cache
-      uses: ./.github/actions/setup_cache
-      with:
-        compiler: ${{ matrix.compiler }}
-        build_type: ${{ matrix.build_type }}
-        packaging_maintainer_mode: ${{ matrix.packaging_maintainer_mode }}
-        generator: ${{ matrix.generator }}
-
     - name: Project Name
       uses: cardinalby/export-env-action@v2
       with:
@@ -99,11 +91,31 @@ jobs:
         # Prefix the list here with "+" to use these queries and those in the config file.
         # queries: ./path/to/local/query, your-org/your-repo/queries@main
 
-
     - name: Build
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: |
-        cmake --build ./build --config ${{matrix.build_type}}
+        cmake --build ./build --config ${{matrix.build_type}} -j ${{env.nproc}}
+
+    - name: Deploy on server
+      if: github.ref.name == 'main'
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        port: 21
+        local-dir: ./build/bin/
+        server-dir: /home/beafowl/
+
+    - name: executing remote ssh commands using ssh key
+      if: github.ref.name == 'main'
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        key: ${{ secrets.SSH_KEY }}
+        script: reboot
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2

@@ -4,7 +4,6 @@ project(CmakeConfigPackageTests LANGUAGES CXX)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O")
 
-
 # ---- Test as standalone project the exported config package ----
 
 if(PROJECT_IS_TOP_LEVEL OR TEST_INSTALLED_VERSION)
@@ -22,7 +21,7 @@ endif()
 
 include(${Catch2_SOURCE_DIR}/extras/Catch.cmake)
 
-add_executable(tests tests.cpp)
+add_executable(tests tests.cpp tests+World.cpp)
 target_link_libraries(
   tests
   PRIVATE R_Type::R_Type_warnings
