@@ -23,17 +23,6 @@ function(R_Type_setup_dependencies)
     )
   endif()
 
-  if (NOT TARGET Boost::boost)
-    CPMAddPackage(
-            NAME Boost
-            VERSION 1.83.0
-            GITHUB_REPOSITORY "boostorg/boost"
-            GIT_TAG "boost-1.83.0"
-            GIT_SHALLOW TRUE
-            GIT_PROGRESS TRUE
-    )
-  endif()
-
   if (NOT TARGET Boost::system)
     CPMAddPackage(
             NAME boost_system
@@ -493,6 +482,217 @@ function(R_Type_setup_dependencies)
             GIT_SHALLOW TRUE
     )
   endif()
+
+  if (NOT TARGET Boost::variant2)
+    CPMAddPackage(
+            NAME boost_variant2
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/variant2"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::spirit)
+    CPMAddPackage(
+            NAME boost_spirit
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/spirit"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::rational)
+    CPMAddPackage(
+            NAME boost_rational
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/rational"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::context)
+    CPMAddPackage(
+            NAME boost_context
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/context"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::algorithm)
+    CPMAddPackage(
+            NAME boost_algorithm
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/algorithm"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::exception)
+    CPMAddPackage(
+            NAME boost_exception
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/exception"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::lexical_cast)
+    CPMAddPackage(
+            NAME boost_lexical_cast
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/lexical_cast"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::endian)
+    CPMAddPackage(
+            NAME boost_endian
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/endian"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if(NOT TARGET Boost::pool)
+    CPMAddPackage(
+            NAME boost_pool
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/pool"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::exception)
+    CPMAddPackage(
+            NAME boost_exception
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/exception"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::unordered)
+    CPMAddPackage(
+            NAME boost_unordered
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/unordered"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::tokenizer)
+    CPMAddPackage(
+            NAME boost_tokenizer
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/tokenizer"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::phoenix)
+    CPMAddPackage(
+            NAME boost_phoenix
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/phoenix"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::unordered)
+    CPMAddPackage(
+            NAME boost_unordered
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/unordered"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::container)
+    CPMAddPackage(
+            NAME boost_container
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/container"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::variant)
+    CPMAddPackage(
+            NAME boost_variant
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/variant"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::proto)
+    CPMAddPackage(
+            NAME boost_proto
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/proto"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::intrusive)
+    CPMAddPackage(
+            NAME boost_intrusive
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/intrusive"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::thread)
+    CPMAddPackage(
+            NAME boost_thread
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/thread"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::type_index)
+    CPMAddPackage(
+            NAME boost_type_index
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/type_index"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::atomic)
+    CPMAddPackage(
+            NAME boost_atomic
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/atomic"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
 
   if (NOT TARGET SDL2)
     FetchContent_Declare(

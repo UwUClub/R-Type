@@ -90,7 +90,7 @@ jobs:
       - name: Build
         # Execute the build.  You can specify a specific target with "--target <NAME>"
         run: |
-          cmake --build ./build --config Release -j ${{env.nproc}}
+          cmake --build ./build --config Release -j 8
 
       - name: Unix - Test and coverage
         if: runner.os != 'Windows'
