@@ -33,28 +33,34 @@ int main(int ac, char **av)
         world.registerComponent<Component::TypeEntity>();
         world.registerComponent<Component::HitBox>();
         world.registerComponent<Component::IsAlive>();
+        world.registerComponent<Component::Connection>();
 
         // Player systems
-        world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::HitBox>(
-            ECS::System::welcomePlayer);
-        world.addSystem<ECS::Utils::Vector2f, Component::Speed>(ECS::System::movePlayer);
-        world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::HitBox>(
-            ECS::System::playerShoot);
+        world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::HitBox,
+                        Component::IsAlive, Component::Connection>(ECS::System::welcomePlayer);
+        world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::Connection>(ECS::System::movePlayer);
+        world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::HitBox,
+                        Component::Connection>(ECS::System::playerShoot);
         world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive, Component::HitBox>(
             ECS::System::playerHit);
-        world.addSystem<Component::TypeEntity, Component::IsAlive>(ECS::System::killPlayer);
-        world.addSystem<Component::Speed>(ECS::System::moveSpeedUp);
-        world.addSystem(ECS::System::disconnectPlayer);
+        world.addSystem<Component::TypeEntity, Component::IsAlive, Component::Connection>(ECS::System::killPlayer);
+        world.addSystem<Component::Speed, Component::Connection>(ECS::System::moveSpeedUp);
+        world.addSystem<Component::Connection>(ECS::System::disconnectPlayer);
+
+        // Network systems
+        world.addSystem<Component::Connection>(ECS::System::receiveAknowledgment);
+        world.addSystem<Component::IsAlive, Component::TypeEntity, Component::Connection>(
+            ECS::System::handlePlayerCrash);
 
         // Enemy systems
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::HitBox,
-                        Component::IsAlive>(ECS::System::spawnEnemy);
+                        Component::IsAlive, Component::Connection>(ECS::System::spawnEnemy);
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveEnemy);
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::HitBox,
-                        Component::IsAlive>(ECS::System::enemyShoot);
+                        Component::IsAlive, Component::Connection>(ECS::System::enemyShoot);
         world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::HitBox, Component::IsAlive>(
             ECS::System::enemyHit);
-        world.addSystem<Component::TypeEntity, Component::IsAlive>(ECS::System::killEnemy);
+        world.addSystem<Component::TypeEntity, Component::IsAlive, Component::Connection>(ECS::System::killEnemy);
 
         // Missile systems
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveMissiles);

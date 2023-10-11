@@ -10,7 +10,8 @@
 namespace ECS {
     void System::playerShoot(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
                              Core::SparseArray<Component::TypeEntity> &aType,
-                             Core::SparseArray<Component::HitBox> &aHitBox)
+                             Core::SparseArray<Component::HitBox> &aHitBox,
+                             Core::SparseArray<Component::Connection> &aConnection)
     {
         auto &world = Core::World::getInstance();
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
@@ -53,7 +54,7 @@ namespace ECS {
 
                 // Send packet
                 server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_SHOOT),
-                                 {static_cast<float>(bulletId), posX, posY});
+                                 {static_cast<float>(bulletId), posX, posY}, aConnection);
 
                 // Delete event
                 eventManager->removeEvent(event);
