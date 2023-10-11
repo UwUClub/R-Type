@@ -40,6 +40,8 @@ A packet has the following properties:
 | `type` | 4-byte int | Packet type. See [part 2.2](#22-packet-type) to get the list of packet types |
 | `payload` | vector of float (variable size) | Data carried by the packet. The size and meaning of each value depends on packet type, check [part 2.2](#22-packet-type) |
 
+If the packet format is not respected, the packet will be ignored by the server.
+
 ### 2.2 Packet Type
 
 Packets sent by client:
@@ -89,6 +91,8 @@ The protocol is binary, so packets must be serialized to binary format before be
 ## 3. Security Considerations
 
 Implementations of this protocol should consider security aspects to protect against unauthorized access, cheating, and other potential vulnerabilities.
+
+You must check your packet reception when making a client or server: always make sure the payload size and values are valid.
 
 Remember that the server should always have the last word on the client.
 
