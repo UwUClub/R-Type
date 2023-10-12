@@ -28,6 +28,12 @@ namespace Network {
                 receivePacket(aPacket);
             }
         });
+
+        network.onReceiveAknowledgment([this](const std::string &aUuid, udp::endpoint &aEndpoint) {
+            (void) aUuid;
+            (void) aEndpoint;
+        });
+
         network.start(udp::v4());
         std::cout << "Connected to " << _serverEndpoint << std::endl;
     }

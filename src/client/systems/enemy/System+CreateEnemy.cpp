@@ -11,6 +11,9 @@ namespace ECS {
 
         if (aEvent->getType() == RType::ClientEventType::ENEMY_SPAWN) {
             const auto payload = aEvent->getPayload();
+            if (payload.size() != 3) {
+                return;
+            }
             auto onlineEntityId = static_cast<std::size_t>(payload[0]);
             float posX = payload[1];
             float posY = payload[2];

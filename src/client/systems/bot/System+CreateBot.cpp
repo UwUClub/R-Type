@@ -11,6 +11,9 @@ namespace ECS {
 
         if (aEvent->getType() == RType::ClientEventType::PLAYER_SPAWN) {
             const auto payload = aEvent->getPayload();
+            if (payload.size() != 5) {
+                return;
+            }
             auto onlineEntityId = static_cast<std::size_t>(payload[0]);
             bool isLocalPlayer = payload[1] == 1;
 

@@ -11,6 +11,9 @@ namespace ECS {
 
         if (aEvent->getType() == RType::ClientEventType::PLAYER_DISCONNECTION) {
             const auto payload = aEvent->getPayload();
+            if (payload.size() != 1) {
+                return;
+            }
             auto onlineBotId = static_cast<size_t>(payload[0]);
             std::size_t localBotId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(typeComp, onlineBotId);
 

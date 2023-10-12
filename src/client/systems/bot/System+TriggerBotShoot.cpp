@@ -15,6 +15,9 @@ namespace ECS {
 
         if (aEvent->getType() == RType::ClientEventType::PLAYER_SHOOT) {
             const auto payload = aEvent->getPayload();
+            if (payload.size() != 3) {
+                return;
+            }
             auto onlineBulletId = static_cast<std::size_t>(payload[0]);
             float posX = payload[1];
             auto posY = payload[2];

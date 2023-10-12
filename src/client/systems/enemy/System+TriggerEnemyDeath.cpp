@@ -22,6 +22,9 @@ namespace ECS {
 
         if (aEvent->getType() == RType::ClientEventType::ENEMY_DEATH) {
             const auto payload = aEvent->getPayload();
+            if (payload.size() != 1) {
+                return;
+            }
             auto onlineEnemyId = static_cast<size_t>(payload[0]);
             std::size_t localEnemyId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(typeComp, onlineEnemyId);
             if (isAliveComp[localEnemyId].has_value()) {

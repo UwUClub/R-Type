@@ -10,7 +10,8 @@
 namespace ECS {
     void System::playerShoot(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
                              Core::SparseArray<Component::TypeEntity> &aType,
-                             Core::SparseArray<Component::HitBox> &aHitBox)
+                             Core::SparseArray<Component::HitBox> &aHitBox,
+                             Core::SparseArray<Component::Connection> &aConnection)
     {
         auto &world = Core::World::getInstance();
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
@@ -22,7 +23,21 @@ namespace ECS {
             auto &gameEvent = static_cast<RType::ServerGameEvent &>(*event);
 
             if (gameEvent.getType() == RType::ServerEventType::SHOOT) {
-                size_t playerId = static_cast<size_t>(gameEvent.getPayload()[0]);
+                if (gameEvent.getPayload().size() != 1) {
+                    eventManager->removeEvent(event);
+                    continue;
+                }
+
+                int playerId = static_cast<int>(gameEvent.getPayload()[0]);
+
+                if (playerId < 0 || playerId >= aPos.size()) {
+                    eventManager->removeEvent(event);
+                    continue;
+                }
+                if (!aPos[playerId].has_value()) {
+                    eventManager->removeEvent(event);
+                    continue;
+                }
 
                 std::cout << "Player " << playerId << " shoot" << std::endl;
 
@@ -39,7 +54,7 @@ namespace ECS {
 
                 // Send packet
                 server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_SHOOT),
-                                 {static_cast<float>(bulletId), posX, posY});
+                                 {static_cast<float>(bulletId), posX, posY}, aConnection);
 
                 // Delete event
                 eventManager->removeEvent(event);

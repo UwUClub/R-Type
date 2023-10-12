@@ -15,6 +15,9 @@ namespace ECS {
 
         if (gameEvent.getType() == RType::ClientEventType::PLAYER_POSITION) {
             const auto payload = gameEvent.getPayload();
+            if (payload.size() != 3) {
+                return;
+            }
             auto onlineBotId = static_cast<std::size_t>(payload[0]);
             size_t localBotId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(typeComp, onlineBotId);
             float posX = payload[1];
