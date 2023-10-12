@@ -705,6 +705,14 @@ function(R_Type_setup_dependencies)
     )
   endif()
   FetchContent_MakeAvailable(SDL2)
+  install(TARGETS SDL2-static
+          EXPORT SDL2Targets
+          RUNTIME DESTINATION bin
+          LIBRARY DESTINATION lib
+          ARCHIVE DESTINATION lib
+          INCLUDES DESTINATION include
+          PUBLIC_HEADER DESTINATION include
+          )
 
   if (NOT TARGET SDL2_image::SDL2_image)
     FetchContent_Declare(
