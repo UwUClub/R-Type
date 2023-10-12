@@ -104,7 +104,6 @@ R_Type_package_project(
 # Experience shows that explicit package naming can help make it easier to sort
 # out potential ABI related issues before they start, while helping you
 # track a build to a specific GIT SHA
-install(DIRECTORY "./assets/sprites" DESTINATION "assets")
 install(TARGETS server client
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
