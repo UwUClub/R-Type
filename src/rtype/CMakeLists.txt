@@ -24,7 +24,7 @@ target_link_libraries(rtype
         Boost::uuid
         ecs
         SDL2::SDL2main
-        SDL2::SDL2-static
+        SDL2::SDL2
         SDL2_image
 )
 
