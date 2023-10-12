@@ -11,7 +11,7 @@ on:
       - main
       - dev
       - RT-58-create-release
-      - RT-Urgent-Mirror-Fix
+      - RT-67-Switch-from-SDL-to-raylib
 
 env:
   CLANG_TIDY_VERSION: "15.0.2"

@@ -8,15 +8,17 @@
 #include "SDLDisplayClass.hpp"
 #include <SDL.h>
 #include <algorithm>
-#include <libgen.h>
-#include <limits.h>
-#include <unistd.h>
 #include "IsAlive.hpp"
 #include "SparseArray.hpp"
 #include "Utils.hpp"
 #include "Values.hpp"
 #include "World.hpp"
 #include <SDL_stdinc.h>
+#if defined(__linux__)
+    #include <libgen.h>
+    #include <limits.h>
+    #include <unistd.h>
+#endif
 
 SDLDisplayClass::SDLDisplayClass()
 {
