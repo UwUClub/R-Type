@@ -1,6 +1,5 @@
 #include <functional>
 #include "ClientHandler.hpp"
-#include "EventManager.hpp"
 #include "KeyboardEvent.hpp"
 #include "SDLDisplayClass.hpp"
 #include "System.hpp"

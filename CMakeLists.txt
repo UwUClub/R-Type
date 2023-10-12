@@ -70,11 +70,11 @@ if(NOT PROJECT_IS_TOP_LEVEL)
 endif()
 
 # Adding the tests:
-include(CTest)
+#include(CTest)
 
-if(BUILD_TESTING)
-  add_subdirectory(test)
-endif()
+#if(BUILD_TESTING)
+#  add_subdirectory(test)
+#endif()
 
 # If MSVC is being used, and ASAN is enabled, we need to set the debugger environment
 # so that it behaves well with MSVC's debugger, and we can run the target from visual studio

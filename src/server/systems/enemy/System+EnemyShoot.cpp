@@ -16,8 +16,9 @@ namespace ECS {
     {
         auto &server = Network::ServerHandler::getInstance();
         auto &world = Core::World::getInstance();
+        const auto &size = aPos.size();
 
-        for (size_t idx = 0; idx < aPos.size(); idx++) {
+        for (size_t idx = 0; idx < size; idx++) {
             if (!aPos[idx].has_value() || !aType[idx].has_value() || !aIsAlive[idx].has_value()) {
                 continue;
             }

@@ -1,5 +1,4 @@
 #include "ClientGameEvent.hpp"
-#include "EventManager.hpp"
 #include "HitBox.hpp"
 #include "IsAlive.hpp"
 #include "SDLDisplayClass.hpp"

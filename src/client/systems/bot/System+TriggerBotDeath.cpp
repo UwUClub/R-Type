@@ -1,5 +1,4 @@
 #include "ClientGameEvent.hpp"
-#include "EventManager.hpp"
 #include "IsAlive.hpp"
 #include "SDLDisplayClass.hpp"
 #include "System.hpp"
@@ -16,6 +15,7 @@ namespace ECS {
         auto &isAliveComp = world.getComponent<Component::IsAlive>();
         auto &spriteComp = world.getComponent<Component::LoadedSprite>();
         auto &aType = world.getComponent<Component::TypeEntity>();
+        const auto size = aType.size();
 
         if (aEvent->getType() == RType::ClientEventType::PLAYER_DEATH) {
             const auto payload = aEvent->getPayload();
@@ -31,7 +31,7 @@ namespace ECS {
         }
 
         // Explosion + entity removal
-        for (size_t botId = 0; botId < aType.size(); botId++) {
+        for (size_t botId = 0; botId < size; botId++) {
             if (!aType[botId].has_value() || isAliveComp[botId].has_value() || !spriteComp[botId].has_value()
                 || (!aType[botId].value().isBot && !aType[botId].value().isPlayer)) {
                 continue;

@@ -14,13 +14,15 @@ namespace ECS {
         auto &world = Core::World::getInstance();
         auto &display = SDLDisplayClass::getInstance();
         auto &client = Network::ClientHandler::getInstance();
+        const auto size = aPos.size();
 
-        for (size_t bonus = 0; bonus < aType.size(); bonus++) {
+        for (size_t bonus = 0; bonus < size; bonus++) {
             if (!aType[bonus].has_value() || !aType[bonus].value().isBonus) {
                 continue;
             }
-            for (size_t player = 0; player < aPos.size(); player++) {
-                if (!aType[player].has_value() || !aType[player].value().isPlayer) {
+            for (size_t player = 0; player < size; player++) {
+                if (!aType[player].has_value() || !aPos[player].has_value() || !aHitBox[player].has_value()
+                    || !aIsAlive[player].has_value() || !aType[player].value().isPlayer) {
                     continue;
                 }
                 if ((aPos[bonus].value().x > aPos[player].value().x

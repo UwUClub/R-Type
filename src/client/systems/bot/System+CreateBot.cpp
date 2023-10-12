@@ -1,5 +1,4 @@
 #include "ClientGameEvent.hpp"
-#include "EventManager.hpp"
 #include "SDLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
@@ -10,15 +9,18 @@ namespace ECS {
         SDLDisplayClass &display = SDLDisplayClass::getInstance();
 
         if (aEvent->getType() == RType::ClientEventType::PLAYER_SPAWN) {
+            std::cout << "Player spawn" << std::endl;
             const auto payload = aEvent->getPayload();
             if (payload.size() != 5) {
                 return;
             }
             auto onlineEntityId = static_cast<std::size_t>(payload[0]);
+            std::cout << "Online entity id: " << onlineEntityId << std::endl;
             bool isLocalPlayer = payload[1] == 1;
 
             Component::TypeEntity entityType {false, true, false, false, false, false, false, onlineEntityId};
             if (isLocalPlayer) {
+                std::cout << "Local player" << std::endl;
                 entityType.isPlayer = true;
                 entityType.isBot = false;
             }

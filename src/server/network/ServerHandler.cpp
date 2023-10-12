@@ -34,7 +34,7 @@ namespace Network {
             if (client == _clients.end()) {
                 return;
             }
-            ECS::Event::EventManager::getInstance()->pushEvent(
+            ECS::Event::EventManager::getInstance()->publish(
                 new RType::ServerGameEvent(RType::ServerEventType::AKNOWLEDGMENT, client->first, {}, aClientEndpoint));
         });
 
@@ -46,7 +46,7 @@ namespace Network {
     void ServerHandler::receivePacket(const RType::Packet &aPacket, udp::endpoint &aClientEndpoint)
     {
         auto client = std::find_if(_clients.begin(), _clients.end(),
-                                   [this, aClientEndpoint](const std::pair<size_t, udp::endpoint> &aPair) {
+                                   [aClientEndpoint](const std::pair<size_t, udp::endpoint> &aPair) {
                                        return aPair.second == aClientEndpoint;
                                    });
 
@@ -54,14 +54,14 @@ namespace Network {
 
         if (client == _clients.end() && packetType == RType::ServerEventType::CONNECT && _clients.size() < 4) {
             std::cout << "New client connected" << std::endl;
-            ECS::Event::EventManager::getInstance()->pushEvent(
+            ECS::Event::EventManager::getInstance()->publish(
                 new RType::ServerGameEvent(RType::ServerEventType::CONNECT, 0, aPacket.payload, aClientEndpoint));
         }
         if (client != _clients.end() && packetType != RType::ServerEventType::CONNECT) {
-            size_t id = client->first;
-            auto *evt = new RType::ServerGameEvent(packetType, id, aPacket.payload, aClientEndpoint);
+            size_t idx = client->first;
+            auto *evt = new RType::ServerGameEvent(packetType, idx, aPacket.payload, aClientEndpoint);
 
-            ECS::Event::EventManager::getInstance()->pushEvent(evt);
+            ECS::Event::EventManager::getInstance()->publish(evt);
         }
     }
 

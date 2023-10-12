@@ -24,8 +24,8 @@ namespace ECS {
 
         // Create entity
         size_t enemyId = world.createEntity();
-        float posX = static_cast<float>(SCREEN_WIDTH - ENEMY_TEX_WIDTH);
-        float posY = static_cast<float>(rand() % SCREEN_HEIGHT);
+        auto posX = static_cast<float>(SCREEN_WIDTH - ENEMY_TEX_WIDTH);
+        auto posY = static_cast<float>(rand() % SCREEN_HEIGHT);
         aPos.insertAt(enemyId, ECS::Utils::Vector2f {posX, posY});
         aSpeed.insertAt(enemyId, Component::Speed {ENEMY_SPEED});
         aType.insertAt(enemyId, Component::TypeEntity {false, false, true, false, false, false, false});

@@ -1,5 +1,4 @@
 #include "ClientGameEvent.hpp"
-#include "EventManager.hpp"
 #include "System.hpp"
 #include "TypeUtils.hpp"
 

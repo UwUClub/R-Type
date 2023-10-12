@@ -6,8 +6,9 @@ namespace ECS {
                            Core::SparseArray<Component::TypeEntity> &aType)
     {
         auto &world = Core::World::getInstance();
+        const auto &size = aPos.size();
 
-        for (size_t idx = 0; idx < aPos.size(); idx++) {
+        for (size_t idx = 0; idx < size; idx++) {
             if (!aPos[idx].has_value() || !aSpeed[idx].has_value() || !aType[idx].has_value()) {
                 continue;
             }
@@ -16,11 +17,10 @@ namespace ECS {
             auto &type = aType[idx].value();
             if (type.isEnemy) {
                 pos.x -= speed.speed * world.getDeltaTime();
-                if (pos.x < -30) {
+                if (pos.x < -ENEMY_TEX_WIDTH) {
                     world.killEntity(idx);
                 }
             }
         }
     }
-
 } // namespace ECS

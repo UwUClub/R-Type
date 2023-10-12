@@ -62,6 +62,7 @@ size_t SDLDisplayClass::addEntity(ECS::Utils::Vector2f aPos, Component::Speed aS
 SDL_Texture *SDLDisplayClass::getTexture(const std::string &aPath)
 {
     if (_textures.find(aPath) == _textures.end()) {
+        std::cout << "Loading texture: " << aPath << std::endl;
         _textures[aPath] = IMG_LoadTexture(_renderer, aPath.c_str());
         if (_textures[aPath] == nullptr) {
             std::cerr << "Failed to create texture: " << SDL_GetError() << std::endl;

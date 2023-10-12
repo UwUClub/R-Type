@@ -21,7 +21,7 @@ namespace ECS {
             /**
              * @brief Create local background once connected to server (triggered by server)
              */
-            static void createBackground();
+            static void createBackground(RType::ClientGameEvent *aEvent);
 
             /**
              * @brief Handle the background's movements (locally)
@@ -116,8 +116,7 @@ namespace ECS {
              * @brief Handle the death of a bot (triggered by server)
              * @param aSpeed
              */
-            static void triggerBotBonus(Core::SparseArray<Component::Speed> &aSpeed,
-                                        Core::SparseArray<Component::TypeEntity> &aType);
+            static void triggerBotBonus(RType::ClientGameEvent *aEvent);
 
             /**
              * @brief Handle the disconnection of a player (triggered by server)
@@ -215,7 +214,7 @@ namespace ECS {
             /**
              * @brief Display error message in case server is full (triggered by server)
              */
-            static void createServerFullErrorMessage();
+            static void createServerFullErrorMessage(RType::ClientGameEvent *aEvent);
 
         private:
             /**

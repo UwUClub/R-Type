@@ -1,7 +1,6 @@
 #include <iostream>
 #include "Components.hpp"
 #include "Event.hpp"
-#include "EventManager.hpp"
 #include "Packets.hpp"
 #include "ServerGameEvent.hpp"
 #include "ServerHandler.hpp"
@@ -9,28 +8,20 @@
 #include "World.hpp"
 
 namespace ECS {
-    void System::disconnectPlayer(Core::SparseArray<Component::Connection> &aConnection)
+    void System::disconnectPlayer(RType::ServerGameEvent *aEvent)
     {
         Core::World &world = Core::World::getInstance();
-        ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
         Network::ServerHandler &server = Network::ServerHandler::getInstance();
-        auto events = eventManager->getEventsByType(Event::EventType::GAME);
+        auto &connectionComp = world.getComponent<Component::Connection>();
 
-        for (auto &event : events) {
-            auto &gameEvent = static_cast<RType::ServerGameEvent &>(*event);
-            if (gameEvent.getType() == RType::ServerEventType::DISCONNECT) {
-                size_t playerId = gameEvent.getEntityId();
+        if (aEvent->getType() == RType::ServerEventType::DISCONNECT) {
+            size_t playerId = aEvent->getEntityId();
 
-                world.killEntity(playerId);
-                server.removeClient(playerId);
+            world.killEntity(playerId);
+            server.removeClient(playerId);
 
-                server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_DISCONNECTION),
-                                 {static_cast<float>(playerId)}, aConnection);
-
-                eventManager->removeEvent(event);
-
-                std::cout << "Player " << playerId << " left" << std::endl;
-            }
+            server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_DISCONNECTION),
+                             {static_cast<float>(playerId)}, connectionComp);
         }
     }
 } // namespace ECS

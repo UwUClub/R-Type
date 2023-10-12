@@ -17,21 +17,18 @@
 #include "World.hpp"
 #include <SDL_rect.h>
 
-int main(int ac, char **av)
+int main(int argc, const char **argv)
 {
-    if (ac < 3) {
-        std::cerr << "Usage: " << av[0] << " <host> <port>" << std::endl;
+    if (argc < 3) {
+        std::cerr << "Usage: ./client <host> <port>" << std::endl;
         return FAILURE;
     }
 
     try {
         // Network
-        std::string host(av[1]);
-        std::string port(av[2]);
+        std::string host(argv[1]);
+        std::string port(argv[2]);
         auto &client = Network::ClientHandler::getInstance();
-        client.start(host, port);
-        RType::Packet connectPacket(static_cast<int>(RType::ServerEventType::CONNECT));
-        client.send(connectPacket);
 
         // Setup ECS / graphic
         ECS::Core::World &world = ECS::Core::World::getInstance();
@@ -57,10 +54,14 @@ int main(int ac, char **av)
         eventManager->subscribe<RType::ClientGameEvent>(ECS::System::triggerBotShoot);
         eventManager->subscribe<RType::ClientGameEvent>(ECS::System::triggerBotDeath);
         eventManager->subscribe<RType::ClientGameEvent>(ECS::System::triggerBotDisconnect);
+        eventManager->subscribe<RType::ClientGameEvent>(ECS::System::triggerBotBonus);
         // Enemy systems subscription
         eventManager->subscribe<RType::ClientGameEvent>(ECS::System::createEnemy);
         eventManager->subscribe<RType::ClientGameEvent>(ECS::System::triggerEnemyShoot);
         eventManager->subscribe<RType::ClientGameEvent>(ECS::System::triggerEnemyDeath);
+        // Error message subscription
+        eventManager->subscribe<RType::ClientGameEvent>(ECS::System::createServerFullErrorMessage);
+        eventManager->subscribe<RType::ClientGameEvent>(ECS::System::createBackground);
 
         // Graphic systems
         world.addSystem(ECS::System::getInput);
@@ -68,7 +69,6 @@ int main(int ac, char **av)
         world.addSystem<Component::LoadedSprite, ECS::Utils::Vector2f>(ECS::System::displayEntities);
 
         // Background systems
-        world.addSystem(ECS::System::createBackground);
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBackground);
 
         // Bot systems
@@ -82,23 +82,22 @@ int main(int ac, char **av)
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBonus);
         world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive, Component::HitBox>(
             ECS::System::triggerBonus);
-        world.addSystem<Component::Speed, Component::TypeEntity>(ECS::System::triggerBotBonus);
 
         // Missile systems
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveMissiles);
 
-        // Error message system
-        world.addSystem(ECS::System::createServerFullErrorMessage);
-
         // Loading message
-        display.addEntity(
-            ECS::Utils::Vector2f {SCREEN_WIDTH / 2 - LOADING_MESSAGE_TEX_WIDTH / 2,
-                                  SCREEN_HEIGHT / 2 - LOADING_MESSAGE_TEX_HEIGHT / 2},
-            Component::Speed {0}, Component::TypeEntity {false, false, false, false, false, false, false},
-            Component::LoadedSprite {LOADING_MESSAGE_ASSET, nullptr, nullptr,
-                                     new SDL_Rect {0, 0, LOADING_MESSAGE_TEX_WIDTH, LOADING_MESSAGE_TEX_HEIGHT}},
-            Component::HitBox {}, Component::IsAlive {false, 0});
+        // display.addEntity(
+        //     ECS::Utils::Vector2f {SCREEN_WIDTH / 2 - LOADING_MESSAGE_TEX_WIDTH / 2,
+        //                           SCREEN_HEIGHT / 2 - LOADING_MESSAGE_TEX_HEIGHT / 2},
+        //     Component::Speed {0}, Component::TypeEntity {false, false, false, false, false, false, false},
+        //     Component::LoadedSprite {LOADING_MESSAGE_ASSET, nullptr, nullptr,
+        //                              new SDL_Rect {0, 0, LOADING_MESSAGE_TEX_WIDTH, LOADING_MESSAGE_TEX_HEIGHT}},
+        //     Component::HitBox {}, Component::IsAlive {false, 0});
 
+        client.start(host, port);
+        RType::Packet connectPacket(static_cast<int>(RType::ServerEventType::CONNECT));
+        client.send(connectPacket);
         // Game loop
         while (world.isRunning()) {
             world.runSystems();

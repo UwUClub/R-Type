@@ -32,9 +32,11 @@ namespace ECS {
                            Core::SparseArray<Component::HitBox> &aHitBox)
     {
         auto &world = Core::World::getInstance();
+        const auto size = aType.size();
 
-        for (size_t playerId = 0; playerId < aType.size(); playerId++) {
-            if (!aType[playerId].has_value() || !aType[playerId].value().isPlayer) {
+        for (size_t playerId = 0; playerId < size; playerId++) {
+            if (!aType[playerId].has_value() || !aPos[playerId].has_value() || !aHitBox[playerId].has_value()
+                || !aIsAlive[playerId].has_value() || !aType[playerId].value().isPlayer) {
                 continue;
             }
             for (size_t obstacleId = 0; obstacleId < aPos.size(); obstacleId++) {

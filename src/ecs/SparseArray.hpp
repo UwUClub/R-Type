@@ -56,10 +56,16 @@ namespace ECS::Core {
 
             referenceType operator[](std::size_t aIndex)
             {
+                if (aIndex >= _container.size()) {
+                    _container.resize(aIndex + 1);
+                }
                 return _container[aIndex];
             }
             constReferenceType operator[](std::size_t aIndex) const
             {
+                if (aIndex >= _container.size()) {
+                    _container.resize(aIndex + 1);
+                }
                 return _container[aIndex];
             }
 
@@ -96,21 +102,6 @@ namespace ECS::Core {
             }
 
             //-------------- METHODS --------------//
-            /**
-             * @brief Insert a component at the position aPos
-             *
-             * @param aPos The position to insert the component (Index of the Entity)
-             * @param aValue The component to insert
-             * @return referenceType A reference to the component inserted
-             */
-            referenceType insertAt(sizeType aPos, constReferenceType aValue)
-            {
-                if (aPos >= _container.size()) {
-                    _container.resize(aPos + 1);
-                }
-                _container[aPos] = aValue;
-                return _container[aPos];
-            }
 
             /**
              * @brief Insert a component at the position aPos

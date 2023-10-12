@@ -7,13 +7,16 @@ namespace ECS {
                           Core::SparseArray<Component::IsAlive> &aIsAlive)
     {
         auto &world = Core::World::getInstance();
+        const auto size = aType.size();
 
-        for (size_t enemyId = 0; enemyId < aType.size(); enemyId++) {
+        for (size_t enemyId = 0; enemyId < size; enemyId++) {
             if (!aType[enemyId].has_value() || !aType[enemyId].value().isEnemy) {
                 continue;
             }
             for (size_t bullet = 0; bullet < aPos.size(); bullet++) {
-                if (!aType[bullet].has_value() || !aType[bullet].value().isBullet) {
+                if (!aType[bullet].has_value() || !aPos[bullet].has_value() || !aPos[enemyId].has_value()
+                    || !aHitBox[bullet].has_value() || !aIsAlive[enemyId].has_value()
+                    || !aType[bullet].value().isBullet) {
                     continue;
                 }
                 if (aPos[bullet].value().x > aPos[enemyId].value().x

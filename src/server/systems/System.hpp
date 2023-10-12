@@ -14,58 +14,27 @@ namespace ECS {
     class System
     {
         public:
+            //---------PLAYER----------//
             /**
              * @brief Welcome the players
              *
-             * @param aPos SparseArray of all entities position
-             * @param aSpeed Sparsearray of all entities speed
-             * @param aType SparseArray of all entities type
-             * @param aHitBox SparseArray of all entities hitbox
-             * @param aIsAlive SparseArray of all entities isAlive
-             * @param aConnection SparseArray of all entities connection
+             * @param aEvent Event to handle
              */
-            static void welcomePlayer(Core::SparseArray<ECS::Utils::Vector2f> &aPos,
-                                      Core::SparseArray<Component::Speed> &aSpeed,
-                                      Core::SparseArray<Component::TypeEntity> &aType,
-                                      Core::SparseArray<Component::HitBox> &aHitBox,
-                                      Core::SparseArray<Component::IsAlive> &aIsAlive,
-                                      Core::SparseArray<Component::Connection> &aConnection);
+            static void welcomePlayer(RType::ServerGameEvent *aEvent);
 
             /**
              * @brief Move the player
              *
-             * @param aPos SparseArray of all entities position
-             * @param aSpeed Sparsearray of all entities speed
-             * @param aConnection SparseArray of all entities connection
+             * @param aEvent Event to handle
              */
-            static void movePlayer(Core::SparseArray<ECS::Utils::Vector2f> &aPos,
-                                   Core::SparseArray<Component::Speed> &aSpeed,
-                                   Core::SparseArray<Component::Connection> &aConnection);
+            static void movePlayer(RType::ServerGameEvent *aEvent);
 
             /**
              * @brief Make players shoot
              *
-             * @param aPos SparseArray of all entities position
-             * @param aSpeed Sparsearray of all entities speed
-             * @param aType SparseArray of all entities type
-             * @param aHitBox SparseArray of all entities hitbox
-             * @param aIsAlive SparseArray of all entities isAlive
-             * @param aConnection SparseArray of all entities connection
+             * @param aEvent Event to handle
              */
-            static void playerShoot(Core::SparseArray<Utils::Vector2f> &aPos,
-                                    Core::SparseArray<Component::Speed> &aSpeed,
-                                    Core::SparseArray<Component::TypeEntity> &aType,
-                                    Core::SparseArray<Component::HitBox> &aHitBox,
-                                    Core::SparseArray<Component::Connection> &aConnection);
-
-            /**
-             * @brief Move the player speed up
-             *
-             * @param aSpeed Sparsearray of all entities speed
-             * @param aConnection SparseArray of all entities connection
-             */
-            static void moveSpeedUp(Core::SparseArray<Component::Speed> &aSpeed,
-                                    Core::SparseArray<Component::Connection> &aConnection);
+            static void playerShoot(RType::ServerGameEvent *aEvent);
 
             /**
              * @brief Handle players who get hit
@@ -94,9 +63,9 @@ namespace ECS {
             /**
              * @brief Disconnect the player from the server
              *
-             * @param aConnection SparseArray of all entities connection
+             * @param aEvent Event to handle
              */
-            static void disconnectPlayer(Core::SparseArray<Component::Connection> &aConnection);
+            static void disconnectPlayer(RType::ServerGameEvent *aEvent);
 
             /**
              * @brief Handle player crash
@@ -109,13 +78,15 @@ namespace ECS {
                                           Core::SparseArray<Component::TypeEntity> &aType,
                                           Core::SparseArray<Component::Connection> &aConnection);
 
+            //---------NETWORK----------//
             /**
              * @brief Receive client aknowledgment
              *
-             * @param aConnection SparseArray of all entities connection status
+             * @param aEvent Event to handle
              */
-            static void receiveAknowledgment(Core::SparseArray<Component::Connection> &aConnection);
+            static void receiveAknowledgment(RType::ServerGameEvent *aEvent);
 
+            //---------ENEMY----------//
             /**
              * @brief Spawn enemies
              *
@@ -184,6 +155,7 @@ namespace ECS {
                                   Core::SparseArray<Component::IsAlive> &aIsAlive,
                                   Core::SparseArray<Component::Connection> &aConnection);
 
+            //---------MISSILE----------//
             /**
              * @brief Move missiles
              *
@@ -194,6 +166,14 @@ namespace ECS {
             static void moveMissiles(Core::SparseArray<Utils::Vector2f> &aPos,
                                      Core::SparseArray<Component::Speed> &aSpeed,
                                      Core::SparseArray<Component::TypeEntity> &aType);
+
+            //---------BONUS----------//
+            /**
+             * @brief Move the player speed up
+             *
+             * @param aEvent Event to handle
+             */
+            static void moveSpeedUp(RType::ServerGameEvent *aEvent);
     };
 } // namespace ECS
 #endif /* !SYSTEM_HPP_ */

@@ -19,7 +19,8 @@ namespace ECS {
                 continue;
             }
             for (size_t missileId = 0; missileId < size; missileId++) {
-                if (!aType[missileId].has_value() || !aType[missileId].value().isBullet) {
+                if (!aType[missileId].has_value() || !aPos[missileId].has_value()
+                    || !aType[missileId].value().isBullet) {
                     continue;
                 }
                 if ((aPos[missileId].value().x > aPos[player].value().x

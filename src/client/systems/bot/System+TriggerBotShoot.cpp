@@ -1,6 +1,5 @@
 #include <cstddef>
 #include "ClientGameEvent.hpp"
-#include "EventManager.hpp"
 #include "IsAlive.hpp"
 #include "SDLDisplayClass.hpp"
 #include "SparseArray.hpp"

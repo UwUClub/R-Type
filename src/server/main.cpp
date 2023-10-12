@@ -12,7 +12,7 @@
 int main(int ac, char **av)
 {
     if (ac < 3) {
-        std::cerr << "Usage: " << av[0] << " <host> <port>" << std::endl;
+        std::cerr << "Usage: ./server <host> <port>" << std::endl;
         return FAILURE;
     }
 
@@ -35,20 +35,23 @@ int main(int ac, char **av)
         world.registerComponent<Component::IsAlive>();
         world.registerComponent<Component::Connection>();
 
+        //-----Events subscription
+        // Player systems subscription
+        eventManager->subscribe<RType::ServerGameEvent>(ECS::System::welcomePlayer);
+        eventManager->subscribe<RType::ServerGameEvent>(ECS::System::movePlayer);
+        eventManager->subscribe<RType::ServerGameEvent>(ECS::System::playerShoot);
+        eventManager->subscribe<RType::ServerGameEvent>(ECS::System::disconnectPlayer);
+        // Bonus systems subscription
+        eventManager->subscribe<RType::ServerGameEvent>(ECS::System::moveSpeedUp);
+        // Network systems subscription
+        eventManager->subscribe<RType::ServerGameEvent>(ECS::System::receiveAknowledgment);
+
         // Player systems
-        world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::HitBox,
-                        Component::IsAlive, Component::Connection>(ECS::System::welcomePlayer);
-        world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::Connection>(ECS::System::movePlayer);
-        world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::HitBox,
-                        Component::Connection>(ECS::System::playerShoot);
         world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive, Component::HitBox>(
             ECS::System::playerHit);
         world.addSystem<Component::TypeEntity, Component::IsAlive, Component::Connection>(ECS::System::killPlayer);
-        world.addSystem<Component::Speed, Component::Connection>(ECS::System::moveSpeedUp);
-        world.addSystem<Component::Connection>(ECS::System::disconnectPlayer);
 
         // Network systems
-        world.addSystem<Component::Connection>(ECS::System::receiveAknowledgment);
         world.addSystem<Component::IsAlive, Component::TypeEntity, Component::Connection>(
             ECS::System::handlePlayerCrash);
 
@@ -68,7 +71,6 @@ int main(int ac, char **av)
         // Game loop
         while (world.isRunning()) {
             world.runSystems();
-            eventManager->clearNonGameEvents();
             world.calcDeltaTime();
         }
 

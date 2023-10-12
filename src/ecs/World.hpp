@@ -132,6 +132,7 @@ as Component container
             std::size_t createEntity()
             {
                 if (_reusableIds.empty()) {
+                    std::cout << "Create entity " << _id << std::endl;
                     for (auto &component : _components) {
                         _addFunctions[component.first](*this, _id);
                     }

@@ -4,7 +4,6 @@
 #include <chrono>
 #include <iostream>
 #include <string>
-#include "EventManager.hpp"
 #include "Packets.hpp"
 
 namespace Network {

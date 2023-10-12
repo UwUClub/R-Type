@@ -1,33 +1,31 @@
 #include "Components.hpp"
 #include "Event.hpp"
-#include "EventManager.hpp"
 #include "Packets.hpp"
 #include "ServerGameEvent.hpp"
 #include "ServerHandler.hpp"
+#include "SparseArray.hpp"
 #include "System.hpp"
 #include "World.hpp"
 
 namespace ECS {
-    void System::moveSpeedUp(Core::SparseArray<Component::Speed> &aSpeed,
-                             Core::SparseArray<Component::Connection> &aConnection)
+    void System::moveSpeedUp(RType::ServerGameEvent *aEvent)
     {
-        ECS::Core::World const &world = ECS::Core::World::getInstance();
-        ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
+        ECS::Core::World &world = ECS::Core::World::getInstance();
         Network::ServerHandler &network = Network::ServerHandler::getInstance();
-        auto events = eventManager->getEventsByType(Event::EventType::GAME);
+        auto &speedComp = world.getComponent<Component::Speed>();
+        auto &connectionComp = world.getComponent<Component::Connection>();
 
-        for (auto &event : events) {
-            auto &gameEvent = static_cast<RType::ServerGameEvent &>(*event);
-            if (gameEvent.getType() == RType::ServerEventType::BONUS) {
-                auto playerId = static_cast<size_t>(gameEvent.getEntityId());
-                float const bonusType = gameEvent.getPayload()[0];
+        if (aEvent->getType() == RType::ServerEventType::BONUS) {
+            auto playerId = static_cast<size_t>(aEvent->getEntityId());
+            float const bonusType = aEvent->getPayload()[0];
+            if (!speedComp[playerId].has_value()) {
+                return;
+            }
 
-                if (bonusType == 1) {
-                    aSpeed[playerId].value().speed += 10;
-                    network.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_BONUS),
-                                      {static_cast<float>(playerId), 1}, aConnection);
-                }
-                eventManager->removeEvent(event);
+            if (bonusType == 1) {
+                speedComp[playerId].value().speed += 10;
+                network.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_BONUS),
+                                  {static_cast<float>(playerId), 1}, connectionComp);
             }
         }
     }

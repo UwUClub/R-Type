@@ -1,4 +1,5 @@
 #include "ClientGameEvent.hpp"
+#include <utility>
 
 namespace RType {
 
@@ -10,7 +11,7 @@ namespace RType {
     ClientGameEvent::ClientGameEvent(ClientEventType aType, std::vector<float> aPayload)
         : ECS::Event::Event(ECS::Event::EventType::GAME),
           _type(aType),
-          _payload(aPayload)
+          _payload(std::move(aPayload))
     {}
 
     ClientEventType ClientGameEvent::getType() const

@@ -29,7 +29,7 @@ namespace Network {
             }
         });
 
-        network.onReceiveAknowledgment([this](const std::string &aUuid, udp::endpoint &aEndpoint) {
+        network.onReceiveAknowledgment([](const std::string &aUuid, udp::endpoint &aEndpoint) {
             (void) aUuid;
             (void) aEndpoint;
         });
@@ -40,10 +40,11 @@ namespace Network {
 
     void ClientHandler::receivePacket(const RType::Packet &aPacket)
     {
-        RType::ClientEventType packetType = static_cast<RType::ClientEventType>(aPacket.type);
+        auto packetType = static_cast<RType::ClientEventType>(aPacket.type);
 
         auto *evt = new RType::ClientGameEvent(packetType, aPacket.payload);
-        ECS::Event::EventManager::getInstance()->pushEvent(evt);
+        std::cout << "Received packet " << aPacket.type << std::endl;
+        ECS::Event::EventManager::getInstance()->publish(evt);
     }
 
     void ClientHandler::send(RType::Packet &aPacket)
