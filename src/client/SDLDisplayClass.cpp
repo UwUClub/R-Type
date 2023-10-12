@@ -56,7 +56,7 @@ SDLDisplayClass::SDLDisplayClass()
     }
     _assetPath = std::string(dir) + "/";
 #else
-    _assetPath = "./"
+    _assetPath = "./";
 #endif
 }
 
