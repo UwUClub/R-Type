@@ -16,7 +16,7 @@ if (SDL2_DOWNLOADED)
             PRIVATE R_Type::R_Type_options
             R_Type::R_Type_warnings
             SDL2::SDL2main
-            SDL2::SDL2
+            SDL2::SDL2-static
             SDL2_image
             ${Boost_LIBRARIES}
             Boost::serialization
@@ -31,7 +31,7 @@ else()
             PRIVATE R_Type::R_Type_options
             R_Type::R_Type_warnings
             SDL2::SDL2main
-            SDL2::SDL2
+            SDL2::SDL2-static
             SDL2_image
             ${Boost_LIBRARIES}
             Boost::serialization
