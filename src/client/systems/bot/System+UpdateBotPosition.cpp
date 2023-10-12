@@ -1,6 +1,6 @@
 #include "ClientGameEvent.hpp"
 #include "EventManager.hpp"
-#include "SDLDisplayClass.hpp"
+#include "RayDisplayClass.hpp"
 #include "System.hpp"
 #include "TypeUtils.hpp"
 

@@ -8,7 +8,6 @@
 #ifndef SDLDISPLAYClass_HPP_
 #define SDLDISPLAYClass_HPP_
 
-#include <SDL2/SDL.h>
 #include <cstddef>
 #include <string>
 #include "Components.hpp"
@@ -16,26 +15,26 @@
 #include "MouseEvent.hpp"
 #include "Utils.hpp"
 #include "WindowEvent.hpp"
-#include <SDL_image.h>
+#include "raylib.h"
 #include <unordered_map>
 
-class SDLDisplayClass
+class RayDisplayClass
 {
     public:
         /**
          * @brief Destroy the SDLDisplayClass object
          *
          */
-        ~SDLDisplayClass();
+        ~RayDisplayClass();
 
         /**
          * @brief Get an Instance of the SDLDisplayClass (singleton)
          *
          * @return SDLDisplayClass&
          */
-        static SDLDisplayClass &getInstance()
+        static RayDisplayClass &getInstance()
         {
-            static SDLDisplayClass instance;
+            static RayDisplayClass instance;
 
             return instance;
         }
@@ -45,14 +44,7 @@ class SDLDisplayClass
          *
          * @return SDL_Texture*
          */
-        SDL_Texture *getTexture(const std::string &path);
-
-        /**
-         * @brief Free the rects of the entity
-         *
-         * @param idx The index of the entity
-         */
-        void freeRects(const std::size_t &idx);
+        Texture2D *getTexture(const std::string &path);
 
         /**
          * @brief Create a new entity object
@@ -68,17 +60,16 @@ class SDLDisplayClass
         static size_t addEntity(ECS::Utils::Vector2f aPos, Component::Speed aSpeed, Component::TypeEntity aType,
                                 Component::LoadedSprite aSprite, Component::HitBox aHitBox,
                                 Component::IsAlive aIsAlive);
-        SDL_Renderer *_renderer;
-        SDL_Window *_window;
+
         std::string _assetPath;
 
     private:
-        std::unordered_map<std::string, SDL_Texture *> _textures;
+        std::unordered_map<std::string, Texture2D> _textures;
         /**
          * @brief Construct a new SDLDisplayClass object
          *
          */
-        SDLDisplayClass();
+        RayDisplayClass();
 };
 
 #endif /* !SDLDISPLAYClass_HPP_ */

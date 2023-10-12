@@ -43,7 +43,7 @@ namespace ECS {
                 size_t playerId = world.createEntity();
                 RType::PLAYER_COLOR playerColor = server.addClientColor(playerId);
 
-                if (playerColor == RType::PLAYER_COLOR::NONE) {
+                if (playerColor == RType::PLAYER_COLOR::NONE_PLAYER) {
                     world.killEntity(playerId);
                     continue;
                 }

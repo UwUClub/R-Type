@@ -1,8 +1,6 @@
 #ifndef UTILS_HPP
 #define UTILS_HPP
 
-#include <SDL.h>
-
 namespace ECS::Utils {
     struct Vector2i
     {

@@ -1,6 +1,7 @@
 #ifndef SYSTEM_HPP_
 #define SYSTEM_HPP_
 
+#include <sys/types.h>
 #include "Components.hpp"
 #include "IsAlive.hpp"
 #include "KeyboardEvent.hpp"
@@ -9,6 +10,7 @@
 #include "WindowEvent.hpp"
 #include "World.hpp"
 #include "components/HitBox.hpp"
+#include "raylib.h"
 
 namespace ECS {
     class System
@@ -72,12 +74,6 @@ namespace ECS {
              *
              */
             static void getInput();
-
-            /**
-             * @brief Close the SDL window (locally)
-             *
-             */
-            static void quitSDL();
 
             /**
              * @brief Load all the textures of the game (locally)
@@ -226,21 +222,10 @@ namespace ECS {
              * @brief Map of all the SDL_Keycode and their equivalent in our ECS
              *
              */
-            static const inline std::unordered_map<SDL_Keycode, const ECS::Event::KeyIdentifier> _keyMap = {
-                {SDLK_ESCAPE, ECS::Event::KeyIdentifier::ESCAPE}, {SDLK_UP, ECS::Event::KeyIdentifier::UP},
-                {SDLK_DOWN, ECS::Event::KeyIdentifier::DOWN},     {SDLK_LEFT, ECS::Event::KeyIdentifier::LEFT},
-                {SDLK_RIGHT, ECS::Event::KeyIdentifier::RIGHT},   {SDLK_SPACE, ECS::Event::KeyIdentifier::SPACE},
-            };
-
-            /**
-             * @brief Map of all the SDL_WindowEvent and their equivalent in our ECS
-             *
-             */
-            static const inline std::unordered_map<Uint32, const ECS::Event::WindowEventType> _windowEventMap = {
-                {SDL_WINDOWEVENT_CLOSE, ECS::Event::WindowEventType::CLOSED},
-                {SDL_WINDOWEVENT_RESIZED, ECS::Event::WindowEventType::RESIZED},
-                {SDL_WINDOWEVENT_FOCUS_GAINED, ECS::Event::WindowEventType::FOCUSED},
-                {SDL_WINDOWEVENT_FOCUS_LOST, ECS::Event::WindowEventType::UNFOCUSED},
+            static const inline std::unordered_map<key_t, const ECS::Event::KeyIdentifier> _keyMap = {
+                {KEY_ESCAPE, ECS::Event::KeyIdentifier::ESCAPE}, {KEY_UP, ECS::Event::KeyIdentifier::UP},
+                {KEY_DOWN, ECS::Event::KeyIdentifier::DOWN},     {KEY_LEFT, ECS::Event::KeyIdentifier::LEFT},
+                {KEY_RIGHT, ECS::Event::KeyIdentifier::RIGHT},   {KEY_SPACE, ECS::Event::KeyIdentifier::SPACE},
             };
     };
 } // namespace ECS

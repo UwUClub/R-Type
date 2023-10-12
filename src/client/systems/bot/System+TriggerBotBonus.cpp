@@ -12,7 +12,7 @@ namespace ECS {
         auto &typeUtils = RType::TypeUtils::getInstance();
 
         for (auto &event : events) {
-            auto &gameEvent = dynamic_cast<RType::ClientGameEvent &>(*event);
+            auto &gameEvent = static_cast<RType::ClientGameEvent &>(*event);
 
             if (gameEvent.getType() == RType::ClientEventType::PLAYER_BONUS) {
                 if (gameEvent.getPayload().size() != 2) {

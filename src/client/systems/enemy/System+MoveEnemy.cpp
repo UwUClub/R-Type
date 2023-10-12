@@ -1,4 +1,4 @@
-#include "SDLDisplayClass.hpp"
+#include "RayDisplayClass.hpp"
 #include "System.hpp"
 #include "World.hpp"
 
@@ -7,7 +7,6 @@ namespace ECS {
                            Core::SparseArray<Component::TypeEntity> &aType)
     {
         auto &world = Core::World::getInstance();
-        auto &display = SDLDisplayClass::getInstance();
 
         for (size_t idx = 0; idx < aPos.size(); idx++) {
             if (!aPos[idx].has_value()) {
@@ -19,7 +18,6 @@ namespace ECS {
             if (type.isEnemy) {
                 pos.x -= speed.speed * world.getDeltaTime();
                 if (pos.x < -30) {
-                    display.freeRects(idx);
                     world.killEntity(idx);
                 }
             }

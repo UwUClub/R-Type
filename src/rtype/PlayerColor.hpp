@@ -4,11 +4,11 @@
 namespace RType {
     enum PLAYER_COLOR
     {
-        NONE = -1,
-        BLUE = 0,
-        PURPLE = 1,
-        GREEN = 2,
-        RED = 3
+        NONE_PLAYER = -1,
+        BLUE_PLAYER = 0,
+        PURPLE_PLAYER = 1,
+        GREEN_PLAYER = 2,
+        RED_PLAYER = 3
     };
 }
 

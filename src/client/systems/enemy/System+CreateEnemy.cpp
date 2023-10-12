@@ -1,6 +1,6 @@
 #include "ClientGameEvent.hpp"
 #include "EventManager.hpp"
-#include "SDLDisplayClass.hpp"
+#include "RayDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 
@@ -8,7 +8,7 @@ namespace ECS {
     void System::createEnemy()
     {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
-        SDLDisplayClass &display = SDLDisplayClass::getInstance();
+        RayDisplayClass &display = RayDisplayClass::getInstance();
         auto events = eventManager->getEventsByType(Event::EventType::GAME);
 
         for (auto &event : events) {
@@ -26,9 +26,8 @@ namespace ECS {
                 display.addEntity(
                     ECS::Utils::Vector2f {posX, posY}, Component::Speed {ENEMY_SPEED},
                     Component::TypeEntity {false, false, true, false, false, false, false, onlineEntityId},
-                    Component::LoadedSprite {ENEMY_ASSET, nullptr,
-                                             new SDL_Rect {0, 0, ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT},
-                                             new SDL_Rect {0, 0, ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT}},
+                    Component::LoadedSprite {ENEMY_ASSET, nullptr, Rectangle {0, 0, ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT},
+                                             Rectangle {0, 0, ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT}},
                     Component::HitBox {ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT}, Component::IsAlive {true, 0});
 
                 eventManager->removeEvent(event);

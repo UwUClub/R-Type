@@ -1,4 +1,4 @@
-#include "SDLDisplayClass.hpp"
+#include "RayDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 #include "World.hpp"

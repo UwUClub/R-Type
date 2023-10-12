@@ -2,7 +2,7 @@
 #include "ClientHandler.hpp"
 #include "EventManager.hpp"
 #include "KeyboardEvent.hpp"
-#include "SDLDisplayClass.hpp"
+#include "RayDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 #include <unordered_map>

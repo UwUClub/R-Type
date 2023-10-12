@@ -73,7 +73,7 @@ namespace Network {
 
     RType::PLAYER_COLOR ServerHandler::addClientColor(size_t aClientId)
     {
-        RType::PLAYER_COLOR color = RType::PLAYER_COLOR::NONE;
+        RType::PLAYER_COLOR color = RType::PLAYER_COLOR::NONE_PLAYER;
 
         for (int i = 0; i < MAX_NUMBER_PLAYER; i++) {
             color = static_cast<RType::PLAYER_COLOR>(i);
@@ -82,7 +82,7 @@ namespace Network {
                 return color;
             }
         }
-        return RType::PLAYER_COLOR::NONE;
+        return RType::PLAYER_COLOR::NONE_PLAYER;
     }
 
     RType::PLAYER_COLOR ServerHandler::getClientColor(size_t aClientId)
@@ -92,7 +92,7 @@ namespace Network {
                 return static_cast<RType::PLAYER_COLOR>(i);
             }
         }
-        return RType::PLAYER_COLOR::NONE;
+        return RType::PLAYER_COLOR::NONE_PLAYER;
     }
 
     void ServerHandler::removeClient(size_t aClientId)

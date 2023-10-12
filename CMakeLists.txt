@@ -1,5 +1,4 @@
 cmake_minimum_required(VERSION 3.21)
-find_package(SDL2 QUIET)
 
 # This template attempts to be "fetch_content"-able
 # so that it works well with tools like CPM or other
@@ -25,11 +24,7 @@ project(
 
 include(cmake/PreventInSourceBuilds.cmake)
 include(ProjectOptions.cmake)
-if (NOT TARGET SDL2::SDL2)
-  set(SDL2_DOWNLOADED TRUE)
-else()
-    set(SDL2_DOWNLOADED FALSE)
-endif()
+
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 R_Type_setup_options()
 

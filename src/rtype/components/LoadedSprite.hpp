@@ -6,9 +6,10 @@
 */
 
 #include <cstddef>
+#include <memory>
 #include <string>
 #include <utility>
-#include <SDL_render.h>
+#include "raylib.h"
 
 #ifndef LOADEDSPRITE_HPP
     #define LOADEDSPRITE_HPP
@@ -21,9 +22,7 @@ namespace Component {
              *
              */
             LoadedSprite()
-                : texture(nullptr),
-                  rect(nullptr),
-                  srcRect(nullptr)
+                : texture(nullptr)
             {}
             /**
              * @brief Construct a new Loaded Sprite object
@@ -33,7 +32,7 @@ namespace Component {
              * @param aTextureRect Size and position of the sprite in the texture
              * @param aDisplayRect Size and position of the sprite on the screen
              */
-            LoadedSprite(std::string aPath, SDL_Texture *aTexture, SDL_Rect *aTextureRect, SDL_Rect *aDisplayRect)
+            LoadedSprite(std::string aPath, Texture2D *aTexture, Rectangle aTextureRect, Rectangle aDisplayRect)
                 : path(std::move(aPath)),
                   texture(aTexture),
                   rect(aTextureRect),
@@ -41,9 +40,9 @@ namespace Component {
             {}
 
             std::string path;
-            SDL_Texture *texture;
-            SDL_Rect *rect;
-            SDL_Rect *srcRect;
+            Texture2D *texture;
+            Rectangle rect {};
+            Rectangle srcRect {};
     };
 } // namespace Component
 #endif // DEBUG

@@ -1,28 +1,24 @@
 #include "KeyboardEvent.hpp"
-#include "SDLDisplayClass.hpp"
+#include "RayDisplayClass.hpp"
 #include "System.hpp"
-#include <SDL_image.h>
+#include "raylib.h"
 
 namespace ECS {
     void System::displayEntities(Core::SparseArray<Component::LoadedSprite> &aSprites,
                                  Core::SparseArray<Utils::Vector2f> &aPos)
     {
-        SDLDisplayClass &display = SDLDisplayClass::getInstance();
+        const auto size = aSprites.size();
 
-        SDL_SetRenderDrawColor(display._renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-        SDL_RenderClear(display._renderer);
-        for (size_t i = 0; i < aSprites.size(); i++) {
-            if (!aSprites[i].has_value() || aSprites[i]->texture == nullptr) {
+        for (auto itx = 0; itx < size; ++itx) {
+            if (!aSprites[itx].has_value() || aSprites[itx].value().texture == nullptr) {
                 continue;
             }
-            if (!aPos[i].has_value()) {
-                continue;
-            }
-            if (aSprites[i]->srcRect != nullptr) {
-                aSprites[i]->srcRect->x = static_cast<int>(aPos[i].value().x);
-                aSprites[i]->srcRect->y = static_cast<int>(aPos[i].value().y);
-            }
-            SDL_RenderCopy(display._renderer, aSprites[i]->texture, aSprites[i]->rect, aSprites[i]->srcRect);
+            const auto &sprite = aSprites[itx].value();
+            const auto &pos = aPos[itx].value();
+            const auto &rect = sprite.rect;
+            const auto &texture = sprite.texture;
+
+            DrawTextureRec(*texture, rect, {pos.x, pos.y}, WHITE);
         }
     }
 } // namespace ECS

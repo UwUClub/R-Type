@@ -3,7 +3,7 @@
 #include <vector>
 #include "ClientHandler.hpp"
 #include "Packets.hpp"
-#include "SDLDisplayClass.hpp"
+#include "RayDisplayClass.hpp"
 #include "System.hpp"
 
 namespace ECS {
@@ -12,7 +12,6 @@ namespace ECS {
                               Core::SparseArray<Component::HitBox> &aHitBox)
     {
         auto &world = Core::World::getInstance();
-        auto &display = SDLDisplayClass::getInstance();
         auto &client = Network::ClientHandler::getInstance();
 
         for (size_t bonus = 0; bonus < aType.size(); bonus++) {
@@ -33,7 +32,6 @@ namespace ECS {
                         && aPos[bonus].value().y > aPos[player].value().y
                         && aPos[bonus].value().y < aPos[player].value().y + aHitBox[player].value().height)) {
                     aIsAlive[bonus].value().isAlive = false;
-                    display.freeRects(bonus);
                     RType::Packet packet(static_cast<int>(RType::ServerEventType::BONUS), {1});
                     client.send(packet);
                     world.killEntity(bonus);
