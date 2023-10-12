@@ -1,6 +1,5 @@
 #include <iostream>
 #include "ClientGameEvent.hpp"
-#include "EventManager.hpp"
 #include "SDLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
@@ -30,7 +29,6 @@ namespace ECS {
                                                            new SDL_Rect {400, 15, SCREEN_WIDTH, SCREEN_HEIGHT}},
                                   Component::HitBox {}, Component::IsAlive {false, 0});
             }
-            Event::EventManager::getInstance()->unsubscribe<RType::ClientGameEvent>(ECS::System::createBackground);
         }
     }
 } // namespace ECS

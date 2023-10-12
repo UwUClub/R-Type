@@ -49,7 +49,7 @@ namespace ECS {
 
         for (size_t i = 0; i < size; i++) {
             if (!typeComp[i].has_value() || !speedComp[i].has_value() || !isAliveComp[i].has_value()
-                || posComp[i].has_value() || !typeComp[i].value().isPlayer) {
+                || !posComp[i].has_value() || !typeComp[i].value().isPlayer) {
                 continue;
             }
             if (keyMap.find(aEvent->_keyId) == keyMap.end() || !isAliveComp[i].value().isAlive) {

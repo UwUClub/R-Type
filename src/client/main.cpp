@@ -44,6 +44,7 @@ int main(int argc, const char **argv)
         world.registerComponent<Component::IsAlive>();
 
         //-------Events subscription
+        eventManager->subscribe<RType::ClientGameEvent>(ECS::System::createBackground);
         eventManager->subscribe<ECS::Event::WindowEvent>(ECS::System::quitSDL);
         // Player systems subscription
         eventManager->subscribe<ECS::Event::KeyboardEvent>(ECS::System::movePlayer);
@@ -61,7 +62,7 @@ int main(int argc, const char **argv)
         eventManager->subscribe<RType::ClientGameEvent>(ECS::System::triggerEnemyDeath);
         // Error message subscription
         eventManager->subscribe<RType::ClientGameEvent>(ECS::System::createServerFullErrorMessage);
-        eventManager->subscribe<RType::ClientGameEvent>(ECS::System::createBackground);
+        eventManager->subscribe<RType::ClientGameEvent>(ECS::System::unsubscriber);
 
         // Graphic systems
         world.addSystem(ECS::System::getInput);
@@ -87,13 +88,13 @@ int main(int argc, const char **argv)
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveMissiles);
 
         // Loading message
-        // display.addEntity(
-        //     ECS::Utils::Vector2f {SCREEN_WIDTH / 2 - LOADING_MESSAGE_TEX_WIDTH / 2,
-        //                           SCREEN_HEIGHT / 2 - LOADING_MESSAGE_TEX_HEIGHT / 2},
-        //     Component::Speed {0}, Component::TypeEntity {false, false, false, false, false, false, false},
-        //     Component::LoadedSprite {LOADING_MESSAGE_ASSET, nullptr, nullptr,
-        //                              new SDL_Rect {0, 0, LOADING_MESSAGE_TEX_WIDTH, LOADING_MESSAGE_TEX_HEIGHT}},
-        //     Component::HitBox {}, Component::IsAlive {false, 0});
+        display.addEntity(
+            ECS::Utils::Vector2f {SCREEN_WIDTH / 2 - LOADING_MESSAGE_TEX_WIDTH / 2,
+                                  SCREEN_HEIGHT / 2 - LOADING_MESSAGE_TEX_HEIGHT / 2},
+            Component::Speed {0}, Component::TypeEntity {false, false, false, false, false, false, false},
+            Component::LoadedSprite {LOADING_MESSAGE_ASSET, nullptr, nullptr,
+                                     new SDL_Rect {0, 0, LOADING_MESSAGE_TEX_WIDTH, LOADING_MESSAGE_TEX_HEIGHT}},
+            Component::HitBox {}, Component::IsAlive {false, 0});
 
         client.start(host, port);
         RType::Packet connectPacket(static_cast<int>(RType::ServerEventType::CONNECT));

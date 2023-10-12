@@ -216,6 +216,14 @@ namespace ECS {
              */
             static void createServerFullErrorMessage(RType::ClientGameEvent *aEvent);
 
+            //----------------------------OTHER----------------------------//
+            /**
+             * @brief use to unsubscribe certains subscribers
+             *
+             * @param aEvent The event to unsubscribe
+             */
+            static void unsubscriber(RType::ClientGameEvent *aEvent);
+
         private:
             /**
              * @brief Map of all the SDL_Keycode and their equivalent in our ECS
