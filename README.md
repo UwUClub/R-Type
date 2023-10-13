@@ -17,7 +17,6 @@
 ## Requirements
 
 - C++ 20+ is required
-- gcc 12+ is required
 
 ## Communication
 

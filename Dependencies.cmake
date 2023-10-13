@@ -7,32 +7,20 @@ include(cmake/FindSDL2.cmake)
 # targets
 function(R_Type_setup_dependencies)
 
-  find_package(Catch2 QUIET)
+  #find_package(Catch2 QUIET)
   find_package(Boost QUIET COMPONENTS system serialization align assert config core static_assert throw_exception array bind chrono integer move mpl predef asio ratio type_traits typeof utility coroutine date_time function regex smart_ptr preprocessor io uuid QUIET)
   find_package(SDL2 QUIET)
   find_package(SDL2_image QUIET)
 
-
-  if(NOT TARGET Catch2::Catch2WithMain)
-    CPMAddPackage(
-            NAME Catch2
-            VERSION 3.4.0
-            GITHUB_REPOSITORY catchorg/Catch2
-            GIT_TAG v3.4.0
-            GIT_SHALLOW TRUE
-    )
-  endif()
-
-  if (NOT TARGET Boost::boost)
-    CPMAddPackage(
-            NAME Boost
-            VERSION 1.83.0
-            GITHUB_REPOSITORY "boostorg/boost"
-            GIT_TAG "boost-1.83.0"
-            GIT_SHALLOW TRUE
-            GIT_PROGRESS TRUE
-    )
-  endif()
+  #if(NOT TARGET Catch2::Catch2WithMain)
+   # CPMAddPackage(
+    #        NAME Catch2
+     #       VERSION 3.4.0
+      #      GITHUB_REPOSITORY catchorg/Catch2
+       #     GIT_TAG v3.4.0
+        #    GIT_SHALLOW TRUE
+    #)
+  #endif()
 
   if (NOT TARGET Boost::system)
     CPMAddPackage(
@@ -494,6 +482,217 @@ function(R_Type_setup_dependencies)
     )
   endif()
 
+  if (NOT TARGET Boost::variant2)
+    CPMAddPackage(
+            NAME boost_variant2
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/variant2"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::spirit)
+    CPMAddPackage(
+            NAME boost_spirit
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/spirit"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::rational)
+    CPMAddPackage(
+            NAME boost_rational
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/rational"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::context)
+    CPMAddPackage(
+            NAME boost_context
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/context"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::algorithm)
+    CPMAddPackage(
+            NAME boost_algorithm
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/algorithm"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::exception)
+    CPMAddPackage(
+            NAME boost_exception
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/exception"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::lexical_cast)
+    CPMAddPackage(
+            NAME boost_lexical_cast
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/lexical_cast"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::endian)
+    CPMAddPackage(
+            NAME boost_endian
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/endian"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if(NOT TARGET Boost::pool)
+    CPMAddPackage(
+            NAME boost_pool
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/pool"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::exception)
+    CPMAddPackage(
+            NAME boost_exception
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/exception"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::unordered)
+    CPMAddPackage(
+            NAME boost_unordered
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/unordered"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::tokenizer)
+    CPMAddPackage(
+            NAME boost_tokenizer
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/tokenizer"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::phoenix)
+    CPMAddPackage(
+            NAME boost_phoenix
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/phoenix"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::unordered)
+    CPMAddPackage(
+            NAME boost_unordered
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/unordered"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::container)
+    CPMAddPackage(
+            NAME boost_container
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/container"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::variant)
+    CPMAddPackage(
+            NAME boost_variant
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/variant"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::proto)
+    CPMAddPackage(
+            NAME boost_proto
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/proto"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::intrusive)
+    CPMAddPackage(
+            NAME boost_intrusive
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/intrusive"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::thread)
+    CPMAddPackage(
+            NAME boost_thread
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/thread"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::type_index)
+    CPMAddPackage(
+            NAME boost_type_index
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/type_index"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+  if (NOT TARGET Boost::atomic)
+    CPMAddPackage(
+            NAME boost_atomic
+            VERSION 1.83.0
+            GITHUB_REPOSITORY "boostorg/atomic"
+            GIT_TAG "boost-1.83.0"
+            GIT_SHALLOW TRUE
+    )
+  endif()
+
+
   if (NOT TARGET SDL2)
     FetchContent_Declare(
             SDL2
@@ -501,9 +700,18 @@ function(R_Type_setup_dependencies)
             GIT_TAG release-2.28.3
             GIT_SHALLOW TRUE
             GIT_PROGRESS TRUE
+            CMAKE_ARGS -DBUILD_SHARED_LIBS=OFF -DSDL_STATIC=ON
     )
   endif()
   FetchContent_MakeAvailable(SDL2)
+  install(TARGETS SDL2-static
+          EXPORT SDL2Targets
+          RUNTIME DESTINATION bin
+          LIBRARY DESTINATION lib
+          ARCHIVE DESTINATION lib
+          INCLUDES DESTINATION include
+          PUBLIC_HEADER DESTINATION include
+          )
 
   if (NOT TARGET SDL2_image::SDL2_image)
     FetchContent_Declare(
@@ -512,9 +720,9 @@ function(R_Type_setup_dependencies)
             GIT_TAG release-2.6.3
             GIT_SHALLOW TRUE
             GIT_PROGRESS TRUE
+            CMAKE_ARGS -DBUILD_SHARED_LIBS=OFF -DSDL_STATIC=ON
     )
     set(SDL2IMAGE_INSTALL OFF)
-    set(BUILD_SHARED_LIBS FALSE)
     FetchContent_MakeAvailable(SDL2_image)
   endif()
 

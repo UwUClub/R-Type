@@ -6,6 +6,7 @@
 */
 
 #include "SDLDisplayClass.hpp"
+#include <SDL.h>
 #include <algorithm>
 #include "IsAlive.hpp"
 #include "SparseArray.hpp"
@@ -13,12 +14,17 @@
 #include "Values.hpp"
 #include "World.hpp"
 #include <SDL_stdinc.h>
+#if defined(__linux__)
+    #include <libgen.h>
+    #include <limits.h>
+    #include <unistd.h>
+#endif
 
 SDLDisplayClass::SDLDisplayClass()
 {
     const Uint32 windowFlags = 0;
 
-    if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
+    if (SDL_Init(SDL_INIT_EVENTS | SDL_INIT_VIDEO) < 0) {
         std::cerr << "Couldn't initialize SDL: " << SDL_GetError() << std::endl;
         return;
     }
@@ -35,6 +41,23 @@ SDLDisplayClass::SDLDisplayClass()
         std::cerr << "Failed to create renderer: " << SDL_GetError() << std::endl;
         return;
     }
+#if defined(__linux__)
+    char result[PATH_MAX];
+    ssize_t count = readlink("/proc/self/exe", result, PATH_MAX);
+    if (count < 0 || count >= PATH_MAX) {
+        _assetPath = "./";
+        return;
+    }
+    result[count] = '\0';
+    char *dir = dirname(result);
+    if (dir == nullptr) {
+        _assetPath = "./";
+        return;
+    }
+    _assetPath = std::string(dir) + "/";
+#else
+    _assetPath = "./";
+#endif
 }
 
 size_t SDLDisplayClass::addEntity(ECS::Utils::Vector2f aPos, Component::Speed aSpeed, Component::TypeEntity aType,
@@ -61,14 +84,16 @@ size_t SDLDisplayClass::addEntity(ECS::Utils::Vector2f aPos, Component::Speed aS
 
 SDL_Texture *SDLDisplayClass::getTexture(const std::string &aPath)
 {
-    if (_textures.find(aPath) == _textures.end()) {
-        _textures[aPath] = IMG_LoadTexture(_renderer, aPath.c_str());
-        if (_textures[aPath] == nullptr) {
+    std::string path = _assetPath + aPath;
+
+    if (_textures.find(path) == _textures.end()) {
+        _textures[path] = IMG_LoadTexture(_renderer, path.c_str());
+        if (_textures[path] == nullptr) {
             std::cerr << "Failed to create texture: " << SDL_GetError() << std::endl;
             return nullptr;
         }
     }
-    return _textures[aPath];
+    return _textures[path];
 }
 
 void SDLDisplayClass::freeRects(const std::size_t &aIdx)
