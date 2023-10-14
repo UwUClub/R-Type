@@ -8,7 +8,7 @@
 #ifndef SDLDISPLAYClass_HPP_
 #define SDLDISPLAYClass_HPP_
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include <cstddef>
 #include <string>
 #include "Components.hpp"
