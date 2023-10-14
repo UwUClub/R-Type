@@ -10,7 +10,7 @@ on:
     branches:
       - main
       - dev
-      - RT-Try-Submodules
+      - RT-Try-Submodule
 
 env:
   CLANG_TIDY_VERSION: "15.0.2"
