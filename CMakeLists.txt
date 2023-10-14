@@ -36,6 +36,9 @@ R_Type_local_options()
 
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
+#exec command to init submodules
+execute_process(COMMAND git submodule update --init --recursive)
+
 set(GIT_SHA
     "Unknown"
     CACHE STRING "SHA this build was generated from")
