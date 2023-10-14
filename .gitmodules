@@ -1,0 +1,6 @@
+[submodule "shared/SDL"]
+	path = shared/SDL
+	url = https://github.com/libsdl-org/SDL.git
+[submodule "shared/SDL_image"]
+	path = shared/SDL_image
+	url = https://github.com/libsdl-org/SDL_image.git

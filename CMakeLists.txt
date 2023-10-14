@@ -1,5 +1,4 @@
 cmake_minimum_required(VERSION 3.21)
-find_package(SDL2 QUIET)
 
 # This template attempts to be "fetch_content"-able
 # so that it works well with tools like CPM or other
@@ -25,11 +24,7 @@ project(
 
 include(cmake/PreventInSourceBuilds.cmake)
 include(ProjectOptions.cmake)
-if (NOT TARGET SDL2::SDL2)
-  set(SDL2_DOWNLOADED TRUE)
-else()
-    set(SDL2_DOWNLOADED FALSE)
-endif()
+
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 R_Type_setup_options()
 
@@ -59,7 +54,13 @@ add_library(R_Type::R_Type_warnings ALIAS R_Type_warnings)
 #add_library(R_Type::R_Type_warnings INTERFACE IMPORTED)
 
 # Adding the src:
+add_executable(client)
+add_executable(server)
+add_library(ecs STATIC)
+add_library(rtype STATIC)
+
 add_subdirectory(src)
+add_subdirectory(shared)
 
 # Don't even look at tests if we're not top level
 if(NOT PROJECT_IS_TOP_LEVEL)

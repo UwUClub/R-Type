@@ -13,9 +13,6 @@ add_subdirectory(timers)
 target_link_libraries(server
         PRIVATE R_Type::R_Type_options
         R_Type::R_Type_warnings
-        SDL2::SDL2main
-        SDL2::SDL2
-        SDL2_image
         ${Boost_LIBRARIES}
         Boost::asio
         Boost::serialization
