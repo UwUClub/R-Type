@@ -1,5 +1,7 @@
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
+find_package(Boost REQUIRED)
+
 target_sources(ecs PRIVATE
         World.hpp
         SparseArray.hpp

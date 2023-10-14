@@ -27,12 +27,6 @@ namespace Network {
         _onReceive = aOnReceive;
     }
 
-    void NetworkHandler::onReceiveAknowledgment(
-        std::function<void(const std::string &, udp::endpoint &)> aOnReceiveAknowledgment)
-    {
-        _onReceiveAknowledgment = aOnReceiveAknowledgment;
-    }
-
     void NetworkHandler::listen()
     {
         _socket.async_receive_from(boost::asio::buffer(_readBuffer), _readEndpoint,
@@ -53,13 +47,14 @@ namespace Network {
         RType::unserializePacket<std::array<char, READ_BUFFER_SIZE>>(&packet, _readBuffer);
 
         if (packet.type == -1) { // receive aknowledgment
-            _onReceiveAknowledgment(packet.uuid, _readEndpoint);
             if (_senders.find(packet.uuid) != _senders.end() && _senders[packet.uuid].first.joinable()) {
                 _senders[packet.uuid].second = false;
                 _senders[packet.uuid].first.join();
                 _senders.erase(packet.uuid);
             }
-        } else {
+        } else if (std::find(_receivedPacketUuids.begin(), _receivedPacketUuids.end(), packet.uuid)
+                   == _receivedPacketUuids.end()) {
+            _receivedPacketUuids.push_back(packet.uuid);
             answerAknowledgment(packet.uuid, _readEndpoint);
             _onReceive(packet, _readEndpoint);
         }

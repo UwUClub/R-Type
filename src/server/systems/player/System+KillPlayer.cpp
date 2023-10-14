@@ -7,8 +7,7 @@
 
 namespace ECS {
     void System::killPlayer(Core::SparseArray<Component::TypeEntity> &aType,
-                            Core::SparseArray<Component::IsAlive> &aIsAlive,
-                            Core::SparseArray<Component::Connection> &aConnection)
+                            Core::SparseArray<Component::IsAlive> &aIsAlive)
     {
         auto &world = Core::World::getInstance();
         auto &server = Network::ServerHandler::getInstance();
@@ -19,10 +18,9 @@ namespace ECS {
             }
             if (!aIsAlive[playerId].value().isAlive) {
                 world.killEntity(playerId);
-                server.removeClient(playerId);
-                std::cout << "Player " << playerId << " killed" << std::endl;
-                server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_DEATH), {static_cast<float>(playerId)},
-                                 aConnection);
+                std::cout << "player " << playerId << " killed" << std::endl;
+                server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_DEATH),
+                                 {static_cast<float>(playerId)});
             }
         }
     }

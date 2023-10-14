@@ -70,7 +70,6 @@ class SDLDisplayClass
                                 Component::IsAlive aIsAlive);
         SDL_Renderer *_renderer;
         SDL_Window *_window;
-        std::string _assetPath;
 
     private:
         std::unordered_map<std::string, SDL_Texture *> _textures;

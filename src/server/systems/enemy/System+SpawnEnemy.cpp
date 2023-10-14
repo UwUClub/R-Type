@@ -8,8 +8,7 @@ namespace ECS {
     void System::spawnEnemy(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
                             Core::SparseArray<Component::TypeEntity> &aType,
                             Core::SparseArray<Component::HitBox> &aHitBox,
-                            Core::SparseArray<Component::IsAlive> &aIsAlive,
-                            Core::SparseArray<Component::Connection> &aConnection)
+                            Core::SparseArray<Component::IsAlive> &aIsAlive)
     {
         Network::ServerHandler &server = Network::ServerHandler::getInstance();
         Timer::TimerSpawnEnemy &timer = Timer::TimerSpawnEnemy::getInstance();
@@ -35,6 +34,6 @@ namespace ECS {
 
         // Send packet
         server.broadcast(static_cast<int>(RType::ClientEventType::ENEMY_SPAWN),
-                         {static_cast<float>(enemyId), posX, posY}, aConnection);
+                         {static_cast<float>(enemyId), posX, posY});
     }
 } // namespace ECS

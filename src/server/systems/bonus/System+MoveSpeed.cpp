@@ -8,8 +8,7 @@
 #include "World.hpp"
 
 namespace ECS {
-    void System::moveSpeedUp(Core::SparseArray<Component::Speed> &aSpeed,
-                             Core::SparseArray<Component::Connection> &aConnection)
+    void System::moveSpeedUp(Core::SparseArray<Component::Speed> &aSpeed)
     {
         ECS::Core::World const &world = ECS::Core::World::getInstance();
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
@@ -17,7 +16,7 @@ namespace ECS {
         auto events = eventManager->getEventsByType(Event::EventType::GAME);
 
         for (auto &event : events) {
-            auto &gameEvent = static_cast<RType::ServerGameEvent &>(*event);
+            auto &gameEvent = dynamic_cast<RType::ServerGameEvent &>(*event);
             if (gameEvent.getType() == RType::ServerEventType::BONUS) {
                 auto playerId = static_cast<size_t>(gameEvent.getEntityId());
                 float const bonusType = gameEvent.getPayload()[0];
@@ -25,7 +24,7 @@ namespace ECS {
                 if (bonusType == 1) {
                     aSpeed[playerId].value().speed += 10;
                     network.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_BONUS),
-                                      {static_cast<float>(playerId), 1}, aConnection);
+                                      {static_cast<float>(playerId), 1});
                 }
                 eventManager->removeEvent(event);
             }

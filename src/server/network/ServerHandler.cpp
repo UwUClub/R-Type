@@ -25,19 +25,6 @@ namespace Network {
             receivePacket(aPacket, aClientEndpoint);
         });
 
-        network.onReceiveAknowledgment([this](const std::string &aUuid, udp::endpoint &aClientEndpoint) {
-            (void) aUuid;
-            auto client = std::find_if(_clients.begin(), _clients.end(),
-                                       [this, aClientEndpoint](const std::pair<size_t, udp::endpoint> &aPair) {
-                                           return aPair.second == aClientEndpoint;
-                                       });
-            if (client == _clients.end()) {
-                return;
-            }
-            ECS::Event::EventManager::getInstance()->pushEvent(
-                new RType::ServerGameEvent(RType::ServerEventType::AKNOWLEDGMENT, client->first, {}, aClientEndpoint));
-        });
-
         network.start(endpoint.protocol());
         network.bind(endpoint);
         std::cout << "Server " << endpoint << " listening" << std::endl;
@@ -110,23 +97,15 @@ namespace Network {
         return _clients.size();
     }
 
-    void ServerHandler::send(const RType::Packet &aPacket, size_t aClientId,
-                             ECS::Core::SparseArray<Component::Connection> &aConnection)
+    void ServerHandler::send(const RType::Packet &aPacket, size_t aClientId)
     {
-        if (aConnection[aClientId].has_value()) {
-            aConnection[aClientId].value().status = Network::ConnectionStatus::PENDING;
-            NetworkHandler::getInstance().send(aPacket, _clients[aClientId]);
-        }
+        NetworkHandler::getInstance().send(aPacket, _clients[aClientId]);
     }
 
-    void ServerHandler::broadcast(int aType, std::vector<float> aPayload,
-                                  ECS::Core::SparseArray<Component::Connection> &aConnection)
+    void ServerHandler::broadcast(int aType, std::vector<float> aPayload)
     {
         for (auto &client : _clients) {
-            if (aConnection[client.first].has_value()) {
-                aConnection[client.first].value().status = Network::ConnectionStatus::PENDING;
-                NetworkHandler::getInstance().send(RType::Packet(aType, aPayload), client.second);
-            }
+            NetworkHandler::getInstance().send(RType::Packet(aType, aPayload), client.second);
         }
     }
 

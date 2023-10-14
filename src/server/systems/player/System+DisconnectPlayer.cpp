@@ -9,7 +9,7 @@
 #include "World.hpp"
 
 namespace ECS {
-    void System::disconnectPlayer(Core::SparseArray<Component::Connection> &aConnection)
+    void System::disconnectPlayer()
     {
         Core::World &world = Core::World::getInstance();
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
@@ -25,7 +25,7 @@ namespace ECS {
                 server.removeClient(playerId);
 
                 server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_DISCONNECTION),
-                                 {static_cast<float>(playerId)}, aConnection);
+                                 {static_cast<float>(playerId)});
 
                 eventManager->removeEvent(event);
 

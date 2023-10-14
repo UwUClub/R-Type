@@ -2,14 +2,12 @@
 #include "EventManager.hpp"
 #include "ServerGameEvent.hpp"
 #include "ServerHandler.hpp"
-#include "SparseArray.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 #include <unordered_map>
 
 namespace ECS {
-    void System::movePlayer(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
-                            Core::SparseArray<Component::Connection> &aConnection)
+    void System::movePlayer(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed)
     {
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
         Network::ServerHandler &network = Network::ServerHandler::getInstance();
@@ -63,7 +61,7 @@ namespace ECS {
                 }
 
                 network.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_POSITION),
-                                  {static_cast<float>(entityId), pos.x, pos.y}, aConnection);
+                                  {static_cast<float>(entityId), pos.x, pos.y});
 
                 eventManager->removeEvent(event);
             }

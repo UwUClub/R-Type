@@ -20,9 +20,7 @@ namespace ECS {
 
     void System::welcomePlayer(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
                                Core::SparseArray<Component::TypeEntity> &aType,
-                               Core::SparseArray<Component::HitBox> &aHitBox,
-                               Core::SparseArray<Component::IsAlive> &aIsAlive,
-                               Core::SparseArray<Component::Connection> &aConnection)
+                               Core::SparseArray<Component::HitBox> &aHitBox)
     {
         ECS::Core::World &world = ECS::Core::World::getInstance();
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
@@ -52,18 +50,13 @@ namespace ECS {
                 aSpeed.insertAt(playerId, Component::Speed {PLAYER_SPEED});
                 aType.insertAt(playerId, Component::TypeEntity {true, false, false, false, false, false, false});
                 aHitBox.insertAt(playerId, Component::HitBox {PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT});
-                aIsAlive.insertAt(playerId, Component::IsAlive {true, 0});
-                aConnection.insertAt(playerId, Component::Connection {Network::ConnectionStatus::CONNECTED});
-
-                std::cout << "Welcome " << playerId << " !" << std::endl;
 
                 server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_SPAWN),
-                                 {static_cast<float>(playerId), 0, static_cast<float>(playerColor), 10, 10},
-                                 aConnection);
+                                 {static_cast<float>(playerId), 0, static_cast<float>(playerColor), 10, 10});
                 server.addClient(playerId, gameEvent.getClientEndpoint());
                 server.send(RType::Packet(static_cast<int>(RType::ClientEventType::PLAYER_SPAWN),
                                           {static_cast<float>(playerId), 1, static_cast<float>(playerColor), 10, 10}),
-                            playerId, aConnection);
+                            playerId);
 
                 int aPosSize = aPos.size();
                 for (std::size_t i = 0; i < aPosSize; i++) {
@@ -74,12 +67,12 @@ namespace ECS {
                         float color = static_cast<float>(server.getClientColor(i));
                         server.send(RType::Packet(static_cast<int>(RType::ClientEventType::PLAYER_SPAWN),
                                                   {static_cast<float>(i), 0, color, aPos[i]->x, aPos[i]->y}),
-                                    playerId, aConnection);
+                                    playerId);
                     }
                     if (aType[i]->isEnemy) {
                         server.send(RType::Packet(static_cast<int>(RType::ClientEventType::ENEMY_SPAWN),
                                                   {static_cast<float>(i), aPos[i]->x, aPos[i]->y}),
-                                    playerId, aConnection);
+                                    playerId);
                     }
                 }
 
