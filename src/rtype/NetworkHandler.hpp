@@ -8,8 +8,14 @@
     #define NETWORKHANDLER_HPP
 
 namespace Network {
+    enum ConnectionStatus
+    {
+        PENDING,
+        CONNECTED,
+    };
 
     using boost::asio::ip::udp;
+    using Sender = std::pair<std::thread, std::atomic<bool>>;
 
     class NetworkHandler
     {
@@ -19,11 +25,10 @@ namespace Network {
             std::array<char, READ_BUFFER_SIZE> _readBuffer = std::array<char, READ_BUFFER_SIZE>();
             udp::endpoint _readEndpoint;
             std::function<void(const RType::Packet &, udp::endpoint &)> _onReceive;
+            std::function<void(const std::string, udp::endpoint &)> _onReceiveAknowledgment;
             std::thread _ioThread;
 
-            using Sender = std::pair<std::thread, std::atomic<bool>>;
             std::unordered_map<std::string, Sender> _senders;
-            std::vector<std::string> _receivedPacketUuids;
 
             /**
              * @brief Launch the server
@@ -70,6 +75,12 @@ namespace Network {
              * @param aOnReceive The callback to set
              */
             void onReceive(std::function<void(const RType::Packet &, udp::endpoint &)>);
+
+            /**
+             * @brief Set the on receive aknowledgment callback
+             * @param aOnReceiveAlnowledgment The callback to set
+             */
+            void onReceiveAknowledgment(std::function<void(const std::string &, udp::endpoint &)>);
 
             /**
              * @brief Listen to clients

@@ -9,14 +9,15 @@
 #define VALUES_HPP_
 #include <string>
 
-//------------------ VALUES ------------------//
-
+//------------------ NETWORK ------------------//
 const constexpr unsigned short READ_BUFFER_SIZE = 1024;
+const constexpr float PACKET_TIMEOUT = 2.0F; // in seconds
+
+// ------------------ DISPLAY ------------------ //
 const constexpr int SCREEN_WIDTH = 1920;
 const constexpr int SCREEN_HEIGHT = 1080;
 
 //------------------ ENEMY ------------------//
-
 const constexpr float ENEMY_SPEED = 200;
 const constexpr int ENEMY_TEX_WIDTH = 33;
 const constexpr int ENEMY_TEX_HEIGHT = 33;
@@ -25,14 +26,12 @@ const constexpr int PROBABILTY_SHOOT_ENEMY = 200000;
 const constexpr int ENEMY_SPAWN_INTERVAL = 5; // in seconds
 
 //------------------ BACKGROUND ------------------//
-
 const constexpr float BACKGROUND_SPEED = 300;
 const constexpr int BACKGROUND_X_RES = 0;
 const constexpr int BACKGROUND_Y_RES = 0;
 static const std::string BACKGROUND_ASSET = "assets/sprites/background.png";
 
 //------------------ PLAYER ------------------//
-
 static const std::string PLAYER_ASSET = "assets/sprites/r-typesheet42.png";
 const constexpr float PLAYER_SPEED = 10;
 const constexpr int PLAYER_TEX_WIDTH = 33;

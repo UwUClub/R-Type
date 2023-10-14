@@ -40,6 +40,8 @@ A packet has the following properties:
 | `type` | 4-byte int | Packet type. See [part 2.2](#22-packet-type) to get the list of packet types |
 | `payload` | vector of float (variable size) | Data carried by the packet. The size and meaning of each value depends on packet type, check [part 2.2](#22-packet-type) |
 
+If the packet format is not respected, the packet will be ignored by the server.
+
 ### 2.2 Packet Type
 
 Packets sent by client:
@@ -48,8 +50,9 @@ Packets sent by client:
 | - | - | - | - | - |
 | `CONNECT` | `0` | Server | empty | 0 bytes |
 | `DISCONNECT` | `1` | Server | empty | 0 bytes |
-| `MOVE` | `2` | Server | <ol><li>Move shift on horizontal axis (negative being left, positive being right, max absolute value is 1)</li><li>Move shift on vertical axis (negative being bottom, positive being top, max absolute value is 1)</li></ol> | 8 bytes |
-| `SHOOT` | `3` | Server | empty | 0 bytes |
+| `MOVE` | `3` | Server | <ol><li>Move shift on horizontal axis (negative being left, positive being right, max absolute value is 1)</li><li>Move shift on vertical axis (negative being bottom, positive being top, max absolute value is 1)</li></ol> | 8 bytes |
+| `SHOOT` | `4` | Server | empty | 0 bytes |
+| `BONUS` | `5` | Server | <ol><li>Bonus type</li></ol> | 4 bytes
 
 Packets sent by server:
 
@@ -59,10 +62,12 @@ Packets sent by server:
 | `PLAYER_DISCONNECTION` | `1` | Client | <ol><li>Id of the entity who leaves</li></ol> | 4 bytes |
 | `PLAYER_POSITION` | `2` | Client | <ol><li>Entity id</li><li>Entity horizontal position</li><li>Entity vertical position</li></ol> | 12 bytes |
 | `PLAYER_SHOOT` | `3` | Client | <ol><li>Shooting entity id</li></ol> | 4 bytes |
-| `PLAYER_DEATH` | `4` | Client | <ol><li>Dying entity id</li></ol> | 4 bytes |
-| `ENEMY_SPAWN` | `5` | Client | <ol><li>Spawning entity id</li><li>Entity horizontal position</li><li>Entity vertical position</li></ol> | 12 bytes |
-| `ENEMY_SHOOT` | `6` | Client | <ol><li>Shooting entity id</li></ol> | 4 bytes |
+| `PLAYER_BONUS` | `4` | Client | <ol><li>Concerned entity id</li></ol> | 4 bytes |
+| `PLAYER_DEATH` | `5` | Client | <ol><li>Dying entity id</li></ol> | 4 bytes |
+| `ENEMY_SPAWN` | `6` | Client | <ol><li>Spawning entity id</li><li>Entity horizontal position</li><li>Entity vertical position</li></ol> | 12 bytes |
 | `ENEMY_DEATH` | `7` | Client | <ol><li>Dying entity id</li></ol> | 4 bytes |
+| `ENEMY_SHOOT` | `8` | Client | <ol><li>Shooting entity id</li></ol> | 4 bytes |
+| `SERVER_FULL` | `9` | Client | empty | 0 bytes |
 
 Packets sent by both:
 
@@ -80,7 +85,7 @@ This way the connecting client is aware of what is going during the gameplay.
 
 ### 2.3. Reception Aknowledgment
 
-A client or server receiving a packet whose type is `>= 0` must send back an aknowledgment packet (type `-1`). Its uuid must be the same as the one of the received packet.
+A client or server receiving a packet whose type is `>= 0` must send back an aknowledgment packet (type `-1`). Its uuid must be the same as the one of the received packet. This practice is recommended for timeout and crash detection: not sending aknowledgment results to be considered as inactive and kicked by the server or left by the client.
 
 ### 2.4. Serialization
 
@@ -89,6 +94,8 @@ The protocol is binary, so packets must be serialized to binary format before be
 ## 3. Security Considerations
 
 Implementations of this protocol should consider security aspects to protect against unauthorized access, cheating, and other potential vulnerabilities.
+
+You must check your packet reception when making a client or server: always make sure the payload size and values are valid.
 
 Remember that the server should always have the last word on the client.
 

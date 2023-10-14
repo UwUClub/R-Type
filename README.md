@@ -17,7 +17,6 @@
 ## Requirements
 
 - C++ 20+ is required
-- gcc 12+ is required
 
 ## Communication
 
@@ -29,8 +28,6 @@
 ## Installation from source
 
 ### SSH
-
-> G++ 20+ is required
 
 ```bash
 git clone git@github.com:UwUClub/R-Type.git

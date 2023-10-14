@@ -11,7 +11,8 @@ namespace ECS {
     void System::enemyShoot(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
                             Core::SparseArray<Component::TypeEntity> &aType,
                             Core::SparseArray<Component::HitBox> &aHitBox,
-                            Core::SparseArray<Component::IsAlive> &aIsAlive)
+                            Core::SparseArray<Component::IsAlive> &aIsAlive,
+                            Core::SparseArray<Component::Connection> &aConnection)
     {
         auto &server = Network::ServerHandler::getInstance();
         auto &world = Core::World::getInstance();
@@ -36,7 +37,7 @@ namespace ECS {
 
                 // Send packet
                 server.broadcast(static_cast<int>(RType::ClientEventType::ENEMY_SHOOT),
-                                 {static_cast<float>(missileId), posX, posY});
+                                 {static_cast<float>(missileId), posX, posY}, aConnection);
             }
         }
     }

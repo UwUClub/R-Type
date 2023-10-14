@@ -1,4 +1,3 @@
-find_package(Boost REQUIRED COMPONENTS system thread serialization)
 find_package(Threads REQUIRED)
 find_package(SDL2 REQUIRED)
 
