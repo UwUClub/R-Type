@@ -13,23 +13,26 @@ namespace ECS {
     {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
 
-        for (const auto &itx : _keyMap) {
-            if (IsKeyDown(itx.first)) {
-                try {
-                    auto *keyEvent = new Event::KeyboardEvent(itx.second, Event::KeyState::PRESSED);
-                    eventManager->pushEvent(keyEvent);
-                } catch (std::exception &e) {
-                    std::cerr << e.what() << std::endl;
-                }
-            } else if (IsKeyUp(itx.first)) {
-                try {
-                    auto *keyEvent = new Event::KeyboardEvent(itx.second, Event::KeyState::RELEASED);
-                    eventManager->pushEvent(keyEvent);
-                } catch (std::exception &e) {
-                    std::cerr << e.what() << std::endl;
-                }
-            }
+        if (IsKeyPressed(KEY_UP)) {
+            eventManager->pushEvent("UP", Event::EventType::KEYBOARD);
         }
+
+        if (IsKeyPressed(KEY_DOWN)) {
+            eventManager->pushEvent("DOWN", Event::EventType::KEYBOARD);
+        }
+
+        if (IsKeyPressed(KEY_LEFT)) {
+            eventManager->pushEvent("LEFT", Event::EventType::KEYBOARD);
+        }
+
+        if (IsKeyPressed(KEY_RIGHT)) {
+            eventManager->pushEvent("RIGHT", Event::EventType::KEYBOARD);
+        }
+
+        if (IsKeyPressed(KEY_SPACE)) {
+            eventManager->pushEvent("SPACE", Event::EventType::KEYBOARD);
+        }
+
         if (WindowShouldClose()) {
             Core::World::getInstance().stop();
         }

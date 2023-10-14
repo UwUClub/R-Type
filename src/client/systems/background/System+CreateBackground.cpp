@@ -5,6 +5,7 @@
 #include "System.hpp"
 #include "Values.hpp"
 #include "World.hpp"
+#include "raylib.h"
 
 namespace ECS {
     void System::createBackground()
@@ -21,19 +22,17 @@ namespace ECS {
                 bool isLocalPlayer = gameEvent.getPayload()[1] == 1;
 
                 if (isLocalPlayer) {
-                    world.killEntity(0);
                     display.addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {BACKGROUND_SPEED},
                                       Component::TypeEntity {false, false, false, false, false, false, true},
-                                      Component::LoadedSprite {BACKGROUND_ASSET,
-                                                               nullptr,
-                                                               {},
+                                      Component::LoadedSprite {BACKGROUND_ASSET, nullptr,
+                                                               Rectangle {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT},
                                                                Rectangle {400, 15, SCREEN_WIDTH, SCREEN_HEIGHT}},
                                       Component::HitBox {}, Component::IsAlive {false, 0});
                     display.addEntity(ECS::Utils::Vector2f {SCREEN_WIDTH, 0}, Component::Speed {BACKGROUND_SPEED},
                                       Component::TypeEntity {false, false, false, false, false, false, true},
                                       Component::LoadedSprite {BACKGROUND_ASSET,
                                                                nullptr,
-                                                               {},
+                                                               {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT},
                                                                Rectangle {400, 15, SCREEN_WIDTH, SCREEN_HEIGHT}},
                                       Component::HitBox {}, Component::IsAlive {false, 0});
                 }

@@ -21,7 +21,7 @@
 
 RayDisplayClass::RayDisplayClass()
 {
-    InitWindow(GetScreenWidth(), GetScreenHeight(), "R-Type");
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "R-Type");
 
 #if defined(__linux__)
     char result[PATH_MAX];
