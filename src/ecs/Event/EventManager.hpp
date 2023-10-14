@@ -78,13 +78,13 @@ namespace ECS::Event {
              *
              * @return std::vector<Event>& A reference to the vector of events.
              */
-            [[nodiscard]] std::vector<std::unique_ptr<Event>> &getEvents();
+            [[nodiscard]] std::vector<std::shared_ptr<Event>> &getEvents();
 
             /**
              * @brief Get all the events of a specific type
              *
              */
-            std::vector<Event *> getEventsByType(const EventType &aEventType);
+            std::vector<std::shared_ptr<Event>> getEventsByType(const EventType &aEventType);
 
             /**
              * @brief Clear non game events
@@ -97,11 +97,11 @@ namespace ECS::Event {
              * @param aIndex The index of the event to remove.
              *
              */
-            void removeEvent(Event *aEvent);
+            void removeEvent(std::shared_ptr<Event> &aEvent);
 
         private:
             EventManager();
-            std::vector<std::unique_ptr<Event>> _events;
+            std::vector<std::shared_ptr<Event>> _events;
 
         private:
             //-------------------EXCEPTIONS-------------------//

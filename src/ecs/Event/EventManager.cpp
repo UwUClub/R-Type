@@ -13,7 +13,7 @@ ECS::Event::EventManager::~EventManager()
 //-------------------PUBLIC METHODS-------------------//
 void ECS::Event::EventManager::pushEvent(Event *aEvent)
 {
-    _events.push_back(std::unique_ptr<Event>(aEvent));
+    _events.push_back(std::shared_ptr<Event>(aEvent));
 }
 
 ECS::Event::EventManager *ECS::Event::EventManager::getInstance()
@@ -23,18 +23,18 @@ ECS::Event::EventManager *ECS::Event::EventManager::getInstance()
     return &instance;
 }
 
-std::vector<std::unique_ptr<ECS::Event::Event>> &ECS::Event::EventManager::getEvents()
+std::vector<std::shared_ptr<ECS::Event::Event>> &ECS::Event::EventManager::getEvents()
 {
     return _events;
 }
 
-std::vector<ECS::Event::Event *> ECS::Event::EventManager::getEventsByType(const EventType &aEventType)
+std::vector<std::shared_ptr<ECS::Event::Event>> ECS::Event::EventManager::getEventsByType(const EventType &aEventType)
 {
-    std::vector<Event *> events;
+    std::vector<std::shared_ptr<Event>> events;
 
     for (auto &event : _events) {
         if (event->getType() == aEventType) {
-            events.push_back(event.get());
+            events.push_back(event);
         }
     }
     return events;
@@ -51,10 +51,10 @@ void ECS::Event::EventManager::clearNonGameEvents()
     }
 }
 
-void ECS::Event::EventManager::removeEvent(Event *aEvent)
+void ECS::Event::EventManager::removeEvent(std::shared_ptr<Event> &aEvent)
 {
     for (auto it = _events.begin(); it != _events.end();) {
-        if (it->get() == aEvent) {
+        if (*it == aEvent) {
             it = _events.erase(it);
         } else {
             ++it;

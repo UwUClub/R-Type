@@ -1,4 +1,5 @@
 #include <functional>
+#include "Event.hpp"
 #include "EventManager.hpp"
 #include "KeyboardEvent.hpp"
 #include "RayDisplayClass.hpp"
@@ -14,23 +15,23 @@ namespace ECS {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
 
         if (IsKeyPressed(KEY_UP)) {
-            eventManager->pushEvent("UP", Event::EventType::KEYBOARD);
+            eventManager->pushEvent(new Event::KeyboardEvent(Event::KeyIdentifier::UP, Event::KeyState::PRESSED));
         }
 
         if (IsKeyPressed(KEY_DOWN)) {
-            eventManager->pushEvent("DOWN", Event::EventType::KEYBOARD);
+            eventManager->pushEvent(new Event::KeyboardEvent(Event::KeyIdentifier::DOWN, Event::KeyState::PRESSED));
         }
 
         if (IsKeyPressed(KEY_LEFT)) {
-            eventManager->pushEvent("LEFT", Event::EventType::KEYBOARD);
+            eventManager->pushEvent(new Event::KeyboardEvent(Event::KeyIdentifier::LEFT, Event::KeyState::PRESSED));
         }
 
         if (IsKeyPressed(KEY_RIGHT)) {
-            eventManager->pushEvent("RIGHT", Event::EventType::KEYBOARD);
+            eventManager->pushEvent(new Event::KeyboardEvent(Event::KeyIdentifier::RIGHT, Event::KeyState::PRESSED));
         }
 
         if (IsKeyPressed(KEY_SPACE)) {
-            eventManager->pushEvent("SPACE", Event::EventType::KEYBOARD);
+            eventManager->pushEvent(new Event::KeyboardEvent(Event::KeyIdentifier::SPACE, Event::KeyState::PRESSED));
         }
 
         if (WindowShouldClose()) {

@@ -51,7 +51,7 @@ namespace ECS {
                 continue;
             }
             for (auto &event : keyboardEvent) {
-                auto *keyEvent = static_cast<Event::KeyboardEvent *>(event);
+                auto *keyEvent = static_cast<Event::KeyboardEvent *>(event.get());
                 if (keyMap.find(keyEvent->_keyId) == keyMap.end() || !aIsAlive[i].value().isAlive) {
                     continue;
                 }

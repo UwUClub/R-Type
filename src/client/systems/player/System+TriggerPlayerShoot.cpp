@@ -21,7 +21,7 @@ namespace ECS {
                 continue;
             }
             for (auto &event : keyboardEvent) {
-                auto *keyEvent = static_cast<Event::KeyboardEvent *>(event);
+                auto *keyEvent = static_cast<Event::KeyboardEvent *>(event.get());
 
                 if (keyEvent->_keyId == Event::KeyIdentifier::SPACE) {
                     std::cout << "Shoot !" << std::endl;
