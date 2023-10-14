@@ -96,75 +96,74 @@ $(document).ready(function(){initNavTree('Values_8hpp_source.html',''); initResi
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define VALUES_HPP_</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">//------------------ VALUES ------------------//</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">unsigned</span> <span class="keywordtype">short</span> READ_BUFFER_SIZE = 1024;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> SCREEN_WIDTH = 1920;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> SCREEN_HEIGHT = 1080;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">//------------------ ENEMY ------------------//</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">//------------------ NETWORK ------------------//</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">unsigned</span> <span class="keywordtype">short</span> READ_BUFFER_SIZE = 1024;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">float</span> PACKET_TIMEOUT = 2.0F; <span class="comment">// in seconds</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">// ------------------ DISPLAY ------------------ //</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> SCREEN_WIDTH = 1920;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> SCREEN_HEIGHT = 1080;</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">float</span> ENEMY_SPEED = 200;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> ENEMY_TEX_WIDTH = 33;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> ENEMY_TEX_HEIGHT = 33;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> std::string ENEMY_ASSET = <span class="stringliteral">&quot;assets/sprites/r-typesheet5.png&quot;</span>;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> PROBABILTY_SHOOT_ENEMY = 200000;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> ENEMY_SPAWN_INTERVAL = 5; <span class="comment">// in seconds</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//------------------ BACKGROUND ------------------//</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">//------------------ ENEMY ------------------//</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">float</span> ENEMY_SPEED = 200;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> ENEMY_TEX_WIDTH = 33;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> ENEMY_TEX_HEIGHT = 33;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> std::string ENEMY_ASSET = <span class="stringliteral">&quot;assets/sprites/r-typesheet5.png&quot;</span>;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> PROBABILTY_SHOOT_ENEMY = 200000;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> ENEMY_SPAWN_INTERVAL = 5; <span class="comment">// in seconds</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">//------------------ BACKGROUND ------------------//</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">float</span> BACKGROUND_SPEED = 300;</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> BACKGROUND_X_RES = 0;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> BACKGROUND_Y_RES = 0;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> std::string BACKGROUND_ASSET = <span class="stringliteral">&quot;assets/sprites/background.png&quot;</span>;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">//------------------ PLAYER ------------------//</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> std::string PLAYER_ASSET = <span class="stringliteral">&quot;assets/sprites/r-typesheet42.png&quot;</span>;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">float</span> PLAYER_SPEED = 10;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> PLAYER_TEX_WIDTH = 33;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> PLAYER_TEX_HEIGHT = 17;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> MAX_NUMBER_PLAYER = 4;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment">//------------------ BULLET (for players) ------------------//</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> std::string BULLET_ASSET = <span class="stringliteral">&quot;assets/sprites/r-typesheet2.png&quot;</span>;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">float</span> BULLET_SPEED = 800;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> BULLET_TEX_WIDTH = 25;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> BULLET_TEX_HEIGHT = 13;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="comment">//------------------ MISSILES (for enemies) ------------------//</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> std::string MISSILES_ASSET = <span class="stringliteral">&quot;assets/sprites/r-typesheet2.png&quot;</span>;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">float</span> MISSILES_SPEED = 500;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> MISSILES_TEX_WIDTH = 25;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> MISSILES_TEX_HEIGHT = 13;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment">//------------------ EXPLOSION ------------------//</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> std::string EXPLOSION_ASSET = <span class="stringliteral">&quot;assets/sprites/r-typesheet16.png&quot;</span>;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">float</span> EXPLOSION_SPEED = 0;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> EXPLOSION_TEX_WIDTH = 23;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> EXPLOSION_TEX_HEIGHT = 23;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="comment">// ------------------ RETURN STATUS ------------------ //</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> SUCCESS = 0;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> FAILURE = 84;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="comment">//------------------ BONUS ------------------//</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> std::string BONUS_ASSET = <span class="stringliteral">&quot;assets/sprites/powerup.png&quot;</span>;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">float</span> BONUS_SPEED = 800;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> BONUS_TEX_WIDTH = 250;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> BONUS_TEX_HEIGHT = 280;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="comment">// ------------------ LOADING MESSAGE ------------------ //</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> std::string LOADING_MESSAGE_ASSET = <span class="stringliteral">&quot;assets/sprites/loading-message.png&quot;</span>;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> LOADING_MESSAGE_TEX_WIDTH = 700;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> LOADING_MESSAGE_TEX_HEIGHT = 400;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="comment">// ------------------ SERVER FULL MESSAGE ------------------ //</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> std::string SERVER_FULL_MESSAGE = <span class="stringliteral">&quot;assets/sprites/server-full-message.png&quot;</span>;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> SERVER_FULL_MESSAGE_TEX_WIDTH = 556;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> SERVER_FULL_MESSAGE_TEX_HEIGHT = 95;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* !VALUES_HPP_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> std::string PLAYER_ASSET = <span class="stringliteral">&quot;assets/sprites/r-typesheet42.png&quot;</span>;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">float</span> PLAYER_SPEED = 10;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> PLAYER_TEX_WIDTH = 33;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> PLAYER_TEX_HEIGHT = 17;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> MAX_NUMBER_PLAYER = 4;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment">//------------------ BULLET (for players) ------------------//</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> std::string BULLET_ASSET = <span class="stringliteral">&quot;assets/sprites/r-typesheet2.png&quot;</span>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">float</span> BULLET_SPEED = 800;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> BULLET_TEX_WIDTH = 25;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> BULLET_TEX_HEIGHT = 13;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">//------------------ MISSILES (for enemies) ------------------//</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> std::string MISSILES_ASSET = <span class="stringliteral">&quot;assets/sprites/r-typesheet2.png&quot;</span>;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">float</span> MISSILES_SPEED = 500;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> MISSILES_TEX_WIDTH = 25;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> MISSILES_TEX_HEIGHT = 13;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="comment">//------------------ EXPLOSION ------------------//</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> std::string EXPLOSION_ASSET = <span class="stringliteral">&quot;assets/sprites/r-typesheet16.png&quot;</span>;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">float</span> EXPLOSION_SPEED = 0;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> EXPLOSION_TEX_WIDTH = 23;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> EXPLOSION_TEX_HEIGHT = 23;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="comment">// ------------------ RETURN STATUS ------------------ //</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> SUCCESS = 0;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> FAILURE = 84;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="comment">//------------------ BONUS ------------------//</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> std::string BONUS_ASSET = <span class="stringliteral">&quot;assets/sprites/powerup.png&quot;</span>;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">float</span> BONUS_SPEED = 800;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> BONUS_TEX_WIDTH = 250;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> BONUS_TEX_HEIGHT = 280;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="comment">// ------------------ LOADING MESSAGE ------------------ //</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> std::string LOADING_MESSAGE_ASSET = <span class="stringliteral">&quot;assets/sprites/loading-message.png&quot;</span>;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> LOADING_MESSAGE_TEX_WIDTH = 700;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> LOADING_MESSAGE_TEX_HEIGHT = 400;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="comment">// ------------------ SERVER FULL MESSAGE ------------------ //</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> std::string SERVER_FULL_MESSAGE = <span class="stringliteral">&quot;assets/sprites/server-full-message.png&quot;</span>;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> SERVER_FULL_MESSAGE_TEX_WIDTH = 556;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keyword">const</span> constexpr <span class="keywordtype">int</span> SERVER_FULL_MESSAGE_TEX_HEIGHT = 95;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* !VALUES_HPP_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

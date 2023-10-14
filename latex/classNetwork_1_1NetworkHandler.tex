@@ -12,6 +12,8 @@ void \mbox{\hyperlink{classNetwork_1_1NetworkHandler_ad726e809ba097e980467cce56f
 \begin{DoxyCompactList}\small\item\em Start handler with specific protocol. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{classNetwork_1_1NetworkHandler_a09ca8dd61a4b673a1e4cad239b7f1ccf}{on\+Receive}} (std\+::function$<$ void(const \mbox{\hyperlink{structRType_1_1Packet}{RType\+::\+Packet}} \&, udp\+::endpoint \&)$>$)
 \begin{DoxyCompactList}\small\item\em Set the on receive callback. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classNetwork_1_1NetworkHandler_a508920793e0dee5c33b83ff6b70907f2}{on\+Receive\+Aknowledgment}} (std\+::function$<$ void(const std\+::string \&, udp\+::endpoint \&)$>$)
+\begin{DoxyCompactList}\small\item\em Set the on receive aknowledgment callback. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classNetwork_1_1NetworkHandler_a2f6ac97a260558c613c7d4410de45a84}\label{classNetwork_1_1NetworkHandler_a2f6ac97a260558c613c7d4410de45a84}} 
 void \mbox{\hyperlink{classNetwork_1_1NetworkHandler_a2f6ac97a260558c613c7d4410de45a84}{listen}} ()
 \begin{DoxyCompactList}\small\item\em Listen to clients. \end{DoxyCompactList}\item 
@@ -91,6 +93,21 @@ Set the on receive callback.
 
 \begin{DoxyParams}{Parameters}
 {\em a\+On\+Receive} & The callback to set \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classNetwork_1_1NetworkHandler_a508920793e0dee5c33b83ff6b70907f2}\label{classNetwork_1_1NetworkHandler_a508920793e0dee5c33b83ff6b70907f2}} 
+\index{Network::NetworkHandler@{Network::NetworkHandler}!onReceiveAknowledgment@{onReceiveAknowledgment}}
+\index{onReceiveAknowledgment@{onReceiveAknowledgment}!Network::NetworkHandler@{Network::NetworkHandler}}
+\doxysubsubsection{\texorpdfstring{onReceiveAknowledgment()}{onReceiveAknowledgment()}}
+{\footnotesize\ttfamily void Network\+::\+Network\+Handler\+::on\+Receive\+Aknowledgment (\begin{DoxyParamCaption}\item[{std\+::function$<$ void(const std\+::string \&, udp\+::endpoint \&)$>$}]{a\+On\+Receive\+Aknowledgment }\end{DoxyParamCaption})}
+
+
+
+Set the on receive aknowledgment callback. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a\+On\+Receive\+Alnowledgment} & The callback to set \\
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{classNetwork_1_1NetworkHandler_a8527db7fe5dd22f488296ffa9d1e6986}\label{classNetwork_1_1NetworkHandler_a8527db7fe5dd22f488296ffa9d1e6986}} 

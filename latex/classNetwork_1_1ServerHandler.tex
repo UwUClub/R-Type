@@ -20,9 +20,9 @@ void \mbox{\hyperlink{classNetwork_1_1ServerHandler_acfaf9f4ad121c9897a2d5d5694d
 \begin{DoxyCompactList}\small\item\em Remove a client from the server. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{classNetwork_1_1ServerHandler_a7d8b4c0b9f3fc71e7abb49ca090bf936}{get\+Number\+Clients}} () const
 \begin{DoxyCompactList}\small\item\em Get the number of clients connected to the server. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{classNetwork_1_1ServerHandler_a2d54cc0dfefb3a72f5714a29ef5f2a97}{send}} (const \mbox{\hyperlink{structRType_1_1Packet}{RType\+::\+Packet}} \&, size\+\_\+t)
+void \mbox{\hyperlink{classNetwork_1_1ServerHandler_a6efb08f09d5e034949ac8367809391f6}{send}} (const \mbox{\hyperlink{structRType_1_1Packet}{RType\+::\+Packet}} \&, size\+\_\+t, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{ECS\+::\+Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Connection}{Component\+::\+Connection}} $>$ \&)
 \begin{DoxyCompactList}\small\item\em Send a packet to a client. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{classNetwork_1_1ServerHandler_a5699142168990eb645fb03641fe7a03d}{broadcast}} (int, std\+::vector$<$ float $>$)
+void \mbox{\hyperlink{classNetwork_1_1ServerHandler_ae348dc1eff0a6789347ca2bfed15dc4e}{broadcast}} (int, std\+::vector$<$ float $>$, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{ECS\+::\+Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Connection}{Component\+::\+Connection}} $>$ \&)
 \begin{DoxyCompactList}\small\item\em Broadcast a message to all clients. Each client receives a packet with a unique uuid. \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{classNetwork_1_1ServerHandler_a6e5b4f29a425e7950e6cbcee8dbae520}{is\+Full}} () const
 \begin{DoxyCompactList}\small\item\em Check if the server is full. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -69,11 +69,11 @@ Add a client to the client color list.
 \begin{DoxyReturn}{Returns}
 The client color (if -\/1, the server is full and the client is not added) 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classNetwork_1_1ServerHandler_a5699142168990eb645fb03641fe7a03d}\label{classNetwork_1_1ServerHandler_a5699142168990eb645fb03641fe7a03d}} 
+\mbox{\Hypertarget{classNetwork_1_1ServerHandler_ae348dc1eff0a6789347ca2bfed15dc4e}\label{classNetwork_1_1ServerHandler_ae348dc1eff0a6789347ca2bfed15dc4e}} 
 \index{Network::ServerHandler@{Network::ServerHandler}!broadcast@{broadcast}}
 \index{broadcast@{broadcast}!Network::ServerHandler@{Network::ServerHandler}}
 \doxysubsubsection{\texorpdfstring{broadcast()}{broadcast()}}
-{\footnotesize\ttfamily void Network\+::\+Server\+Handler\+::broadcast (\begin{DoxyParamCaption}\item[{int}]{a\+Type,  }\item[{std\+::vector$<$ float $>$}]{a\+Payload }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void Network\+::\+Server\+Handler\+::broadcast (\begin{DoxyParamCaption}\item[{int}]{a\+Type,  }\item[{std\+::vector$<$ float $>$}]{a\+Payload,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{ECS\+::\+Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Connection}{Component\+::\+Connection}} $>$ \&}]{a\+Connection }\end{DoxyParamCaption})}
 
 
 
@@ -84,6 +84,8 @@ Broadcast a message to all clients. Each client receives a packet with a unique 
 {\em a\+Type} & The packet type to send \\
 \hline
 {\em a\+Payload} & The payload to send \\
+\hline
+{\em a\+Connections} & Connection components of clients \\
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{classNetwork_1_1ServerHandler_abdbb289d6fdec7d2ed5281cdce0d8acc}\label{classNetwork_1_1ServerHandler_abdbb289d6fdec7d2ed5281cdce0d8acc}} 
@@ -175,11 +177,11 @@ Remove a client from the server.
 {\em a\+Client\+Id} & The id of the client to remove \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{classNetwork_1_1ServerHandler_a2d54cc0dfefb3a72f5714a29ef5f2a97}\label{classNetwork_1_1ServerHandler_a2d54cc0dfefb3a72f5714a29ef5f2a97}} 
+\mbox{\Hypertarget{classNetwork_1_1ServerHandler_a6efb08f09d5e034949ac8367809391f6}\label{classNetwork_1_1ServerHandler_a6efb08f09d5e034949ac8367809391f6}} 
 \index{Network::ServerHandler@{Network::ServerHandler}!send@{send}}
 \index{send@{send}!Network::ServerHandler@{Network::ServerHandler}}
 \doxysubsubsection{\texorpdfstring{send()}{send()}}
-{\footnotesize\ttfamily void Network\+::\+Server\+Handler\+::send (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structRType_1_1Packet}{RType\+::\+Packet}} \&}]{a\+Packet,  }\item[{size\+\_\+t}]{a\+Client\+Id }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void Network\+::\+Server\+Handler\+::send (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structRType_1_1Packet}{RType\+::\+Packet}} \&}]{a\+Packet,  }\item[{size\+\_\+t}]{a\+Client\+Id,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{ECS\+::\+Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Connection}{Component\+::\+Connection}} $>$ \&}]{a\+Connection }\end{DoxyParamCaption})}
 
 
 

@@ -117,12 +117,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7d8b4c0b9f3fc71e7abb49ca090bf936"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNetwork_1_1ServerHandler.html#a7d8b4c0b9f3fc71e7abb49ca090bf936">getNumberClients</a> () const</td></tr>
 <tr class="memdesc:a7d8b4c0b9f3fc71e7abb49ca090bf936"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of clients connected to the server.  <a href="classNetwork_1_1ServerHandler.html#a7d8b4c0b9f3fc71e7abb49ca090bf936">More...</a><br /></td></tr>
 <tr class="separator:a7d8b4c0b9f3fc71e7abb49ca090bf936"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2d54cc0dfefb3a72f5714a29ef5f2a97"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNetwork_1_1ServerHandler.html#a2d54cc0dfefb3a72f5714a29ef5f2a97">send</a> (const <a class="el" href="structRType_1_1Packet.html">RType::Packet</a> &amp;, size_t)</td></tr>
-<tr class="memdesc:a2d54cc0dfefb3a72f5714a29ef5f2a97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a packet to a client.  <a href="classNetwork_1_1ServerHandler.html#a2d54cc0dfefb3a72f5714a29ef5f2a97">More...</a><br /></td></tr>
-<tr class="separator:a2d54cc0dfefb3a72f5714a29ef5f2a97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5699142168990eb645fb03641fe7a03d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNetwork_1_1ServerHandler.html#a5699142168990eb645fb03641fe7a03d">broadcast</a> (int, std::vector&lt; float &gt;)</td></tr>
-<tr class="memdesc:a5699142168990eb645fb03641fe7a03d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Broadcast a message to all clients. Each client receives a packet with a unique uuid.  <a href="classNetwork_1_1ServerHandler.html#a5699142168990eb645fb03641fe7a03d">More...</a><br /></td></tr>
-<tr class="separator:a5699142168990eb645fb03641fe7a03d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6efb08f09d5e034949ac8367809391f6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNetwork_1_1ServerHandler.html#a6efb08f09d5e034949ac8367809391f6">send</a> (const <a class="el" href="structRType_1_1Packet.html">RType::Packet</a> &amp;, size_t, <a class="el" href="classECS_1_1Core_1_1SparseArray.html">ECS::Core::SparseArray</a>&lt; <a class="el" href="structComponent_1_1Connection.html">Component::Connection</a> &gt; &amp;)</td></tr>
+<tr class="memdesc:a6efb08f09d5e034949ac8367809391f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a packet to a client.  <a href="classNetwork_1_1ServerHandler.html#a6efb08f09d5e034949ac8367809391f6">More...</a><br /></td></tr>
+<tr class="separator:a6efb08f09d5e034949ac8367809391f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae348dc1eff0a6789347ca2bfed15dc4e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNetwork_1_1ServerHandler.html#ae348dc1eff0a6789347ca2bfed15dc4e">broadcast</a> (int, std::vector&lt; float &gt;, <a class="el" href="classECS_1_1Core_1_1SparseArray.html">ECS::Core::SparseArray</a>&lt; <a class="el" href="structComponent_1_1Connection.html">Component::Connection</a> &gt; &amp;)</td></tr>
+<tr class="memdesc:ae348dc1eff0a6789347ca2bfed15dc4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Broadcast a message to all clients. Each client receives a packet with a unique uuid.  <a href="classNetwork_1_1ServerHandler.html#ae348dc1eff0a6789347ca2bfed15dc4e">More...</a><br /></td></tr>
+<tr class="separator:ae348dc1eff0a6789347ca2bfed15dc4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e5b4f29a425e7950e6cbcee8dbae520"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNetwork_1_1ServerHandler.html#a6e5b4f29a425e7950e6cbcee8dbae520">isFull</a> () const</td></tr>
 <tr class="memdesc:a6e5b4f29a425e7950e6cbcee8dbae520"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the server is full.  <a href="classNetwork_1_1ServerHandler.html#a6e5b4f29a425e7950e6cbcee8dbae520">More...</a><br /></td></tr>
 <tr class="separator:a6e5b4f29a425e7950e6cbcee8dbae520"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -198,8 +198,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a5699142168990eb645fb03641fe7a03d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5699142168990eb645fb03641fe7a03d">&#9670;&nbsp;</a></span>broadcast()</h2>
+<a id="ae348dc1eff0a6789347ca2bfed15dc4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae348dc1eff0a6789347ca2bfed15dc4e">&#9670;&nbsp;</a></span>broadcast()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -214,7 +214,13 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::vector&lt; float &gt;&#160;</td>
-          <td class="paramname"><em>aPayload</em>&#160;</td>
+          <td class="paramname"><em>aPayload</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classECS_1_1Core_1_1SparseArray.html">ECS::Core::SparseArray</a>&lt; <a class="el" href="structComponent_1_1Connection.html">Component::Connection</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>aConnection</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -229,6 +235,7 @@ Static Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">aType</td><td>The packet type to send </td></tr>
     <tr><td class="paramname">aPayload</td><td>The payload to send </td></tr>
+    <tr><td class="paramname">aConnections</td><td>Connection components of clients </td></tr>
   </table>
   </dd>
 </dl>
@@ -393,8 +400,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a2d54cc0dfefb3a72f5714a29ef5f2a97"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2d54cc0dfefb3a72f5714a29ef5f2a97">&#9670;&nbsp;</a></span>send()</h2>
+<a id="a6efb08f09d5e034949ac8367809391f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6efb08f09d5e034949ac8367809391f6">&#9670;&nbsp;</a></span>send()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -409,7 +416,13 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>aClientId</em>&#160;</td>
+          <td class="paramname"><em>aClientId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classECS_1_1Core_1_1SparseArray.html">ECS::Core::SparseArray</a>&lt; <a class="el" href="structComponent_1_1Connection.html">Component::Connection</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>aConnection</em>&#160;</td>
         </tr>
         <tr>
           <td></td>

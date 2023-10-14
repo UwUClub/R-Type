@@ -1,6 +1,7 @@
 var annotated_dup =
 [
     [ "Component", null, [
+      [ "Connection", "structComponent_1_1Connection.html", "structComponent_1_1Connection" ],
       [ "HitBox", "structComponent_1_1HitBox.html", "structComponent_1_1HitBox" ],
       [ "IsAlive", "structComponent_1_1IsAlive.html", "structComponent_1_1IsAlive" ],
       [ "LoadedSprite", "structComponent_1_1LoadedSprite.html", "structComponent_1_1LoadedSprite" ],

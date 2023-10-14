@@ -2,6 +2,7 @@ var hierarchy =
 [
     [ "RType::Aknowlegdment", "structRType_1_1Aknowlegdment.html", null ],
     [ "Network::ClientHandler", "classNetwork_1_1ClientHandler.html", null ],
+    [ "Component::Connection", "structComponent_1_1Connection.html", null ],
     [ "ECS::Event::Event", "classECS_1_1Event_1_1Event.html", [
       [ "ECS::Event::KeyboardEvent", "classECS_1_1Event_1_1KeyboardEvent.html", null ],
       [ "ECS::Event::MouseEvent", "classECS_1_1Event_1_1MouseEvent.html", null ],
