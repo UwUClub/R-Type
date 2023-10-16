@@ -33,7 +33,7 @@ namespace Raylib {
     }
 
     // Sounds
-    Sound::Sound(const std::string& fileName, float volume)
+    Sound::Sound(const std::string &fileName, float volume)
         : _path(fileName),
           _realPath(ECS::ResourcesManager::convertPath(fileName)),
           _sound(LoadSound(_realPath.c_str()))
@@ -113,7 +113,7 @@ namespace Raylib {
 
     // Music
 
-    Music::Music(const std::string& fileName, float volume)
+    Music::Music(const std::string &fileName, float volume)
         : _path(fileName),
           _realPath(ECS::ResourcesManager::convertPath(fileName)),
           _music(LoadMusicStream(_realPath.c_str()))
