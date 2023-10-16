@@ -3,8 +3,10 @@
 
 #include <sys/types.h>
 #include "Components.hpp"
+#include "Graphics.hpp"
 #include "IsAlive.hpp"
 #include "KeyboardEvent.hpp"
+#include "LoadedSprite.hpp"
 #include "Raylib.hpp"
 #include "SparseArray.hpp"
 #include "Utils.hpp"
@@ -80,7 +82,7 @@ namespace ECS {
              *
              * @param aSprites SparseArray of all the entities sprites
              */
-            static void loadTextures(Core::SparseArray<Component::LoadedSprite> &aSprites);
+            static void loadTextures(Core::SparseArray<Raylib::Sprite> &aSprites);
 
             /**
              * @brief Display all the entities on the screen (locally)
@@ -88,7 +90,7 @@ namespace ECS {
              * @param aSprites SparseArray of all the entities sprites
              * @param aPos SparseArray of all the entities position
              */
-            static void displayEntities(Core::SparseArray<Component::LoadedSprite> &aSprites,
+            static void displayEntities(Core::SparseArray<Raylib::Sprite> &aSprites,
                                         Core::SparseArray<Utils::Vector2f> &aPos);
 
             /**

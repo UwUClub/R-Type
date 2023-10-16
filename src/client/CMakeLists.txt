@@ -5,6 +5,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 target_sources(client PRIVATE
         main.cpp
         RayDisplayClass.cpp
+        LoadedSprite.hpp
 )
 
 add_subdirectory(network)

@@ -12,6 +12,7 @@
 #include <string>
 #include "Components.hpp"
 #include "KeyboardEvent.hpp"
+#include "LoadedSprite.hpp"
 #include "MouseEvent.hpp"
 #include "Raylib.hpp"
 #include "Utils.hpp"

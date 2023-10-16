@@ -6,13 +6,6 @@ target_include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-target_sources(
-    ${PROJECT_NAME_CLIENT}
-    PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/UnloadRaylib.cpp
-)
-
 add_subdirectory(Geometry)
 add_subdirectory(Graphics)
-add_subdirectory(Audio)
 add_subdirectory(Events)

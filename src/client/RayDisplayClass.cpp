@@ -7,6 +7,8 @@
 
 #include "RayDisplayClass.hpp"
 #include <algorithm>
+#include "Geometry.hpp"
+#include "Graphics.hpp"
 #include "IsAlive.hpp"
 #include "Raylib.hpp"
 #include "SparseArray.hpp"
@@ -50,15 +52,17 @@ size_t RayDisplayClass::addEntity(ECS::Utils::Vector2f aPos, Component::Speed aS
     auto &vec = world.getComponent<ECS::Utils::Vector2f>();
     auto &spd = world.getComponent<Component::Speed>();
     auto &type = world.getComponent<Component::TypeEntity>();
-    auto &sprite = world.getComponent<Component::LoadedSprite>();
+    auto &sprite = world.getComponent<Raylib::Sprite>();
     auto &hitbox = world.getComponent<Component::HitBox>();
     auto &isAlive = world.getComponent<Component::IsAlive>();
     const size_t idx = world.createEntity();
+    Raylib::Rectangle rect =
+        Raylib::Rectangle {aSprite.srcRect.x, aSprite.srcRect.y, aSprite.srcRect.width, aSprite.srcRect.height};
 
     vec.insertAt(idx, aPos);
     spd.insertAt(idx, aSpeed);
     type.insertAt(idx, aType);
-    sprite.insertAt(idx, std::move(aSprite));
+    sprite.insertAt(idx, Raylib::Sprite(aSprite.path, rect));
     hitbox.insertAt(idx, aHitBox);
     isAlive.insertAt(idx, aIsAlive);
     return idx;
@@ -77,7 +81,7 @@ Texture2D *RayDisplayClass::getTexture(const std::string &aPath)
 RayDisplayClass::~RayDisplayClass()
 {
     auto &world = ECS::Core::World::getInstance();
-    auto &sprites = world.getComponent<Component::LoadedSprite>();
+    auto &sprites = world.getComponent<Raylib::Sprite>();
 
     for (auto &sprite : sprites) {
         if (!sprite.has_value()) {
@@ -85,7 +89,7 @@ RayDisplayClass::~RayDisplayClass()
         }
     }
     for (auto &texture : _textures) {
-        UnloadTexture(texture.second);
+        Raylib::Sprite::unloadTexture(texture.second);
     }
     CloseWindow();
 }

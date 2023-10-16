@@ -2,17 +2,17 @@
 #include "System.hpp"
 
 namespace ECS {
-    void System::loadTextures(Core::SparseArray<Component::LoadedSprite> &aSprites)
+    void System::loadTextures(Core::SparseArray<Raylib::Sprite> &aSprites)
     {
         RayDisplayClass &display = RayDisplayClass::getInstance();
 
         for (auto &aSprite : aSprites) {
-            if (!aSprite.has_value() || aSprite.value().texture != nullptr) {
+            if (!aSprite.has_value() || aSprite.value()._texture != nullptr) {
                 continue;
             }
-            aSprite.value().texture = display.getTexture(aSprite.value().path);
-            if (aSprite.value().texture == nullptr) {
-                std::cerr << "Failed to load texture: " << aSprite.value().path << std::endl;
+            aSprite.value()._texture = display.getTexture(aSprite.value()._fileName);
+            if (aSprite.value()._texture == nullptr) {
+                std::cerr << "Failed to load texture: " << aSprite.value()._fileName << std::endl;
             }
         }
     }

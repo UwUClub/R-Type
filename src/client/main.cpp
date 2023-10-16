@@ -3,6 +3,7 @@
 #include "ClientHandler.hpp"
 #include "Components.hpp"
 #include "EventManager.hpp"
+#include "Graphics.hpp"
 #include "HitBox.hpp"
 #include "IsAlive.hpp"
 #include "NetworkHandler.hpp"
@@ -43,14 +44,15 @@ int main(int ac, char **av)
         world.registerComponent<Component::Speed>();
         world.registerComponent<Component::TypeEntity>();
         world.registerComponent<Component::LoadedSprite>();
+        world.registerComponent<Raylib::Sprite>();
         world.registerComponent<Component::HitBox>();
         world.registerComponent<Component::IsAlive>();
 
         // Graphic systems
 
         world.addSystem(ECS::System::getInput);
-        world.addSystem<Component::LoadedSprite>(ECS::System::loadTextures);
-        world.addSystem<Component::LoadedSprite, ECS::Utils::Vector2f>(ECS::System::displayEntities);
+        world.addSystem<Raylib::Sprite>(ECS::System::loadTextures);
+        world.addSystem<Raylib::Sprite, ECS::Utils::Vector2f>(ECS::System::displayEntities);
 
         // Background systems
 
