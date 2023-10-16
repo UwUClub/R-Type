@@ -9,15 +9,15 @@ namespace ECS {
                                    Core::SparseArray<Component::TypeEntity> &aType)
     {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
-        ;
-        auto events = eventManager->getEventsByType(Event::EventType::GAME);
 
-        for (auto &event : events) {
-            auto &gameEvent = static_cast<RType::ClientGameEvent &>(*event);
+        auto &events = eventManager->getEventsByType<RType::ClientGameEvent>();
+
+        for (size_t i = 0; i < events.size(); i++) {
+            auto &gameEvent = events[i];
 
             if (gameEvent.getType() == RType::ClientEventType::PLAYER_POSITION) {
                 if (gameEvent.getPayload().size() != 3) {
-                    eventManager->removeEvent(event);
+                    eventManager->removeEvent<RType::ClientGameEvent>(i);
                     continue;
                 }
                 std::size_t onlineBotId = static_cast<int>(gameEvent.getPayload()[0]);
@@ -26,13 +26,13 @@ namespace ECS {
 
                 size_t localBotId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(aType, onlineBotId);
                 if (!aPos[localBotId].has_value()) {
-                    eventManager->removeEvent(event);
+                    eventManager->removeEvent<RType::ClientGameEvent>(i);
                     continue;
                 }
                 aPos[localBotId].value().x = posX;
                 aPos[localBotId].value().y = posY;
 
-                eventManager->removeEvent(event);
+                eventManager->removeEvent<RType::ClientGameEvent>(i);
             }
         }
     }

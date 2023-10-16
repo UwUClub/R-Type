@@ -9,14 +9,12 @@ namespace ECS {
     {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         RayDisplayClass &display = RayDisplayClass::getInstance();
-        auto events = eventManager->getEventsByType(Event::EventType::GAME);
+        auto &events = eventManager->getEventsByType<RType::ClientGameEvent>();
 
-        for (auto &event : events) {
-            auto &gameEvent = static_cast<RType::ClientGameEvent &>(*event);
-
+        for (size_t i = 0; i < events.size(); i++) {
+            auto &gameEvent = events[i];
             if (gameEvent.getType() == RType::ClientEventType::PLAYER_SPAWN) {
                 if (gameEvent.getPayload().size() != 5) {
-                    eventManager->removeEvent(event);
                     continue;
                 }
 
@@ -42,7 +40,7 @@ namespace ECS {
                                   Component::HitBox {PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT},
                                   Component::IsAlive {true, 0});
 
-                eventManager->removeEvent(event);
+                eventManager->removeEvent<RType::ClientGameEvent>(i);
             }
         }
     }

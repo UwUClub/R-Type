@@ -9,14 +9,14 @@ namespace ECS {
     {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         RayDisplayClass &display = RayDisplayClass::getInstance();
-        auto events = eventManager->getEventsByType(Event::EventType::GAME);
+        auto &events = eventManager->getEventsByType<RType::ClientGameEvent>();
 
-        for (auto &event : events) {
-            auto &gameEvent = static_cast<RType::ClientGameEvent &>(*event);
+        for (size_t i = 0; i < events.size(); i++) {
+            auto &gameEvent = events[i];
 
             if (gameEvent.getType() == RType::ClientEventType::ENEMY_SPAWN) {
                 if (gameEvent.getPayload().size() != 3) {
-                    eventManager->removeEvent(event);
+                    eventManager->removeEvent<RType::ClientGameEvent>(i);
                     continue;
                 }
                 std::size_t onlineEntityId = static_cast<std::size_t>(gameEvent.getPayload()[0]);
@@ -30,7 +30,7 @@ namespace ECS {
                                              Rectangle {0, 0, ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT}},
                     Component::HitBox {ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT}, Component::IsAlive {true, 0});
 
-                eventManager->removeEvent(event);
+                eventManager->removeEvent<RType::ClientGameEvent>(i);
             }
         }
     }

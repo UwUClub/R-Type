@@ -40,10 +40,10 @@ namespace Network {
 
     void ClientHandler::receivePacket(const RType::Packet &aPacket)
     {
-        RType::ClientEventType packetType = static_cast<RType::ClientEventType>(aPacket.type);
+        auto packetType = static_cast<RType::ClientEventType>(aPacket.type);
 
-        auto *evt = new RType::ClientGameEvent(packetType, aPacket.payload);
-        ECS::Event::EventManager::getInstance()->pushEvent(evt);
+        ECS::Event::EventManager::getInstance()->pushEvent<RType::ClientGameEvent>(
+            RType::ClientGameEvent(packetType, aPacket.payload));
     }
 
     void ClientHandler::send(RType::Packet &aPacket)

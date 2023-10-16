@@ -74,7 +74,7 @@ int main(int ac, char **av)
         while (world.isRunning()) {
             world.runSystems();
 
-            eventManager->clearNonGameEvents();
+            eventManager->keepEventsAndClear<RType::ServerGameEvent>();
 
             world.calcDeltaTime();
         }

@@ -1,5 +1,4 @@
 #include <boost/asio.hpp>
-#include "Event.hpp"
 
 #ifndef SERVERGAMEEVENT_HPP
     #define SERVERGAMEEVENT_HPP
@@ -21,7 +20,7 @@ namespace RType {
     /**
      * @brief Game event class is the base class of all game events
      */
-    class ServerGameEvent : public ECS::Event::Event
+    class ServerGameEvent
     {
         private:
             ServerEventType _type;

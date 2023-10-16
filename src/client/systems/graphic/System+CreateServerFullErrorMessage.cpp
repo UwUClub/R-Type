@@ -12,10 +12,10 @@ namespace ECS {
         auto &world = ECS::Core::World::getInstance();
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         RayDisplayClass &display = RayDisplayClass::getInstance();
-        auto events = eventManager->getEventsByType(Event::EventType::GAME);
+        auto &events = eventManager->getEventsByType<RType::ClientGameEvent>();
 
-        for (auto &event : events) {
-            auto &gameEvent = static_cast<RType::ClientGameEvent &>(*event);
+        for (size_t i = 0; i < events.size(); i++) {
+            auto &gameEvent = events[i];
 
             if (gameEvent.getType() == RType::ClientEventType::SERVER_FULL) {
                 world.killEntity(0);
@@ -31,7 +31,7 @@ namespace ECS {
                                                                       SERVER_FULL_MESSAGE_TEX_HEIGHT}},
                                   Component::HitBox {}, Component::IsAlive {false, 0});
 
-                eventManager->removeEvent(event);
+                eventManager->removeEvent<RType::ClientGameEvent>(i);
             }
         }
     }

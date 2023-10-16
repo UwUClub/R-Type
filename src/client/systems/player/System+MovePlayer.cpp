@@ -17,7 +17,7 @@ namespace ECS {
         Network::ClientHandler &network = Network::ClientHandler::getInstance();
 
         Event::EventManager *eventManager = Event::EventManager::getInstance();
-        auto keyboardEvent = eventManager->getEventsByType(Event::EventType::KEYBOARD);
+        auto &keyboardEvent = eventManager->getEventsByType<Event::KeyboardEvent>();
         static const std::unordered_map<Event::KeyIdentifier, std::function<void(float &, Utils::Vector2f &, float)>>
             keyMap = {
                 {Event::KeyIdentifier::UP,
@@ -50,9 +50,8 @@ namespace ECS {
             if (!aType[i].has_value() || !aType[i].value().isPlayer) {
                 continue;
             }
-            for (auto &event : keyboardEvent) {
-                auto *keyEvent = static_cast<Event::KeyboardEvent *>(event.get());
-                if (keyMap.find(keyEvent->_keyId) == keyMap.end() || !aIsAlive[i].value().isAlive) {
+            for (auto &keyEvent : keyboardEvent) {
+                if (keyMap.find(keyEvent._keyId) == keyMap.end() || !aIsAlive[i].value().isAlive) {
                     continue;
                 }
                 auto &pos = aPos[i].value();
@@ -60,7 +59,7 @@ namespace ECS {
                 if (onlinePlayerId == -1) {
                     continue;
                 }
-                keyMap.at(keyEvent->_keyId)(aSpeed[i].value().speed, pos, onlinePlayerId);
+                keyMap.at(keyEvent._keyId)(aSpeed[i].value().speed, pos, onlinePlayerId);
 
                 if (pos.x < 0) {
                     pos.x = 0;

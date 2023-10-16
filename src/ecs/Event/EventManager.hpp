@@ -1,18 +1,16 @@
 #ifndef EVENTMANAGER_HPP
 #define EVENTMANAGER_HPP
 
+#include <any>
 #include <functional>
 #include <memory>
 #include <queue>
 #include <string>
 #include <typeindex>
 #include <vector>
-#include "Event.hpp"
+#include "EventHandler.hpp"
 #include <unordered_map>
-
 namespace ECS::Event {
-    class Event;
-
     /**
      * @brief EventManager class is a singleton that manage all events
      *
@@ -67,41 +65,123 @@ namespace ECS::Event {
             static EventManager *getInstance();
 
             /**
+             * @brief Get the Handler object
+             *
+             * @tparam Event The type of the event.
+             * @return EventHandler<Event>& The handler of the event.
+             */
+            template<class Event>
+            EventHandler<Event> &getHandler()
+            {
+                try {
+                    auto &handler = _eventsHandler.at(std::type_index(typeid(Event)));
+                    auto &component = std::any_cast<EventHandler<Event> &>(handler);
+
+                    return component;
+                } catch (const std::bad_any_cast &e) {
+                    throw EventManagerException("There is no handler of this type");
+                }
+            }
+
+            /**
              * @brief Push an event to the queue
              *
              * @param aEvent The event to push.
+             * @tparam Event The type of the event.
              */
-            void pushEvent(Event *aEvent);
+            template<class Event>
+            void pushEvent(const Event &aEvent)
+            {
+                auto eventIndex = std::type_index(typeid(Event));
 
-            /**
-             * @brief Get the Events object
-             *
-             * @return std::vector<Event>& A reference to the vector of events.
-             */
-            [[nodiscard]] std::vector<std::shared_ptr<Event>> &getEvents();
+                if (_eventsHandler.find(eventIndex) == _eventsHandler.end()) {
+                    _eventsHandler[eventIndex] = EventHandler<Event>();
+                    _clearFunctions[eventIndex] = [](EventManager &aManager) {
+                        auto &myHandler = aManager.getHandler<Event>();
+
+                        myHandler.clearEvents();
+                    };
+                }
+                try {
+                    auto &handler = getHandler<Event>();
+
+                    handler.pushEvent(aEvent);
+                } catch (const std::bad_any_cast &e) {
+                    throw EventManagerException("Can't push event");
+                }
+            }
 
             /**
              * @brief Get all the events of a specific type
-             *
+             * @tparam Event The type of the event.
+             * @return std::vector<Event>& The list of events.
              */
-            std::vector<std::shared_ptr<Event>> getEventsByType(const EventType &aEventType);
+            template<class Event>
+            std::vector<Event> &getEventsByType()
+            {
+                auto eventIndex = std::type_index(typeid(Event));
+
+                if (_eventsHandler.find(eventIndex) == _eventsHandler.end()) {
+                    _eventsHandler[eventIndex] = EventHandler<Event>();
+                    _clearFunctions[eventIndex] = [](EventManager &aManager) {
+                        auto &myHandler = aManager.getHandler<Event>();
+
+                        myHandler.clearEvents();
+                    };
+                }
+                try {
+                    auto &handler = getHandler<Event>();
+
+                    return handler.getEvents();
+                } catch (const std::bad_any_cast &e) {
+                    throw EventManagerException("Can't get events");
+                }
+            }
 
             /**
-             * @brief Clear non game events
-             *
+             * @brief Clear all the events of the types that aren't in the list
+             * @tparam EventList The list of events to keep.
              */
-            void clearNonGameEvents();
+            template<typename... EventList>
+            void keepEventsAndClear()
+            {
+                std::vector<std::type_index> eventIndexList = {std::type_index(typeid(EventList))...};
+
+                for (auto &lam : _clearFunctions) {
+                    if (std::find(eventIndexList.begin(), eventIndexList.end(), lam.first) == eventIndexList.end()) {
+                        lam.second(*this);
+                    }
+                }
+            }
 
             /**
              * @brief Remove an event from the queue
              * @param aIndex The index of the event to remove.
+             * @tparam Event The type of the event.
              *
              */
-            void removeEvent(std::shared_ptr<Event> &aEvent);
+            template<class Event>
+            void removeEvent(const std::size_t aIndex)
+            {
+                auto eventIndex = std::type_index(typeid(Event));
+
+                if (_eventsHandler.find(eventIndex) == _eventsHandler.end()) {
+                    return;
+                }
+                try {
+                    auto &handler = getHandler<Event>();
+
+                    handler.removeEvent(aIndex);
+                } catch (const std::bad_any_cast &e) {
+                    throw EventManagerException("Can't remove event");
+                }
+            }
 
         private:
             EventManager();
-            std::vector<std::shared_ptr<Event>> _events;
+            using func = std::function<void(EventManager &)>;
+            std::unordered_map<std::type_index, std::any> _eventsHandler;
+            std::unordered_map<std::type_index, func> _clearFunctions;
 
         private:
             //-------------------EXCEPTIONS-------------------//
@@ -116,6 +196,8 @@ namespace ECS::Event {
                 private:
                     std::string _message;
             };
+
+            //-------------------METHODS-------------------//
     };
 } // namespace ECS::Event
 

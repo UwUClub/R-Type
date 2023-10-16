@@ -1,7 +1,6 @@
 #ifndef WINDOWEVENT_HPP
 #define WINDOWEVENT_HPP
 
-#include "Event.hpp"
 #include "Utils.hpp"
 
 namespace ECS::Event {
@@ -34,7 +33,7 @@ namespace ECS::Event {
      * @brief Window event class is the base class of all window events
      *
      */
-    class WindowEvent : public Event
+    class WindowEvent
     {
         public:
             //-------------------CONSTRUCTORS / DESTRUCTOR-------------------//

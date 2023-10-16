@@ -1,7 +1,6 @@
 #include <cstddef>
 #include <iostream>
 #include "Components.hpp"
-#include "Event.hpp"
 #include "EventManager.hpp"
 #include "NetworkHandler.hpp"
 #include "Packets.hpp"

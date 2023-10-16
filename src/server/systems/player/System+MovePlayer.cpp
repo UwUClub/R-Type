@@ -14,15 +14,15 @@ namespace ECS {
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
         Network::ServerHandler &network = Network::ServerHandler::getInstance();
 
-        auto events = eventManager->getEventsByType(Event::EventType::GAME);
+        auto &events = eventManager->getEventsByType<RType::ServerGameEvent>();
 
-        for (auto &event : events) {
-            auto &gameEvent = static_cast<RType::ServerGameEvent &>(*event);
+        for (size_t i = 0; i < events.size(); i++) {
+            auto &gameEvent = events[i];
 
             if (gameEvent.getType() == RType::ServerEventType::MOVE) {
                 // Check payload size
                 if (gameEvent.getPayload().size() != 3) {
-                    eventManager->removeEvent(event);
+                    eventManager->removeEvent<RType::ServerGameEvent>(i);
                     continue;
                 }
 
@@ -30,7 +30,7 @@ namespace ECS {
                 int entityId = static_cast<int>(gameEvent.getPayload()[0]);
                 if (entityId < 0 || entityId >= aPos.size() || !aPos[entityId].has_value()
                     || !aSpeed[entityId].has_value()) {
-                    eventManager->removeEvent(event);
+                    eventManager->removeEvent<RType::ServerGameEvent>(i);
                     continue;
                 }
 
@@ -38,7 +38,7 @@ namespace ECS {
                 float moveX = gameEvent.getPayload()[1];
                 float moveY = gameEvent.getPayload()[2];
                 if (moveX < -1 || moveX > 1 || moveY < -1 || moveY > 1) {
-                    eventManager->removeEvent(event);
+                    eventManager->removeEvent<RType::ServerGameEvent>(i);
                     continue;
                 }
 
@@ -65,7 +65,7 @@ namespace ECS {
                 network.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_POSITION),
                                   {static_cast<float>(entityId), pos.x, pos.y}, aConnection);
 
-                eventManager->removeEvent(event);
+                eventManager->removeEvent<RType::ServerGameEvent>(i);
             }
         }
     }

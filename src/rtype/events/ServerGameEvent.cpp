@@ -7,8 +7,7 @@ namespace RType {
 
     ServerGameEvent::ServerGameEvent(ServerEventType aType, int aEntityId, std::vector<float> aPayload,
                                      udp::endpoint aClientEndpoint)
-        : ECS::Event::Event(ECS::Event::EventType::GAME),
-          _type(aType),
+        : _type(aType),
           _entityId(aEntityId),
           _payload(aPayload),
           _clientEndpoint(aClientEndpoint)

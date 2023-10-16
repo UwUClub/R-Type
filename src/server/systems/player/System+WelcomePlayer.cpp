@@ -1,7 +1,6 @@
 #include <boost/asio.hpp>
 #include <iostream>
 #include "Components.hpp"
-#include "Event.hpp"
 #include "EventManager.hpp"
 #include "HitBox.hpp"
 #include "NetworkHandler.hpp"
@@ -28,15 +27,15 @@ namespace ECS {
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
         Network::ServerHandler &server = Network::ServerHandler::getInstance();
         Network::NetworkHandler &network = Network::NetworkHandler::getInstance();
-        auto events = eventManager->getEventsByType(Event::EventType::GAME);
+        auto &events = eventManager->getEventsByType<RType::ServerGameEvent>();
 
-        for (auto &event : events) {
-            auto &gameEvent = static_cast<RType::ServerGameEvent &>(*event);
+        for (size_t i = 0; i < events.size(); i++) {
+            auto &gameEvent = events[i];
             if (gameEvent.getType() == RType::ServerEventType::CONNECT) {
                 if (server.isFull()) {
                     udp::endpoint cliEndpoint = gameEvent.getClientEndpoint();
                     network.send(RType::Packet(static_cast<int>(RType::ClientEventType::SERVER_FULL)), cliEndpoint);
-                    eventManager->removeEvent(event);
+                    eventManager->removeEvent<RType::ServerGameEvent>(i);
                     continue;
                 }
 
@@ -83,7 +82,7 @@ namespace ECS {
                     }
                 }
 
-                eventManager->removeEvent(event);
+                eventManager->removeEvent<RType::ServerGameEvent>(i);
             }
         }
     }

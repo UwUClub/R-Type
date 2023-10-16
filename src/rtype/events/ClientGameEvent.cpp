@@ -3,13 +3,11 @@
 namespace RType {
 
     ClientGameEvent::ClientGameEvent(ClientEventType aType)
-        : ECS::Event::Event(ECS::Event::EventType::GAME),
-          _type(aType)
+        : _type(aType)
     {}
 
     ClientGameEvent::ClientGameEvent(ClientEventType aType, std::vector<float> aPayload)
-        : ECS::Event::Event(ECS::Event::EventType::GAME),
-          _type(aType),
+        : _type(aType),
           _payload(aPayload)
     {}
 

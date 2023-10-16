@@ -1,65 +1,18 @@
 #include "EventManager.hpp"
 #include <memory>
-#include "Event.hpp"
 
 //-------------------CONSTRUCTORS / DESTRUCTOR-------------------//
 ECS::Event::EventManager::EventManager() = default;
 
-ECS::Event::EventManager::~EventManager()
-{
-    _events.clear();
-}
+ECS::Event::EventManager::~EventManager() = default;
 
 //-------------------PUBLIC METHODS-------------------//
-void ECS::Event::EventManager::pushEvent(Event *aEvent)
-{
-    _events.push_back(std::shared_ptr<Event>(aEvent));
-}
 
 ECS::Event::EventManager *ECS::Event::EventManager::getInstance()
 {
     static EventManager instance;
 
     return &instance;
-}
-
-std::vector<std::shared_ptr<ECS::Event::Event>> &ECS::Event::EventManager::getEvents()
-{
-    return _events;
-}
-
-std::vector<std::shared_ptr<ECS::Event::Event>> ECS::Event::EventManager::getEventsByType(const EventType &aEventType)
-{
-    std::vector<std::shared_ptr<Event>> events;
-
-    for (auto &event : _events) {
-        if (event->getType() == aEventType) {
-            events.push_back(event);
-        }
-    }
-    return events;
-}
-
-void ECS::Event::EventManager::clearNonGameEvents()
-{
-    for (auto it = _events.begin(); it != _events.end();) {
-        if ((*it)->getType() != EventType::GAME) {
-            it = _events.erase(it);
-        } else {
-            ++it;
-        }
-    }
-}
-
-void ECS::Event::EventManager::removeEvent(std::shared_ptr<Event> &aEvent)
-{
-    for (auto it = _events.begin(); it != _events.end();) {
-        if (*it == aEvent) {
-            it = _events.erase(it);
-        } else {
-            ++it;
-        }
-    }
 }
 
 //-------------------NESTED CLASSES-------------------//

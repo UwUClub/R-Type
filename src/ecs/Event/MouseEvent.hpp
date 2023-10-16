@@ -1,7 +1,6 @@
 #ifndef MOUSEEVENT_HPP
 #define MOUSEEVENT_HPP
 
-#include "Event.hpp"
 #include "Utils.hpp"
 
 namespace ECS::Event {
@@ -24,7 +23,7 @@ namespace ECS::Event {
     /**
      * @brief Mouse event class is the base class of all mouse events
      */
-    class MouseEvent : public Event
+    class MouseEvent
     {
         public:
             //-------------------CONSTRUCTORS / DESTRUCTOR-------------------//

@@ -12,14 +12,14 @@ namespace ECS {
     {
         auto &display = RayDisplayClass::getInstance();
         Event::EventManager *eventManager = Event::EventManager::getInstance();
-        auto events = eventManager->getEventsByType(Event::EventType::GAME);
+        auto &events = eventManager->getEventsByType<RType::ClientGameEvent>();
 
-        for (auto &event : events) {
-            auto &gameEvent = static_cast<RType::ClientGameEvent &>(*event);
+        for (size_t i = 0; i < events.size(); i++) {
+            auto &gameEvent = events[i];
 
             if (gameEvent.getType() == RType::ClientEventType::ENEMY_SHOOT) {
                 if (gameEvent.getPayload().size() != 3) {
-                    eventManager->removeEvent(event);
+                    eventManager->removeEvent<RType::ClientGameEvent>(i);
                     continue;
                 }
                 std::size_t onlineMissileId = static_cast<int>(gameEvent.getPayload()[0]);
@@ -34,7 +34,7 @@ namespace ECS {
                                              Rectangle {0, 0, MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT}},
                     Component::HitBox {MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT}, Component::IsAlive {false, 0});
 
-                eventManager->removeEvent(event);
+                eventManager->removeEvent<RType::ClientGameEvent>(i);
             }
         }
     }

@@ -1,7 +1,6 @@
 #include <cstddef>
 #include <iostream>
 #include "Components.hpp"
-#include "Event.hpp"
 #include "EventManager.hpp"
 #include "NetworkHandler.hpp"
 #include "Packets.hpp"
@@ -14,10 +13,11 @@ namespace ECS {
     void System::receiveAknowledgment(Core::SparseArray<Component::Connection> &aConnection)
     {
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
-        auto events = eventManager->getEventsByType(Event::EventType::GAME);
+        auto &events = eventManager->getEventsByType<RType::ServerGameEvent>();
 
-        for (auto &event : events) {
-            auto &gameEvent = static_cast<RType::ServerGameEvent &>(*event);
+        for (size_t i = 0; i < events.size(); i++) {
+            auto &gameEvent = events[i];
+
             if (gameEvent.getType() == RType::ServerEventType::AKNOWLEDGMENT) {
                 size_t playerId = gameEvent.getEntityId();
 
@@ -26,7 +26,7 @@ namespace ECS {
                     aConnection[playerId].value().status = Network::ConnectionStatus::CONNECTED;
                     aConnection[playerId].value().age = 0;
                 }
-                eventManager->removeEvent(event);
+                eventManager->removeEvent<RType::ServerGameEvent>(i);
             }
         }
     }

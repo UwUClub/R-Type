@@ -14,16 +14,14 @@ namespace ECS {
     {
         Network::ClientHandler &client = Network::ClientHandler::getInstance();
         Event::EventManager *eventManager = Event::EventManager::getInstance();
-        auto keyboardEvent = eventManager->getEventsByType(Event::EventType::KEYBOARD);
+        auto &keyboardEvent = eventManager->getEventsByType<Event::KeyboardEvent>();
 
         for (size_t i = 0; i < aPos.size(); i++) {
             if (!aType[i].has_value() || !aType[i].value().isPlayer || !aIsAlive[i].value().isAlive) {
                 continue;
             }
-            for (auto &event : keyboardEvent) {
-                auto *keyEvent = static_cast<Event::KeyboardEvent *>(event.get());
-
-                if (keyEvent->_keyId == Event::KeyIdentifier::SPACE) {
+            for (auto &keyEvent : keyboardEvent) {
+                if (keyEvent._keyId == Event::KeyIdentifier::SPACE) {
                     std::cout << "Shoot !" << std::endl;
                     int playerOnlineId = aType[i].value().onlineId.value_or(-1);
                     if (playerOnlineId == -1) {

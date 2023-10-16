@@ -1,5 +1,4 @@
 #include <functional>
-#include "Event.hpp"
 #include "EventManager.hpp"
 #include "KeyboardEvent.hpp"
 #include "RayDisplayClass.hpp"
@@ -15,23 +14,28 @@ namespace ECS {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
 
         if (IsKeyPressed(KEY_UP)) {
-            eventManager->pushEvent(new Event::KeyboardEvent(Event::KeyIdentifier::UP, Event::KeyState::PRESSED));
+            eventManager->pushEvent<Event::KeyboardEvent>(
+                Event::KeyboardEvent(Event::KeyIdentifier::UP, Event::KeyState::PRESSED));
         }
 
         if (IsKeyPressed(KEY_DOWN)) {
-            eventManager->pushEvent(new Event::KeyboardEvent(Event::KeyIdentifier::DOWN, Event::KeyState::PRESSED));
+            eventManager->pushEvent<Event::KeyboardEvent>(
+                Event::KeyboardEvent(Event::KeyIdentifier::DOWN, Event::KeyState::PRESSED));
         }
 
         if (IsKeyPressed(KEY_LEFT)) {
-            eventManager->pushEvent(new Event::KeyboardEvent(Event::KeyIdentifier::LEFT, Event::KeyState::PRESSED));
+            eventManager->pushEvent<Event::KeyboardEvent>(
+                Event::KeyboardEvent(Event::KeyIdentifier::LEFT, Event::KeyState::PRESSED));
         }
 
         if (IsKeyPressed(KEY_RIGHT)) {
-            eventManager->pushEvent(new Event::KeyboardEvent(Event::KeyIdentifier::RIGHT, Event::KeyState::PRESSED));
+            eventManager->pushEvent<Event::KeyboardEvent>(
+                Event::KeyboardEvent(Event::KeyIdentifier::RIGHT, Event::KeyState::PRESSED));
         }
 
         if (IsKeyPressed(KEY_SPACE)) {
-            eventManager->pushEvent(new Event::KeyboardEvent(Event::KeyIdentifier::SPACE, Event::KeyState::PRESSED));
+            eventManager->pushEvent<Event::KeyboardEvent>(
+                Event::KeyboardEvent(Event::KeyIdentifier::SPACE, Event::KeyState::PRESSED));
         }
 
         if (WindowShouldClose()) {

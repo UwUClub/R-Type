@@ -17,25 +17,25 @@ namespace ECS {
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
         Network::ServerHandler &server = Network::ServerHandler::getInstance();
 
-        auto events = eventManager->getEventsByType(Event::EventType::GAME);
+        auto &events = eventManager->getEventsByType<RType::ServerGameEvent>();
 
-        for (auto &event : events) {
-            auto &gameEvent = static_cast<RType::ServerGameEvent &>(*event);
+        for (size_t i = 0; i < events.size(); i++) {
+            auto &gameEvent = events[i];
 
             if (gameEvent.getType() == RType::ServerEventType::SHOOT) {
                 if (gameEvent.getPayload().size() != 1) {
-                    eventManager->removeEvent(event);
+                    eventManager->removeEvent<RType::ServerGameEvent>(i);
                     continue;
                 }
 
                 int playerId = static_cast<int>(gameEvent.getPayload()[0]);
 
                 if (playerId < 0 || playerId >= aPos.size()) {
-                    eventManager->removeEvent(event);
+                    eventManager->removeEvent<RType::ServerGameEvent>(i);
                     continue;
                 }
                 if (!aPos[playerId].has_value()) {
-                    eventManager->removeEvent(event);
+                    eventManager->removeEvent<RType::ServerGameEvent>(i);
                     continue;
                 }
 
@@ -57,7 +57,7 @@ namespace ECS {
                                  {static_cast<float>(bulletId), posX, posY}, aConnection);
 
                 // Delete event
-                eventManager->removeEvent(event);
+                eventManager->removeEvent<RType::ServerGameEvent>(i);
             }
         }
     }

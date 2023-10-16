@@ -14,28 +14,28 @@ namespace ECS {
         auto &world = Core::World::getInstance();
         auto &display = RayDisplayClass::getInstance();
         Event::EventManager *eventManager = Event::EventManager::getInstance();
-        auto events = eventManager->getEventsByType(Event::EventType::GAME);
+        auto &events = eventManager->getEventsByType<RType::ClientGameEvent>();
 
         // Receive death event from server
-        for (auto &event : events) {
-            auto &gameEvent = static_cast<RType::ClientGameEvent &>(*event);
+        for (size_t i = 0; i < events.size(); i++) {
+            auto &gameEvent = events[i];
 
             if (gameEvent.getType() == RType::ClientEventType::PLAYER_DEATH) {
                 if (gameEvent.getPayload().size() != 1) {
-                    eventManager->removeEvent(event);
+                    eventManager->removeEvent<RType::ClientGameEvent>(i);
                     continue;
                 }
 
                 size_t onlineBotId = static_cast<size_t>(gameEvent.getPayload()[0]);
                 size_t localBotId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(aType, onlineBotId);
                 if (!aIsAlive[localBotId].has_value()) {
-                    eventManager->removeEvent(event);
+                    eventManager->removeEvent<RType::ClientGameEvent>(i);
                     continue;
                 }
 
                 aIsAlive[localBotId].value().isAlive = false;
 
-                eventManager->removeEvent(event);
+                eventManager->removeEvent<RType::ClientGameEvent>(i);
             }
         }
 
