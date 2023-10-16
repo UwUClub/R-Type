@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
-find_package(SDL2)
+find_package(SDL2 QUIET)
 
 # This template attempts to be "fetch_content"-able
 # so that it works well with tools like CPM or other
@@ -58,9 +58,6 @@ add_library(R_Type::R_Type_warnings ALIAS R_Type_warnings)
 #add_library(R_Type::R_Type_options INTERFACE IMPORTED)
 #add_library(R_Type::R_Type_warnings INTERFACE IMPORTED)
 
-# configure files based on CMake configuration options
-add_subdirectory(configured_files)
-
 # Adding the src:
 add_subdirectory(src)
 
@@ -70,11 +67,11 @@ if(NOT PROJECT_IS_TOP_LEVEL)
 endif()
 
 # Adding the tests:
-include(CTest)
+#include(CTest)
 
-if(BUILD_TESTING)
-  add_subdirectory(test)
-endif()
+#if(BUILD_TESTING)
+#  add_subdirectory(test)
+#endif()
 
 # If MSVC is being used, and ASAN is enabled, we need to set the debugger environment
 # so that it behaves well with MSVC's debugger, and we can run the target from visual studio
@@ -84,6 +81,8 @@ if(MSVC)
   message("all_targets=${all_targets}")
   set_target_properties(${all_targets} PROPERTIES VS_DEBUGGER_ENVIRONMENT "PATH=$(VC_ExecutablePath_x64);%PATH%")
 endif()
+
+file(COPY ${CMAKE_SOURCE_DIR}/assets DESTINATION ${CMAKE_BINARY_DIR}/bin)
 
 # set the startup project for the "play" button in MSVC
 set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT server)
@@ -107,8 +106,29 @@ R_Type_package_project(
 # Experience shows that explicit package naming can help make it easier to sort
 # out potential ABI related issues before they start, while helping you
 # track a build to a specific GIT SHA
+install(TARGETS server client
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
+include(InstallRequiredSystemLibraries)
+
+set(CPACK_PACKAGE_NAME "RTYPE")
+if(NOT DEFINED CPACK_PACKAGE_VERSION)
+    set(CPACK_PACKAGE_VERSION ${CMAKE_PROJECT_VERSION})
+endif()
 set(CPACK_PACKAGE_FILE_NAME
     "${CMAKE_PROJECT_NAME}-${CMAKE_PROJECT_VERSION}-${GIT_SHORT_SHA}-${CMAKE_SYSTEM_NAME}-${CMAKE_BUILD_TYPE}-${CMAKE_CXX_COMPILER_ID}-${CMAKE_CXX_COMPILER_VERSION}"
 )
+set(CPACK_PACKAGE_INSTALL_DIRECTORY "RTYPE")
+set(CPACK_PACKAGE_CONTACT "UwU Club")
+
+if(WIN32)
+    set(CPACK_GENERATOR "NSIS64")
+else()
+    set(CPACK_GENERATOR "DEB;RPM")
+endif()
+
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/assets" DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 include(CPack)

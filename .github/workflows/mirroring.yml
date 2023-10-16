@@ -5,7 +5,7 @@ on:
       - main
 
 env:
-  SOURCE_REPO: "git@github.com:UwUClub/Zappy.git" #Insert source url of the git source repo
+  SOURCE_REPO: "git@github.com:UwUClub/R-Type.git" #Insert source url of the git source repo
   DEST_REPO: "git@github.com:EpitechPromo2026/B-CPP-500-TLS-5-1-rtype-valentin.gegoux.git" #Insert Destination url of the git dest repo
 
 jobs:
