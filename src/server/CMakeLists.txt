@@ -11,7 +11,6 @@ add_subdirectory(timers)
 target_link_libraries(server
         PRIVATE R_Type::R_Type_options
         R_Type::R_Type_warnings
-        raylib
         ${Boost_LIBRARIES}
         Boost::asio
         Boost::serialization

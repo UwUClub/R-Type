@@ -8,11 +8,11 @@
 #include "RayDisplayClass.hpp"
 #include <algorithm>
 #include "IsAlive.hpp"
+#include "Raylib.hpp"
 #include "SparseArray.hpp"
 #include "Utils.hpp"
 #include "Values.hpp"
 #include "World.hpp"
-#include "raylib.h"
 #if defined(__linux__)
     #include <libgen.h>
     #include <limits.h>
@@ -21,7 +21,7 @@
 
 RayDisplayClass::RayDisplayClass()
 {
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "R-Type");
+    Raylib::initWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "R-Type");
 
 #if defined(__linux__)
     char result[PATH_MAX];

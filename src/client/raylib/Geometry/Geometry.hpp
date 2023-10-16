@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2023
-** R-Type
+** R-Bus
 ** File description:
 ** Geometry
 */
@@ -57,6 +57,7 @@ namespace Raylib {
             uint8_t a;
     };
 
+    // COLOR CONSTANTS
     static const Color DarkGray = static_cast<Color>(DARKGRAY);
     static const Color Yellow = static_cast<Color>(YELLOW);
     static const Color Gold = static_cast<Color>(GOLD);

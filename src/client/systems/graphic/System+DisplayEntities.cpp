@@ -1,7 +1,7 @@
 #include "KeyboardEvent.hpp"
 #include "RayDisplayClass.hpp"
+#include "Raylib.hpp"
 #include "System.hpp"
-#include "raylib.h"
 
 namespace ECS {
     void System::displayEntities(Core::SparseArray<Component::LoadedSprite> &aSprites,

@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2023
-** R-Type
+** R-Bus
 ** File description:
 ** Audio
 */
@@ -14,11 +14,13 @@ extern "C"
 }
 
 namespace Raylib {
+    // Audio device management functions
     void initAudioDevice();
     void closeAudioDevice();
     bool isAudioDeviceReady();
     void setMasterVolume(float volume);
 
+    // Sounds
     class Sound
     {
         public:

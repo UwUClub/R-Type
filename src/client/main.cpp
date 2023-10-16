@@ -8,13 +8,13 @@
 #include "NetworkHandler.hpp"
 #include "Packets.hpp"
 #include "RayDisplayClass.hpp"
+#include "Raylib.hpp"
 #include "ServerGameEvent.hpp"
 #include "System.hpp"
 #include "TypeEntity.hpp"
 #include "Utils.hpp"
 #include "Values.hpp"
 #include "World.hpp"
-#include "raylib.h"
 
 int main(int ac, char **av)
 {

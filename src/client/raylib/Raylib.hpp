@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2023
-** R-Type
+** R-Bus
 ** File description:
 ** Raylib
 */

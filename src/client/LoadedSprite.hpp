@@ -9,7 +9,7 @@
 #include <memory>
 #include <string>
 #include <utility>
-#include "raylib.h"
+#include "Raylib.hpp"
 
 #ifndef LOADEDSPRITE_HPP
     #define LOADEDSPRITE_HPP

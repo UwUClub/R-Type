@@ -21,7 +21,6 @@ target_link_libraries(rtype
         Boost::serialization
         Boost::uuid
         ecs
-        raylib
 )
 
 target_include_directories(rtype PRIVATE

@@ -5,12 +5,12 @@
 #include "Components.hpp"
 #include "IsAlive.hpp"
 #include "KeyboardEvent.hpp"
+#include "Raylib.hpp"
 #include "SparseArray.hpp"
 #include "Utils.hpp"
 #include "WindowEvent.hpp"
 #include "World.hpp"
 #include "components/HitBox.hpp"
-#include "raylib.h"
 
 namespace ECS {
     class System

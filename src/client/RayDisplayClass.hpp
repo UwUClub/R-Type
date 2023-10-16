@@ -13,9 +13,9 @@
 #include "Components.hpp"
 #include "KeyboardEvent.hpp"
 #include "MouseEvent.hpp"
+#include "Raylib.hpp"
 #include "Utils.hpp"
 #include "WindowEvent.hpp"
-#include "raylib.h"
 #include <unordered_map>
 
 class RayDisplayClass

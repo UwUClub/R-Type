@@ -2,10 +2,10 @@
 #include "EventManager.hpp"
 #include "KeyboardEvent.hpp"
 #include "RayDisplayClass.hpp"
+#include "Raylib.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 #include "World.hpp"
-#include "raylib.h"
 #include <unordered_map>
 
 namespace ECS {

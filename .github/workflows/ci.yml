@@ -11,6 +11,7 @@ on:
       - main
       - dev
       - RT-67-Switch-from-SDL-to-raylib
+      - install-raylib
 
 env:
   CLANG_TIDY_VERSION: "15.0.2"

@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2023
-** R-Type
+** R-Bus
 ** File description:
 ** Graphics
 */
@@ -37,6 +37,7 @@ namespace Raylib {
         INTERLACED_HINT = FLAG_INTERLACED_HINT,
     };
 
+    // Window-related functions
     void initWindow(int width, int height, const std::string &title);
     bool windowShouldClose();
     void closeWindow();
@@ -67,6 +68,7 @@ namespace Raylib {
     std::string getClipboardText();
     void setWindowIcon(Image image);
 
+    // Cursor-related functions
     void showCursor();
     void hideCursor();
     bool isCursorHidden();
@@ -74,17 +76,21 @@ namespace Raylib {
     void disableCursor();
     bool isCursorOnScreen();
 
+    // Drawing-related functions
     void clearBackground(Raylib::Color color);
     void beginDrawing();
     void endDrawing();
 
+    // Timing-related functions
     void setTargetFPS(int fps);
     int getFPS();
     float getFrameTime();
     double getTime();
 
+    // Misc. functions
     void takeScreenshot(const std::string &fileName);
 
+    // Input-related functions: keyboard
     bool isKeyPressed(KeyboardKey key);
     bool isKeyDown(KeyboardKey key);
     bool isKeyReleased(KeyboardKey key);
@@ -93,6 +99,7 @@ namespace Raylib {
     int getKeyPressed();
     int getCharPressed();
 
+    // Input-related functions: mouse
     bool isMouseButtonPressed(MouseButton button);
     bool isMouseButtonDown(MouseButton button);
     bool isMouseButtonReleased(MouseButton button);
@@ -108,15 +115,19 @@ namespace Raylib {
     Vector2 getMouseWheelMoveV();
     void setMouseCursor(int cursor);
 
+    // Shapes-related functions
     void drawPixel(int posX, int posY, Color color);
     void drawCircle(int centerX, int centerY, float radius, Color color);
     void drawRectangle(int posX, int posY, int width, int height, Color color);
 
+    // Color/pixel related functions
     Color fade(Color color, float alpha);
     int colorToInt(Color color);
     Vector4 colorNormalize(Color color);
     Color colorFromNormalized(Vector4 normalized);
     Color getColor(unsigned int hexValue);
+
+    // Graphic classes
 
     class Image
     {
@@ -150,6 +161,8 @@ namespace Raylib {
             int getFormat() const;
             void unloadSprite();
 
+            // draw texture functions
+
             void draw(int posX, int posY, Color tint);
             void drawV(Raylib::Vector2 position, Color tint);
             void drawEx(Raylib::Vector2 position, float rotation, float scale, Color tint);
@@ -159,9 +172,12 @@ namespace Raylib {
         private:
             void loadTextureFromImage(Image image);
             ::Texture2D _texture;
+            // width and height in percentage of the screen
             float _width;
             float _height;
     };
+
+    // Text functions and classes
 
     class Text
     {
