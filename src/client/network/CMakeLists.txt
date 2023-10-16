@@ -6,7 +6,7 @@ target_sources(client PRIVATE
 )
 
 target_link_libraries(client
-        PRIVATE R_Type::R_Type_options
+        PRIVATE
         R_Type::R_Type_warnings
         ${Boost_LIBRARIES}
         Boost::asio

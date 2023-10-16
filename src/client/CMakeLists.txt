@@ -13,7 +13,7 @@ add_subdirectory(systems)
 
 if (SDL2_DOWNLOADED)
     target_link_libraries(client
-            PRIVATE R_Type::R_Type_options
+            PRIVATE
             R_Type::R_Type_warnings
             SDL2::SDL2main
             SDL2::SDL2
@@ -28,7 +28,7 @@ if (SDL2_DOWNLOADED)
     )
 else()
     target_link_libraries(client
-            PRIVATE R_Type::R_Type_options
+            PRIVATE
             R_Type::R_Type_warnings
             SDL2::SDL2main
             SDL2::SDL2

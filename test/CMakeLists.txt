@@ -25,7 +25,6 @@ add_executable(tests tests.cpp tests+World.cpp)
 target_link_libraries(
   tests
   PRIVATE R_Type::R_Type_warnings
-          R_Type::R_Type_options
           Catch2::Catch2WithMain)
 
 if(WIN32 AND BUILD_SHARED_LIBS)
