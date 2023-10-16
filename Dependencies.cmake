@@ -728,6 +728,7 @@ function(R_Type_setup_dependencies)
           GIT_TAG release-2.6.3
           GIT_SHALLOW TRUE
           GIT_PROGRESS TRUE
+          CMAKE_ARGS -DBUILD_SHARED_LIBS=OFF -DSDL2_IMAGE_STATIC=ON
   )
   set(SDL2IMAGE_INSTALL OFF)
   FetchContent_MakeAvailable(SDL2_image)
