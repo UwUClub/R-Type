@@ -89,7 +89,7 @@ jobs:
       - name: Install xrand
         if: runner.os != 'Windows'
         run: |
-          sudo apt-get install -y libxrandr
+          sudo apt-get install -y libxrandr-dev
 
       - name: Configure CMake
         run: |
