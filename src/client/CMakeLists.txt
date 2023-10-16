@@ -9,6 +9,7 @@ target_sources(client PRIVATE
 
 add_subdirectory(network)
 add_subdirectory(systems)
+add_subdirectory(raylib)
 
 
 target_link_libraries(client
