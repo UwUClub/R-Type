@@ -7,10 +7,8 @@ include(FetchContent)
 function(R_Type_setup_dependencies)
 
   #find_package(Catch2 QUIET)
-  set(RAYLIB_VERSION "4.5.0")
   set(BOOST_VERSION "1.83.0")
   find_package(Boost ${BOOST_VERSION} QUIET)
-  find_package(raylib ${RAYLIB_VERSION} QUIET)
 
   #if(NOT TARGET Catch2::Catch2WithMain)
    # CPMAddPackage(
@@ -37,16 +35,6 @@ function(R_Type_setup_dependencies)
     set(Boost_USE_STATIC_RUNTIME OFF)
     add_definitions(-DBOOST_USE_WINDOWS_H=0)
     FetchContent_MakeAvailable(Boost)
-  endif()
-
-  if (NOT TARGET raylib)
-    FetchContent_Declare(
-            raylib
-            URL https://github.com/raysan5/raylib/archive/refs/tags/${RAYLIB_VERSION}.tar.gz
-            FIND_PACKAGE_ARGS ${RAYLIB_VERSION}
-    )
-    set(BUILD_EXAMPLES OFF CACHE INTERNAL "")
-    FetchContent_MakeAvailable(raylib)
   endif()
 
   if (NOT TARGET SDL2)
