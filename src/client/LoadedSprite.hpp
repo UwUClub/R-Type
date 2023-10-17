@@ -42,10 +42,27 @@ namespace Component {
                   srcRect(aDisplayRect)
             {}
 
+            /**
+             * @brief Construct a new Loaded Sprite object
+             *
+             * @param aPath path to the sprite
+             * @param aTexture texture of the sprite (once loaded)
+             * @param aTextureRect Size and position of the sprite in the texture
+             * @param aDisplayRect Size and position of the sprite on the screen
+             */
+            LoadedSprite(std::string aPath, sf::Texture *aTexture, sf::IntRect *aTextureRect, sf::IntRect *aDisplayRect, float aScale)
+                : path(std::move(aPath)),
+                  texture(aTexture),
+                  rect(aTextureRect),
+                  srcRect(aDisplayRect),
+                  scale(aScale)
+            {}
+
             std::string path;
             sf::Texture *texture;
             sf::IntRect *rect;
             sf::IntRect *srcRect;
+            float scale = 1.0;
     };
 } // namespace Component
 #endif // DEBUG

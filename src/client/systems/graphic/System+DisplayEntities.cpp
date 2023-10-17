@@ -20,11 +20,10 @@ namespace ECS {
             std::cout << "checked " << aSprites[i]->path << std::endl;
             if (aSprites[i]->srcRect != nullptr) {
                 sf::Sprite sprite;
-                aSprites[i]->srcRect->top = 0;
-                aSprites[i]->srcRect->left = 0;
                 sprite.setTexture(*aSprites[i]->texture);
-                sprite.setTextureRect(*aSprites[i]->srcRect);
+                sprite.setTextureRect(*aSprites[i]->rect);
                 sprite.setPosition(aPos[i].value().x, aPos[i].value().y);
+                sprite.scale(aSprites[i]->scale, aSprites[i]->scale);
                 std::cout << "drawing" << std::endl;
                 display._window.draw(sprite);
             }

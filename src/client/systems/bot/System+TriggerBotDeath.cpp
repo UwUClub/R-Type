@@ -53,8 +53,8 @@ namespace ECS {
                 aSprites[botId].value().texture = nullptr;
                 aSprites[botId].value().rect->height = EXPLOSION_TEX_HEIGHT;
                 aSprites[botId].value().rect->width = EXPLOSION_TEX_WIDTH;
-                aSprites[botId].value().rect->top = 146;
-                aSprites[botId].value().rect->left = 46;
+                aSprites[botId].value().rect->left = 146;
+                aSprites[botId].value().rect->top = 46;
                 aIsAlive[botId].value().timeToDie = 1;
             } else if (!aIsAlive[botId].value().isAlive) {
                 aIsAlive[botId].value().timeToDie -= world.getDeltaTime();

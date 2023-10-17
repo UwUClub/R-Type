@@ -55,8 +55,8 @@ namespace ECS {
                 aSprites[enemy].value().texture = nullptr;
                 aSprites[enemy].value().rect->height = EXPLOSION_TEX_HEIGHT;
                 aSprites[enemy].value().rect->width = EXPLOSION_TEX_WIDTH;
-                aSprites[enemy].value().rect->top = 146;
-                aSprites[enemy].value().rect->left = 46;
+                aSprites[enemy].value().rect->top = 46;
+                aSprites[enemy].value().rect->left = 146;
                 aIsAlive[enemy].value().timeToDie = 1;
                 if (rand() % 5 == 0) {
                     display.addEntity(
@@ -65,7 +65,7 @@ namespace ECS {
                         Component::TypeEntity {false, false, false, false, false, true, false},
                         Component::LoadedSprite {BONUS_ASSET, nullptr,
                                                  new sf::IntRect {125, 520, BONUS_TEX_WIDTH, BONUS_TEX_HEIGHT},
-                                                 new sf::IntRect {0, 0, 50, 50}},
+                                                 new sf::IntRect {0, 0, 50, 50}, BONUS_SCALE},
                         Component::HitBox {BONUS_TEX_WIDTH, BONUS_TEX_HEIGHT}, Component::IsAlive {false, 0});
                 }
             } else if (!aIsAlive[enemy].value().isAlive) {
