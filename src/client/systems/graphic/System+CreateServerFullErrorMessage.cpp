@@ -1,7 +1,8 @@
+#include <SFML/Graphics/Rect.hpp>
 #include <iostream>
 #include "ClientGameEvent.hpp"
 #include "EventManager.hpp"
-#include "SDLDisplayClass.hpp"
+#include "SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 #include "World.hpp"
@@ -11,7 +12,7 @@ namespace ECS {
     {
         auto &world = ECS::Core::World::getInstance();
         Event::EventManager *eventManager = Event::EventManager::getInstance();
-        SDLDisplayClass &display = SDLDisplayClass::getInstance();
+        SFMLDisplayClass &display = SFMLDisplayClass::getInstance();
         auto events = eventManager->getEventsByType(Event::EventType::GAME);
 
         for (auto &event : events) {
@@ -26,7 +27,7 @@ namespace ECS {
                                   Component::Speed {0},
                                   Component::TypeEntity {false, false, false, false, false, false, true},
                                   Component::LoadedSprite {SERVER_FULL_MESSAGE, nullptr, nullptr,
-                                                           new SDL_Rect {400, 15, SERVER_FULL_MESSAGE_TEX_WIDTH,
+                                                           new sf::IntRect {400, 15, SERVER_FULL_MESSAGE_TEX_WIDTH,
                                                                          SERVER_FULL_MESSAGE_TEX_HEIGHT}},
                                   Component::HitBox {}, Component::IsAlive {false, 0});
 

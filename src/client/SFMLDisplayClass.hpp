@@ -2,40 +2,43 @@
 ** EPITECH PROJECT, 2023
 ** R-Type
 ** File description:
-** SDLDisplayClass
+** SFMLDisplayClass
 */
 
 #ifndef SDLDISPLAYClass_HPP_
 #define SDLDISPLAYClass_HPP_
 
-#include <SDL2/SDL.h>
+#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Window/Window.hpp>
 #include <cstddef>
 #include <string>
 #include "Components.hpp"
+#include "LoadedSprite.hpp"
 #include "KeyboardEvent.hpp"
 #include "MouseEvent.hpp"
 #include "Utils.hpp"
 #include "WindowEvent.hpp"
-#include <SDL_image.h>
 #include <unordered_map>
 
-class SDLDisplayClass
+class SFMLDisplayClass
 {
     public:
         /**
-         * @brief Destroy the SDLDisplayClass object
+         * @brief Destroy the SFMLDisplayClass object
          *
          */
-        ~SDLDisplayClass();
+        ~SFMLDisplayClass();
 
         /**
-         * @brief Get an Instance of the SDLDisplayClass (singleton)
+         * @brief Get an Instance of the SFMLDisplayClass (singleton)
          *
-         * @return SDLDisplayClass&
+         * @return SFMLDisplayClass&
          */
-        static SDLDisplayClass &getInstance()
+        static SFMLDisplayClass &getInstance()
         {
-            static SDLDisplayClass instance;
+            static SFMLDisplayClass instance;
 
             return instance;
         }
@@ -43,9 +46,9 @@ class SDLDisplayClass
         /**
          * @brief Get the texture object
          *
-         * @return SDL_Texture*
+         * @return sf::Texture*
          */
-        SDL_Texture *getTexture(const std::string &path);
+        sf::Texture *getTexture(const std::string &path);
 
         /**
          * @brief Free the rects of the entity
@@ -68,17 +71,16 @@ class SDLDisplayClass
         static size_t addEntity(ECS::Utils::Vector2f aPos, Component::Speed aSpeed, Component::TypeEntity aType,
                                 Component::LoadedSprite aSprite, Component::HitBox aHitBox,
                                 Component::IsAlive aIsAlive);
-        SDL_Renderer *_renderer;
-        SDL_Window *_window;
+        sf::RenderWindow _window;
         std::string _assetPath;
 
     private:
-        std::unordered_map<std::string, SDL_Texture *> _textures;
+        std::unordered_map<std::string, sf::Texture *> _textures;
         /**
-         * @brief Construct a new SDLDisplayClass object
+         * @brief Construct a new SFMLDisplayClass object
          *
          */
-        SDLDisplayClass();
+        SFMLDisplayClass();
 };
 
 #endif /* !SDLDISPLAYClass_HPP_ */

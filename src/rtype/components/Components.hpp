@@ -10,7 +10,6 @@
 #include "Connection.hpp"
 #include "HitBox.hpp"
 #include "IsAlive.hpp"
-#include "LoadedSprite.hpp"
 #include "Speed.hpp"
 #include "TypeEntity.hpp"
 #endif /* !COMPONENTS_HPP_ */

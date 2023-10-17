@@ -1,22 +1,9 @@
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
-
 target_sources(client PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/ClientHandler.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/ClientHandler.cpp"
 )
 
-target_link_libraries(client
-        PRIVATE R_Type::R_Type_options
-        R_Type::R_Type_warnings
-        ${Boost_LIBRARIES}
-        Boost::asio
-)
-
 target_include_directories(client PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${Boost_INCLUDE_DIRS}
-)
-
-set_target_properties(client PROPERTIES
-        RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
 )

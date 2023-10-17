@@ -1,7 +1,5 @@
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
-find_package(SDL2 REQUIRED)
-
 target_sources(rtype PRIVATE
         Packets.hpp
         Values.hpp
@@ -23,9 +21,6 @@ target_link_libraries(rtype
         Boost::serialization
         Boost::uuid
         ecs
-        SDL2::SDL2main
-        SDL2::SDL2
-        SDL2_image
 )
 
 target_include_directories(rtype PRIVATE

@@ -1,25 +1,22 @@
-#include "../System.hpp"
-#include "SFMLDisplayClass.hpp"
-#include "Values.hpp"
+#include "System.hpp"
 #include "World.hpp"
 
 namespace ECS {
-    void System::moveBonus(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
+    void System::moveWall(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
                            Core::SparseArray<Component::TypeEntity> &aType)
     {
         auto &world = Core::World::getInstance();
 
         for (size_t idx = 0; idx < aPos.size(); idx++) {
-            if (!aPos[idx].has_value()) {
+            if (!aPos[idx].has_value() || !aSpeed[idx].has_value() || !aType[idx].has_value()) {
                 continue;
             }
             auto &pos = aPos[idx].value();
             auto &speed = aSpeed[idx].value();
             auto &type = aType[idx].value();
-            if (type.isBonus) {
+            if (type.isWall) {
                 pos.x -= speed.speed * world.getDeltaTime();
                 if (pos.x < -30) {
-                    SFMLDisplayClass::getInstance().freeRects(idx);
                     world.killEntity(idx);
                 }
             }

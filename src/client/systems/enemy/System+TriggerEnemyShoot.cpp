@@ -1,7 +1,10 @@
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/Rect.hpp>
 #include "ClientGameEvent.hpp"
 #include "EventManager.hpp"
 #include "IsAlive.hpp"
-#include "SDLDisplayClass.hpp"
+#include "SFML/Graphics/Rect.hpp"
+#include "SFMLDisplayClass.hpp"
 #include "SparseArray.hpp"
 #include "System.hpp"
 #include "Values.hpp"
@@ -10,7 +13,7 @@
 namespace ECS {
     void System::triggerEnemyShoot()
     {
-        auto &display = SDLDisplayClass::getInstance();
+        auto &display = SFMLDisplayClass::getInstance();
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         auto events = eventManager->getEventsByType(Event::EventType::GAME);
 
@@ -30,8 +33,8 @@ namespace ECS {
                     ECS::Utils::Vector2f {posX, posY}, Component::Speed {MISSILES_SPEED},
                     Component::TypeEntity {false, false, false, true, false, false, false, onlineMissileId},
                     Component::LoadedSprite {MISSILES_ASSET, nullptr,
-                                             new SDL_Rect {304, 10, MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT},
-                                             new SDL_Rect {0, 0, MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT}},
+                                             new sf::IntRect {304, 10, MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT},
+                                             new sf::IntRect {0, 0, MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT}},
                     Component::HitBox {MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT}, Component::IsAlive {false, 0});
 
                 eventManager->removeEvent(event);

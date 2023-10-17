@@ -1,17 +1,16 @@
 #include <iostream>
-#include "SDLDisplayClass.hpp"
+#include "SFMLDisplayClass.hpp"
 #include "SparseArray.hpp"
 #include "System.hpp"
 #include "components/HitBox.hpp"
 #include "components/IsAlive.hpp"
-#include <SDL_image.h>
 
 namespace ECS {
     void System::botHit(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::TypeEntity> &aType,
                         Core::SparseArray<Component::IsAlive> &aIsAlive, Core::SparseArray<Component::HitBox> &aHitBox)
     {
         auto &world = Core::World::getInstance();
-        auto &display = SDLDisplayClass::getInstance();
+        auto &display = SFMLDisplayClass::getInstance();
 
         for (size_t player = 0; player < aType.size(); player++) {
             if (!aType[player].has_value() || !aType[player].value().isPlayer) {

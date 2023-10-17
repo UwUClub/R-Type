@@ -10,6 +10,7 @@ on:
     branches:
       - main
       - dev
+      - RT-70-Switch-to-SFML
 
 env:
   CLANG_TIDY_VERSION: "15.0.2"
