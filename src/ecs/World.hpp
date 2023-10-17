@@ -257,19 +257,9 @@ as Component container
              *
              * @return float The delta time
              */
-            float getDeltaTime() const
+            [[nodiscard]] float getDeltaTime() const
             {
-                return _deltaTime;
-            }
-
-            /**
-             * @brief Set delta time
-             *
-             * @param aDeltaTime The delta time
-             */
-            void setDeltaTime(float aDeltaTime)
-            {
-                _deltaTime = aDeltaTime;
+                return _delta.count();
             }
 
             /**
@@ -301,16 +291,15 @@ as Component container
                 _isRunning = true;
             }
 
+            /**
+             * @brief Update delta time from last frame
+             *
+             */
             void calcDeltaTime()
             {
                 auto now = std::chrono::steady_clock::now();
                 _delta = now - _lastTime;
                 _lastTime = now;
-            }
-
-            [[nodiscard]] float getDeltaTime() const
-            {
-                return _delta.count();
             }
 
         private:
@@ -362,7 +351,6 @@ as Component container
             using systemFunction = std::function<void()>;
             std::vector<systemFunction> _systems;
 
-            float _deltaTime = 0;
             bool _isRunning {true};
             std::chrono::time_point<std::chrono::steady_clock> _lastTime {std::chrono::steady_clock::now()};
             std::chrono::duration<float> _delta;

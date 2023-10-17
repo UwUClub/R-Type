@@ -2,6 +2,7 @@
 #define SYSTEM_HPP_
 
 #include <SDL.h>
+#include "Components.hpp"
 #include "KeyboardEvent.hpp"
 #include "MouseEvent.hpp"
 #include "Utils.hpp"
@@ -14,47 +15,48 @@ namespace ECS {
     {
         public:
             /**
-             * @brief Move the player
+             * @brief Apply gravity to entities submitted to it
              *
-             * @param aWorld A reference to the world
              * @param aPos SparseArray of all entities position
-             * @param aSpeed Sparsearray of all entities speed
-             * @param aType SparseArray of all entities type
+             * @param aWeight Sparsearray of all entities weight
              */
-            static void movePlayer(Core::World &aWorld, Core::SparseArray<ECS::Utils::Vector2f> &aPos,
-                                   Core::SparseArray<ECS::Utils::Speed> &aSpeed,
-                                   Core::SparseArray<ECS::Utils::TypeEntity> &aType);
+            static void applyGravity(Core::SparseArray<ECS::Utils::Vector2f> &aPos,
+                                     Core::SparseArray<Component::Weight> &aWeight);
+
+            /**
+             * @brief Make an entity jump
+             *
+             * @param aPos SparseArray of all entities position
+             * @param aJump Sparsearray of all entities who can jump
+             */
+            static void jump(Core::SparseArray<ECS::Utils::Vector2f> &aPos, Core::SparseArray<Component::Jump> &aJump);
 
             /**
              * @brief Get the all the input of the user
              *
-             * @param aWorld A reference to the world
              */
 
-            static void getInput(Core::World &aWorld);
+            static void getInput();
 
             /**
              * @brief Close the SDL window
              *
-             * @param aWorld A reference to the world
              */
-            static void quitSDL(Core::World &aWorld);
+            static void quitSDL();
 
             /**
              * @brief Load all the textures of the game
              *
-             * @param aWorld A reference to the world
              * @param aSprites SparseArray of all the entities sprites
              */
-            static void loadTextures(Core::World &aWorld, Core::SparseArray<Utils::LoadedSprite> &aSprites);
+            static void loadTextures(Core::SparseArray<Component::LoadedSprite> &aSprites);
 
             /**
              * @brief Display all the entities on the screen
              *
-             * @param aWorld A reference to the world
              * @param aSprites SparseArray of all the entities sprites
              */
-            static void displayEntities(Core::World &aWorld, Core::SparseArray<Utils::LoadedSprite> &aSprites,
+            static void displayEntities(Core::SparseArray<Component::LoadedSprite> &aSprites,
                                         Core::SparseArray<Utils::Vector2f> &aPos);
 
         private:

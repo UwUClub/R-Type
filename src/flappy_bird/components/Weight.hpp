@@ -1,17 +1,17 @@
 #ifndef WEIGHT_HPP_
 #define WEIGHT_HPP_
 
-namespace ECS::Utils {
+namespace Component {
     struct Weight
     {
             Weight()
                 : weight(1)
             {}
-            Weight(int aWeight)
+            Weight(float aWeight)
                 : weight(aWeight)
             {}
-            int weight;
+            float weight;
     };
-} // namespace ECS::Utils
+} // namespace Component
 
 #endif // !

@@ -1,52 +1,25 @@
-find_package(Boost REQUIRED COMPONENTS system thread serialization)
-find_package(Threads REQUIRED)
 find_package(SDL2 REQUIRED)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
 target_sources(flappy_bird PRIVATE
         main.cpp
-        System.cpp
         SDLDisplayClass.cpp
 )
 
 add_subdirectory(components)
+add_subdirectory(systems)
 
-if (SDL2_DOWNLOADED)
-    target_link_libraries(flappy_bird
-            PRIVATE R_Type::R_Type_options
-            R_Type::R_Type_warnings
-            SDL2::SDL2main
-            SDL2::SDL2
-            SDL2_image
-            ${Boost_LIBRARIES}
-            Boost::serialization
-            Threads::Threads
-            ecs
-            rtype_protocol
-            Boost::asio
-            Boost::serialization
-    )
-else()
-    target_link_libraries(flappy_bird
-            PRIVATE R_Type::R_Type_options
-            R_Type::R_Type_warnings
-            SDL2::SDL2main
-            SDL2::SDL2
-            SDL2_image
-            ${Boost_LIBRARIES}
-            Boost::serialization
-            Threads::Threads
-            ecs
-            rtype_protocol
-            Boost::asio
-            Boost::serialization
-    )
-endif()
+target_link_libraries(flappy_bird PRIVATE
+        SDL2::SDL2main
+        SDL2::SDL2
+        SDL2_image
+        ecs
+)
+
 
 target_include_directories(flappy_bird PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(flappy_bird PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/components)
-target_include_directories(flappy_bird PRIVATE ${Boost_INCLUDE_DIRS})
 target_include_directories(flappy_bird PRIVATE "../../build/_deps/sdl2-src/include/SDL2")
 target_include_directories(flappy_bird PRIVATE "../../build/_deps/sdl2_image-src/include")
 

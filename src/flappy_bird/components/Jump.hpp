@@ -1,24 +1,24 @@
 #ifndef JUMP_HPP_
 #define JUMP_HPP_
 
-namespace ECS::Utils {
+namespace Component {
     struct Jump
     {
             Jump()
                 : Jump(1)
             {}
-            Jump(int aStrength)
+            Jump(float aStrength)
                 : strength(aStrength)
             {}
-            Jump(int aStrength, float aHeight)
+            Jump(float aStrength, float aHeight)
                 : strength(aStrength),
                   height(aHeight)
             {}
             bool isJumping = false;
-            int strength;
+            float strength;
             float initialAltitude;
             float height = 100;
     };
-} // namespace ECS::Utils
+} // namespace Component
 
 #endif // !
