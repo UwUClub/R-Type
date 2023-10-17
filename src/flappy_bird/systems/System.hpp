@@ -28,8 +28,10 @@ namespace ECS {
              *
              * @param aPos SparseArray of all entities position
              * @param aJump Sparsearray of all entities who can jump
+             * @param aWeight Sparsearray of all entities weight
              */
-            static void jump(Core::SparseArray<ECS::Utils::Vector2f> &aPos, Core::SparseArray<Component::Jump> &aJump);
+            static void jump(Core::SparseArray<ECS::Utils::Vector2f> &aPos, Core::SparseArray<Component::Jump> &aJump,
+                             Core::SparseArray<Component::Weight> &aWeight);
 
             /**
              * @brief Get the all the input of the user

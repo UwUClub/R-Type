@@ -5,7 +5,8 @@
 #include "World.hpp"
 
 namespace ECS {
-    void System::jump(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Jump> &aJump)
+    void System::jump(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Jump> &aJump,
+                      Core::SparseArray<Component::Weight> &aWeight)
     {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         auto keyboardEvent = eventManager->getEventsByType(Event::EventType::KEYBOARD);
@@ -14,13 +15,17 @@ namespace ECS {
         for (size_t i = 0; i < aJump.size(); i++) {
             if (aJump[i].value().isJumping) {
                 float targetY = aJump[i].value().initialAltitude - aJump[i].value().height;
-                float endTolerance = PLAYER_JUMP_HEIGHT / PLAYER_JUMP_FLOATING;
+                float endTolerance = aJump[i].value().height / PLAYER_JUMP_FLOATING;
 
                 if (std::abs(targetY - aPos[i].value().y) < endTolerance) {
                     aJump[i].value().isJumping = false;
                 } else {
                     aPos[i].value().y +=
                         (targetY - aPos[i].value().y) * aJump[i].value().strength * world.getDeltaTime();
+                }
+
+                if (aWeight[i].has_value()) {
+                    aWeight[i].value().resetFallVelocity();
                 }
             }
 

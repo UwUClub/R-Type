@@ -33,7 +33,7 @@ int main(int ac, char **av)
     world.addSystem<Component::LoadedSprite>(ECS::System::loadTextures);
     world.addSystem<Component::LoadedSprite, ECS::Utils::Vector2f>(ECS::System::displayEntities);
     world.addSystem<ECS::Utils::Vector2f, Component::Weight>(ECS::System::applyGravity);
-    world.addSystem<ECS::Utils::Vector2f, Component::Jump>(ECS::System::jump);
+    world.addSystem<ECS::Utils::Vector2f, Component::Jump, Component::Weight>(ECS::System::jump);
     world.addSystem(ECS::System::quitSDL);
 
     while (world.isRunning()) {
