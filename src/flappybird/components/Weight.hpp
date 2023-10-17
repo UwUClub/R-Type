@@ -3,6 +3,7 @@
 
 #include "ConfigReader.hpp"
 #include "Values.hpp"
+
 namespace Component {
     struct Weight
     {
@@ -20,8 +21,8 @@ namespace Component {
             }
             void resetFallVelocity()
             {
-                auto &physicsConf = ConfigReader::getInstance().getPhysics();
-                fallVelocity = (float) physicsConf["initial_fall_velocity"];
+                auto &physicsConf = ConfigReader::getInstance().get()["physics"];
+                fallVelocity = static_cast<float>(physicsConf["initial_fall_velocity"]);
             }
             float weight;
             float fallVelocity;

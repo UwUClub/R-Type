@@ -16,7 +16,7 @@ int main(int ac, char **av)
     // Load config
     ConfigReader &configReader = ConfigReader::getInstance();
     configReader.loadConfig();
-    auto &playerConf = configReader.getPlayer();
+    auto &playerConf = configReader.get()["player"];
 
     // Load components
     ECS::Core::World &world = ECS::Core::World::getInstance();
@@ -29,12 +29,13 @@ int main(int ac, char **av)
 
     // Setup entities
     SDLDisplayClass &display = SDLDisplayClass::getInstance();
-    display.addEntity(ECS::Utils::Vector2f {SCREEN_WIDTH / 2 - (float) playerConf["width"] / 2, 10},
+    display.addEntity(ECS::Utils::Vector2f {SCREEN_WIDTH / 2 - static_cast<float>(playerConf["width"]) / 2, 10},
                       Component::Speed {playerConf["speed"]}, Component::Weight {playerConf["weight"]},
                       Component::TypeEntity {true, false},
-                      Component::LoadedSprite {
-                          playerConf["asset"], nullptr, new SDL_Rect {0, 0, playerConf["width"], playerConf["height"]},
-                          new SDL_Rect {0, 0, (int) playerConf["width"] * 2, (int) playerConf["height"] * 2}},
+                      Component::LoadedSprite {playerConf["asset"], nullptr,
+                                               new SDL_Rect {0, 0, playerConf["width"], playerConf["height"]},
+                                               new SDL_Rect {0, 0, static_cast<int>(playerConf["width"]) * 2,
+                                                             static_cast<int>(playerConf["height"]) * 2}},
                       Component::Jump {playerConf["jump"]["strength"], playerConf["jump"]["height"]});
 
     // Load systems

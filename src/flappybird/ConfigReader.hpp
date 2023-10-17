@@ -10,8 +10,7 @@ using json = nlohmann::json;
 class ConfigReader
 {
     private:
-        json _player;
-        json _physics;
+        json _data;
 
     public:
         /**
@@ -45,18 +44,11 @@ class ConfigReader
         void loadConfig();
 
         /**
-         * @brief Get player data
+         * @brief Get all the config
          *
-         * @return Player data
+         * @return All the config
          */
-        json &getPlayer();
-
-        /**
-         * @brief Get physics data
-         *
-         * @return Physics data
-         */
-        json &getPhysics();
+        json &get();
 };
 
 #endif

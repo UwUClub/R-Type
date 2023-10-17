@@ -9,7 +9,7 @@ target_sources(ecs PRIVATE
     )
 
 target_include_directories(ecs PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
-target_include_directories(flappy_bird PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(flappybird PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_include_directories(rtype PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(client PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

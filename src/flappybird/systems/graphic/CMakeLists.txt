@@ -1,8 +1,8 @@
-target_sources(flappy_bird PRIVATE
+target_sources(flappybird PRIVATE
         System+DisplayEntities.cpp
         System+GetInput.cpp
         System+LoadTextures.cpp
         System+SDLQuit.cpp
 )
 
-target_include_directories(flappy_bird PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(flappybird PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
