@@ -3,25 +3,32 @@
         "width": 288,
         "height": 512
     },
-    "player": {
-        "sprite": "assets/flappybird/sprites/bluebird-upflap.png",
-        "width": 34,
-        "height": 24,
-        "weight": 100,
-        "jump": {
-            "height": 180,
-            "strength": 4,
-            "floating": 65
-        }
-    },
     "physics": {
         "gravity": 2,
         "initial_fall_velocity": 2
     },
-    "background": {
-        "sprite": "assets/flappybird/sprites/background-day.png",
-        "width": 288,
-        "height": 512,
-        "speed": 100
+    "entities": {
+        "background": {
+            "sprite": "assets/flappybird/sprites/background-day.png",
+            "width": 288,
+            "height": 512
+        },
+        "base": {
+            "sprite": "assets/flappybird/sprites/base.png",
+            "width": 336,
+            "height": 112,
+            "speed": 100
+        },
+        "bird": {
+            "sprite": "assets/flappybird/sprites/bluebird-upflap.png",
+            "width": 34,
+            "height": 24,
+            "weight": 100,
+            "jump": {
+                "height": 180,
+                "strength": 4,
+                "floating": 65
+            }
+        }
     }
 }

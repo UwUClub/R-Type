@@ -68,9 +68,8 @@ namespace ECS {
              * @param aSpeed SparseArray of all the entities speed
              * @param aType SparseArray of all the entities type
              */
-            static void moveBackground(Core::SparseArray<Utils::Vector2f> &aPos,
-                                       Core::SparseArray<Component::Speed> &aSpeed,
-                                       Core::SparseArray<Component::TypeEntity> &aType);
+            static void moveBase(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
+                                 Core::SparseArray<Component::TypeEntity> &aType);
 
         private:
             /**

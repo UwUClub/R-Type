@@ -16,10 +16,11 @@ int main(int ac, char **av)
     // Load config
     ConfigReader &configReader = ConfigReader::getInstance();
     configReader.loadConfig();
-    auto &playerConf = configReader.get()["player"];
-    auto &physicsConf = configReader.get()["physics"];
-    auto &backgroundConf = configReader.get()["background"];
     auto &graphicsConf = configReader.get()["graphics"];
+    auto &physicsConf = configReader.get()["physics"];
+    auto &birdConf = configReader.get()["entities"]["bird"];
+    auto &backgroundConf = configReader.get()["entities"]["background"];
+    auto &baseConf = configReader.get()["entities"]["base"];
 
     // Load components
     ECS::Core::World &world = ECS::Core::World::getInstance();
@@ -30,41 +31,49 @@ int main(int ac, char **av)
     auto &weight = world.registerComponent<Component::Weight>();
     auto &jump = world.registerComponent<Component::Jump>();
 
-    // Setup 1st background entity
-    size_t backgroundId1 = world.createEntity();
-    vec.insertAt(backgroundId1, ECS::Utils::Vector2f {0, 0});
-    speed.insertAt(backgroundId1, Component::Speed {backgroundConf["speed"]});
-    type.insertAt(backgroundId1, Component::TypeEntity {false, true});
-    sprite.insertAt(backgroundId1,
+    // Setup background
+    size_t backgroundId = world.createEntity();
+    vec.insertAt(backgroundId, ECS::Utils::Vector2f {0, 0});
+    type.insertAt(backgroundId, Component::TypeEntity {EntityType::BACKGROUND});
+    sprite.insertAt(backgroundId,
                     Component::LoadedSprite {backgroundConf["sprite"], nullptr,
                                              new SDL_Rect {0, 0, backgroundConf["width"], backgroundConf["height"]},
                                              new SDL_Rect {0, 0, static_cast<int>(backgroundConf["width"]),
                                                            static_cast<int>(backgroundConf["height"])}});
 
-    // Setup 2nd background entity
-    size_t backgroundId2 = world.createEntity();
-    vec.insertAt(backgroundId2, ECS::Utils::Vector2f {graphicsConf["width"], 0});
-    speed.insertAt(backgroundId2, Component::Speed {backgroundConf["speed"]});
-    type.insertAt(backgroundId2, Component::TypeEntity {false, true});
-    sprite.insertAt(backgroundId2,
-                    Component::LoadedSprite {backgroundConf["sprite"], nullptr,
-                                             new SDL_Rect {0, 0, backgroundConf["width"], backgroundConf["height"]},
-                                             new SDL_Rect {0, 0, static_cast<int>(backgroundConf["width"]),
-                                                           static_cast<int>(backgroundConf["height"])}});
+    // Setup base entities
+    float basePosY = static_cast<float>(graphicsConf["height"]) - static_cast<float>(baseConf["height"]);
+    size_t base1Id = world.createEntity();
+    vec.insertAt(base1Id, ECS::Utils::Vector2f {0, basePosY});
+    speed.insertAt(base1Id, Component::Speed {baseConf["speed"]});
+    type.insertAt(base1Id, Component::TypeEntity {EntityType::BASE});
+    sprite.insertAt(base1Id, Component::LoadedSprite {baseConf["sprite"], nullptr,
+                                                      new SDL_Rect {0, 0, baseConf["width"], baseConf["height"]},
+                                                      new SDL_Rect {0, 0, static_cast<int>(baseConf["width"]),
+                                                                    static_cast<int>(baseConf["height"])}});
+
+    size_t base2Id = world.createEntity();
+    vec.insertAt(base2Id, ECS::Utils::Vector2f {graphicsConf["width"], basePosY});
+    speed.insertAt(base2Id, Component::Speed {baseConf["speed"]});
+    type.insertAt(base2Id, Component::TypeEntity {EntityType::BASE});
+    sprite.insertAt(base2Id, Component::LoadedSprite {baseConf["sprite"], nullptr,
+                                                      new SDL_Rect {0, 0, baseConf["width"], baseConf["height"]},
+                                                      new SDL_Rect {0, 0, static_cast<int>(baseConf["width"]),
+                                                                    static_cast<int>(baseConf["height"])}});
 
     // Setup player entity
-    size_t playerId = world.createEntity();
-    vec.insertAt(playerId,
+    size_t birdId = world.createEntity();
+    vec.insertAt(birdId,
                  ECS::Utils::Vector2f {
-                     static_cast<float>(graphicsConf["width"]) / 2 - static_cast<float>(playerConf["width"]) / 2, 10});
-    type.insertAt(playerId, Component::TypeEntity {true, false});
-    sprite.insertAt(playerId, Component::LoadedSprite {playerConf["sprite"], nullptr,
-                                                       new SDL_Rect {0, 0, playerConf["width"], playerConf["height"]},
-                                                       new SDL_Rect {0, 0, static_cast<int>(playerConf["width"]),
-                                                                     static_cast<int>(playerConf["height"])}});
-    weight.insertAt(playerId, Component::Weight(playerConf["weight"], physicsConf["initial_fall_velocity"]));
-    jump.insertAt(playerId, Component::Jump(playerConf["jump"]["strength"], playerConf["jump"]["height"],
-                                            playerConf["jump"]["floating"]));
+                     static_cast<float>(graphicsConf["width"]) / 2 - static_cast<float>(birdConf["width"]) / 2, 10});
+    type.insertAt(birdId, Component::TypeEntity {EntityType::BIRD});
+    sprite.insertAt(birdId, Component::LoadedSprite {birdConf["sprite"], nullptr,
+                                                     new SDL_Rect {0, 0, birdConf["width"], birdConf["height"]},
+                                                     new SDL_Rect {0, 0, static_cast<int>(birdConf["width"]),
+                                                                   static_cast<int>(birdConf["height"])}});
+    weight.insertAt(birdId, Component::Weight(birdConf["weight"], physicsConf["initial_fall_velocity"]));
+    jump.insertAt(birdId, Component::Jump(birdConf["jump"]["strength"], birdConf["jump"]["height"],
+                                          birdConf["jump"]["floating"]));
 
     // Load systems
     world.addSystem(ECS::System::getInput);
@@ -72,7 +81,7 @@ int main(int ac, char **av)
     world.addSystem<Component::LoadedSprite, ECS::Utils::Vector2f>(ECS::System::displayEntities);
     world.addSystem<ECS::Utils::Vector2f, Component::Weight>(ECS::System::applyGravity);
     world.addSystem<ECS::Utils::Vector2f, Component::Jump, Component::Weight>(ECS::System::jump);
-    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBackground);
+    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBase);
     world.addSystem(ECS::System::quitSDL);
 
     // Game loop

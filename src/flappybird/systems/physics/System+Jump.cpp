@@ -12,12 +12,12 @@ namespace ECS {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         auto keyboardEvent = eventManager->getEventsByType(Event::EventType::KEYBOARD);
         auto &world = Core::World::getInstance();
-        auto &playerConf = ConfigReader::getInstance().get()["player"];
+        auto &birdConf = ConfigReader::getInstance().get()["entities"]["bird"];
 
         for (size_t i = 0; i < aJump.size(); i++) {
             if (aJump[i].value().isJumping) {
                 float targetY = aJump[i].value().initialAltitude - aJump[i].value().height;
-                auto endTolerance = static_cast<float>(playerConf["jump"]["floating"]);
+                auto endTolerance = static_cast<float>(birdConf["jump"]["floating"]);
 
                 if (std::abs(targetY - aPos[i].value().y) < endTolerance) {
                     aJump[i].value().isJumping = false;

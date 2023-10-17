@@ -10,6 +10,22 @@
 
 #ifndef TYPEENTITY_HPP
     #define TYPEENTITY_HPP
+
+enum EntityType
+{
+    PLAYER,
+    BACKGROUND,
+    BASE,
+    PIPE,
+    BIRD,
+    GROUND,
+    SCORE,
+    GAMEOVER,
+    RESTART,
+    QUIT,
+    NONE
+};
+
 namespace Component {
     struct TypeEntity
     {
@@ -18,23 +34,17 @@ namespace Component {
              *
              */
             TypeEntity()
-                : isPlayer(false),
-                  isBackground(false)
             {}
             /**
              * @brief Construct a new Type Entity object
              *
-             * @param aIsPlayer a boolean to know if the entity is a player
-             * @param aIsBackground a boolean to know if the entity is a background
+             *
              */
-            TypeEntity(bool aIsPlayer, bool aIsBackground)
-                : isPlayer(aIsPlayer),
-                  isBackground(aIsBackground)
+            TypeEntity(EntityType aType)
+                : type(aType)
             {}
 
-            bool isPlayer;
-            bool isBackground;
-            std::optional<size_t> onlineId;
+            EntityType type = NONE;
     };
 } // namespace Component
 
