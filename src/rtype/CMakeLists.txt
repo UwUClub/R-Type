@@ -14,7 +14,7 @@ add_subdirectory(events)
 add_subdirectory(components)
 
 target_link_libraries(rtype
-        PRIVATE R_Type::R_Type_options
+        PRIVATE
         R_Type::R_Type_warnings
         ${Boost_LIBRARIES}
         Boost::asio
