@@ -13,17 +13,11 @@
 
 enum EntityType
 {
-    PLAYER,
-    BACKGROUND,
-    BASE,
-    PIPE,
-    BIRD,
-    GROUND,
-    SCORE,
-    GAMEOVER,
-    RESTART,
-    QUIT,
-    NONE
+    BACKGROUND = 0,
+    GROUND = 1,
+    PIPE = 2,
+    BIRD = 3,
+    NONE = -1
 };
 
 namespace Component {

@@ -4,8 +4,8 @@
 #include <SDL_image.h>
 
 namespace ECS {
-    void System::moveBase(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
-                          Core::SparseArray<Component::TypeEntity> &aType)
+    void System::moveGround(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
+                            Core::SparseArray<Component::TypeEntity> &aType)
     {
         SDLDisplayClass &display = SDLDisplayClass::getInstance();
         auto &graphicsConf = ConfigReader::getInstance().get()["graphics"];
@@ -13,7 +13,7 @@ namespace ECS {
 
         for (size_t i = 0; i < aPos.size(); i++) {
             if (!aPos[i].has_value() || !aType[i].has_value() || !aSpeed[i].has_value()
-                || aType[i].value().type != EntityType::BASE) {
+                || aType[i].value().type != EntityType::GROUND) {
                 continue;
             }
             aPos[i].value().x -= aSpeed[i].value().speed * Core::World::getInstance().getDeltaTime();
