@@ -8,23 +8,21 @@ namespace Component {
     struct Weight
     {
             Weight()
-                : weight(1),
+                : weight(0),
+                  initialFallVelocity(0),
                   fallVelocity(0)
-            {
-                resetFallVelocity();
-            }
-            Weight(float aWeight)
+            {}
+            Weight(float aWeight, float aFallVelocity)
                 : weight(aWeight),
-                  fallVelocity(0)
-            {
-                resetFallVelocity();
-            }
+                  initialFallVelocity(aFallVelocity),
+                  fallVelocity(aFallVelocity)
+            {}
             void resetFallVelocity()
             {
-                auto &physicsConf = ConfigReader::getInstance().get()["physics"];
-                fallVelocity = static_cast<float>(physicsConf["initial_fall_velocity"]);
+                fallVelocity = initialFallVelocity;
             }
             float weight;
+            float initialFallVelocity;
             float fallVelocity;
     };
 } // namespace Component

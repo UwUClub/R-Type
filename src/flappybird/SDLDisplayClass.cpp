@@ -22,13 +22,14 @@
 SDLDisplayClass::SDLDisplayClass()
 {
     const Uint32 windowFlags = 0;
+    auto &graphicsConf = ConfigReader::getInstance().get()["graphics"];
 
     if (SDL_Init(SDL_INIT_EVENTS | SDL_INIT_VIDEO) < 0) {
         std::cerr << "Couldn't initialize SDL: " << SDL_GetError() << std::endl;
         return;
     }
-    _window = SDL_CreateWindow("R-Type", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT,
-                               windowFlags);
+    _window = SDL_CreateWindow("R-Type", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, graphicsConf["width"],
+                               graphicsConf["height"], windowFlags);
     if (_window == nullptr) {
         std::cout << "Failed to open SDL window: " << SDL_GetError() << std::endl;
         return;

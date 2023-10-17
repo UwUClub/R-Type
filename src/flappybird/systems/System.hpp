@@ -61,6 +61,17 @@ namespace ECS {
             static void displayEntities(Core::SparseArray<Component::LoadedSprite> &aSprites,
                                         Core::SparseArray<Utils::Vector2f> &aPos);
 
+            /**
+             * @brief Move the background
+             *
+             * @param aPos SparseArray of all the entities position
+             * @param aSpeed SparseArray of all the entities speed
+             * @param aType SparseArray of all the entities type
+             */
+            static void moveBackground(Core::SparseArray<Utils::Vector2f> &aPos,
+                                       Core::SparseArray<Component::Speed> &aSpeed,
+                                       Core::SparseArray<Component::TypeEntity> &aType);
+
         private:
             /**
              * @brief Map of all the SDL_Keycode and their equivalent in our ECS

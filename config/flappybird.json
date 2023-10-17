@@ -1,9 +1,12 @@
 {
+    "graphics": {
+        "width": 288,
+        "height": 512
+    },
     "player": {
-        "asset": "assets/flappybird/sprites/bluebird-upflap.png",
+        "sprite": "assets/flappybird/sprites/bluebird-upflap.png",
         "width": 34,
         "height": 24,
-        "speed": 10,
         "weight": 100,
         "jump": {
             "height": 180,
@@ -16,7 +19,9 @@
         "initial_fall_velocity": 2
     },
     "background": {
-        "asset": "assets/flappybird/sprites/background-day.png",
-        "speed": 1
+        "sprite": "assets/flappybird/sprites/background-day.png",
+        "width": 288,
+        "height": 512,
+        "speed": 100
     }
 }
