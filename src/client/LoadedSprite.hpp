@@ -50,7 +50,8 @@ namespace Component {
              * @param aTextureRect Size and position of the sprite in the texture
              * @param aDisplayRect Size and position of the sprite on the screen
              */
-            LoadedSprite(std::string aPath, sf::Texture *aTexture, sf::IntRect *aTextureRect, sf::IntRect *aDisplayRect, float aScale)
+            LoadedSprite(std::string aPath, sf::Texture *aTexture, sf::IntRect *aTextureRect, sf::IntRect *aDisplayRect,
+                         float aScale)
                 : path(std::move(aPath)),
                   texture(aTexture),
                   rect(aTextureRect),

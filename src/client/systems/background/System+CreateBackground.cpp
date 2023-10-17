@@ -26,12 +26,14 @@ namespace ECS {
                     world.killEntity(0);
                     display.addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {BACKGROUND_SPEED},
                                       Component::TypeEntity {false, false, false, false, false, false, true},
-                                      Component::LoadedSprite {BACKGROUND_ASSET, nullptr, new sf::IntRect {400, 15, SCREEN_WIDTH, SCREEN_HEIGHT},
+                                      Component::LoadedSprite {BACKGROUND_ASSET, nullptr,
+                                                               new sf::IntRect {400, 15, SCREEN_WIDTH, SCREEN_HEIGHT},
                                                                new sf::IntRect {400, 15, SCREEN_WIDTH, SCREEN_HEIGHT}},
                                       Component::HitBox {}, Component::IsAlive {false, 0});
                     display.addEntity(ECS::Utils::Vector2f {SCREEN_WIDTH, 0}, Component::Speed {BACKGROUND_SPEED},
                                       Component::TypeEntity {false, false, false, false, false, false, true},
-                                      Component::LoadedSprite {BACKGROUND_ASSET, nullptr, new sf::IntRect {400, 15, SCREEN_WIDTH, SCREEN_HEIGHT},
+                                      Component::LoadedSprite {BACKGROUND_ASSET, nullptr,
+                                                               new sf::IntRect {400, 15, SCREEN_WIDTH, SCREEN_HEIGHT},
                                                                new sf::IntRect {400, 15, SCREEN_WIDTH, SCREEN_HEIGHT}},
                                       Component::HitBox {}, Component::IsAlive {false, 0});
                 }
