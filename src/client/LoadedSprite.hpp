@@ -5,7 +5,7 @@
 ** LoadedSprite
 */
 
-#include <SFML/Graphics.h>
+#include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <cstddef>
