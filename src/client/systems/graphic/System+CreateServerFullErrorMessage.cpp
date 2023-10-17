@@ -28,7 +28,7 @@ namespace ECS {
                                   Component::TypeEntity {false, false, false, false, false, false, true},
                                   Component::LoadedSprite {SERVER_FULL_MESSAGE, nullptr, nullptr,
                                                            new sf::IntRect {400, 15, SERVER_FULL_MESSAGE_TEX_WIDTH,
-                                                                         SERVER_FULL_MESSAGE_TEX_HEIGHT}},
+                                                                            SERVER_FULL_MESSAGE_TEX_HEIGHT}},
                                   Component::HitBox {}, Component::IsAlive {false, 0});
 
                 eventManager->removeEvent(event);

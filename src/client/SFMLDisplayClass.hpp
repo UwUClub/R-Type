@@ -15,8 +15,8 @@
 #include <cstddef>
 #include <string>
 #include "Components.hpp"
-#include "LoadedSprite.hpp"
 #include "KeyboardEvent.hpp"
+#include "LoadedSprite.hpp"
 #include "MouseEvent.hpp"
 #include "Utils.hpp"
 #include "WindowEvent.hpp"

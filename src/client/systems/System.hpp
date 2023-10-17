@@ -234,9 +234,12 @@ namespace ECS {
              *
              */
             static const inline std::unordered_map<sf::Keyboard::Key, const ECS::Event::KeyIdentifier> _keyMap = {
-                {sf::Keyboard::Key::Escape, ECS::Event::KeyIdentifier::ESCAPE}, {sf::Keyboard::Key::Up, ECS::Event::KeyIdentifier::UP},
-                {sf::Keyboard::Key::Down, ECS::Event::KeyIdentifier::DOWN},     {sf::Keyboard::Key::Left, ECS::Event::KeyIdentifier::LEFT},
-                {sf::Keyboard::Key::Right, ECS::Event::KeyIdentifier::RIGHT},   {sf::Keyboard::Key::Space, ECS::Event::KeyIdentifier::SPACE},
+                {sf::Keyboard::Key::Escape, ECS::Event::KeyIdentifier::ESCAPE},
+                {sf::Keyboard::Key::Up, ECS::Event::KeyIdentifier::UP},
+                {sf::Keyboard::Key::Down, ECS::Event::KeyIdentifier::DOWN},
+                {sf::Keyboard::Key::Left, ECS::Event::KeyIdentifier::LEFT},
+                {sf::Keyboard::Key::Right, ECS::Event::KeyIdentifier::RIGHT},
+                {sf::Keyboard::Key::Space, ECS::Event::KeyIdentifier::SPACE},
             };
     };
 } // namespace ECS

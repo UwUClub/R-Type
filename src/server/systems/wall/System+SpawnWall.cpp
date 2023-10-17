@@ -29,8 +29,8 @@ namespace ECS {
             aPos.insertAt(wallId, ECS::Utils::Vector2f {posX, posY});
             aSpeed.insertAt(wallId, Component::Speed {WALL_SPEED});
             aType.insertAt(wallId, Component::TypeEntity {false, false, true, false, false, false, false});
-            aHitBox.insertAt(wallId,
-                             Component::HitBox {static_cast<float>(ENEMY_TEX_WIDTH), static_cast<float>(ENEMY_TEX_HEIGHT)});
+            aHitBox.insertAt(
+                wallId, Component::HitBox {static_cast<float>(ENEMY_TEX_WIDTH), static_cast<float>(ENEMY_TEX_HEIGHT)});
             aIsAlive.insertAt(wallId, Component::IsAlive {true, 0});
 
             // Send packet

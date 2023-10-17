@@ -3,7 +3,7 @@
 
 namespace ECS {
     void System::moveWall(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
-                           Core::SparseArray<Component::TypeEntity> &aType)
+                          Core::SparseArray<Component::TypeEntity> &aType)
     {
         auto &world = Core::World::getInstance();
 

@@ -10,8 +10,8 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <algorithm>
 #include "IsAlive.hpp"
-#include "SparseArray.hpp"
 #include "LoadedSprite.hpp"
+#include "SparseArray.hpp"
 #include "Utils.hpp"
 #include "Values.hpp"
 #include "World.hpp"
@@ -48,8 +48,8 @@ SFMLDisplayClass::SFMLDisplayClass()
 }
 
 size_t SFMLDisplayClass::addEntity(ECS::Utils::Vector2f aPos, Component::Speed aSpeed, Component::TypeEntity aType,
-                                  Component::LoadedSprite aSprite, Component::HitBox aHitBox,
-                                  Component::IsAlive aIsAlive)
+                                   Component::LoadedSprite aSprite, Component::HitBox aHitBox,
+                                   Component::IsAlive aIsAlive)
 {
     ECS::Core::World &world = ECS::Core::World::getInstance();
     auto &vec = world.getComponent<ECS::Utils::Vector2f>();

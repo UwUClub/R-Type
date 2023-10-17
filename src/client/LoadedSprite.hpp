@@ -5,12 +5,12 @@
 ** LoadedSprite
 */
 
+#include <SFML/Graphics.h>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <cstddef>
 #include <string>
 #include <utility>
-#include <SFML/Graphics.h>
 
 #ifndef LOADEDSPRITE_HPP
     #define LOADEDSPRITE_HPP
