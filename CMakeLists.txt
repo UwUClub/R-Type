@@ -45,10 +45,6 @@ add_subdirectory(src)
 #   add_subdirectory(test)
 # endif()
 
-if (WIN32)
-    add_definitions(-DBOOST_USE_WINDOWS_H=0)
-endif()
-
 # If MSVC is being used, and ASAN is enabled, we need to set the debugger environment
 # so that it behaves well with MSVC's debugger, and we can run the target from visual studio
 if(MSVC)
@@ -64,16 +60,6 @@ file(COPY ${CMAKE_SOURCE_DIR}/assets DESTINATION ${CMAKE_BINARY_DIR}/bin)
 # set the startup project for the "play" button in MSVC
 set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT server)
 
-include(cmake/PackageProject.cmake)
-
-# Add other targets that you want installed here, by default we just package the one executable
-# we know we want to ship
-R_Type_package_project(
-  TARGETS
-  server
-  client
-  R_Type_warnings
-)
 # Experience shows that explicit package naming can help make it easier to sort
 # out potential ABI related issues before they start, while helping you
 # track a build to a specific GIT SHA
