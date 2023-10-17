@@ -3,8 +3,7 @@
 
 namespace ECS {
     void System::wallHit(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::TypeEntity> &aType,
-                          Core::SparseArray<Component::HitBox> &aHitBox,
-                          Core::SparseArray<Component::IsAlive> &aIsAlive)
+                         Core::SparseArray<Component::HitBox> &aHitBox, Core::SparseArray<Component::IsAlive> &aIsAlive)
     {
         auto &world = Core::World::getInstance();
 
