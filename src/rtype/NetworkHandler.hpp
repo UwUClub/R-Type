@@ -24,7 +24,7 @@ namespace Network {
             boost::asio::io_service _ioService;
             udp::socket _socket = udp::socket(_ioService);
 
-            //std::array<char, READ_BUFFER_SIZE> _readBuffer = std::array<char, READ_BUFFER_SIZE>();*
+            // std::array<char, READ_BUFFER_SIZE> _readBuffer = std::array<char, READ_BUFFER_SIZE>();*
             boost::asio::streambuf _readInbound;
             boost::asio::streambuf::mutable_buffers_type _readBuffer = _readInbound.prepare(READ_BUFFER_SIZE);
 

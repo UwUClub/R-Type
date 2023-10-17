@@ -58,9 +58,9 @@ namespace Network {
             std::cout << 3 << std::endl;
             boost::archive::binary_iarchive archive(archiveStream);
             std::cout << 4 << std::endl;
-            //archive >> packet;
+            // archive >> packet;
 
-            //RType::unserializePacket<boost::asio::streambuf::mutable_buffers_type>(&packet, _readBuffer);
+            // RType::unserializePacket<boost::asio::streambuf::mutable_buffers_type>(&packet, _readBuffer);
 
             // if (packet.type == -1) { // receive aknowledgment
             //     _onReceiveAknowledgment(packet.uuid, _readEndpoint);
