@@ -692,6 +692,15 @@ function(R_Type_setup_dependencies)
     )
   endif()
 
+  if (NOT TARGET nlohmann_json)
+    CPMAddPackage(
+            NAME nlohmann_json
+            VERSION 3.11.2
+            GITHUB_REPOSITORY "nlohmann/json"
+            GIT_TAG v3.11.2
+            GIT_SHALLOW TRUE
+    )
+  endif()
 
   if (NOT TARGET SDL2)
     FetchContent_Declare(

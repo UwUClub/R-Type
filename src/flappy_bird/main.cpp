@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Components.hpp"
+#include "ConfigReader.hpp"
 #include "EventManager.hpp"
 #include "SDLDisplayClass.hpp"
 #include "System.hpp"
@@ -11,10 +12,14 @@ int main(int ac, char **av)
 {
     (void) ac;
     (void) av;
-    ECS::Core::World &world = ECS::Core::World::getInstance();
-    SDLDisplayClass &display = SDLDisplayClass::getInstance();
-    ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
 
+    // Load config
+    ConfigReader &configReader = ConfigReader::getInstance();
+    configReader.loadConfig();
+    auto &playerConf = configReader.getPlayer();
+
+    // Load components
+    ECS::Core::World &world = ECS::Core::World::getInstance();
     world.registerComponent<ECS::Utils::Vector2f>();
     world.registerComponent<Component::Speed>();
     world.registerComponent<Component::TypeEntity>();
@@ -22,13 +27,17 @@ int main(int ac, char **av)
     world.registerComponent<Component::Weight>();
     world.registerComponent<Component::Jump>();
 
-    display.addEntity(
-        ECS::Utils::Vector2f {SCREEN_WIDTH / 2 - PLAYER_TEX_WIDTH / 2, 10}, Component::Speed {PLAYER_SPEED},
-        Component::Weight {PLAYER_WEIGHT}, Component::TypeEntity {true, false},
-        Component::LoadedSprite {PLAYER_ASSET, nullptr, new SDL_Rect {0, 0, PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT},
-                                 new SDL_Rect {0, 0, PLAYER_TEX_WIDTH * 2, PLAYER_TEX_HEIGHT * 2}},
-        Component::Jump {PLAYER_JUMP_STRENGTH, PLAYER_JUMP_HEIGHT});
+    // Setup entities
+    SDLDisplayClass &display = SDLDisplayClass::getInstance();
+    display.addEntity(ECS::Utils::Vector2f {SCREEN_WIDTH / 2 - (float) playerConf["width"] / 2, 10},
+                      Component::Speed {playerConf["speed"]}, Component::Weight {playerConf["weight"]},
+                      Component::TypeEntity {true, false},
+                      Component::LoadedSprite {
+                          playerConf["asset"], nullptr, new SDL_Rect {0, 0, playerConf["width"], playerConf["height"]},
+                          new SDL_Rect {0, 0, (int) playerConf["width"] * 2, (int) playerConf["height"] * 2}},
+                      Component::Jump {playerConf["jump"]["strength"], playerConf["jump"]["height"]});
 
+    // Load systems
     world.addSystem(ECS::System::getInput);
     world.addSystem<Component::LoadedSprite>(ECS::System::loadTextures);
     world.addSystem<Component::LoadedSprite, ECS::Utils::Vector2f>(ECS::System::displayEntities);
@@ -36,6 +45,8 @@ int main(int ac, char **av)
     world.addSystem<ECS::Utils::Vector2f, Component::Jump, Component::Weight>(ECS::System::jump);
     world.addSystem(ECS::System::quitSDL);
 
+    // Game loop
+    ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
     while (world.isRunning()) {
         world.runSystems();
         SDL_RenderPresent(display._renderer);

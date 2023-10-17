@@ -1,10 +1,9 @@
-find_package(SDL2 REQUIRED)
-
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
 target_sources(flappy_bird PRIVATE
         main.cpp
         SDLDisplayClass.cpp
+        ConfigReader.cpp
 )
 
 add_subdirectory(components)
@@ -15,6 +14,7 @@ target_link_libraries(flappy_bird PRIVATE
         SDL2::SDL2
         SDL2_image
         ecs
+        nlohmann_json
 )
 
 

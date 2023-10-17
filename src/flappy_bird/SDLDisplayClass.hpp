@@ -79,8 +79,6 @@ class SDLDisplayClass
         SDLDisplayClass();
         SDL_Window *_window;
         std::string _assetPath;
-
-    private:
 };
 
 #endif /* !SDLDISPLAYClass_HPP_ */

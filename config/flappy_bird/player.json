@@ -1,0 +1,12 @@
+{
+    "asset": "assets/sprites/bluebird-upflap.png",
+    "width": 34,
+    "height": 24,
+    "speed": 10,
+    "weight": 100,
+    "jump": {
+        "height": 180,
+        "strength": 4,
+        "floating": 65
+    }
+}

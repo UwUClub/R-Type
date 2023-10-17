@@ -13,25 +13,16 @@
 const constexpr int SCREEN_WIDTH = 1000;
 const constexpr int SCREEN_HEIGHT = 1000;
 
+// //--------------- CONFIG ------------------ //
+static const std::string CONFIG_PATH = "config/flappy_bird/";
+static const std::string CONFIG_PLAYER = "player.json";
+static const std::string CONFIG_PHYSICS = "physics.json";
+
 //------------------ BACKGROUND ------------------//
 const constexpr float BACKGROUND_SPEED = 300;
 const constexpr int BACKGROUND_X_RES = 0;
 const constexpr int BACKGROUND_Y_RES = 0;
 static const std::string BACKGROUND_ASSET = "assets/sprites/background.png";
-
-//---------------- GRAVITY ------------------//
-static const constexpr float INITIAL_FALL_VELOCITY = 1;
-static const constexpr float GRAVITY = 0.05;
-
-//------------------ PLAYER ------------------//
-static const std::string PLAYER_ASSET = "assets/sprites/bluebird-upflap.png";
-const constexpr float PLAYER_SPEED = 10;
-const constexpr float PLAYER_WEIGHT = 150;
-const constexpr float PLAYER_JUMP_HEIGHT = 260;
-const constexpr float PLAYER_JUMP_STRENGTH = 4;
-const constexpr float PLAYER_JUMP_FLOATING = 6;
-const constexpr int PLAYER_TEX_WIDTH = 34;
-const constexpr int PLAYER_TEX_HEIGHT = 24;
 
 // ------------------ RETURN STATUS ------------------ //
 const constexpr int SUCCESS = 0;
