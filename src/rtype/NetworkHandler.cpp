@@ -1,5 +1,4 @@
 #include "NetworkHandler.hpp"
-#include <boost/asio.hpp>
 #include <boost/bind.hpp>
 #include <chrono>
 #include <iostream>
@@ -40,7 +39,7 @@ namespace Network {
                                                boost::asio::placeholders::bytes_transferred));
 
         if (!_ioThread.joinable()) {
-            _ioThread = std::thread(boost::bind(&boost::asio::io_service::run, &_ioService));
+            _ioThread = boost::thread(boost::bind(&boost::asio::io_service::run, &_ioService));
         }
     }
 

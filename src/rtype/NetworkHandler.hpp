@@ -1,4 +1,5 @@
 #include <boost/asio.hpp>
+#include <boost/thread.hpp>
 #include <iostream>
 #include "Packets.hpp"
 #include "Values.hpp"
@@ -26,7 +27,7 @@ namespace Network {
             udp::endpoint _readEndpoint;
             std::function<void(const RType::Packet &, udp::endpoint &)> _onReceive;
             std::function<void(const std::string, udp::endpoint &)> _onReceiveAknowledgment;
-            std::thread _ioThread;
+            boost::thread _ioThread;
 
             std::unordered_map<std::string, Sender> _senders;
 
