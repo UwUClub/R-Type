@@ -8,7 +8,7 @@ target_sources(ecs PRIVATE
 add_subdirectory(Event)
 
 target_link_libraries(ecs
-        PRIVATE R_Type::R_Type_options
+        PRIVATE
         R_Type::R_Type_warnings
         SDL2::SDL2
         SDL2::SDL2main
