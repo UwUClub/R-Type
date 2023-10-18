@@ -36,7 +36,7 @@ Each client is a game player that listens to user inputs, sends actions to the s
 A packet has the following properties:
 | Name | Kind | Description |
 | - | - | - |
-| `uuid` | 16-byte string | Unique id to identify the packet. See [part 2.3](#23-reception-aknowledgment) to learn about its utility |
+| `uuid` | 36-byte string | Unique id to identify the packet. See [part 2.3](#23-reception-aknowledgment) to learn about its utility |
 | `type` | 4-byte int | Packet type. See [part 2.2](#22-packet-type) to get the list of packet types |
 | `payload` | vector of float (variable size) | Data carried by the packet. The size and meaning of each value depends on packet type, check [part 2.2](#22-packet-type) |
 
