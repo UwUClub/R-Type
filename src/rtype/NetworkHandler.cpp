@@ -56,12 +56,16 @@ namespace Network {
             _readInbound.commit(aBytesTransferred);
             std::istream archiveStream(&_readInbound);
             std::cout << 2 << std::endl;
-            if (archiveStream && archiveStream.peek() != EOF) {
+            std::cout << archiveStream.peek() << std::endl;
+            if (archiveStream.peek() != EOF) {
                 std::cout << 3 << std::endl;
-                boost::archive::binary_iarchive archive(archiveStream);
+                // check if signature is valid
                 RType::Packet packet;
-                archive >> packet;
                 std::cout << 4 << std::endl;
+                boost::archive::binary_iarchive archive(archiveStream);
+                std::cout << 5 << std::endl;
+                archive >> packet;
+                std::cout << 6 << std::endl;
                 if (packet.type == -1) { // receive aknowledgment
                     _onReceiveAknowledgment(packet.uuid, _readEndpoint);
                     if (_senders.find(packet.uuid) != _senders.end() && _senders[packet.uuid].first.joinable()) {
@@ -74,10 +78,11 @@ namespace Network {
                     _onReceive(packet, _readEndpoint);
                 }
             }
-            _readInbound.consume(_readInbound.size());
+            listen();
         } catch (const std::exception &e) {
             std::cout << "Unserialization error: " << e.what() << std::endl;
         }
+        _readInbound.consume(_readInbound.size());
         listen();
     }
 
