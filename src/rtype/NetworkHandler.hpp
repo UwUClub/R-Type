@@ -1,4 +1,5 @@
 #include <boost/asio.hpp>
+#include <boost/thread.hpp>
 #include <iostream>
 #include "Packets.hpp"
 #include "Values.hpp"
@@ -22,11 +23,14 @@ namespace Network {
         private:
             boost::asio::io_service _ioService;
             udp::socket _socket = udp::socket(_ioService);
-            std::array<char, READ_BUFFER_SIZE> _readBuffer = std::array<char, READ_BUFFER_SIZE>();
+
+            boost::asio::streambuf _readInbound;
+            boost::asio::streambuf::mutable_buffers_type _readBuffer = _readInbound.prepare(READ_BUFFER_SIZE);
+
             udp::endpoint _readEndpoint;
             std::function<void(const RType::Packet &, udp::endpoint &)> _onReceive;
             std::function<void(const std::string, udp::endpoint &)> _onReceiveAknowledgment;
-            std::thread _ioThread;
+            boost::thread _ioThread;
 
             std::unordered_map<std::string, Sender> _senders;
 

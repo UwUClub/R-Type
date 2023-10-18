@@ -6,6 +6,7 @@
 #include <string>
 #include "EventManager.hpp"
 #include "Packets.hpp"
+#include <boost/archive/binary_iarchive.hpp>
 
 namespace Network {
 
@@ -14,6 +15,7 @@ namespace Network {
     void NetworkHandler::start(const boost::asio::basic_socket<boost::asio::ip::udp>::protocol_type &aProtocol)
     {
         _socket.open(aProtocol);
+        handleRequest(boost::system::error_code(), 0);
         listen();
     }
 
@@ -40,7 +42,7 @@ namespace Network {
                                                boost::asio::placeholders::bytes_transferred));
 
         if (!_ioThread.joinable()) {
-            _ioThread = std::thread(boost::bind(&boost::asio::io_service::run, &_ioService));
+            _ioThread = boost::thread(boost::bind(&boost::asio::io_service::run, &_ioService));
         }
     }
 
@@ -49,19 +51,32 @@ namespace Network {
         (void) aError;
         (void) aBytesTransferred;
 
-        RType::Packet packet;
-        RType::unserializePacket<std::array<char, READ_BUFFER_SIZE>>(&packet, _readBuffer);
-
-        if (packet.type == -1) { // receive aknowledgment
-            _onReceiveAknowledgment(packet.uuid, _readEndpoint);
-            if (_senders.find(packet.uuid) != _senders.end() && _senders[packet.uuid].first.joinable()) {
-                _senders[packet.uuid].second = false;
-                _senders[packet.uuid].first.join();
-                _senders.erase(packet.uuid);
+        try {
+            std::cout << 1 << std::endl;
+            _readInbound.commit(aBytesTransferred);
+            std::istream archiveStream(&_readInbound);
+            std::cout << 2 << std::endl;
+            if (archiveStream && archiveStream.peek() != EOF) {
+                std::cout << 3 << std::endl;
+                boost::archive::binary_iarchive archive(archiveStream);
+                RType::Packet packet;
+                archive >> packet;
+                std::cout << 4 << std::endl;
+                if (packet.type == -1) { // receive aknowledgment
+                    _onReceiveAknowledgment(packet.uuid, _readEndpoint);
+                    if (_senders.find(packet.uuid) != _senders.end() && _senders[packet.uuid].first.joinable()) {
+                        _senders[packet.uuid].second = false;
+                        _senders[packet.uuid].first.join();
+                        _senders.erase(packet.uuid);
+                    }
+                } else {
+                    answerAknowledgment(packet.uuid, _readEndpoint);
+                    _onReceive(packet, _readEndpoint);
+                }
             }
-        } else {
-            answerAknowledgment(packet.uuid, _readEndpoint);
-            _onReceive(packet, _readEndpoint);
+            _readInbound.consume(_readInbound.size());
+        } catch (const std::exception &e) {
+            std::cout << "Unserialization error: " << e.what() << std::endl;
         }
         listen();
     }
