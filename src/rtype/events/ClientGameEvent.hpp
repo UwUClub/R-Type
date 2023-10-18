@@ -1,6 +1,5 @@
 #include <cstddef>
 #include <vector>
-#include "Event.hpp"
 
 #ifndef CLIENTGAMEEVENT_HPP
     #define CLIENTGAMEEVENT_HPP
@@ -24,7 +23,7 @@ namespace RType {
     /**
      * @brief Game event class is the base class of all game events
      */
-    class ClientGameEvent : public ECS::Event::Event
+    class ClientGameEvent
     {
         private:
             ClientEventType _type;
@@ -49,13 +48,13 @@ namespace RType {
              * @brief Get event type
              * @return ClientEventType
              */
-            ClientEventType getType() const;
+            [[nodiscard]] ClientEventType getType() const;
 
             /**
              * @brief Get the payload of the event
              * @return std::vector<float>
              */
-            const std::vector<float> &getPayload() const;
+            [[nodiscard]] const std::vector<float> &getPayload() const;
     };
 } // namespace RType
 

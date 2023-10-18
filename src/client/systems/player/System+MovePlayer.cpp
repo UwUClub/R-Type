@@ -15,9 +15,8 @@ namespace ECS {
                             Core::SparseArray<Component::IsAlive> &aIsAlive)
     {
         Network::ClientHandler &network = Network::ClientHandler::getInstance();
-
         Event::EventManager *eventManager = Event::EventManager::getInstance();
-        auto keyboardEvent = eventManager->getEventsByType(Event::EventType::KEYBOARD);
+        auto &keyboardEvent = eventManager->getEventsByType<Event::KeyboardEvent>();
         static const std::unordered_map<Event::KeyIdentifier, std::function<void(float &, Utils::Vector2f &, float)>>
             keyMap = {
                 {Event::KeyIdentifier::UP,
@@ -45,22 +44,25 @@ namespace ECS {
                      network.send(packet);
                  }},
             };
+        const auto size = aPos.size();
 
-        for (size_t i = 0; i < aPos.size(); i++) {
+        for (size_t i = 0; i < size; i++) {
             if (!aType[i].has_value() || !aType[i].value().isPlayer) {
                 continue;
             }
             for (auto &event : keyboardEvent) {
-                auto *keyEvent = static_cast<Event::KeyboardEvent *>(event);
-                if (keyMap.find(keyEvent->_keyId) == keyMap.end() || !aIsAlive[i].value().isAlive) {
+                if (keyMap.find(event._keyId) == keyMap.end() || !aIsAlive[i].value().isAlive) {
                     continue;
                 }
+
                 auto &pos = aPos[i].value();
-                float onlinePlayerId = static_cast<float>(aType[i].value().onlineId.value_or(-1));
+                auto &speed = aSpeed[i].value().speed;
+                auto onlinePlayerId = aType[i].value().onlineId.value_or(-1);
+
                 if (onlinePlayerId == -1) {
                     continue;
                 }
-                keyMap.at(keyEvent->_keyId)(aSpeed[i].value().speed, pos, onlinePlayerId);
+                keyMap.at(event._keyId)(speed, pos, onlinePlayerId);
 
                 if (pos.x < 0) {
                     pos.x = 0;

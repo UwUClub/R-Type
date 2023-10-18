@@ -132,14 +132,17 @@ as Component container
             std::size_t createEntity()
             {
                 if (_reusableIds.empty()) {
+                    const auto idx = _id;
                     for (auto &component : _components) {
-                        _addFunctions[component.first](*this, _id);
+                        _addFunctions[component.first](*this, idx);
                     }
-                    return _id++;
-                }
-                auto &idx = _reusableIds.back();
 
-                _reusableIds.pop_back();
+                    _id++;
+                    return idx;
+                }
+                auto &idx = _reusableIds.front();
+
+                _reusableIds.erase(_reusableIds.begin());
                 for (auto &component : _components) {
                     _addFunctions[component.first](*this, idx);
                 }

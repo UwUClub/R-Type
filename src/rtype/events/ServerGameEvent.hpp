@@ -1,5 +1,4 @@
 #include <boost/asio.hpp>
-#include "Event.hpp"
 
 #ifndef SERVERGAMEEVENT_HPP
     #define SERVERGAMEEVENT_HPP
@@ -21,7 +20,7 @@ namespace RType {
     /**
      * @brief Game event class is the base class of all game events
      */
-    class ServerGameEvent : public ECS::Event::Event
+    class ServerGameEvent
     {
         private:
             ServerEventType _type;
@@ -39,31 +38,31 @@ namespace RType {
              * @param aClientEndpoint the endpoint of the client who triggers the event
              */
             explicit ServerGameEvent(ServerEventType aType, int aEntityId, const std::vector<float> &aPayload,
-                                     udp::endpoint aClientEndpoint);
+                                     const udp::endpoint &aClientEndpoint);
 
             /**
              * @brief Get event type
              * @return EventType
              */
-            ServerEventType getType() const;
+            [[nodiscard]] ServerEventType getType() const;
 
             /**
              * @brief Get entity id
              * @return The entity id
              */
-            int getEntityId() const;
+            [[nodiscard]] int getEntityId() const;
 
             /**
              * @brief Get payload
              * @return The payload
              */
-            const std::vector<float> &getPayload() const;
+            [[nodiscard]] const std::vector<float> &getPayload() const;
 
             /**
              * @brief Get client endpoint
              * @return udp::endpoint
              */
-            udp::endpoint getClientEndpoint() const;
+            [[nodiscard]] const udp::endpoint &getClientEndpoint() const;
     };
 } // namespace RType
 

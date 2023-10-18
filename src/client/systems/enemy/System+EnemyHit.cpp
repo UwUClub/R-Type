@@ -8,19 +8,26 @@ namespace ECS {
     {
         auto &world = Core::World::getInstance();
         auto &display = SFMLDisplayClass::getInstance();
+        const auto size = aType.size();
 
-        for (size_t enemy = 0; enemy < aType.size(); enemy++) {
+        for (size_t enemy = 0; enemy < size; enemy++) {
             if (!aType[enemy].has_value() || !aType[enemy].value().isEnemy) {
                 continue;
             }
-            for (size_t bullet = 0; bullet < aPos.size(); bullet++) {
-                if (!aType[bullet].has_value() || !aType[bullet].value().isBullet) {
+
+            auto &posEnemy = aPos[enemy].value();
+            auto &hitBoxEnemy = aHitBox[enemy].value();
+            const auto size = aPos.size();
+
+            for (size_t bullet = 0; bullet < size; bullet++) {
+                if (!aType[bullet].has_value() || !aType[bullet].value().isBullet || !aPos[bullet].has_value()) {
                     continue;
                 }
-                if (aPos[bullet].value().x > aPos[enemy].value().x
-                    && aPos[bullet].value().x < aPos[enemy].value().x + aHitBox[enemy].value().width
-                    && aPos[bullet].value().y > aPos[enemy].value().y
-                    && aPos[bullet].value().y < aPos[enemy].value().y + aHitBox[enemy].value().height) {
+
+                auto &posBullet = aPos[bullet].value();
+
+                if (posBullet.x > posEnemy.x && posBullet.x < posEnemy.x + hitBoxEnemy.width && posBullet.y > posEnemy.y
+                    && posBullet.y < posEnemy.y + hitBoxEnemy.height) {
                     display.freeRects(bullet);
                     world.killEntity(bullet);
                     break;

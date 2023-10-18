@@ -49,7 +49,6 @@ int main(int ac, char **av)
         world.addSystem(ECS::System::getInput);
         world.addSystem<Component::LoadedSprite>(ECS::System::loadTextures);
         world.addSystem<Component::LoadedSprite, ECS::Utils::Vector2f>(ECS::System::displayEntities);
-        world.addSystem(ECS::System::quitSDL);
 
         // Background systems
         world.addSystem(ECS::System::createBackground);
@@ -65,8 +64,7 @@ int main(int ac, char **av)
         world.addSystem(ECS::System::createBot);
         world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::updateBotPosition);
         world.addSystem(ECS::System::triggerBotShoot);
-        world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive, Component::HitBox>(
-            ECS::System::botHit);
+        world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::HitBox>(ECS::System::botHit);
         world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite>(
             ECS::System::triggerBotDeath);
         world.addSystem<Component::TypeEntity>(ECS::System::triggerBotDisconnect);
@@ -104,7 +102,7 @@ int main(int ac, char **av)
         // Game loop
         while (world.isRunning()) {
             world.runSystems();
-            eventManager->clearNonGameEvents();
+            eventManager->keepEventsAndClear<RType::ClientGameEvent>();
             world.calcDeltaTime();
         }
 
