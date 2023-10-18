@@ -50,33 +50,23 @@ namespace Network {
 
         try {
             RType::Packet packet;
+            RType::unserializePacket<std::array<char, READ_BUFFER_SIZE>>(&packet, _readBuffer);
 
-            std::cout << 1 << std::endl;
-            _readInbound.commit(aBytesTransferred);
-            std::cout << 2 << std::endl;
-            std::istream archiveStream(&_readInbound);
-            std::cout << 3 << std::endl;
-            boost::archive::binary_iarchive archive(archiveStream);
-            std::cout << 4 << std::endl;
-            // archive >> packet;
-
-            // RType::unserializePacket<boost::asio::streambuf::mutable_buffers_type>(&packet, _readBuffer);
-
-            // if (packet.type == -1) { // receive aknowledgment
-            //     _onReceiveAknowledgment(packet.uuid, _readEndpoint);
-            //     if (_senders.find(packet.uuid) != _senders.end() && _senders[packet.uuid].first.joinable()) {
-            //         _senders[packet.uuid].second = false;
-            //         _senders[packet.uuid].first.join();
-            //         _senders.erase(packet.uuid);
-            //     }
-            // } else {
-            //     answerAknowledgment(packet.uuid, _readEndpoint);
-            //     _onReceive(packet, _readEndpoint);
-            // }
+            if (packet.type == -1) { // receive aknowledgment
+                _onReceiveAknowledgment(packet.uuid, _readEndpoint);
+                if (_senders.find(packet.uuid) != _senders.end() && _senders[packet.uuid].first.joinable()) {
+                    _senders[packet.uuid].second = false;
+                    _senders[packet.uuid].first.join();
+                    _senders.erase(packet.uuid);
+                }
+            } else {
+                answerAknowledgment(packet.uuid, _readEndpoint);
+                _onReceive(packet, _readEndpoint);
+            }
+            listen();
         } catch (std::exception &e) {
             std::cerr << "Packet unserialization error: " << e.what() << std::endl;
         }
-        // listen();
     }
 
     void NetworkHandler::send(const RType::Packet &aPacket, udp::endpoint &aClientEndpoint)
