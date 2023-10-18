@@ -43,7 +43,7 @@ namespace RType {
              * @param aType the type of the event
              * @param aPayload the payload of the event
              */
-            explicit ClientGameEvent(ClientEventType aType, std::vector<float> aPayload);
+            explicit ClientGameEvent(ClientEventType aType, const std::vector<float> &aPayload);
 
             /**
              * @brief Get event type

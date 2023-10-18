@@ -38,7 +38,7 @@ namespace RType {
              * @param aPayload the payload
              * @param aClientEndpoint the endpoint of the client who triggers the event
              */
-            explicit ServerGameEvent(ServerEventType aType, int aEntityId, std::vector<float> aPayload,
+            explicit ServerGameEvent(ServerEventType aType, int aEntityId, const std::vector<float> &aPayload,
                                      udp::endpoint aClientEndpoint);
 
             /**
