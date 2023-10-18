@@ -14,7 +14,6 @@ namespace Network {
     void NetworkHandler::start(const boost::asio::basic_socket<boost::asio::ip::udp>::protocol_type &aProtocol)
     {
         _socket.open(aProtocol);
-        // handleRequest(boost::system::error_code(), 0);
         listen();
     }
 
@@ -36,6 +35,7 @@ namespace Network {
 
     void NetworkHandler::listen()
     {
+        _readBuffer = _readInbound.prepare(READ_BUFFER_SIZE);
         _socket.async_receive_from(boost::asio::buffer(_readBuffer), _readEndpoint,
                                    boost::bind(&NetworkHandler::handleRequest, this, boost::asio::placeholders::error,
                                                boost::asio::placeholders::bytes_transferred));
@@ -51,20 +51,12 @@ namespace Network {
         (void) aBytesTransferred;
 
         try {
-            std::cout << 1 << std::endl;
             _readInbound.commit(aBytesTransferred);
             std::istream archiveStream(&_readInbound);
-            std::cout << 2 << std::endl;
-            std::cout << archiveStream.peek() << std::endl;
-            if (archiveStream.peek() != EOF) {
-                std::cout << 3 << std::endl;
-                // check if signature is valid
+            if (archiveStream.peek() != EOF && archiveStream.peek() != 0) {
                 RType::Packet packet;
-                std::cout << 4 << std::endl;
                 boost::archive::binary_iarchive archive(archiveStream);
-                std::cout << 5 << std::endl;
                 archive >> packet;
-                std::cout << 6 << std::endl;
                 if (packet.type == -1) { // receive aknowledgment
                     _onReceiveAknowledgment(packet.uuid, _readEndpoint);
                     if (_senders.find(packet.uuid) != _senders.end() && _senders[packet.uuid].first.joinable()) {
@@ -77,11 +69,9 @@ namespace Network {
                     _onReceive(packet, _readEndpoint);
                 }
             }
-            listen();
         } catch (const std::exception &e) {
             std::cout << "Unserialization error: " << e.what() << std::endl;
         }
-        _readInbound.consume(_readInbound.size());
         listen();
     }
 
