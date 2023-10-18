@@ -15,7 +15,7 @@ namespace Network {
     void NetworkHandler::start(const boost::asio::basic_socket<boost::asio::ip::udp>::protocol_type &aProtocol)
     {
         _socket.open(aProtocol);
-        handleRequest(boost::system::error_code(), 0);
+        // handleRequest(boost::system::error_code(), 0);
         listen();
     }
 
