@@ -1,8 +1,6 @@
 #ifndef KEYBOARDEVENT_HPP
 #define KEYBOARDEVENT_HPP
 
-#include "Event.hpp"
-
 namespace ECS::Event {
     enum class KeyIdentifier
     {
@@ -111,7 +109,7 @@ namespace ECS::Event {
         RELEASED = 1
     };
 
-    class KeyboardEvent : public Event
+    class KeyboardEvent
     {
         public:
             // -------------------CONSTRUCTORS / DESTRUCTOR-------------------//

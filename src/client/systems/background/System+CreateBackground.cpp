@@ -13,11 +13,9 @@ namespace ECS {
         auto &world = ECS::Core::World::getInstance();
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         SFMLDisplayClass &display = SFMLDisplayClass::getInstance();
-        auto events = eventManager->getEventsByType(Event::EventType::GAME);
+        auto &events = eventManager->getEventsByType<RType::ClientGameEvent>();
 
-        for (auto &event : events) {
-            auto &gameEvent = static_cast<RType::ClientGameEvent &>(*event);
-
+        for (auto &gameEvent : events) {
             if (gameEvent.getType() == RType::ClientEventType::PLAYER_SPAWN) {
                 bool isLocalPlayer = gameEvent.getPayload()[1] == 1;
 

@@ -8,9 +8,10 @@ namespace ECS {
                            Core::SparseArray<Component::TypeEntity> &aType)
     {
         auto &world = Core::World::getInstance();
+        const auto size = aType.size();
 
-        for (size_t idx = 0; idx < aPos.size(); idx++) {
-            if (!aPos[idx].has_value()) {
+        for (size_t idx = 0; idx < size; idx++) {
+            if (!aPos[idx].has_value() || !aSpeed[idx].has_value() || !aType[idx].has_value()) {
                 continue;
             }
             auto &pos = aPos[idx].value();
