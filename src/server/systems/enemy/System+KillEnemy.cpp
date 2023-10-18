@@ -12,15 +12,16 @@ namespace ECS {
     {
         auto &world = Core::World::getInstance();
         auto &server = Network::ServerHandler::getInstance();
+        const auto size = aType.size();
 
-        for (size_t enemyId = 0; enemyId < aType.size(); enemyId++) {
+        for (size_t enemyId = 0; enemyId < size; enemyId++) {
             if (!aType[enemyId].has_value() || !aType[enemyId].value().isEnemy) {
                 continue;
             }
             if (!aIsAlive[enemyId].value().isAlive) {
-                world.killEntity(enemyId);
-                std::cout << "Enemy " << enemyId << " killed" << std::endl;
                 std::vector<float> payload = {static_cast<float>(enemyId)};
+
+                world.killEntity(enemyId);
                 server.broadcast(static_cast<int>(RType::ClientEventType::ENEMY_DEATH), payload, aConnection);
             }
         }

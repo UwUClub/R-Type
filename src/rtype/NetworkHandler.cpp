@@ -75,7 +75,7 @@ namespace Network {
         listen();
     }
 
-    void NetworkHandler::send(const RType::Packet &aPacket, udp::endpoint &aClientEndpoint)
+    void NetworkHandler::send(const RType::Packet &aPacket, const udp::endpoint &aClientEndpoint)
     {
         boost::asio::streambuf buf;
         RType::serializePacket(&buf, aPacket);

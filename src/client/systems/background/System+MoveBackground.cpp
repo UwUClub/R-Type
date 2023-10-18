@@ -15,8 +15,10 @@ namespace ECS {
                 || !aSpeed[i].has_value()) {
                 continue;
             }
+
             auto &pos = aPos[i].value();
             auto &speed = aSpeed[i].value().speed;
+
             pos.x -= speed * deltaTime;
             if (pos.x <= -SCREEN_WIDTH) {
                 pos.x = SCREEN_WIDTH;

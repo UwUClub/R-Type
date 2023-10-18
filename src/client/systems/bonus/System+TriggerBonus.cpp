@@ -21,17 +21,21 @@ namespace ECS {
                 || !aIsAlive[bonus].has_value() || !aHitBox[bonus].has_value()) {
                 continue;
             }
+
             auto &posBonus = aPos[bonus].value();
             auto &isAliveBonus = aIsAlive[bonus].value();
             auto &hitBoxBonus = aHitBox[bonus].value();
+            const auto posSize = aPos.size();
+
             if (!isAliveBonus.isAlive) {
                 continue;
             }
-            const auto posSize = aPos.size();
+
             for (size_t player = 0; player < posSize; player++) {
                 if (!aType[player].has_value() || !aType[player].value().isPlayer) {
                     continue;
                 }
+
                 auto &posPlayer = aPos[player].value();
                 auto &hitBoxPlayer = aHitBox[player].value();
 

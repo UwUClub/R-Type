@@ -14,9 +14,11 @@ namespace ECS {
             if (!aPos[idx].has_value() || !aSpeed[idx].has_value() || !aType[idx].has_value()) {
                 continue;
             }
+
             auto &pos = aPos[idx].value();
             auto &speed = aSpeed[idx].value();
             auto &type = aType[idx].value();
+
             if (type.isBonus) {
                 pos.x -= speed.speed * world.getDeltaTime();
                 if (pos.x < -30) {

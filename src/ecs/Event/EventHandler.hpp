@@ -45,13 +45,31 @@ namespace ECS::Event {
             ~EventHandler() = default;
 
             //-------------------OPERATORS-------------------//
-            EventHandler(const EventHandler &aOther) = delete;
+            EventHandler(const EventHandler &aOther)
+                : _events(aOther._events)
+            {}
 
-            EventHandler(EventHandler &&aOther) noexcept = delete;
+            EventHandler(EventHandler &&aOther) noexcept
+                : _events(std::move(aOther._events))
+            {}
 
-            EventHandler &operator=(const EventHandler &aOther) = delete;
+            EventHandler &operator=(const EventHandler &aOther)
+            {
+                if (this == &aOther) {
+                    return *this;
+                }
+                _events = aOther._events;
+                return *this;
+            }
 
-            EventHandler &operator=(EventHandler &&aOther) noexcept = delete;
+            EventHandler &operator=(EventHandler &&aOther) noexcept
+            {
+                if (this == &aOther) {
+                    return *this;
+                }
+                _events = std::move(aOther._events);
+                return *this;
+            }
 
             //-------------------METHODS-------------------//
             /**

@@ -78,35 +78,6 @@ namespace ECS::Event {
             static EventManager *getInstance();
 
             /**
-             * @brief Get an Hander linked to an event
-             *
-             * @tparam Event The type of the event to get the handler
-             * @return EventHandler<Event>& The handler of the event.
-             */
-            template<class Event>
-            EventHandler<Event> &getHandler()
-            {
-                auto eventTypeIndex = std::type_index(typeid(Event));
-
-                try {
-                    if (_eventsHandler.find(eventTypeIndex) == _eventsHandler.end()) {
-                        _eventsHandler[eventTypeIndex] = EventHandler<Event>();
-                        _clearFunctions[eventTypeIndex] = [](EventManager &aManager) {
-                            auto &myHandler = aManager.getHandler<Event>();
-
-                            myHandler.clearEvents();
-                        };
-                    }
-                    auto &handler = _eventsHandler.at(eventTypeIndex);
-                    auto &component = std::any_cast<EventHandler<Event> &>(handler);
-
-                    return component;
-                } catch (const std::bad_any_cast &e) {
-                    throw EventManagerException("There is no handler of this type");
-                }
-            }
-
-            /**
              * @brief Subscribe to an event, the callback will be called when the event is published
              *
              * @tparam Event The type of the event to subscribe to
@@ -177,12 +148,41 @@ namespace ECS::Event {
             }
 
             /**
+             * @brief Get an Hander linked to an event
+             *
+             * @tparam Event The type of the event to get the handler
+             * @return EventHandler<Event>& The handler of the event.
+             */
+            template<typename Event>
+            EventHandler<Event> &getHandler()
+            {
+                auto eventTypeIndex = std::type_index(typeid(Event));
+
+                try {
+                    if (_eventsHandler.find(eventTypeIndex) == _eventsHandler.cend()) {
+                        _eventsHandler[eventTypeIndex] = EventHandler<Event>();
+                        _clearFunctions[eventTypeIndex] = [](EventManager &aManager) {
+                            auto &myHandler = aManager.getHandler<Event>();
+
+                            myHandler.clearEvents();
+                        };
+                    }
+                    auto &handler = _eventsHandler.at(eventTypeIndex);
+                    auto &component = std::any_cast<EventHandler<Event> &>(handler);
+
+                    return component;
+                } catch (const std::bad_any_cast &e) {
+                    throw EventManagerException("There is no handler of this type");
+                }
+            }
+
+            /**
              * @brief Push an event to the queue
              * @details Doesn't call the subscribers
              * @param aEvent The event to push.
              * @tparam Event The type of the event.
              */
-            template<class Event>
+            template<typename Event>
             void pushEvent(const Event &aEvent)
             {
                 try {
@@ -199,7 +199,7 @@ namespace ECS::Event {
              * @tparam Event The type of the event.
              * @return std::vector<Event>& The list of events.
              */
-            template<class Event>
+            template<typename Event>
             std::vector<Event> &getEventsByType()
             {
                 try {
@@ -233,7 +233,7 @@ namespace ECS::Event {
              * @tparam Event The type of the event.
              *
              */
-            template<class Event>
+            template<typename Event>
             void removeEvent(const std::size_t aIndex)
             {
                 auto eventIndex = std::type_index(typeid(Event));

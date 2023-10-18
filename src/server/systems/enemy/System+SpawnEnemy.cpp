@@ -24,8 +24,9 @@ namespace ECS {
 
         // Create entity
         size_t enemyId = world.createEntity();
-        float posX = static_cast<float>(SCREEN_WIDTH - ENEMY_TEX_WIDTH);
-        float posY = static_cast<float>(rand() % SCREEN_HEIGHT);
+        auto posX = static_cast<float>(SCREEN_WIDTH - ENEMY_TEX_WIDTH);
+        auto posY = static_cast<float>(rand() % SCREEN_HEIGHT);
+
         aPos.insertAt(enemyId, ECS::Utils::Vector2f {posX, posY});
         aSpeed.insertAt(enemyId, Component::Speed {ENEMY_SPEED});
         aType.insertAt(enemyId, Component::TypeEntity {false, false, true, false, false, false, false});
@@ -33,8 +34,8 @@ namespace ECS {
                          Component::HitBox {static_cast<float>(ENEMY_TEX_WIDTH), static_cast<float>(ENEMY_TEX_HEIGHT)});
         aIsAlive.insertAt(enemyId, Component::IsAlive {true, 0});
 
-        // Send packet
         std::vector<float> payload = {static_cast<float>(enemyId), posX, posY};
+        // Send packet
         server.broadcast(static_cast<int>(RType::ClientEventType::ENEMY_SPAWN), payload, aConnection);
     }
 } // namespace ECS

@@ -1,3 +1,4 @@
+#include <vector>
 #include "ClientGameEvent.hpp"
 #include "EventManager.hpp"
 #include "SFMLDisplayClass.hpp"
@@ -9,31 +10,42 @@ namespace ECS {
                                    Core::SparseArray<Component::TypeEntity> &aType)
     {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
-        ;
-        auto events = eventManager->getEventsByType(Event::EventType::GAME);
+        auto &events = eventManager->getEventsByType<RType::ClientGameEvent>();
+        std::vector<size_t> toRemove;
+        const auto size = events.size();
 
-        for (auto &event : events) {
-            auto &gameEvent = static_cast<RType::ClientGameEvent &>(*event);
+        for (size_t i = 0; i < size; i++) {
+            auto &gameEvent = events[i];
 
-            if (gameEvent.getType() == RType::ClientEventType::PLAYER_POSITION) {
-                if (gameEvent.getPayload().size() != 3) {
-                    eventManager->removeEvent(event);
-                    continue;
-                }
-                std::size_t onlineBotId = static_cast<int>(gameEvent.getPayload()[0]);
-                float posX = gameEvent.getPayload()[1];
-                float posY = gameEvent.getPayload()[2];
-
-                size_t localBotId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(aType, onlineBotId);
-                if (!aPos[localBotId].has_value()) {
-                    eventManager->removeEvent(event);
-                    continue;
-                }
-                aPos[localBotId].value().x = posX;
-                aPos[localBotId].value().y = posY;
-
-                eventManager->removeEvent(event);
+            if (gameEvent.getType() != RType::ClientEventType::PLAYER_POSITION) {
+                continue;
             }
+
+            const auto &payload = gameEvent.getPayload();
+
+            if (payload.size() != 3) {
+                toRemove.push_back(i);
+                continue;
+            }
+
+            std::size_t onlineBotId = static_cast<int>(payload[0]);
+            float posX = payload[1];
+            float posY = payload[2];
+            size_t localBotId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(aType, onlineBotId);
+
+            if (!aPos[localBotId].has_value()) {
+                toRemove.push_back(i);
+                continue;
+            }
+
+            auto &posLocal = aPos[localBotId].value();
+
+            posLocal.x = posX;
+            posLocal.y = posY;
+            toRemove.push_back(i);
+        }
+        for (auto &idx : toRemove) {
+            eventManager->removeEvent<RType::ClientGameEvent>(idx);
         }
     }
 
