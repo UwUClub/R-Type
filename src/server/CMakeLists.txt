@@ -14,6 +14,7 @@ target_link_libraries(server
         ${Boost_LIBRARIES}
         Boost::asio
         Boost::serialization
+        Boost::uuid
         ecs
         rtype
 )
