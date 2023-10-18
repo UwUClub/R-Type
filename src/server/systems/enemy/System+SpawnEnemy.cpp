@@ -34,7 +34,7 @@ namespace ECS {
         aIsAlive.insertAt(enemyId, Component::IsAlive {true, 0});
 
         // Send packet
-        server.broadcast(static_cast<int>(RType::ClientEventType::ENEMY_SPAWN),
-                         {static_cast<float>(enemyId), posX, posY}, aConnection);
+        std::vector<float> payload = {static_cast<float>(enemyId), posX, posY};
+        server.broadcast(static_cast<int>(RType::ClientEventType::ENEMY_SPAWN), payload, aConnection);
     }
 } // namespace ECS

@@ -24,7 +24,7 @@ namespace RType {
         return _entityId;
     }
 
-    std::vector<float> ServerGameEvent::getPayload() const
+    const std::vector<float> &ServerGameEvent::getPayload() const
     {
         return _payload;
     }

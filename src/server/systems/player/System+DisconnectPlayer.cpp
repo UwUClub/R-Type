@@ -24,8 +24,8 @@ namespace ECS {
                 world.killEntity(playerId);
                 server.removeClient(playerId);
 
-                server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_DISCONNECTION),
-                                 {static_cast<float>(playerId)}, aConnection);
+                std::vector<float> payload = {static_cast<float>(playerId)};
+                server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_DISCONNECTION), payload, aConnection);
 
                 eventManager->removeEvent(event);
 

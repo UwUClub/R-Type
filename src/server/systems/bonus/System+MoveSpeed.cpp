@@ -24,8 +24,8 @@ namespace ECS {
 
                 if (bonusType == 1) {
                     aSpeed[playerId].value().speed += 10;
-                    network.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_BONUS),
-                                      {static_cast<float>(playerId), 1}, aConnection);
+                    std::vector<float> payload = {static_cast<float>(playerId), 1};
+                    network.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_BONUS), payload, aConnection);
                 }
                 eventManager->removeEvent(event);
             }

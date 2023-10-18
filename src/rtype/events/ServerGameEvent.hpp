@@ -57,7 +57,7 @@ namespace RType {
              * @brief Get payload
              * @return The payload
              */
-            std::vector<float> getPayload() const;
+            const std::vector<float> &getPayload() const;
 
             /**
              * @brief Get client endpoint

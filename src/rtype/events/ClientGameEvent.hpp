@@ -55,7 +55,7 @@ namespace RType {
              * @brief Get the payload of the event
              * @return std::vector<float>
              */
-            std::vector<float> getPayload() const;
+            const std::vector<float> &getPayload() const;
     };
 } // namespace RType
 

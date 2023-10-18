@@ -19,8 +19,8 @@ namespace ECS {
             }
             if (!aIsAlive[playerId].value().isAlive) {
                 std::cout << "Player " << playerId << " killed" << std::endl;
-                server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_DEATH), {static_cast<float>(playerId)},
-                                 aConnection);
+                std::vector<float> payload = {static_cast<float>(playerId)};
+                server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_DEATH), payload, aConnection);
                 server.removeClient(playerId);
                 world.killEntity(playerId);
             }

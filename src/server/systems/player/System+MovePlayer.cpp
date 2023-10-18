@@ -62,8 +62,8 @@ namespace ECS {
                     pos.y = SCREEN_HEIGHT;
                 }
 
-                network.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_POSITION),
-                                  {static_cast<float>(entityId), pos.x, pos.y}, aConnection);
+                std::vector<float> payload = {static_cast<float>(entityId), pos.x, pos.y};
+                network.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_POSITION), payload, aConnection);
 
                 eventManager->removeEvent(event);
             }

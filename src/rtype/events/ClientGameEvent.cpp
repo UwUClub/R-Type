@@ -18,7 +18,7 @@ namespace RType {
         return _type;
     }
 
-    std::vector<float> ClientGameEvent::getPayload() const
+    const std::vector<float> &ClientGameEvent::getPayload() const
     {
         return _payload;
     }

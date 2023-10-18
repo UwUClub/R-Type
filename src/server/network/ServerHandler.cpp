@@ -119,7 +119,7 @@ namespace Network {
         }
     }
 
-    void ServerHandler::broadcast(int aType, std::vector<float> aPayload,
+    void ServerHandler::broadcast(int aType, std::vector<float> &aPayload,
                                   ECS::Core::SparseArray<Component::Connection> &aConnection)
     {
         for (auto &client : _clients) {
