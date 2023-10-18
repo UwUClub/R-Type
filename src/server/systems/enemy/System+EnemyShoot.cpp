@@ -36,8 +36,8 @@ namespace ECS {
                 aHitBox.insertAt(missileId, Component::HitBox {MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT});
 
                 // Send packet
-                server.broadcast(static_cast<int>(RType::ClientEventType::ENEMY_SHOOT),
-                                 {static_cast<float>(missileId), posX, posY}, aConnection);
+                std::vector<float> payload = {static_cast<float>(missileId), posX, posY};
+                server.broadcast(static_cast<int>(RType::ClientEventType::ENEMY_SHOOT), payload, aConnection);
             }
         }
     }

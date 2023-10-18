@@ -5,6 +5,7 @@
 #include <string>
 #include "EventManager.hpp"
 #include "Packets.hpp"
+#include <boost/archive/binary_iarchive.hpp>
 
 namespace Network {
 
@@ -34,6 +35,7 @@ namespace Network {
 
     void NetworkHandler::listen()
     {
+        _readBuffer = _readInbound.prepare(READ_BUFFER_SIZE);
         _socket.async_receive_from(boost::asio::buffer(_readBuffer), _readEndpoint,
                                    boost::bind(&NetworkHandler::handleRequest, this, boost::asio::placeholders::error,
                                                boost::asio::placeholders::bytes_transferred));
@@ -49,24 +51,28 @@ namespace Network {
         (void) aBytesTransferred;
 
         try {
-            RType::Packet packet;
-            RType::unserializePacket<std::array<char, READ_BUFFER_SIZE>>(&packet, _readBuffer);
-
-            if (packet.type == -1) { // receive aknowledgment
-                _onReceiveAknowledgment(packet.uuid, _readEndpoint);
-                if (_senders.find(packet.uuid) != _senders.end() && _senders[packet.uuid].first.joinable()) {
-                    _senders[packet.uuid].second = false;
-                    _senders[packet.uuid].first.join();
-                    _senders.erase(packet.uuid);
+            _readInbound.commit(aBytesTransferred);
+            std::istream archiveStream(&_readInbound);
+            if (archiveStream.peek() != EOF && archiveStream.peek() != 0) {
+                RType::Packet packet;
+                boost::archive::binary_iarchive archive(archiveStream);
+                archive >> packet;
+                if (packet.type == -1) { // receive aknowledgment
+                    _onReceiveAknowledgment(packet.uuid, _readEndpoint);
+                    if (_senders.find(packet.uuid) != _senders.end() && _senders[packet.uuid].first.joinable()) {
+                        _senders[packet.uuid].second = false;
+                        _senders[packet.uuid].first.join();
+                        _senders.erase(packet.uuid);
+                    }
+                } else {
+                    answerAknowledgment(packet.uuid, _readEndpoint);
+                    _onReceive(packet, _readEndpoint);
                 }
-            } else {
-                answerAknowledgment(packet.uuid, _readEndpoint);
-                _onReceive(packet, _readEndpoint);
             }
-            listen();
-        } catch (std::exception &e) {
-            std::cerr << "Packet unserialization error: " << e.what() << std::endl;
+        } catch (const std::exception &e) {
+            std::cout << "Unserialization error: " << e.what() << std::endl;
         }
+        listen();
     }
 
     void NetworkHandler::send(const RType::Packet &aPacket, udp::endpoint &aClientEndpoint)

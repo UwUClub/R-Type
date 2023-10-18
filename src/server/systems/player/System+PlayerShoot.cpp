@@ -53,8 +53,8 @@ namespace ECS {
                 aHitBox.insertAt(bulletId, Component::HitBox {BULLET_TEX_WIDTH, BULLET_TEX_HEIGHT});
 
                 // Send packet
-                server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_SHOOT),
-                                 {static_cast<float>(bulletId), posX, posY}, aConnection);
+                std::vector<float> payload = {static_cast<float>(bulletId), posX, posY};
+                server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_SHOOT), payload, aConnection);
 
                 // Delete event
                 eventManager->removeEvent(event);

@@ -105,7 +105,7 @@ namespace Network {
              * @param aPayload The payload to send
              * @param aConnections Connection components of clients
              */
-            void broadcast(int, std::vector<float>, ECS::Core::SparseArray<Component::Connection> &);
+            void broadcast(int, std::vector<float> &, ECS::Core::SparseArray<Component::Connection> &);
 
             /**
              * @brief Check if the server is full

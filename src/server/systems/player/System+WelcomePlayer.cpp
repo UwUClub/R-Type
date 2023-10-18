@@ -57,9 +57,8 @@ namespace ECS {
 
                 std::cout << "Welcome " << playerId << " !" << std::endl;
 
-                server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_SPAWN),
-                                 {static_cast<float>(playerId), 0, static_cast<float>(playerColor), 10, 10},
-                                 aConnection);
+                std::vector<float> payload = {static_cast<float>(playerId), 0, static_cast<float>(playerColor), 10, 10};
+                server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_SPAWN), payload, aConnection);
                 server.addClient(playerId, gameEvent.getClientEndpoint());
                 server.send(RType::Packet(static_cast<int>(RType::ClientEventType::PLAYER_SPAWN),
                                           {static_cast<float>(playerId), 1, static_cast<float>(playerColor), 10, 10}),

@@ -22,7 +22,6 @@ namespace ECS {
                 size_t playerId = gameEvent.getEntityId();
 
                 if (aConnection[playerId].has_value()) {
-                    std::cout << "Got aknowledgment from " << playerId << std::endl;
                     aConnection[playerId].value().status = Network::ConnectionStatus::CONNECTED;
                     aConnection[playerId].value().age = 0;
                 }
