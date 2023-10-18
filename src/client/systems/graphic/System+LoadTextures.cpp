@@ -1,11 +1,10 @@
-#include "SDLDisplayClass.hpp"
+#include "SFMLDisplayClass.hpp"
 #include "System.hpp"
-#include <SDL_image.h>
 
 namespace ECS {
     void System::loadTextures(Core::SparseArray<Component::LoadedSprite> &aSprites)
     {
-        SDLDisplayClass &display = SDLDisplayClass::getInstance();
+        SFMLDisplayClass &display = SFMLDisplayClass::getInstance();
 
         for (auto &aSprite : aSprites) {
             if (!aSprite.has_value() || aSprite.value().texture != nullptr) {

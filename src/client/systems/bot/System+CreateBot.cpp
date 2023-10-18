@@ -1,6 +1,7 @@
+#include <SFML/Graphics/Rect.hpp>
 #include "ClientGameEvent.hpp"
 #include "EventManager.hpp"
-#include "SDLDisplayClass.hpp"
+#include "SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 
@@ -8,7 +9,7 @@ namespace ECS {
     void System::createBot()
     {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
-        SDLDisplayClass &display = SDLDisplayClass::getInstance();
+        SFMLDisplayClass &display = SFMLDisplayClass::getInstance();
         auto events = eventManager->getEventsByType(Event::EventType::GAME);
 
         for (auto &event : events) {
@@ -35,10 +36,10 @@ namespace ECS {
                 std::cout << "Player with color " << color << " joined" << std::endl;
 
                 display.addEntity(ECS::Utils::Vector2f {posX, posY}, Component::Speed {PLAYER_SPEED}, entityType,
-                                  Component::LoadedSprite {
-                                      PLAYER_ASSET, nullptr,
-                                      new SDL_Rect {0, color * PLAYER_TEX_HEIGHT, PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT},
-                                      new SDL_Rect {0, 0, PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT}},
+                                  Component::LoadedSprite {PLAYER_ASSET, nullptr,
+                                                           new sf::IntRect {0, color * PLAYER_TEX_HEIGHT,
+                                                                            PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT},
+                                                           new sf::IntRect {0, 0, PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT}},
                                   Component::HitBox {PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT},
                                   Component::IsAlive {true, 0});
 

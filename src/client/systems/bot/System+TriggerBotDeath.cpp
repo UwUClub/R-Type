@@ -1,11 +1,10 @@
 #include "ClientGameEvent.hpp"
 #include "EventManager.hpp"
 #include "IsAlive.hpp"
-#include "SDLDisplayClass.hpp"
+#include "SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "TypeUtils.hpp"
 #include "Values.hpp"
-#include <SDL_image.h>
 
 namespace ECS {
     void System::triggerBotDeath(Core::SparseArray<Component::TypeEntity> &aType,
@@ -13,7 +12,7 @@ namespace ECS {
                                  Core::SparseArray<Component::LoadedSprite> &aSprites)
     {
         auto &world = Core::World::getInstance();
-        auto &display = SDLDisplayClass::getInstance();
+        auto &display = SFMLDisplayClass::getInstance();
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         auto events = eventManager->getEventsByType(Event::EventType::GAME);
 
@@ -52,10 +51,10 @@ namespace ECS {
             } else if (!aIsAlive[botId].value().isAlive && aIsAlive[botId].value().timeToDie == 0) {
                 aSprites[botId].value().path = EXPLOSION_ASSET;
                 aSprites[botId].value().texture = nullptr;
-                aSprites[botId].value().rect->h = EXPLOSION_TEX_HEIGHT;
-                aSprites[botId].value().rect->w = EXPLOSION_TEX_WIDTH;
-                aSprites[botId].value().rect->x = 146;
-                aSprites[botId].value().rect->y = 46;
+                aSprites[botId].value().rect->height = EXPLOSION_TEX_HEIGHT;
+                aSprites[botId].value().rect->width = EXPLOSION_TEX_WIDTH;
+                aSprites[botId].value().rect->left = 146;
+                aSprites[botId].value().rect->top = 46;
                 aIsAlive[botId].value().timeToDie = 1;
             } else if (!aIsAlive[botId].value().isAlive) {
                 aIsAlive[botId].value().timeToDie -= world.getDeltaTime();

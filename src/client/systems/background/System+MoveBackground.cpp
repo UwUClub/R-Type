@@ -1,4 +1,4 @@
-#include "SDLDisplayClass.hpp"
+#include "SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 #include "World.hpp"

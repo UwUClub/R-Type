@@ -1,5 +1,4 @@
 #include "NetworkHandler.hpp"
-#include <boost/asio.hpp>
 #include <boost/bind.hpp>
 #include <chrono>
 #include <iostream>

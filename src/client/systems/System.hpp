@@ -1,9 +1,16 @@
 #ifndef SYSTEM_HPP_
 #define SYSTEM_HPP_
 
+#include <SFML/Config.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/System.hpp>
+#include <SFML/Window/Event.hpp>
+#include <SFML/Window/Keyboard.hpp>
+#include <SFML/Window/Window.hpp>
 #include "Components.hpp"
 #include "IsAlive.hpp"
 #include "KeyboardEvent.hpp"
+#include "LoadedSprite.hpp"
 #include "SparseArray.hpp"
 #include "Utils.hpp"
 #include "WindowEvent.hpp"
@@ -226,21 +233,13 @@ namespace ECS {
              * @brief Map of all the SDL_Keycode and their equivalent in our ECS
              *
              */
-            static const inline std::unordered_map<SDL_Keycode, const ECS::Event::KeyIdentifier> _keyMap = {
-                {SDLK_ESCAPE, ECS::Event::KeyIdentifier::ESCAPE}, {SDLK_UP, ECS::Event::KeyIdentifier::UP},
-                {SDLK_DOWN, ECS::Event::KeyIdentifier::DOWN},     {SDLK_LEFT, ECS::Event::KeyIdentifier::LEFT},
-                {SDLK_RIGHT, ECS::Event::KeyIdentifier::RIGHT},   {SDLK_SPACE, ECS::Event::KeyIdentifier::SPACE},
-            };
-
-            /**
-             * @brief Map of all the SDL_WindowEvent and their equivalent in our ECS
-             *
-             */
-            static const inline std::unordered_map<Uint32, const ECS::Event::WindowEventType> _windowEventMap = {
-                {SDL_WINDOWEVENT_CLOSE, ECS::Event::WindowEventType::CLOSED},
-                {SDL_WINDOWEVENT_RESIZED, ECS::Event::WindowEventType::RESIZED},
-                {SDL_WINDOWEVENT_FOCUS_GAINED, ECS::Event::WindowEventType::FOCUSED},
-                {SDL_WINDOWEVENT_FOCUS_LOST, ECS::Event::WindowEventType::UNFOCUSED},
+            static const inline std::unordered_map<sf::Keyboard::Key, const ECS::Event::KeyIdentifier> _keyMap = {
+                {sf::Keyboard::Key::Escape, ECS::Event::KeyIdentifier::ESCAPE},
+                {sf::Keyboard::Key::Up, ECS::Event::KeyIdentifier::UP},
+                {sf::Keyboard::Key::Down, ECS::Event::KeyIdentifier::DOWN},
+                {sf::Keyboard::Key::Left, ECS::Event::KeyIdentifier::LEFT},
+                {sf::Keyboard::Key::Right, ECS::Event::KeyIdentifier::RIGHT},
+                {sf::Keyboard::Key::Space, ECS::Event::KeyIdentifier::SPACE},
             };
     };
 } // namespace ECS

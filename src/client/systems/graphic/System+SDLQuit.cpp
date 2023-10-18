@@ -1,5 +1,5 @@
 #include "EventManager.hpp"
-#include "SDLDisplayClass.hpp"
+#include "SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "WindowEvent.hpp"
 

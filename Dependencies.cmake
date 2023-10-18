@@ -8,7 +8,11 @@ function(R_Type_setup_dependencies)
 
   #find_package(Catch2 QUIET)
   set(BOOST_VERSION "1.83.0")
-  find_package(Boost ${BOOST_VERSION} QUIET)
+  set(BOOST_LIBS system serialization align assert config core static_assert throw_exception array bind chrono integer move mpl predef asio ratio type_traits typeof utility coroutine date_time function regex smart_ptr preprocessor io uuid)
+  # set no header
+  set(BOOST_INCLUDE_LIBRARIES ${BOOST_LIBS})
+  set(BUILD_SHARED_LIBS OFF)
+  set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
   #if(NOT TARGET Catch2::Catch2WithMain)
    # CPMAddPackage(
@@ -20,9 +24,8 @@ function(R_Type_setup_dependencies)
     #)
   #endif()
 
-  set(FETCHCONTENT_QUIET FALSE)
+    set(FETCHCONTENT_QUIET FALSE)
 
-  if (NOT TARGET Boost::boost)
     FetchContent_Declare(
         Boost
         URL https://github.com/boostorg/boost/releases/download/boost-${BOOST_VERSION}/boost-${BOOST_VERSION}.7z
@@ -33,41 +36,14 @@ function(R_Type_setup_dependencies)
     set(Boost_USE_STATIC_LIBS ON)
     set(Boost_USE_MULTITHREADED ON)
     set(Boost_USE_STATIC_RUNTIME OFF)
-    add_definitions(-DBOOST_USE_WINDOWS_H=0)
     FetchContent_MakeAvailable(Boost)
-  endif()
 
-  if (NOT TARGET SDL2)
-    FetchContent_Declare(
-            SDL2
-            GIT_REPOSITORY https://github.com/libsdl-org/SDL.git
-            GIT_TAG release-2.28.3
-            GIT_SHALLOW TRUE
-            GIT_PROGRESS TRUE
-            CMAKE_ARGS -DBUILD_SHARED_LIBS=OFF -DSDL_STATIC=ON
-    )
-  endif()
-  FetchContent_MakeAvailable(SDL2)
-  install(TARGETS SDL2-static
-          EXPORT SDL2Targets
-          RUNTIME DESTINATION bin
-          LIBRARY DESTINATION lib
-          ARCHIVE DESTINATION lib
-          INCLUDES DESTINATION include
-          PUBLIC_HEADER DESTINATION include
-          )
 
-  if (NOT TARGET SDL2_image::SDL2_image)
     FetchContent_Declare(
-            SDL2_image
-            GIT_REPOSITORY https://github.com/libsdl-org/SDL_image.git
-            GIT_TAG release-2.6.3
-            GIT_SHALLOW TRUE
-            GIT_PROGRESS TRUE
-            CMAKE_ARGS -DBUILD_SHARED_LIBS=OFF -DSDL_STATIC=ON
+        SFML
+        GIT_REPOSITORY https://github.com/SFML/SFML.git
+        GIT_TAG 2.6.0
     )
-    set(SDL2IMAGE_INSTALL OFF)
-    FetchContent_MakeAvailable(SDL2_image)
-  endif()
+    FetchContent_MakeAvailable(SFML)
 
 endfunction()
