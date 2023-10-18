@@ -4,20 +4,25 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
 target_sources(client PRIVATE
         main.cpp
-        SDLDisplayClass.cpp
+        SFMLDisplayClass.cpp
 )
 
 add_subdirectory(network)
 add_subdirectory(systems)
 
 target_link_libraries(client
-            PRIVATE
-            SDL2::SDL2main
-            SDL2::SDL2
-            SDL2_image
-            Threads::Threads
-            ecs
-            rtype
+    PRIVATE
+    sfml-graphics
+    sfml-window
+    sfml-system
+    Threads::Threads
+    ecs
+    rtype
+    ${Boost_LIBRARIES}
+    Boost::asio
+    Boost::serialization
+    Boost::serialization
+    Boost::uuid
 )
 
 target_include_directories(client PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

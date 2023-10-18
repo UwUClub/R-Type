@@ -18,11 +18,11 @@ namespace ECS {
                 continue;
             }
             if (!aIsAlive[playerId].value().isAlive) {
-                world.killEntity(playerId);
-                server.removeClient(playerId);
                 std::cout << "Player " << playerId << " killed" << std::endl;
                 server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_DEATH), {static_cast<float>(playerId)},
                                  aConnection);
+                server.removeClient(playerId);
+                world.killEntity(playerId);
             }
         }
     }

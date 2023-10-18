@@ -1,5 +1,3 @@
-find_package(SDL2 REQUIRED)
-
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
 target_sources(server PRIVATE
@@ -13,13 +11,12 @@ add_subdirectory(timers)
 target_link_libraries(server
         PRIVATE
         R_Type::R_Type_warnings
-        SDL2::SDL2main
-        SDL2::SDL2
-        SDL2_image
         ${Boost_LIBRARIES}
         Boost::asio
         Boost::serialization
+        Boost::uuid
         ecs
+        rtype
 )
 
 target_include_directories(server PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

@@ -1,6 +1,7 @@
+#include <SFML/Graphics/Rect.hpp>
 #include "ClientGameEvent.hpp"
 #include "EventManager.hpp"
-#include "SDLDisplayClass.hpp"
+#include "SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 
@@ -8,7 +9,7 @@ namespace ECS {
     void System::createEnemy()
     {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
-        SDLDisplayClass &display = SDLDisplayClass::getInstance();
+        SFMLDisplayClass &display = SFMLDisplayClass::getInstance();
         auto events = eventManager->getEventsByType(Event::EventType::GAME);
 
         for (auto &event : events) {
@@ -27,8 +28,8 @@ namespace ECS {
                     ECS::Utils::Vector2f {posX, posY}, Component::Speed {ENEMY_SPEED},
                     Component::TypeEntity {false, false, true, false, false, false, false, onlineEntityId},
                     Component::LoadedSprite {ENEMY_ASSET, nullptr,
-                                             new SDL_Rect {0, 0, ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT},
-                                             new SDL_Rect {0, 0, ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT}},
+                                             new sf::IntRect {0, 0, ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT},
+                                             new sf::IntRect {0, 0, ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT}},
                     Component::HitBox {ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT}, Component::IsAlive {true, 0});
 
                 eventManager->removeEvent(event);

@@ -1,4 +1,4 @@
-#include "SDLDisplayClass.hpp"
+#include "SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 #include "World.hpp"
@@ -8,7 +8,7 @@ namespace ECS {
                               Core::SparseArray<Component::TypeEntity> &aType)
     {
         auto &world = Core::World::getInstance();
-        auto &display = SDLDisplayClass::getInstance();
+        auto &display = SFMLDisplayClass::getInstance();
 
         for (size_t idx = 0; idx < aPos.size(); idx++) {
             if (!aPos[idx].has_value() || !aSpeed[idx].has_value() || !aType[idx].has_value()) {

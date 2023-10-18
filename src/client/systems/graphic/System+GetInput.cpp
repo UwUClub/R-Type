@@ -1,32 +1,33 @@
+#include <SFML/Window/Event.hpp>
+#include <SFML/Window/Keyboard.hpp>
 #include <functional>
 #include "EventManager.hpp"
 #include "KeyboardEvent.hpp"
-#include "SDLDisplayClass.hpp"
+#include "SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
+#include "World.hpp"
 #include <unordered_map>
 
 namespace ECS {
     void System::getInput()
     {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
-        SDL_Event event;
+        SFMLDisplayClass *display = &SFMLDisplayClass::getInstance();
+        sf::Event event;
 
-        while (SDL_PollEvent(&event) != 0) {
-            if (event.type == SDL_KEYDOWN && (_keyMap.find(event.key.keysym.sym) != _keyMap.end())) {
+        while (display->_window.pollEvent(event)) {
+            if (event.type == sf::Event::KeyPressed && (_keyMap.find(event.key.code) != _keyMap.end())) {
                 try {
-                    auto *keyEvent =
-                        new Event::KeyboardEvent(_keyMap.at(event.key.keysym.sym), Event::KeyState::PRESSED);
+                    auto *keyEvent = new Event::KeyboardEvent(_keyMap.at(event.key.code), Event::KeyState::PRESSED);
                     eventManager->pushEvent(keyEvent);
                 } catch (std::exception &e) {
                     std::cerr << e.what() << std::endl;
                 }
             }
-            if (event.type == SDL_WINDOWEVENT && (_windowEventMap.find(event.window.event) != _windowEventMap.end())) {
-                auto *windowEvent = new Event::WindowEvent(
-                    SCREEN_WIDTH, SCREEN_WIDTH, 0, 0, ECS::Event::WindowDisplayState::FULLSCREEN,
-                    ECS::Event::WindowFocusState::FOCUSED, _windowEventMap.at(event.window.event));
-                eventManager->pushEvent(windowEvent);
+            if (event.type == sf::Event::Closed) {
+                display->_window.close();
+                Core::World::getInstance().stop();
             }
         }
     }

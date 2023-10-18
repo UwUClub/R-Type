@@ -1,5 +1,4 @@
 #include "NetworkHandler.hpp"
-#include <boost/asio.hpp>
 #include <boost/bind.hpp>
 #include <chrono>
 #include <iostream>
@@ -40,7 +39,7 @@ namespace Network {
                                                boost::asio::placeholders::bytes_transferred));
 
         if (!_ioThread.joinable()) {
-            _ioThread = std::thread(boost::bind(&boost::asio::io_service::run, &_ioService));
+            _ioThread = boost::thread(boost::bind(&boost::asio::io_service::run, &_ioService));
         }
     }
 
@@ -49,21 +48,25 @@ namespace Network {
         (void) aError;
         (void) aBytesTransferred;
 
-        RType::Packet packet;
-        RType::unserializePacket<std::array<char, READ_BUFFER_SIZE>>(&packet, _readBuffer);
+        try {
+            RType::Packet packet;
+            RType::unserializePacket<std::array<char, READ_BUFFER_SIZE>>(&packet, _readBuffer);
 
-        if (packet.type == -1) { // receive aknowledgment
-            _onReceiveAknowledgment(packet.uuid, _readEndpoint);
-            if (_senders.find(packet.uuid) != _senders.end() && _senders[packet.uuid].first.joinable()) {
-                _senders[packet.uuid].second = false;
-                _senders[packet.uuid].first.join();
-                _senders.erase(packet.uuid);
+            if (packet.type == -1) { // receive aknowledgment
+                _onReceiveAknowledgment(packet.uuid, _readEndpoint);
+                if (_senders.find(packet.uuid) != _senders.end() && _senders[packet.uuid].first.joinable()) {
+                    _senders[packet.uuid].second = false;
+                    _senders[packet.uuid].first.join();
+                    _senders.erase(packet.uuid);
+                }
+            } else {
+                answerAknowledgment(packet.uuid, _readEndpoint);
+                _onReceive(packet, _readEndpoint);
             }
-        } else {
-            answerAknowledgment(packet.uuid, _readEndpoint);
-            _onReceive(packet, _readEndpoint);
+            listen();
+        } catch (std::exception &e) {
+            std::cerr << "Packet unserialization error: " << e.what() << std::endl;
         }
-        listen();
     }
 
     void NetworkHandler::send(const RType::Packet &aPacket, udp::endpoint &aClientEndpoint)

@@ -1,29 +1,9 @@
-find_package(Threads REQUIRED)
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
-
 target_sources(server PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/ServerHandler.hpp"
         "${CMAKE_CURRENT_SOURCE_DIR}/ServerHandler.cpp"
 )
 
-target_link_libraries(server
-        PRIVATE
-        R_Type::R_Type_warnings
-        ${Boost_LIBRARIES}
-        ecs
-        rtype
-        Boost::asio
-        Boost::serialization
-        Boost::uuid
-        Threads::Threads
-)
-
 target_include_directories(server PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${Boost_INCLUDE_DIRS}
-)
-
-set_target_properties(server PROPERTIES
-        RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
 )
