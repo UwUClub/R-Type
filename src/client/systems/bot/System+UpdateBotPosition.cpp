@@ -44,9 +44,7 @@ namespace ECS {
             posLocal.y = posY;
             toRemove.push_back(i);
         }
-        for (auto &idx : toRemove) {
-            eventManager->removeEvent<RType::ClientGameEvent>(idx);
-        }
+        eventManager->removeEvent<RType::ClientGameEvent>(toRemove);
     }
 
 } // namespace ECS

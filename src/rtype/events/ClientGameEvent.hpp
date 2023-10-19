@@ -37,6 +37,11 @@ namespace RType {
              */
             explicit ClientGameEvent(ClientEventType aType);
 
+            ClientGameEvent(const ClientGameEvent &gameEvent) = default;
+            ClientGameEvent(ClientGameEvent &&gameEvent) = default;
+            ClientGameEvent &operator=(const ClientGameEvent &gameEvent) = default;
+            ClientGameEvent &operator=(ClientGameEvent &&gameEvent) noexcept = default;
+
             /**
              * @brief Construct a new Game Event object
              * @param aType the type of the event

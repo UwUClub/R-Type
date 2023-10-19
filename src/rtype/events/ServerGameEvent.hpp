@@ -40,6 +40,11 @@ namespace RType {
             explicit ServerGameEvent(ServerEventType aType, int aEntityId, const std::vector<float> &aPayload,
                                      const udp::endpoint &aClientEndpoint);
 
+            ServerGameEvent(const ServerGameEvent &gameEvent) = default;
+            ServerGameEvent(ServerGameEvent &&gameEvent) = default;
+            ServerGameEvent &operator=(const ServerGameEvent &gameEvent) = default;
+            ServerGameEvent &operator=(ServerGameEvent &&gameEvent) noexcept = default;
+
             /**
              * @brief Get event type
              * @return EventType

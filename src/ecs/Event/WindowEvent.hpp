@@ -50,12 +50,17 @@ namespace ECS::Event {
                         const WindowDisplayState &aWindowState, const WindowFocusState &aWindowFocusState,
                         const WindowEventType &aWindowEventType);
 
+            WindowEvent(const WindowEvent &windowEvent) = default;
+            WindowEvent(WindowEvent &&windowEvent) = default;
+            WindowEvent &operator=(const WindowEvent &windowEvent) = default;
+            WindowEvent &operator=(WindowEvent &&windowEvent) noexcept = default;
+
             //-------------------ATTRIBUTES-------------------//
-            const WindowSize _size;                   /*!< The size of the window. */
-            const WindowPosition _position;           /*!< The position of the window. */
-            const WindowDisplayState _windowState;    /*!< Is the window fullscreen. */
-            const WindowFocusState _windowFocusState; /*!< Is the window focused. */
-            const WindowEventType _windowEventType;   /*!< The type of the window event. */
+            WindowSize _size;                   /*!< The size of the window. */
+            WindowPosition _position;           /*!< The position of the window. */
+            WindowDisplayState _windowState;    /*!< Is the window fullscreen. */
+            WindowFocusState _windowFocusState; /*!< Is the window focused. */
+            WindowEventType _windowEventType;   /*!< The type of the window event. */
     };
 } // namespace ECS::Event
 #endif // !

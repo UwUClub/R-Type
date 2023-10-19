@@ -47,9 +47,7 @@ namespace ECS {
             aIsAlive[localEnemyId].value().isAlive = false;
             toRemove.push_back(i);
         }
-        for (auto &idx : toRemove) {
-            eventManager->removeEvent<RType::ClientGameEvent>(idx);
-        }
+        eventManager->removeEvent<RType::ClientGameEvent>(toRemove);
 
         // Explosion + entity removal
         const auto typeSize = aType.size();
