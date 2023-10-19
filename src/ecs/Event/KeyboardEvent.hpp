@@ -127,13 +127,21 @@ namespace ECS::Event {
                           const bool &aIsCtrlPressed = false, const bool &aIsAltPressed = false,
                           const bool &aIsSystemPressed = false);
 
+            KeyboardEvent(const KeyboardEvent &keyboardEvent) = default;
+            KeyboardEvent(KeyboardEvent &&keyboardEvent) = default;
+            KeyboardEvent &operator=(const KeyboardEvent &keyboardEvent) = default;
+
+            KeyboardEvent &operator=(KeyboardEvent &&keyboardEvent) noexcept = default;
+
+            ~KeyboardEvent() = default;
+
             // -------------------ATTRIBUTES-------------------//
-            const KeyIdentifier _keyId;
-            const KeyState _state;
-            const bool _isShiftPressed;
-            const bool _isCtrlPressed;
-            const bool _isAltPressed;
-            const bool _isSystemPressed;
+            KeyIdentifier _keyId;
+            KeyState _state;
+            bool _isShiftPressed;
+            bool _isCtrlPressed;
+            bool _isAltPressed;
+            bool _isSystemPressed;
     };
 } // namespace ECS::Event
 

@@ -2,6 +2,7 @@
 #define EVENTMANAGER_HPP
 
 #include <any>
+#include <cstddef>
 #include <functional>
 #include <memory>
 #include <queue>
@@ -245,6 +246,33 @@ namespace ECS::Event {
                     auto &handler = getHandler<Event>();
 
                     handler.removeEvent(aIndex);
+                } catch (const std::bad_any_cast &e) {
+                    throw EventManagerException("Can't remove event");
+                }
+            }
+
+            /**
+             * @brief Remove an event from the queue
+             * @param aIndexes The indexes of the event to remove.
+             * @tparam Event The type of the event.
+             *
+             */
+            template<typename Event>
+            void removeEvent(std::vector<size_t> aIndexes)
+            {
+                auto eventIndex = std::type_index(typeid(Event));
+
+                if (_eventsHandler.find(eventIndex) == _eventsHandler.end()) {
+                    return;
+                }
+                try {
+                    auto &handler = getHandler<Event>();
+
+                    for (size_t i = 0; i < aIndexes.size(); i++) {
+                        size_t idx = aIndexes[i] - i;
+
+                        handler.removeEvent(idx);
+                    }
                 } catch (const std::bad_any_cast &e) {
                     throw EventManagerException("Can't remove event");
                 }

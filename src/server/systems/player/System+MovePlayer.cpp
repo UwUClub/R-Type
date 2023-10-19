@@ -80,8 +80,6 @@ namespace ECS {
             network.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_POSITION), payload, aConnection);
             toRemove.push_back(i);
         }
-        for (auto &idx : toRemove) {
-            eventManager->removeEvent<RType::ServerGameEvent>(idx);
-        }
+        eventManager->removeEvent<RType::ClientGameEvent>(toRemove);
     }
 } // namespace ECS

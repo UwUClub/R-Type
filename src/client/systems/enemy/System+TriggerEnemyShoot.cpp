@@ -47,8 +47,6 @@ namespace ECS {
                 Component::HitBox {MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT}, Component::IsAlive {false, 0});
             toRemove.push_back(i);
         }
-        for (auto &idx : toRemove) {
-            eventManager->removeEvent<RType::ClientGameEvent>(idx);
-        }
+        eventManager->removeEvent<RType::ClientGameEvent>(toRemove);
     }
 } // namespace ECS
