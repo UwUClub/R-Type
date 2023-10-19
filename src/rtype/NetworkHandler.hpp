@@ -41,10 +41,18 @@ namespace Network {
 
             /**
              * @brief Handle a request from a client
+             *
              * @param aError The error code
              * @param aBytesTransferred The number of bytes transferred
              */
-            void handleRequest(const boost::system::error_code &, std::size_t);
+            void tryHandleRequest(const boost::system::error_code &, std::size_t);
+
+            /**
+             * @brief Handle a request from a client
+             *
+             * @param aBytesTransferred The number of bytes transferred
+             */
+            void handleRequest(std::size_t);
 
         public:
             /**
