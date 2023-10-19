@@ -33,6 +33,6 @@ namespace ECS {
             server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_DISCONNECTION), payload, aConnection);
             toRemove.push_back(i);
         }
-        eventManager->removeEvent<RType::ClientGameEvent>(toRemove);
+        eventManager->removeEvent<RType::ServerGameEvent>(toRemove);
     }
 } // namespace ECS
