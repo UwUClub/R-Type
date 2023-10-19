@@ -90,6 +90,6 @@ namespace ECS {
             }
             toRemove.push_back(i);
         }
-        eventManager->removeEvent<RType::ClientGameEvent>(toRemove);
+        eventManager->removeEvent<RType::ServerGameEvent>(toRemove);
     }
 } // namespace ECS
