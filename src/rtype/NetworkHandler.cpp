@@ -67,7 +67,6 @@ namespace Network {
         std::istream is(&_readInbound);
         RType::Packet packet;
 
-        std::cout << "Received packet of size " << _readInbound.size() << std::endl;
         if (_readInbound.size() < 40) {
             return;
         }
@@ -94,8 +93,6 @@ namespace Network {
             is.read(reinterpret_cast<char *>(&i), sizeof(float));
             packet.payload.push_back(i);
         }
-        std::cout << "received packet " << packet.uuid << " " << packet.type << " " << packet.payload.size()
-                  << std::endl;
 
         if (packet.type == -1) { // receive aknowledgment
             _onReceiveAknowledgment(packet.uuid, _readEndpoint);
