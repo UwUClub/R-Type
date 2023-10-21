@@ -63,7 +63,7 @@ namespace Network {
              * @param aClientId The id of the client
              * @param aEndpoint The endpoint of the client
              */
-            void addClient(size_t, udp::endpoint);
+            void addClient(size_t, const udp::endpoint &);
 
             /**
              * @brief Get the client color

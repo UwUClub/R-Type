@@ -8,14 +8,20 @@ namespace ECS {
                                 Core::SparseArray<Component::TypeEntity> &aType)
     {
         auto deltaTime = Core::World::getInstance().getDeltaTime();
+        const auto size = aType.size();
 
-        for (size_t i = 0; i < aType.size(); i++) {
-            if (!aType[i].has_value() || !aType[i].value().isBackground) {
+        for (size_t i = 0; i < size; i++) {
+            if (!aType[i].has_value() || !aType[i].value().isBackground || !aPos[i].has_value()
+                || !aSpeed[i].has_value()) {
                 continue;
             }
-            aPos[i].value().x -= aSpeed[i].value().speed * deltaTime;
-            if (aPos[i].value().x <= -SCREEN_WIDTH) {
-                aPos[i].value().x = SCREEN_WIDTH;
+
+            auto &pos = aPos[i].value();
+            auto &speed = aSpeed[i].value().speed;
+
+            pos.x -= speed * deltaTime;
+            if (pos.x <= -SCREEN_WIDTH) {
+                pos.x = SCREEN_WIDTH;
             }
         }
     }

@@ -110,7 +110,7 @@ namespace Network {
         }
     }
 
-    void NetworkHandler::send(const RType::Packet &aPacket, udp::endpoint &aClientEndpoint)
+    void NetworkHandler::send(const RType::Packet &aPacket, const udp::endpoint &aClientEndpoint)
     {
         boost::asio::streambuf buf;
         std::ostream os(&buf);

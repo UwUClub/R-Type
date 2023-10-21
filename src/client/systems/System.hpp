@@ -81,12 +81,6 @@ namespace ECS {
             static void getInput();
 
             /**
-             * @brief Close the SDL window (locally)
-             *
-             */
-            static void quitSDL();
-
-            /**
              * @brief Load all the textures of the game (locally)
              *
              * @param aSprites SparseArray of all the entities sprites
@@ -192,12 +186,10 @@ namespace ECS {
              *
              * @param aPos SparseArray of all entities position
              * @param aType SparseArray of all entities type
-             * @param aIsAlive SparseArray of all entities isAlive component
              * @param HitBox SparseArray of all entities hitbox component
              */
             static void botHit(Core::SparseArray<Utils::Vector2f> &aPos,
                                Core::SparseArray<Component::TypeEntity> &aType,
-                               Core::SparseArray<Component::IsAlive> &aIsAlive,
                                Core::SparseArray<Component::HitBox> &HitBox);
 
             /**

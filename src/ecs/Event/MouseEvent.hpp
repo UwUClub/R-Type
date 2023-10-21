@@ -1,7 +1,6 @@
 #ifndef MOUSEEVENT_HPP
 #define MOUSEEVENT_HPP
 
-#include "Event.hpp"
 #include "Utils.hpp"
 
 namespace ECS::Event {
@@ -24,7 +23,7 @@ namespace ECS::Event {
     /**
      * @brief Mouse event class is the base class of all mouse events
      */
-    class MouseEvent : public Event
+    class MouseEvent
     {
         public:
             //-------------------CONSTRUCTORS / DESTRUCTOR-------------------//
@@ -44,14 +43,19 @@ namespace ECS::Event {
                        const bool &aIsMoving = false, const bool &aIsAltPressed = false,
                        const bool &aIsShiftPressed = false, const bool &aIsCtrlPressed = false);
 
+            MouseEvent(const MouseEvent &mouseEvent) = default;
+            MouseEvent(MouseEvent &&mouseEvent) = default;
+            MouseEvent &operator=(const MouseEvent &mouseEvent) = default;
+            MouseEvent &operator=(MouseEvent &&mouseEvent) noexcept = default;
+
             //-------------------ATTRIBUTES-------------------//
-            const MousePosition _position; /*!< The position of the mouse. */
-            const MouseButton _button;     /*!< The mouse button. */
-            const MouseState _state;       /*!< The mouse button state. */
-            bool _isMoving;                /*!< Is the mouse moving. */
-            bool _isAltPressed;            /*!< Is the left alt key pressed. */
-            bool _isShiftPressed;          /*!< Is the left shift key pressed. */
-            bool _isCtrlPressed;           /*!< Is the left ctrl key pressed. */
+            MousePosition _position; /*!< The position of the mouse. */
+            MouseButton _button;     /*!< The mouse button. */
+            MouseState _state;       /*!< The mouse button state. */
+            bool _isMoving;          /*!< Is the mouse moving. */
+            bool _isAltPressed;      /*!< Is the left alt key pressed. */
+            bool _isShiftPressed;    /*!< Is the left shift key pressed. */
+            bool _isCtrlPressed;     /*!< Is the left ctrl key pressed. */
     };
 } // namespace ECS::Event
 
