@@ -22,20 +22,13 @@ namespace Network {
         }
 
         network.onReceive([this](const RType::Packet &aPacket, udp::endpoint &aClientEndpoint) {
-            receivePacket(aPacket, aClientEndpoint);
-        });
-
-        network.onReceiveAknowledgment([this](const std::string &aUuid, udp::endpoint &aClientEndpoint) {
-            (void) aUuid;
-            auto client = std::find_if(_clients.begin(), _clients.end(),
-                                       [aClientEndpoint](const std::pair<size_t, udp::endpoint> &aPair) {
-                                           return aPair.second == aClientEndpoint;
-                                       });
-            if (client == _clients.end()) {
-                return;
+            if (aPacket.type == -1) {
+                receiveAknowledgment(aClientEndpoint);
+            } else if (aPacket.type >= 0) {
+                receivePacket(aPacket, aClientEndpoint);
+            } else {
+                // TODO: receiveError
             }
-            ECS::Event::EventManager::getInstance()->pushEvent<RType::ServerGameEvent>(
-                RType::ServerGameEvent(RType::ServerEventType::AKNOWLEDGMENT, client->first, {}, aClientEndpoint));
         });
 
         network.start(endpoint.protocol());
@@ -43,7 +36,7 @@ namespace Network {
         std::cout << "Server " << endpoint << " listening" << std::endl;
     }
 
-    void ServerHandler::receivePacket(const RType::Packet &aPacket, udp::endpoint &aClientEndpoint)
+    void ServerHandler::receivePacket(const RType::Packet &aPacket, const udp::endpoint &aClientEndpoint)
     {
         auto client = std::find_if(_clients.begin(), _clients.end(),
                                    [aClientEndpoint](const std::pair<size_t, udp::endpoint> &aPair) {
@@ -63,6 +56,19 @@ namespace Network {
             ECS::Event::EventManager::getInstance()->pushEvent<RType::ServerGameEvent>(
                 RType::ServerGameEvent(packetType, idx, aPacket.payload, aClientEndpoint));
         }
+    }
+
+    void ServerHandler::receiveAknowledgment(const udp::endpoint &aClientEndpoint)
+    {
+        auto client = std::find_if(_clients.begin(), _clients.end(),
+                                   [aClientEndpoint](const std::pair<size_t, udp::endpoint> &aPair) {
+                                       return aPair.second == aClientEndpoint;
+                                   });
+        if (client == _clients.end()) {
+            return;
+        }
+        ECS::Event::EventManager::getInstance()->pushEvent<RType::ServerGameEvent>(
+            RType::ServerGameEvent(RType::ServerEventType::AKNOWLEDGMENT, client->first, {}, aClientEndpoint));
     }
 
     void ServerHandler::addClient(size_t aClientId, const udp::endpoint &aEndpoint)

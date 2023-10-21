@@ -29,7 +29,6 @@ namespace Network {
 
             udp::endpoint _readEndpoint;
             std::function<void(const RType::Packet &, udp::endpoint &)> _onReceive;
-            std::function<void(const std::string, udp::endpoint &)> _onReceiveAknowledgment;
             boost::thread _ioThread;
 
             std::unordered_map<std::string, Sender> _senders;
@@ -87,12 +86,6 @@ namespace Network {
              * @param aOnReceive The callback to set
              */
             void onReceive(std::function<void(const RType::Packet &, udp::endpoint &)>);
-
-            /**
-             * @brief Set the on receive aknowledgment callback
-             * @param aOnReceiveAlnowledgment The callback to set
-             */
-            void onReceiveAknowledgment(std::function<void(const std::string &, udp::endpoint &)>);
 
             /**
              * @brief Listen to clients

@@ -25,13 +25,12 @@ namespace Network {
             (void) aEndpoint;
 
             if (aEndpoint == _serverEndpoint) {
-                receivePacket(aPacket);
+                if (aPacket.type >= 0) {
+                    receivePacket(aPacket);
+                } else if (aPacket.type < -1) {
+                    // TODO: receiveError
+                }
             }
-        });
-
-        network.onReceiveAknowledgment([this](const std::string &aUuid, udp::endpoint &aEndpoint) {
-            (void) aUuid;
-            (void) aEndpoint;
         });
 
         network.start(udp::v4());

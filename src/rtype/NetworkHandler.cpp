@@ -29,12 +29,6 @@ namespace Network {
         _onReceive = aOnReceive;
     }
 
-    void NetworkHandler::onReceiveAknowledgment(
-        std::function<void(const std::string &, udp::endpoint &)> aOnReceiveAknowledgment)
-    {
-        _onReceiveAknowledgment = aOnReceiveAknowledgment;
-    }
-
     void NetworkHandler::listen()
     {
         _readBuffer = _readInbound.prepare(READ_BUFFER_SIZE);
@@ -95,17 +89,16 @@ namespace Network {
         }
 
         if (packet.type == -1) { // receive aknowledgment
-            _onReceiveAknowledgment(packet.uuid, _readEndpoint);
             if (_senders.find(packet.uuid) != _senders.end() && _senders[packet.uuid].first.joinable()) {
                 _senders[packet.uuid].second = false;
                 _senders[packet.uuid].first.join();
                 _senders.erase(packet.uuid);
             }
-        } else {
+        } else if (packet.type >= 0) { // send aknowledgment
             RType::Packet aknowledgment(packet.uuid);
             send(aknowledgment, _readEndpoint);
-            _onReceive(packet, _readEndpoint);
         }
+        _onReceive(packet, _readEndpoint);
     }
 
     void NetworkHandler::send(const RType::Packet &aPacket, const udp::endpoint &aClientEndpoint)
