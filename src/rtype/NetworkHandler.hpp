@@ -107,13 +107,6 @@ namespace Network {
             void send(const RType::Packet &, const udp::endpoint &);
 
             /**
-             * @brief Answer to a sender as the packet has been received
-             * @param aPacketUuid The uuid of the packet
-             * @param aEndpoint The endpoint of the sender
-             */
-            void answerAknowledgment(const std::string &, udp::endpoint &);
-
-            /**
              * @brief Get the io service
              */
             boost::asio::io_service &getIoService();

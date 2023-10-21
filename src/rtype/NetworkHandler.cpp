@@ -102,7 +102,8 @@ namespace Network {
                 _senders.erase(packet.uuid);
             }
         } else {
-            answerAknowledgment(packet.uuid, _readEndpoint);
+            RType::Packet aknowledgment(packet.uuid);
+            send(aknowledgment, _readEndpoint);
             _onReceive(packet, _readEndpoint);
         }
     }
@@ -134,17 +135,6 @@ namespace Network {
         //         std::cerr << "NetworkHandler send error: " << e.what() << std::endl;
         //     }
         // });
-    }
-
-    void NetworkHandler::answerAknowledgment(const std::string &aPacketUuid, udp::endpoint &aEndpoint)
-    {
-        try {
-            boost::asio::streambuf buf;
-            RType::Packet packet(aPacketUuid);
-            _socket.send_to(buf.data(), aEndpoint);
-        } catch (std::exception &e) {
-            std::cerr << "NetworkHandler send error: " << e.what() << std::endl;
-        }
     }
 
     boost::asio::io_service &NetworkHandler::getIoService()
