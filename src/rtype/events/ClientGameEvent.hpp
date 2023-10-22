@@ -6,7 +6,7 @@
 
 namespace RType {
 
-    enum class ClientEventType
+    enum ClientEventType
     {
         PLAYER_SPAWN = 0,
         PLAYER_DISCONNECTION = 1,
@@ -18,6 +18,7 @@ namespace RType {
         ENEMY_DEATH = 7,
         ENEMY_SHOOT = 8,
         SERVER_FULL = 9,
+        MAX_CLI_EVT = 10
     };
 
     /**

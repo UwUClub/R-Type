@@ -12,6 +12,8 @@
 //------------------ NETWORK ------------------//
 const constexpr unsigned short READ_BUFFER_SIZE = 1024;
 const constexpr float PACKET_TIMEOUT = 2.0F; // in seconds
+const constexpr int AKNOWLEDGMENT_PACKET_TYPE = -1;
+const constexpr int ERROR_PACKET_TYPE = -2;
 
 // ------------------ DISPLAY ------------------ //
 const constexpr int SCREEN_WIDTH = 1920;

@@ -6,6 +6,7 @@
 #include "NetworkHandler.hpp"
 #include "Packets.hpp"
 #include "PlayerColor.hpp"
+#include "ServerGameEvent.hpp"
 #include "Values.hpp"
 
 namespace Network {
@@ -22,9 +23,9 @@ namespace Network {
         }
 
         network.onReceive([this](const RType::Packet &aPacket, udp::endpoint &aClientEndpoint) {
-            if (aPacket.type == -1) {
+            if (aPacket.type == AKNOWLEDGMENT_PACKET_TYPE) {
                 receiveAknowledgment(aClientEndpoint);
-            } else if (aPacket.type >= 0) {
+            } else if (aPacket.type >= 0 && aPacket.type < RType::ServerEventType::MAX_SRV_EVT) {
                 receivePacket(aPacket, aClientEndpoint);
             } else {
                 // TODO: receiveError

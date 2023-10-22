@@ -7,14 +7,15 @@ namespace RType {
 
     using boost::asio::ip::udp;
 
-    enum class ServerEventType
+    enum ServerEventType
     {
+        AKNOWLEDGMENT = -1,
         CONNECT = 0,
         DISCONNECT = 1,
-        AKNOWLEDGMENT = 2,
-        MOVE = 3,
-        SHOOT = 4,
-        BONUS = 5,
+        MOVE = 2,
+        SHOOT = 3,
+        BONUS = 4,
+        MAX_SRV_EVT = 5
     };
 
     /**

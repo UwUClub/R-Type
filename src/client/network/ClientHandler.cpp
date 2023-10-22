@@ -7,6 +7,7 @@
 #include "EventManager.hpp"
 #include "NetworkHandler.hpp"
 #include "Packets.hpp"
+#include "Values.hpp"
 
 namespace Network {
 
@@ -25,9 +26,9 @@ namespace Network {
             (void) aEndpoint;
 
             if (aEndpoint == _serverEndpoint) {
-                if (aPacket.type >= 0) {
+                if (aPacket.type >= 0 && aPacket.type < RType::ClientEventType::MAX_CLI_EVT) {
                     receivePacket(aPacket);
-                } else if (aPacket.type < -1) {
+                } else if (aPacket.type != AKNOWLEDGMENT_PACKET_TYPE) {
                     // TODO: receiveError
                 }
             }
