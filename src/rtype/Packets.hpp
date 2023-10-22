@@ -37,18 +37,17 @@ namespace RType {
                   payload(aPayload)
             {}
 
-            Packet(const std::string &aUuid) // answer aknowledgment
+            Packet(std::string &aUuid, int aType)
                 : uuid(aUuid),
-                  type(-1),
-                  payload()
+                  type(aType)
             {}
 
             template<typename archive>
             void serialize(archive &ar, const unsigned int /*version*/)
             {
-                ar &uuid;
-                ar &type;
-                ar &payload;
+                ar & uuid;
+                ar & type;
+                ar & payload;
             }
     };
 

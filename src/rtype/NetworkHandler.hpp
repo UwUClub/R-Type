@@ -95,7 +95,7 @@ namespace Network {
             /**
              * @brief Send a message to the server
              * @param aPacket The packet to send
-             * @param aClientEndpoint The id of the client to send the message to
+             * @param aEndpoint The id of the client to send the message to
              */
             void send(const RType::Packet &, const udp::endpoint &);
 

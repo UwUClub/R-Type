@@ -25,10 +25,13 @@ namespace Network {
         network.onReceive([this](const RType::Packet &aPacket, udp::endpoint &aClientEndpoint) {
             if (aPacket.type == AKNOWLEDGMENT_PACKET_TYPE) {
                 receiveAknowledgment(aClientEndpoint);
+            } else if (aPacket.type == ERROR_PACKET_TYPE) {
+                // receive error packet
             } else if (aPacket.type >= 0 && aPacket.type < RType::ServerEventType::MAX_SRV_EVT) {
                 receivePacket(aPacket, aClientEndpoint);
             } else {
-                // TODO: receiveError
+                NetworkHandler &network = NetworkHandler::getInstance();
+                network.send(RType::Packet(ERROR_PACKET_TYPE), aClientEndpoint);
             }
         });
 
@@ -43,20 +46,14 @@ namespace Network {
                                    [aClientEndpoint](const std::pair<size_t, udp::endpoint> &aPair) {
                                        return aPair.second == aClientEndpoint;
                                    });
-
         auto packetType = static_cast<RType::ServerEventType>(aPacket.type);
 
-        if (client == _clients.end() && packetType == RType::ServerEventType::CONNECT && _clients.size() < 4) {
-            std::cout << "New client connected" << std::endl;
-            ECS::Event::EventManager::getInstance()->pushEvent<RType::ServerGameEvent>(
-                RType::ServerGameEvent(RType::ServerEventType::CONNECT, 0, aPacket.payload, aClientEndpoint));
+        int entityId = -1;
+        if (client != _clients.end()) {
+            entityId = client->first;
         }
-        if (client != _clients.end() && packetType != RType::ServerEventType::CONNECT) {
-            size_t idx = client->first;
-
-            ECS::Event::EventManager::getInstance()->pushEvent<RType::ServerGameEvent>(
-                RType::ServerGameEvent(packetType, idx, aPacket.payload, aClientEndpoint));
-        }
+        ECS::Event::EventManager::getInstance()->pushEvent<RType::ServerGameEvent>(
+            RType::ServerGameEvent(packetType, entityId, aPacket.payload, aClientEndpoint));
     }
 
     void ServerHandler::receiveAknowledgment(const udp::endpoint &aClientEndpoint)
