@@ -28,14 +28,14 @@ namespace ECS {
 
             const auto &payloadReceived = gameEvent.getPayload();
             // Check payload size
-            if (payloadReceived.size() != 3) {
+            if (payloadReceived.size() != 2) {
                 toRemove.push_back(i);
                 network.send(RType::Packet(ERROR_PACKET_TYPE), gameEvent.getClientEndpoint());
                 continue;
             }
 
             // Get and check entity ID
-            auto entityId = static_cast<size_t>(payloadReceived[0]);
+            auto entityId = gameEvent.getEntityId();
 
             if (entityId < 0 || entityId >= aPos.size() || !aPos[entityId].has_value()
                 || !aSpeed[entityId].has_value()) {
@@ -45,8 +45,8 @@ namespace ECS {
             }
 
             // Get and check move values
-            float moveY = payloadReceived[2];
-            float moveX = payloadReceived[1];
+            float moveX = payloadReceived[0];
+            float moveY = payloadReceived[1];
 
             if (moveX < -1 || moveX > 1 || moveY < -1 || moveY > 1) {
                 toRemove.push_back(i);
