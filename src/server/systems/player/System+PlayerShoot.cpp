@@ -17,6 +17,7 @@ namespace ECS {
     {
         auto &world = Core::World::getInstance();
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
+        Network::NetworkHandler &network = Network::NetworkHandler::getInstance();
         Network::ServerHandler &server = Network::ServerHandler::getInstance();
         auto &events = eventManager->getEventsByType<RType::ServerGameEvent>();
         const auto size = events.size();
@@ -26,6 +27,7 @@ namespace ECS {
             auto &gameEvent = events[i];
 
             if (gameEvent.getType() != RType::ServerEventType::SHOOT) {
+                network.send(RType::Packet(ERROR_PACKET_TYPE), gameEvent.getClientEndpoint());
                 continue;
             }
 
@@ -33,6 +35,7 @@ namespace ECS {
 
             if (payloadReceived.size() != 1) {
                 toRemove.push_back(i);
+                network.send(RType::Packet(ERROR_PACKET_TYPE), gameEvent.getClientEndpoint());
                 continue;
             }
 
@@ -40,10 +43,12 @@ namespace ECS {
 
             if (playerId < 0 || playerId >= aPos.size()) {
                 toRemove.push_back(i);
+                network.send(RType::Packet(ERROR_PACKET_TYPE), gameEvent.getClientEndpoint());
                 continue;
             }
             if (!aPos[playerId].has_value()) {
                 toRemove.push_back(i);
+                network.send(RType::Packet(ERROR_PACKET_TYPE), gameEvent.getClientEndpoint());
                 continue;
             }
 

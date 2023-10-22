@@ -51,7 +51,6 @@ namespace Network {
             handleRequest(aBytesTransferred);
         } catch (const std::exception &e) {
             send(RType::Packet(ERROR_PACKET_TYPE), _readEndpoint);
-            // std::cout << "Unserialization error: " << e.what() << std::endl;
         }
         _readInbound.consume(_readInbound.size());
         listen();
