@@ -45,9 +45,9 @@ namespace RType {
             template<typename archive>
             void serialize(archive &ar, const unsigned int /*version*/)
             {
-                ar & uuid;
-                ar & type;
-                ar & payload;
+                ar &uuid;
+                ar &type;
+                ar &payload;
             }
     };
 
