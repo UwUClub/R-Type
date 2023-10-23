@@ -8,13 +8,15 @@
 #include "SFMLDisplayClass.hpp"
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Texture.hpp>
+#include <SFML/Window/Event.hpp>
+#include <SFML/Window/Keyboard.hpp>
+#include <functional>
+#include "EventManager.hpp"
+#include "KeyboardEvent.hpp"
 #include <algorithm>
-#include "IsAlive.hpp"
-#include "LoadedSprite.hpp"
-#include "SparseArray.hpp"
-#include "Utils.hpp"
-#include "Values.hpp"
+#include <iostream>
 #include "World.hpp"
+#include "LoadedSprite.hpp"
 #if defined(__linux__)
     #include <libgen.h>
     #include <limits.h>
@@ -23,7 +25,7 @@
 
 SFMLDisplayClass::SFMLDisplayClass()
 {
-    _window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "R-Type");
+    _window.create(sf::VideoMode(1920, 1080), "R-Type");
     /*if (_window == nullptr) {
         std::cout << "Failed to create SFML window: " << std::endl;
         return;
@@ -45,28 +47,6 @@ SFMLDisplayClass::SFMLDisplayClass()
 #else
     _assetPath = "./";
 #endif
-}
-
-size_t SFMLDisplayClass::addEntity(ECS::Utils::Vector2f aPos, Component::Speed aSpeed, Component::TypeEntity aType,
-                                   Component::LoadedSprite aSprite, Component::HitBox aHitBox,
-                                   Component::IsAlive aIsAlive)
-{
-    ECS::Core::World &world = ECS::Core::World::getInstance();
-    auto &vec = world.getComponent<ECS::Utils::Vector2f>();
-    auto &spd = world.getComponent<Component::Speed>();
-    auto &type = world.getComponent<Component::TypeEntity>();
-    auto &sprite = world.getComponent<Component::LoadedSprite>();
-    auto &hitbox = world.getComponent<Component::HitBox>();
-    auto &isAlive = world.getComponent<Component::IsAlive>();
-    const size_t idx = world.createEntity();
-
-    vec.insertAt(idx, aPos);
-    spd.insertAt(idx, aSpeed);
-    type.insertAt(idx, aType);
-    sprite.insertAt(idx, aSprite);
-    hitbox.insertAt(idx, aHitBox);
-    isAlive.insertAt(idx, aIsAlive);
-    return idx;
 }
 
 sf::Texture *SFMLDisplayClass::getTexture(const std::string &aPath)
@@ -98,6 +78,29 @@ void SFMLDisplayClass::freeRects(const std::size_t &aIdx)
     delete sprites[aIdx]->rect;
     delete sprites[aIdx]->srcRect;
 }
+
+void SFMLDisplayClass::getInput()
+{
+    Event::EventManager *eventManager = Event::EventManager::getInstance();
+    SFMLDisplayClass *display = &SFMLDisplayClass::getInstance();
+    sf::Event event;
+
+    while (display->_window.pollEvent(event)) {
+        if (event.type == sf::Event::KeyPressed && (_keyMap.find(event.key.code) != _keyMap.end())) {
+            try {
+                auto *keyEvent = new Event::KeyboardEvent(_keyMap.at(event.key.code), Event::KeyState::PRESSED);
+                eventManager->pushEvent(keyEvent);
+            } catch (std::exception &e) {
+                std::cerr << e.what() << std::endl;
+            }
+        }
+        if (event.type == sf::Event::Closed) {
+            display->_window.close();
+            Core::World::getInstance().stop();
+        }
+    }
+}
+
 
 SFMLDisplayClass::~SFMLDisplayClass()
 {

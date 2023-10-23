@@ -14,12 +14,7 @@
 #include <SFML/Window/Window.hpp>
 #include <cstddef>
 #include <string>
-#include "Components.hpp"
-#include "KeyboardEvent.hpp"
 #include "LoadedSprite.hpp"
-#include "MouseEvent.hpp"
-#include "Utils.hpp"
-#include "WindowEvent.hpp"
 #include <unordered_map>
 
 class SFMLDisplayClass
@@ -57,20 +52,8 @@ class SFMLDisplayClass
          */
         void freeRects(const std::size_t &idx);
 
-        /**
-         * @brief Create a new entity object
-         *
-         * @param aPos Position of the entity
-         * @param aSpeed Speed of the entity
-         * @param aType Type of the entity
-         * @param aSprite Sprite of the entity
-         * @param aHitBox Hitbox of the entity
-         * @param aIsAlive IsAlive of the entity
-         * @return size_t The index of the entity
-         */
-        static size_t addEntity(ECS::Utils::Vector2f aPos, Component::Speed aSpeed, Component::TypeEntity aType,
-                                Component::LoadedSprite aSprite, Component::HitBox aHitBox,
-                                Component::IsAlive aIsAlive);
+        void getInput();
+
         sf::RenderWindow _window;
         std::string _assetPath;
 

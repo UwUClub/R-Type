@@ -4,6 +4,7 @@
 #include "SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
+#include "AddEntity.hpp"
 
 namespace ECS {
     void System::createEnemy()
@@ -24,7 +25,7 @@ namespace ECS {
                 float posX = gameEvent.getPayload()[1];
                 float posY = gameEvent.getPayload()[2];
 
-                display.addEntity(
+                AddEntity::addEntity(
                     ECS::Utils::Vector2f {posX, posY}, Component::Speed {ENEMY_SPEED},
                     Component::TypeEntity {false, false, true, false, false, false, false, onlineEntityId},
                     Component::LoadedSprite {ENEMY_ASSET, nullptr,

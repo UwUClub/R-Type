@@ -6,6 +6,7 @@
 #include "System.hpp"
 #include "Values.hpp"
 #include "World.hpp"
+#include "AddEntity.hpp"
 
 namespace ECS {
     void System::createServerFullErrorMessage()
@@ -22,7 +23,7 @@ namespace ECS {
                 display.freeRects(0);
                 world.killEntity(0);
                 std::cout << "Server is full" << std::endl;
-                display.addEntity(ECS::Utils::Vector2f {SCREEN_WIDTH / 2 - SERVER_FULL_MESSAGE_TEX_WIDTH / 2,
+                AddEntity::addEntity(ECS::Utils::Vector2f {SCREEN_WIDTH / 2 - SERVER_FULL_MESSAGE_TEX_WIDTH / 2,
                                                         SCREEN_HEIGHT / 2 - SERVER_FULL_MESSAGE_TEX_HEIGHT / 2},
                                   Component::Speed {0},
                                   Component::TypeEntity {false, false, false, false, false, false, true},

@@ -9,6 +9,7 @@
 #include "System.hpp"
 #include "Values.hpp"
 #include "World.hpp"
+#include "AddEntity.hpp"
 
 namespace ECS {
     void System::triggerEnemyShoot()
@@ -29,7 +30,7 @@ namespace ECS {
                 float posX = gameEvent.getPayload()[1];
                 auto posY = gameEvent.getPayload()[2];
 
-                display.addEntity(
+                AddEntity::addEntity(
                     ECS::Utils::Vector2f {posX, posY}, Component::Speed {MISSILES_SPEED},
                     Component::TypeEntity {false, false, false, true, false, false, false, onlineMissileId},
                     Component::LoadedSprite {MISSILES_ASSET, nullptr,

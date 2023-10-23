@@ -38,6 +38,11 @@ target_include_directories(server PRIVATE
         ${Boost_INCLUDE_DIRS}
 )
 
+target_include_directories(ecs PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${Boost_INCLUDE_DIRS}
+)
+
 set_target_properties(rtype PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
         LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}

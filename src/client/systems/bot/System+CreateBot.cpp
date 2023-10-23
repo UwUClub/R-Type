@@ -4,6 +4,7 @@
 #include "SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
+#include "AddEntity.hpp"
 
 namespace ECS {
     void System::createBot()
@@ -35,7 +36,7 @@ namespace ECS {
                 float posY = gameEvent.getPayload()[4];
                 std::cout << "Player with color " << color << " joined" << std::endl;
 
-                display.addEntity(ECS::Utils::Vector2f {posX, posY}, Component::Speed {PLAYER_SPEED}, entityType,
+                AddEntity::addEntity(ECS::Utils::Vector2f {posX, posY}, Component::Speed {PLAYER_SPEED}, entityType,
                                   Component::LoadedSprite {PLAYER_ASSET, nullptr,
                                                            new sf::IntRect {0, color * PLAYER_TEX_HEIGHT,
                                                                             PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT},

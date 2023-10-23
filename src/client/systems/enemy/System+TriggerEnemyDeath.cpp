@@ -8,6 +8,7 @@
 #include "TypeUtils.hpp"
 #include "Values.hpp"
 #include "World.hpp"
+#include "AddEntity.hpp"
 
 namespace ECS {
     void System::triggerEnemyDeath(Core::SparseArray<Component::TypeEntity> &aType,
@@ -59,7 +60,7 @@ namespace ECS {
                 aSprites[enemy].value().rect->left = 146;
                 aIsAlive[enemy].value().timeToDie = 1;
                 if (rand() % 5 == 0) {
-                    display.addEntity(
+                    AddEntity::addEntity(
                         ECS::Utils::Vector2f {aPos[enemy].value().x, aPos[enemy].value().y},
                         Component::Speed {BONUS_SPEED},
                         Component::TypeEntity {false, false, false, false, false, true, false},
