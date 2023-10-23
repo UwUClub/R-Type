@@ -7,6 +7,7 @@
 #include "EwECS/Event/EventManager.hpp"
 #include "NetworkHandler.hpp"
 #include "Packets.hpp"
+#include "Values.hpp"
 
 namespace Network {
 
@@ -25,13 +26,10 @@ namespace Network {
             (void) aEndpoint;
 
             if (aEndpoint == _serverEndpoint) {
-                receivePacket(aPacket);
+                if (aPacket.type >= 0 && aPacket.type < RType::ClientEventType::MAX_CLI_EVT) {
+                    receivePacket(aPacket);
+                }
             }
-        });
-
-        network.onReceiveAknowledgment([this](const std::string &aUuid, udp::endpoint &aEndpoint) {
-            (void) aUuid;
-            (void) aEndpoint;
         });
 
         network.start(udp::v4());

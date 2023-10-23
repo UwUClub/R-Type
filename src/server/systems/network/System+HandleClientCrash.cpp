@@ -24,6 +24,7 @@ namespace ECS {
                 && aConnection[i].value().status == Network::ConnectionStatus::PENDING) {
                 aConnection[i].value().age += world.getDeltaTime();
                 if (aConnection[i].value().age >= PACKET_TIMEOUT) {
+                    std::cout << "Player " << i << " crashed" << std::endl;
                     aIsAlive[i].value().isAlive = false;
                 }
             }

@@ -35,10 +35,14 @@ namespace ECS {
             if (gameEvent.getType() != RType::ServerEventType::CONNECT) {
                 continue;
             }
+            if (gameEvent.getEntityId() != -1) {
+                network.send(RType::Packet(ERROR_PACKET_TYPE), gameEvent.getClientEndpoint());
+                continue;
+            }
             if (server.isFull()) {
                 const auto &cliEndpoint = gameEvent.getClientEndpoint();
 
-                network.send(RType::Packet(static_cast<int>(RType::ClientEventType::SERVER_FULL)), cliEndpoint);
+                network.send(RType::Packet(RType::ClientEventType::SERVER_FULL), cliEndpoint);
                 toRemove.push_back(i);
                 continue;
             }

@@ -54,9 +54,15 @@ namespace Network {
             /**
              * @brief Handle packet reception
              * @param aPacket The received packet
-             * @param aEndpoint The endpoint of the server
+             * @param aEndpoint The endpoint of the sender
              */
-            void receivePacket(const RType::Packet &, udp::endpoint &);
+            void receivePacket(const RType::Packet &, const udp::endpoint &);
+
+            /**
+             * @brief Handle aknowledgment reception
+             * @param aEndpoint The endpoint of the sender
+             */
+            void receiveAknowledgment(const udp::endpoint &);
 
             /**
              * @brief Register a client to the server

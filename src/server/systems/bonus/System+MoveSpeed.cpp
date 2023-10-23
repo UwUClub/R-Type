@@ -7,13 +7,15 @@
 #include "ServerGameEvent.hpp"
 #include "ServerHandler.hpp"
 #include "System.hpp"
+#include "Values.hpp"
 
 namespace ECS {
     void System::moveSpeedUp(Core::SparseArray<Component::Speed> &aSpeed,
                              Core::SparseArray<Component::Connection> &aConnection)
     {
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
-        Network::ServerHandler &network = Network::ServerHandler::getInstance();
+        Network::NetworkHandler &network = Network::NetworkHandler::getInstance();
+        Network::ServerHandler &server = Network::ServerHandler::getInstance();
         auto &events = eventManager->getEventsByType<RType::ServerGameEvent>();
         const auto size = events.size();
         std::vector<size_t> toRemove;
@@ -32,7 +34,9 @@ namespace ECS {
                 std::vector<float> payload = {static_cast<float>(playerId), 1};
 
                 aSpeed[playerId].value().speed += 10;
-                network.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_BONUS), payload, aConnection);
+                server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_BONUS), payload, aConnection);
+            } else {
+                network.send(RType::Packet(ERROR_PACKET_TYPE), gameEvent.getClientEndpoint());
             }
             toRemove.push_back(i);
         }

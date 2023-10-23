@@ -20,8 +20,7 @@ target_link_libraries(client
     rtype
     ${Boost_LIBRARIES}
     Boost::asio
-    Boost::serialization
-    Boost::serialization
+    Boost::thread
     Boost::uuid
 )
 
