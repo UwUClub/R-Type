@@ -10,13 +10,13 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
+#include <algorithm>
 #include <functional>
+#include <iostream>
 #include "EventManager.hpp"
 #include "KeyboardEvent.hpp"
-#include <algorithm>
-#include <iostream>
-#include "World.hpp"
 #include "LoadedSprite.hpp"
+#include "World.hpp"
 #if defined(__linux__)
     #include <libgen.h>
     #include <limits.h>
@@ -100,7 +100,6 @@ void SFMLDisplayClass::getInput()
         }
     }
 }
-
 
 SFMLDisplayClass::~SFMLDisplayClass()
 {

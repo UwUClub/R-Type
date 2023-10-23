@@ -1,5 +1,6 @@
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Rect.hpp>
+#include "AddEntity.hpp"
 #include "ClientGameEvent.hpp"
 #include "EventManager.hpp"
 #include "IsAlive.hpp"
@@ -9,7 +10,6 @@
 #include "System.hpp"
 #include "Values.hpp"
 #include "World.hpp"
-#include "AddEntity.hpp"
 
 namespace ECS {
     void System::triggerEnemyShoot()

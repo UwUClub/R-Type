@@ -1,10 +1,10 @@
 #include <SFML/Graphics/Rect.hpp>
+#include "AddEntity.hpp"
 #include "ClientGameEvent.hpp"
 #include "EventManager.hpp"
 #include "SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
-#include "AddEntity.hpp"
 
 namespace ECS {
     void System::createEnemy()

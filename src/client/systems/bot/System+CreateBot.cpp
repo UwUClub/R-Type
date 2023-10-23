@@ -1,10 +1,10 @@
 #include <SFML/Graphics/Rect.hpp>
+#include "AddEntity.hpp"
 #include "ClientGameEvent.hpp"
 #include "EventManager.hpp"
 #include "SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
-#include "AddEntity.hpp"
 
 namespace ECS {
     void System::createBot()
@@ -36,13 +36,13 @@ namespace ECS {
                 float posY = gameEvent.getPayload()[4];
                 std::cout << "Player with color " << color << " joined" << std::endl;
 
-                AddEntity::addEntity(ECS::Utils::Vector2f {posX, posY}, Component::Speed {PLAYER_SPEED}, entityType,
-                                  Component::LoadedSprite {PLAYER_ASSET, nullptr,
-                                                           new sf::IntRect {0, color * PLAYER_TEX_HEIGHT,
-                                                                            PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT},
-                                                           new sf::IntRect {0, 0, PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT}},
-                                  Component::HitBox {PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT},
-                                  Component::IsAlive {true, 0});
+                AddEntity::addEntity(
+                    ECS::Utils::Vector2f {posX, posY}, Component::Speed {PLAYER_SPEED}, entityType,
+                    Component::LoadedSprite {
+                        PLAYER_ASSET, nullptr,
+                        new sf::IntRect {0, color * PLAYER_TEX_HEIGHT, PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT},
+                        new sf::IntRect {0, 0, PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT}},
+                    Component::HitBox {PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT}, Component::IsAlive {true, 0});
 
                 eventManager->removeEvent(event);
             }

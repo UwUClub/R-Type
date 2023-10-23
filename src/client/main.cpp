@@ -1,6 +1,7 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <boost/asio.hpp>
 #include <iostream>
+#include "AddEntity.hpp"
 #include "ClientHandler.hpp"
 #include "Components.hpp"
 #include "EventManager.hpp"
@@ -15,7 +16,6 @@
 #include "Utils.hpp"
 #include "Values.hpp"
 #include "World.hpp"
-#include "AddEntity.hpp"
 
 int main(int ac, char **av)
 {

@@ -1,3 +1,4 @@
+#include "AddEntity.hpp"
 #include "ClientGameEvent.hpp"
 #include "EventManager.hpp"
 #include "HitBox.hpp"
@@ -8,7 +9,6 @@
 #include "TypeUtils.hpp"
 #include "Values.hpp"
 #include "World.hpp"
-#include "AddEntity.hpp"
 
 namespace ECS {
     void System::triggerEnemyDeath(Core::SparseArray<Component::TypeEntity> &aType,
