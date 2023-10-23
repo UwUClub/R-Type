@@ -17,7 +17,7 @@ R-Type is an iconic series of horizontal-scrolling shoot 'em up video games deve
 
    3.1. [Packet Format](#31-packet-format)
 
-   3.2. [Packet Type](#32-packet-type)
+   3.2. [Packet Types](#32-packet-types)
 
    3.3. [Reception Aknowledgment](#33-reception-aknowledgment)
 
@@ -62,40 +62,143 @@ A packet has the following properties:
 
 If the packet format is not respected, the packet will be ignored by the server.
 
-### 3.2 Packet Type
+### 3.2 Packet Types
 
-Packets sent by client:
+#### 3.2.1. Sent by client
 
-| Name | Type | Bounds to | Payload format | Payload size |
-| - | - | - | - | - |
-| `CONNECT` | `0` | Server | empty | 0 bytes |
-| `DISCONNECT` | `1` | Server | empty | 0 bytes |
-| `MOVE` | `2` | Server | <ol><li>Move shift on horizontal axis (negative being left, positive being right, max absolute value is 1)</li><li>Move shift on vertical axis (negative being bottom, positive being top, max absolute value is 1)</li></ol> | 8 bytes |
-| `SHOOT` | `3` | Server | empty | 0 bytes |
+##### 3.2.1.1. Connect
+| Type | Bounds to | Payload format | Payload size (bytes) |
+| - | - | - | - |
+| `0x00` | Server | empty | 0 |
 
-Packets sent by server:
+##### 3.2.1.2. Disconnect
+| Type | Bounds to | Payload format | Payload size (bytes) |
+| - | - | - | - |
+| `0x01` | Server | empty | 0 |
 
-| Name | Type | Bounds to | Payload format | Payload size |
-| - | - | - | - | - |
-| `PLAYER_SPAWN` | `0` | Client | <ol><li>Entity id</li><li>Is packet receiver the concerned player (`1` for yes, otherwise no)</li><li>Player color (goes from `0` to `3`)</li><li>Entity horizontal position</li><li>Entity vertical position</li></ol> | 20 bytes |
-| `PLAYER_DISCONNECTION` | `1` | Client | <ol><li>Id of the entity who leaves</li></ol> | 4 bytes |
-| `PLAYER_POSITION` | `2` | Client | <ol><li>Entity id</li><li>Entity horizontal position</li><li>Entity vertical position</li></ol> | 12 bytes |
-| `PLAYER_SHOOT` | `3` | Client | <ol><li>Shooting entity id</li></ol> | 4 bytes |
-| `PLAYER_BONUS` | `4` | Client | <ol><li>Concerned entity id</li><li>Bonus type</li></ol> | 4 bytes |
-| `PLAYER_DEATH` | `5` | Client | <ol><li>Dying entity id</li></ol> | 4 bytes |
-| `ENEMY_SPAWN` | `6` | Client | <ol><li>Spawning entity id</li><li>Entity horizontal position</li><li>Entity vertical position</li></ol> | 12 bytes |
-| `ENEMY_DEATH` | `7` | Client | <ol><li>Dying entity id</li></ol> | 4 bytes |
-| `ENEMY_SHOOT` | `8` | Client | <ol><li>Shooting entity id</li></ol> | 4 bytes |
-| `SERVER_FULL` | `9` | Client | empty | 0 bytes |
+##### 3.2.1.3. Move
+ <table>
+   <tr>
+    <th>Type</th>
+    <th>Bound to</th>
+    <th>Payload description</th>
+    <th>Payload type</th>
+   </tr>
+   <tr>
+    <td><code>0x02</code></td>
+    <td>Server</td>
+    <td>
+       <table>
+          <tr><td>Move shift on horizontal axis</td></tr>
+          <tr><td>Move shift on vertical axis</td></tr>
+       </table>
+    </td>
+    <td>
+       <table>
+          <tr><td>float</td></tr>
+          <tr><td>float</td></tr>
+       </table>
+    </td>
+   </tr>
+</table> 
 
-Packets sent by both:
+##### 3.2.1.4. Shoot
+| Type | Bounds to | Payload format | Payload size (bytes) |
+| - | - | - | - |
+| `0x03` | Server | empty | 0 bytes |
 
-| Name | Type | Bounds to | Payload format | Payload size |
-| - | - | - | - | - |
-| `RECEPTION_AKNOWLEDGMENT` | `-1` | Client & Server | empty | 0 bytes |
-| `ERROR` | `-2` | Client & Server | empty | 0 bytes |
+#### 3.2.2. Sent by server
 
-The first packet sent by a client to its server **must** be of type `CONNECT`. Otherwise, the server will not listen to any of its packets.
+##### 3.2.2.1. Player joined
+ <table>
+   <tr>
+    <th>Type</th>
+    <th>Bound to</th>
+    <th>Payload description</th>
+    <th>Payload type</th>
+   </tr>
+   <tr>
+    <td><code>0x00</code></td>
+    <td>Client</td>
+    <td>
+       <table>
+          <tr><td>Entity ID</td></tr>
+          <tr><td>Is receiver the concerned player</td></tr>
+          <tr><td>Player color</td></tr>
+          <tr><td>Player horizontal position</td></tr>
+          <tr><td>Player vertical position</td></tr>
+       </table>
+    </td>
+    <td>
+       <table>
+          <tr><td>unsigned short</td></tr>
+          <tr><td>boolean</td></tr>
+          <tr><td>color</td></tr>
+          <tr><td>float</td></tr>
+          <tr><td>float</td></tr>
+       </table>
+    </td>
+   </tr>
+</table> 
+
+##### 3.2.2.2. Player left
+| Type | Bounds to | Payload format | Payload size |
+| - | - | - | - |
+| `0x01` | Client | <ol><li>Id of the entity who leaves</li></ol> | 4 bytes |
+
+##### 3.2.2.3. Player position update
+| Type | Bounds to | Payload format | Payload size |
+| - | - | - | - |
+| `0x02` | Client | <ol><li>Entity id</li><li>Entity horizontal position</li><li>Entity vertical position</li></ol> | 12 bytes |
+
+##### 3.2.2.4. Player shot
+| Type | Bounds to | Payload format | Payload size |
+| - | - | - | - |
+| `0x03` | Client | <ol><li>Shooting entity id</li></ol> | 4 bytes |
+
+##### 3.2.2.5. Player got bonus
+| Type | Bounds to | Payload format | Payload size |
+| - | - | - | - |
+| `0x04` | Client | <ol><li>Concerned entity id</li><li>Bonus type</li></ol> | 4 bytes |
+
+##### 3.2.2.6. Player died
+| Type | Bounds to | Payload format | Payload size |
+| - | - | - | - |
+| `0x05` | Client | <ol><li>Dying entity id</li></ol> | 4 bytes |
+
+##### 3.2.2.7. Monster spawned
+| Type | Bounds to | Payload format | Payload size |
+| - | - | - | - |
+| `0x06` | Client | <ol><li>Spawning entity id</li><li>Entity horizontal position</li><li>Entity vertical position</li></ol> | 12 bytes |
+
+##### 3.2.2.8. Monster died
+| Type | Bounds to | Payload format | Payload size |
+| - | - | - | - |
+| `0x07` | Client | <ol><li>Dying entity id</li></ol> | 4 bytes |
+
+##### 3.2.2.9. Monster shot
+| Type | Bounds to | Payload format | Payload size |
+| - | - | - | - |
+| `0x08` | Client | <ol><li>Shooting entity id</li></ol> | 4 bytes |
+
+##### 3.2.2.10. Server is full
+| Type | Bounds to | Payload format | Payload size |
+| - | - | - | - |
+| `0x09` | Client | empty | 0 bytes |
+
+#### 3.2.3. Sent by client & server
+
+##### 3.2.3.1. Answer aknowledgment 
+|  Type | Bounds to | Payload format | Payload size |
+| - | - | - | - |
+| `-1` | Client & Server | empty | 0 bytes |
+
+##### 3.2.3.2. Answer error
+|  Type | Bounds to | Payload format | Payload size |
+| - | - | - | - |
+| `-2` | Client & Server | empty | 0 bytes |
+
+The first packet sent by a client to its server **must** be of type [connect](#3211-connect). Otherwise, the server will not listen to any of its packets.
 
 When a client connects the server should:
    - send `PLAYER_SPAWN` packets to the connecting client, for each player already present in the server
