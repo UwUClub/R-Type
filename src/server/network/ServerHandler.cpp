@@ -1,6 +1,5 @@
 #include "ServerHandler.hpp"
 #include <boost/bind.hpp>
-#include <boost/serialization/serialization.hpp>
 #include <iostream>
 #include "EventManager.hpp"
 #include "NetworkHandler.hpp"

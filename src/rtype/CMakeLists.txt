@@ -18,7 +18,7 @@ target_link_libraries(rtype
         R_Type::R_Type_warnings
         ${Boost_LIBRARIES}
         Boost::asio
-        Boost::serialization
+        Boost::thread
         Boost::uuid
         ecs
 )

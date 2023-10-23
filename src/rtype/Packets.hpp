@@ -1,7 +1,5 @@
 #include <any>
 #include <boost/asio.hpp>
-#include <boost/serialization/serialization.hpp>
-#include <boost/serialization/vector.hpp>
 #include <boost/uuid/uuid.hpp>
 #include <iostream>
 #include <sstream>
@@ -41,14 +39,6 @@ namespace RType {
                 : uuid(aUuid),
                   type(aType)
             {}
-
-            template<typename archive>
-            void serialize(archive &ar, const unsigned int /*version*/)
-            {
-                ar &uuid;
-                ar &type;
-                ar &payload;
-            }
     };
 
     struct Aknowlegdment
