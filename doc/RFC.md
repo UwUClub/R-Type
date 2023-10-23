@@ -60,8 +60,8 @@ The R-Type server accepts connections from UDP clients and communicates with the
 | Name | Size (bytes) | Encodes | Notes |
 | - | - | - | - |
 | boolean | 1 | Either false or true  | True is encoded as 0x01, false as 0x00 |
-| byte | 1 | An integer between -128 and 127 | Signed 8-bit integer |
 | unsigned byte | 1 | An integer between 0 and 255 | Unsigned 8-bit integer |
+| unsigned short | 2 | An integer between 0 and 65535 | Unsigned 16-bit integer |
 | float | 4 | A floating point number |
 | string | ≥ 1 | A sequence of bytes representing characters |
 
@@ -74,9 +74,9 @@ Each client is a game player that listens to user inputs, sends actions to the s
 A packet has the following properties:
 | Name | Kind | Description |
 | - | - | - |
-| `uuid` | 36-byte string | Unique id to identify the packet. See [part 2.3](#23-reception-aknowledgment) to learn about its utility |
-| `type` | 4-byte int | Packet type. See [part 2.2](#22-packet-type) to get the list of packet types |
-| `payload` | vector of float (variable size) | Data carried by the packet. The size and meaning of each value depends on packet type, check [part 2.2](#22-packet-type) |
+| `uuid` | 36-byte string | Unique id to identify the packet. See [part 3.3](#33-reception-aknowledgment) to learn about its utility |
+| `type` | byte | [Packet type](#32-packet-types) |
+| `payload` | depends on [packet type](#32-packet-types) | Data carried by the packet |
 
 If the packet format is not respected, the packet will be ignored by the server.
 
@@ -151,7 +151,7 @@ If the packet format is not respected, the packet will be ignored by the server.
        <table>
           <tr><td>unsigned short</td></tr>
           <tr><td>boolean</td></tr>
-          <tr><td>color</td></tr>
+          <tr><td>unsigned byte</td></tr>
           <tr><td>float</td></tr>
           <tr><td>float</td></tr>
        </table>
@@ -197,11 +197,13 @@ If the packet format is not respected, the packet will be ignored by the server.
     <td>
        <table>
           <tr><td>Player entity ID</td></tr>
+          <tr><td>Bonus type</td></tr>
        </table>
     </td>
     <td>
        <table>
-          <tr><td>bonus</td></tr>
+          <tr><td>unsigned short</td></tr>
+          <tr><td>unsigned byte</td></tr>
        </table>
     </td>
    </tr>
@@ -227,7 +229,9 @@ If the packet format is not respected, the packet will be ignored by the server.
     </td>
     <td>
        <table>
-          <tr><td>bonus</td></tr>
+          <tr><td>unsigned short</td></tr>
+          <tr><td>float</td></tr>
+          <tr><td>float</td></tr>
        </table>
     </td>
    </tr>
@@ -303,7 +307,7 @@ If the packet format is not respected, the packet will be ignored by the server.
     </td>
     <td>
        <table>
-          <tr><td>bonus</td></tr>
+          <tr><td>unsigned short</td></tr>
        </table>
     </td>
    </tr>
