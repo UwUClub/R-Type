@@ -2,12 +2,12 @@
 #include <iostream>
 #include <vector>
 #include "Components.hpp"
-#include "EventManager.hpp"
+#include "EwECS/Event/EventManager.hpp"
+#include "EwECS/SparseArray.hpp"
 #include "NetworkHandler.hpp"
 #include "Packets.hpp"
 #include "ServerGameEvent.hpp"
 #include "ServerHandler.hpp"
-#include "SparseArray.hpp"
 #include "System.hpp"
 
 namespace ECS {

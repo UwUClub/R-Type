@@ -1,13 +1,13 @@
 #include <iostream>
 #include "Components.hpp"
-#include "EventManager.hpp"
+#include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Utils.hpp"
+#include "EwECS/World.hpp"
 #include "HitBox.hpp"
 #include "IsAlive.hpp"
 #include "NetworkHandler.hpp"
 #include "ServerHandler.hpp"
 #include "System.hpp"
-#include "Utils.hpp"
-#include "World.hpp"
 
 int main(int ac, char **av)
 {

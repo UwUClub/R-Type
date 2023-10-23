@@ -15,11 +15,11 @@
 #include <cstddef>
 #include <string>
 #include "Components.hpp"
-#include "KeyboardEvent.hpp"
+#include "EwECS/Event/KeyboardEvent.hpp"
+#include "EwECS/Event/MouseEvent.hpp"
+#include "EwECS/Event/WindowEvent.hpp"
+#include "EwECS/Utils.hpp"
 #include "LoadedSprite.hpp"
-#include "MouseEvent.hpp"
-#include "Utils.hpp"
-#include "WindowEvent.hpp"
 #include <unordered_map>
 
 class SFMLDisplayClass

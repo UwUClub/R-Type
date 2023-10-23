@@ -1,11 +1,11 @@
 #include <functional>
 #include "ClientHandler.hpp"
-#include "EventManager.hpp"
-#include "KeyboardEvent.hpp"
+#include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Event/KeyboardEvent.hpp"
+#include "EwECS/World.hpp"
 #include "SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
-#include "World.hpp"
 #include "components/IsAlive.hpp"
 #include <unordered_map>
 
