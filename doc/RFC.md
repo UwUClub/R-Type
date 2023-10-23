@@ -50,9 +50,8 @@ Packets sent by client:
 | - | - | - | - | - |
 | `CONNECT` | `0` | Server | empty | 0 bytes |
 | `DISCONNECT` | `1` | Server | empty | 0 bytes |
-| `MOVE` | `3` | Server | <ol><li>Move shift on horizontal axis (negative being left, positive being right, max absolute value is 1)</li><li>Move shift on vertical axis (negative being bottom, positive being top, max absolute value is 1)</li></ol> | 8 bytes |
-| `SHOOT` | `4` | Server | empty | 0 bytes |
-| `BONUS` | `5` | Server | <ol><li>Bonus type</li></ol> | 4 bytes
+| `MOVE` | `2` | Server | <ol><li>Move shift on horizontal axis (negative being left, positive being right, max absolute value is 1)</li><li>Move shift on vertical axis (negative being bottom, positive being top, max absolute value is 1)</li></ol> | 8 bytes |
+| `SHOOT` | `3` | Server | empty | 0 bytes |
 
 Packets sent by server:
 
@@ -62,7 +61,7 @@ Packets sent by server:
 | `PLAYER_DISCONNECTION` | `1` | Client | <ol><li>Id of the entity who leaves</li></ol> | 4 bytes |
 | `PLAYER_POSITION` | `2` | Client | <ol><li>Entity id</li><li>Entity horizontal position</li><li>Entity vertical position</li></ol> | 12 bytes |
 | `PLAYER_SHOOT` | `3` | Client | <ol><li>Shooting entity id</li></ol> | 4 bytes |
-| `PLAYER_BONUS` | `4` | Client | <ol><li>Concerned entity id</li></ol> | 4 bytes |
+| `PLAYER_BONUS` | `4` | Client | <ol><li>Concerned entity id</li><li>Bonus type</li></ol> | 4 bytes |
 | `PLAYER_DEATH` | `5` | Client | <ol><li>Dying entity id</li></ol> | 4 bytes |
 | `ENEMY_SPAWN` | `6` | Client | <ol><li>Spawning entity id</li><li>Entity horizontal position</li><li>Entity vertical position</li></ol> | 12 bytes |
 | `ENEMY_DEATH` | `7` | Client | <ol><li>Dying entity id</li></ol> | 4 bytes |
@@ -74,6 +73,7 @@ Packets sent by both:
 | Name | Type | Bounds to | Payload format | Payload size |
 | - | - | - | - | - |
 | `RECEPTION_AKNOWLEDGMENT` | `-1` | Client & Server | empty | 0 bytes |
+| `ERROR` | `-2` | Client & Server | empty | 0 bytes |
 
 The first packet sent by a client to its server **must** be of type `CONNECT`. Otherwise, the server will not listen to any of its packets.
 
@@ -89,7 +89,7 @@ A client or server receiving a packet whose type is `>= 0` must send back an akn
 
 ### 2.4. Serialization
 
-The protocol is binary, so packets must be serialized to binary format before being sent. It must be unserialized from binary format before being read.
+The protocol is binary, so packets must be serialized to binary format before being sent. It must be unserialized from binary format before being read. 
 
 ## 3. Security Considerations
 
