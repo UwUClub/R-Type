@@ -21,7 +21,7 @@ R-Type is an iconic series of horizontal-scrolling shoot 'em up video games deve
    
         * 3.2.1. [From client](#321-from-client)
             * [Connect](#connect)
-            * [Disonnect](#disconnect)
+            * [Disconnect](#disconnect)
             * [Move](#move)
             * [Shoot](#shoot)
 
