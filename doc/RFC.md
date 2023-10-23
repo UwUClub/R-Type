@@ -9,47 +9,35 @@ R-Type is an iconic series of horizontal-scrolling shoot 'em up video games deve
 1. [Introduction](#1-introduction)
 2. [Definitions](#2-definitions)
 
-   2.1. [Packet](#21-packet)
+   * 2.1. [Packet](#21-packet)
 
-   2.2. [Data Types](#22-data-types)
+   * 2.2. [Data Types](#22-data-types)
 
-4. [Protocol Specification](#3-protocol-specification)
+3. [Protocol Specification](#3-protocol-specification)
 
-   3.1. [Packet Format](#31-packet-format)
+   * 3.1. [Packet Format](#31-packet-format)
 
-   3.2. [Packet Types](#32-packet-types)
+   * 3.2. [Packet Types](#32-packet-types)
+   
+        * 3.2.1. [From client](#321-from-client)
+            * [Connect](#connect)
+            * [Disonnect](#disconnect)
+            * [Move](#move)
+            * [Shoot](#shoot)
 
-      3.2.1 [Sent by client](#321-sent-by-client)
+        * 3.2.2. [From server](#322-from-server)
+            * [Player joined](#player-joined)
+            * [Player left](#player-left)
+            * [Entity position update](#entity-position-update)
+            * [Monster spawned](#monster-spawned)
+            * [Entity shot](#entity-shot)
+            * [Player got bonus](#player-got-bonus)
+            * [Entity died](#entity-died)
+            * [Server is full](#server-is-full)
 
-         3.2.1.1 [Connect](#3211-connect)
+   * 3.3. [Reception Aknowledgment](#33-reception-aknowledgment)
 
-         3.2.1.2 [Disconnect](#3212-disconnect)
-
-         3.2.1.3 [Move](#3213-move)
-
-         3.2.1.4 [Shoot](#3214-shoot)
-
-      3.2.2 [Sent by server](#322-sent-by-server)
-
-         3.2.2.1 [Player joined](#3221-player-joined)
-
-         3.2.2.2 [Player left](#3222-player-left)
-
-         3.2.2.3 [Player position update](#3223-player-position-update)
-
-         3.2.2.4 [Monster spawned](#3227-monster-spawned)
-
-         3.2.2.5 [Entity shot](#3224-entity-shot)
-
-         3.2.2.6 [Player got bonus](#3225-player-got-bonus)
-
-         3.2.2.7 [Entity died](#3226-entity-died)
-
-         3.2.2.8 [Server is full](#3228-server-is-full)
-
-   3.3. [Reception Aknowledgment](#33-reception-aknowledgment)
-
-   3.4. [Serialization](#34-serialization)
+   * 3.4. [Serialization](#34-serialization)
 
 5. [Security Considerations](#4-security-considerations)
 6. [Authors](#5-authors)
@@ -90,11 +78,11 @@ A packet has the following properties:
 
 If the packet format is not respected, the packet will be ignored by the server.
 
-### 3.2 Packet Types
+### 3.2. Packet Types
 
-#### 3.2.1. Sent by client
+#### 3.2.1. From client
 
-##### 3.2.1.1. Connect
+##### Connect
 | Type | Bounds to | Payload description | Payload type |
 | - | - | - | - |
 | `0x00` | Server | empty | 0 |
@@ -135,7 +123,7 @@ If the packet format is not respected, the packet will be ignored by the server.
 | - | - | - | - |
 | `0x03` | Server | empty | 0 bytes |
 
-#### 3.2.2. Sent by server
+#### 3.2.2. From server
 
 ##### 3.2.2.1. Player joined
  <table>
@@ -324,7 +312,7 @@ If the packet format is not respected, the packet will be ignored by the server.
 | - | - | - | - |
 | `0x09` | Client | empty | 0 bytes |
 
-#### 3.2.3. Sent by client & server
+#### 3.2.3. From client & server
 
 ##### 3.2.3.1. Answer aknowledgment 
 |  Type | Bound to | Payload format | Payload size |
