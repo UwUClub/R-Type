@@ -1,5 +1,4 @@
 #include "NetworkHandler.hpp"
-#include <bitset>
 #include <boost/bind.hpp>
 #include <chrono>
 #include <iostream>
