@@ -2,8 +2,7 @@
 #include "World.hpp"
 
 size_t AddEntity::addEntity(ECS::Utils::Vector2f aPos, Component::Speed aSpeed, Component::TypeEntity aType,
-                                   Component::LoadedSprite aSprite, Component::HitBox aHitBox,
-                                   Component::IsAlive aIsAlive)
+                            Component::LoadedSprite aSprite, Component::HitBox aHitBox, Component::IsAlive aIsAlive)
 {
     ECS::Core::World &world = ECS::Core::World::getInstance();
     auto &vec = world.getComponent<ECS::Utils::Vector2f>();

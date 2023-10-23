@@ -1,6 +1,7 @@
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <vector>
+#include "AddEntity.hpp"
 #include "ClientGameEvent.hpp"
 #include "EwECS/Event/EventManager.hpp"
 #include "EwECS/SparseArray.hpp"
@@ -9,9 +10,9 @@
 #include "SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
-
-namespace ECS {
-    void System::triggerEnemyShoot()
+<<<<<<< HEAD
+=======
+#include "World.hpp"
     {
         auto &display = SFMLDisplayClass::getInstance();
         Event::EventManager *eventManager = Event::EventManager::getInstance();

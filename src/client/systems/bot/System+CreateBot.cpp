@@ -1,12 +1,12 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <cstddef>
 #include <vector>
+#include "AddEntity.hpp"
 #include "ClientGameEvent.hpp"
 #include "EwECS/Event/EventManager.hpp"
 #include "SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
-#include "AddEntity.hpp"
 
 namespace ECS {
     void System::createBot()

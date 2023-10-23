@@ -1,5 +1,6 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <iostream>
+#include "AddEntity.hpp"
 #include "ClientGameEvent.hpp"
 #include "EwECS/Event/EventManager.hpp"
 #include "EwECS/World.hpp"

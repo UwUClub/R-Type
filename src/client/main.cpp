@@ -1,6 +1,7 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <boost/asio.hpp>
 #include <iostream>
+#include "AddEntity.hpp"
 #include "ClientHandler.hpp"
 #include "Components.hpp"
 #include "EwECS/EwECS.hpp"
