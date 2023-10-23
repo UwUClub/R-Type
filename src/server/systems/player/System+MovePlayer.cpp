@@ -1,9 +1,9 @@
 #include <iostream>
 #include <vector>
-#include "EventManager.hpp"
+#include "EwECS/Event/EventManager.hpp"
+#include "EwECS/SparseArray.hpp"
 #include "ServerGameEvent.hpp"
 #include "ServerHandler.hpp"
-#include "SparseArray.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 #include <unordered_map>

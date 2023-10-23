@@ -1,5 +1,6 @@
 #include "ClientGameEvent.hpp"
-#include "EventManager.hpp"
+#include "EwECS/Event/EventManager.hpp"
+#include "EwECS/World.hpp"
 #include "HitBox.hpp"
 #include "IsAlive.hpp"
 #include "SFML/Graphics/Rect.hpp"
@@ -7,7 +8,6 @@
 #include "System.hpp"
 #include "TypeUtils.hpp"
 #include "Values.hpp"
-#include "World.hpp"
 
 namespace ECS {
     void System::triggerEnemyDeath(Core::SparseArray<Component::TypeEntity> &aType,

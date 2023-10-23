@@ -1,11 +1,11 @@
 #include <iostream>
 #include "ClientGameEvent.hpp"
+#include "EwECS/SparseArray.hpp"
+#include "EwECS/World.hpp"
 #include "IsAlive.hpp"
 #include "ServerHandler.hpp"
-#include "SparseArray.hpp"
 #include "System.hpp"
 #include "Values.hpp"
-#include "World.hpp"
 
 namespace ECS {
     void System::enemyShoot(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,

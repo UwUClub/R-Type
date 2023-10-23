@@ -4,7 +4,7 @@
 #include <chrono>
 #include <iostream>
 #include <string>
-#include "EventManager.hpp"
+#include "EwECS/Event/EventManager.hpp"
 #include "NetworkHandler.hpp"
 #include "Packets.hpp"
 

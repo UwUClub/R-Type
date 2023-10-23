@@ -8,13 +8,13 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Window.hpp>
 #include "Components.hpp"
+#include "EwECS/Event/KeyboardEvent.hpp"
+#include "EwECS/Event/WindowEvent.hpp"
+#include "EwECS/SparseArray.hpp"
+#include "EwECS/Utils.hpp"
+#include "EwECS/World.hpp"
 #include "IsAlive.hpp"
-#include "KeyboardEvent.hpp"
 #include "LoadedSprite.hpp"
-#include "SparseArray.hpp"
-#include "Utils.hpp"
-#include "WindowEvent.hpp"
-#include "World.hpp"
 #include "components/HitBox.hpp"
 
 namespace ECS {

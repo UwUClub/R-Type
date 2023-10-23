@@ -1,7 +1,7 @@
 #include <functional>
 #include "ClientHandler.hpp"
-#include "EventManager.hpp"
-#include "KeyboardEvent.hpp"
+#include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Event/KeyboardEvent.hpp"
 #include "SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"

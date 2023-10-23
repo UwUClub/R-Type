@@ -1,13 +1,13 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <vector>
 #include "ClientGameEvent.hpp"
-#include "EventManager.hpp"
+#include "EwECS/Event/EventManager.hpp"
+#include "EwECS/SparseArray.hpp"
+#include "EwECS/World.hpp"
 #include "IsAlive.hpp"
 #include "SFMLDisplayClass.hpp"
-#include "SparseArray.hpp"
 #include "System.hpp"
 #include "Values.hpp"
-#include "World.hpp"
 
 namespace ECS {
     void System::triggerBotShoot()

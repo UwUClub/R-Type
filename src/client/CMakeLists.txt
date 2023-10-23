@@ -26,6 +26,8 @@ target_link_libraries(client
 )
 
 target_include_directories(client PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(client PRIVATE "${PROJECT_SOURCE_DIR}/extern/EwECS/includes")
+
 
 set_target_properties(client PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin

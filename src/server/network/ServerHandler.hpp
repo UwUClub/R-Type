@@ -1,9 +1,9 @@
 #include <boost/asio.hpp>
 #include <iostream>
 #include "Components.hpp"
+#include "EwECS/SparseArray.hpp"
 #include "Packets.hpp"
 #include "PlayerColor.hpp"
-#include "SparseArray.hpp"
 #include "Values.hpp"
 #include <unordered_map>
 
