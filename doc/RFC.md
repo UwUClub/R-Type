@@ -7,18 +7,24 @@ R-Type is an iconic series of horizontal-scrolling shoot 'em up video games deve
 ## Table of Contents
 
 1. [Introduction](#1-introduction)
-2. [Protocol Specification](#2-protocol-specification)
+2. [Definitions](#2-definitions)
 
-   2.1. [Packet Format](#21-packet-format)
+   2.1. [Packet](#21-packet)
 
-   2.2. [Packet Type](#22-packet-type)
+   2.2. [Data Types](#22-data-types)
 
-   2.3. [Reception Aknowledgment](#23-reception-aknowledgment)
+4. [Protocol Specification](#3-protocol-specification)
 
-   2.4. [Serialization](#24-serialization)
+   3.1. [Packet Format](#31-packet-format)
 
-3. [Security Considerations](#3-security-considerations)
-4. [Authors](#4-authors)
+   3.2. [Packet Type](#32-packet-type)
+
+   3.3. [Reception Aknowledgment](#33-reception-aknowledgment)
+
+   3.4. [Serialization](#34-serialization)
+
+5. [Security Considerations](#4-security-considerations)
+6. [Authors](#5-authors)
 
 ## 1. Introduction
 
@@ -27,11 +33,25 @@ between clients and servers in a multiplayer R-Type game. This protocol
 defines various message types and associated data structures for in-game
 events, including player interactions and monster behavior.
 
-## 2. Protocol Specification
+## 2. Definitions
+
+### 2.1. Packet
+
+The R-Type server accepts connections from UDP clients and communicates with them using packets. A packet is a sequence of bytes sent over the UDP connection.
+
+### 2.2. Data Types
+
+| Name | Size (bytes) | Encodes |
+| - | - | - |
+| int | 4 | An integer between -2147483648 and 2147483647 |
+| float | 4 | A floating point number |
+| string | ≥ 1 | A sequence of bytes representing characters |
+
+## 3. Protocol Specification
 
 Each client is a game player that listens to user inputs, sends actions to the server and calculates some game logic on its side. The server centralizes the main game logic and defines what happens in the game. It always has the last word on clients.
 
-### 2.1. Packet Format
+### 3.1. Packet Format
 
 A packet has the following properties:
 | Name | Kind | Description |
@@ -42,7 +62,7 @@ A packet has the following properties:
 
 If the packet format is not respected, the packet will be ignored by the server.
 
-### 2.2 Packet Type
+### 3.2 Packet Type
 
 Packets sent by client:
 
@@ -83,15 +103,15 @@ When a client connects the server should:
 
 This way the connecting client is aware of what is going during the gameplay.
 
-### 2.3. Reception Aknowledgment
+### 3.3. Reception Aknowledgment
 
 A client or server receiving a packet whose type is `>= 0` must send back an aknowledgment packet (type `-1`). Its uuid must be the same as the one of the received packet. This practice is recommended for timeout and crash detection: not sending aknowledgment results to be considered as inactive and kicked by the server or left by the client.
 
-### 2.4. Serialization
+### 3.4. Serialization
 
 The protocol is binary, so packets must be serialized to binary format before being sent. It must be unserialized from binary format before being read. 
 
-## 3. Security Considerations
+## 4. Security Considerations
 
 Implementations of this protocol should consider security aspects to protect against unauthorized access, cheating, and other potential vulnerabilities.
 
@@ -99,7 +119,7 @@ You must check your packet reception when making a client or server: always make
 
 Remember that the server should always have the last word on the client.
 
-## 4. Authors
+## 5. Authors
 
 **A game developed by:**
 - Valentin GEGOUX (valentin.gegoux@epitech.eu)
