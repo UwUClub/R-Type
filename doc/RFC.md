@@ -19,6 +19,34 @@ R-Type is an iconic series of horizontal-scrolling shoot 'em up video games deve
 
    3.2. [Packet Types](#32-packet-types)
 
+      3.2.1 [Sent by client](#321-sent-by-client)
+
+         3.2.1.1 [Connect](#3211-connect)
+
+         3.2.1.2 [Disconnect](#3212-disconnect)
+
+         3.2.1.3 [Move](#3213-move)
+
+         3.2.1.4 [Shoot](#3214-shoot)
+
+      3.2.2 [Sent by server](#322-sent-by-server)
+
+         3.2.2.1 [Player joined](#3221-player-joined)
+
+         3.2.2.2 [Player left](#3222-player-left)
+
+         3.2.2.3 [Player position update](#3223-player-position-update)
+
+         3.2.2.4 [Monster spawned](#3227-monster-spawned)
+
+         3.2.2.5 [Entity shot](#3224-entity-shot)
+
+         3.2.2.6 [Player got bonus](#3225-player-got-bonus)
+
+         3.2.2.7 [Entity died](#3226-entity-died)
+
+         3.2.2.8 [Server is full](#3228-server-is-full)
+
    3.3. [Reception Aknowledgment](#33-reception-aknowledgment)
 
    3.4. [Serialization](#34-serialization)
@@ -165,7 +193,7 @@ If the packet format is not respected, the packet will be ignored by the server.
    </tr>
 </table>
 
-##### 3.2.2.3. Player position update
+##### 3.2.2.5. Player position update
  <table>
    <tr>
     <th>Type</th>
@@ -193,79 +221,7 @@ If the packet format is not respected, the packet will be ignored by the server.
    </tr>
 </table>
 
-##### 3.2.2.4. Entity shot
- <table>
-   <tr>
-    <th>Type</th>
-    <th>Bound to</th>
-    <th>Payload description</th>
-    <th>Payload type</th>
-   </tr>
-   <tr>
-    <td><code>0x03</code></td>
-    <td>Client</td>
-    <td>
-       <table>
-          <tr><td>Player entity ID</td></tr>
-       </table>
-    </td>
-    <td>
-       <table>
-          <tr><td>unsigned short</td></tr>
-       </table>
-    </td>
-   </tr>
-</table>
-
-##### 3.2.2.5. Player got bonus
-<table>
-   <tr>
-    <th>Type</th>
-    <th>Bound to</th>
-    <th>Payload description</th>
-    <th>Payload type</th>
-   </tr>
-   <tr>
-    <td><code>0x04</code></td>
-    <td>Client</td>
-    <td>
-       <table>
-          <tr><td>Player entity ID</td></tr>
-       </table>
-    </td>
-    <td>
-       <table>
-          <tr><td>bonus</td></tr>
-       </table>
-    </td>
-   </tr>
-</table>
-
-##### 3.2.2.6. Entity died
-<table>
-   <tr>
-    <th>Type</th>
-    <th>Bound to</th>
-    <th>Payload description</th>
-    <th>Payload type</th>
-   </tr>
-   <tr>
-    <td><code>0x05</code></td>
-    <td>Client</td>
-    <td>
-       <table>
-          <tr><td>Entity ID</td></tr>
-       </table>
-    </td>
-    <td>
-       <table>
-          <tr><td>bonus</td></tr>
-       </table>
-    </td>
-   </tr>
-</table>
-
-##### 3.2.2.7. Monster spawned
+##### 3.2.2.4. Monster spawned
 <table>
    <tr>
     <th>Type</th>
@@ -291,7 +247,79 @@ If the packet format is not respected, the packet will be ignored by the server.
    </tr>
 </table>
 
-##### 3.2.2.10. Server is full
+##### 3.2.2.5. Entity shot
+ <table>
+   <tr>
+    <th>Type</th>
+    <th>Bound to</th>
+    <th>Payload description</th>
+    <th>Payload type</th>
+   </tr>
+   <tr>
+    <td><code>0x03</code></td>
+    <td>Client</td>
+    <td>
+       <table>
+          <tr><td>Player entity ID</td></tr>
+       </table>
+    </td>
+    <td>
+       <table>
+          <tr><td>unsigned short</td></tr>
+       </table>
+    </td>
+   </tr>
+</table>
+
+##### 3.2.2.6. Player got bonus
+<table>
+   <tr>
+    <th>Type</th>
+    <th>Bound to</th>
+    <th>Payload description</th>
+    <th>Payload type</th>
+   </tr>
+   <tr>
+    <td><code>0x04</code></td>
+    <td>Client</td>
+    <td>
+       <table>
+          <tr><td>Player entity ID</td></tr>
+       </table>
+    </td>
+    <td>
+       <table>
+          <tr><td>bonus</td></tr>
+       </table>
+    </td>
+   </tr>
+</table>
+
+##### 3.2.2.7. Entity died
+<table>
+   <tr>
+    <th>Type</th>
+    <th>Bound to</th>
+    <th>Payload description</th>
+    <th>Payload type</th>
+   </tr>
+   <tr>
+    <td><code>0x05</code></td>
+    <td>Client</td>
+    <td>
+       <table>
+          <tr><td>Entity ID</td></tr>
+       </table>
+    </td>
+    <td>
+       <table>
+          <tr><td>bonus</td></tr>
+       </table>
+    </td>
+   </tr>
+</table>
+
+##### 3.2.2.8. Server is full
 | Type | Bound to | Payload format | Payload size |
 | - | - | - | - |
 | `0x09` | Client | empty | 0 bytes |
