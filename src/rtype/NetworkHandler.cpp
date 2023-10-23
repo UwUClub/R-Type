@@ -6,6 +6,7 @@
 #include <string>
 #include "EventManager.hpp"
 #include "Packets.hpp"
+#include "Serialization.hpp"
 #include "Values.hpp"
 
 namespace Network {
@@ -57,37 +58,8 @@ namespace Network {
     void NetworkHandler::handleRequest(std::size_t aBytesTransferred)
     {
         _readInbound.commit(aBytesTransferred);
-        std::istream is(&_readInbound);
         RType::Packet packet;
-
-        if (_readInbound.size() < 40) {
-            send(RType::Packet(ERROR_PACKET_TYPE), _readEndpoint);
-            return;
-        }
-
-        // Read uuid
-        char uuid[37] = {};
-        is.read(uuid, 36);
-        uuid[36] = '\0';
-        packet.uuid = std::string(uuid);
-
-        // Check invalid uuid
-        if (boost::uuids::string_generator()(packet.uuid).version() == boost::uuids::uuid::version_unknown) {
-            send(RType::Packet(ERROR_PACKET_TYPE), _readEndpoint);
-            return;
-        }
-
-        // Read type
-        int type = -2;
-        is.read(reinterpret_cast<char *>(&type), sizeof(int));
-        packet.type = type;
-
-        // Read payload
-        while (is.peek() != EOF) {
-            float i;
-            is.read(reinterpret_cast<char *>(&i), sizeof(float));
-            packet.payload.push_back(i);
-        }
+        Network::Serialization::unserialize(&packet, _readInbound);
 
         if (packet.type == -1) { // receive aknowledgment
             if (_senders.find(packet.uuid) != _senders.end() && _senders[packet.uuid].first.joinable()) {
@@ -104,14 +76,8 @@ namespace Network {
 
     void NetworkHandler::send(const RType::Packet &aPacket, const udp::endpoint &aEndpoint)
     {
-        boost::asio::streambuf buf;
-        std::ostream os(&buf);
-
-        os.write(aPacket.uuid.c_str(), 36);
-        os.write(reinterpret_cast<const char *>(&aPacket.type), sizeof(aPacket.type));
-        for (auto &i : aPacket.payload) {
-            os.write(reinterpret_cast<const char *>(&i), sizeof(i));
-        }
+        boost::asio::streambuf buf = boost::asio::streambuf();
+        Network::Serialization::serialize(&buf, aPacket);
 
         _socket.send_to(buf.data(), aEndpoint);
 
