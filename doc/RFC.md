@@ -60,8 +60,8 @@ The R-Type server accepts connections from UDP clients and communicates with the
 | Name | Size (bytes) | Encodes | Notes |
 | - | - | - | - |
 | boolean | 1 | Either false or true  | True is encoded as 0x01, false as 0x00 |
-| short | 2 | An integer between -32768 and 32767 | Signed 16-bit integer |
-| unsigned short | 2 | An integer between 0 and 65535 | Unsigned 16-bit integer |
+| byte | 1 | An integer between -128 and 127 | Signed 8-bit integer |
+| unsigned byte | 1 | An integer between 0 and 255 | Unsigned 8-bit integer |
 | float | 4 | A floating point number |
 | string | ≥ 1 | A sequence of bytes representing characters |
 
