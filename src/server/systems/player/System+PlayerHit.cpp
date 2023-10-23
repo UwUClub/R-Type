@@ -1,6 +1,6 @@
-#include "SparseArray.hpp"
+#include "EwECS/SparseArray.hpp"
+#include "EwECS/Utils.hpp"
 #include "System.hpp"
-#include "Utils.hpp"
 #include "components/HitBox.hpp"
 #include "components/IsAlive.hpp"
 

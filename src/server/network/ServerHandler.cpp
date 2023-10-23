@@ -2,7 +2,7 @@
 #include <boost/bind.hpp>
 #include <boost/serialization/serialization.hpp>
 #include <iostream>
-#include "EventManager.hpp"
+#include "EwECS/Event/EventManager.hpp"
 #include "NetworkHandler.hpp"
 #include "Packets.hpp"
 #include "PlayerColor.hpp"

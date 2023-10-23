@@ -2,7 +2,7 @@
 #include <cstddef>
 #include <vector>
 #include "ClientGameEvent.hpp"
-#include "EventManager.hpp"
+#include "EwECS/Event/EventManager.hpp"
 #include "SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"

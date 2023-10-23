@@ -1,6 +1,6 @@
 #include <cstddef>
 #include "Components.hpp"
-#include "SparseArray.hpp"
+#include "EwECS/SparseArray.hpp"
 
 #ifndef RTYPE_UTILS_HPP_
     #define RTYPE_UTILS_HPP_

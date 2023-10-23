@@ -1,6 +1,6 @@
+#include "EwECS/World.hpp"
 #include "System.hpp"
 #include "Values.hpp"
-#include "World.hpp"
 
 namespace ECS {
     void System::moveMissiles(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,

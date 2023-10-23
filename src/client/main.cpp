@@ -3,7 +3,9 @@
 #include <iostream>
 #include "ClientHandler.hpp"
 #include "Components.hpp"
-#include "EventManager.hpp"
+#include "EwECS/EwECS.hpp"
+#include "EwECS/Utils.hpp"
+#include "EwECS/World.hpp"
 #include "HitBox.hpp"
 #include "IsAlive.hpp"
 #include "NetworkHandler.hpp"
@@ -12,9 +14,7 @@
 #include "ServerGameEvent.hpp"
 #include "System.hpp"
 #include "TypeEntity.hpp"
-#include "Utils.hpp"
 #include "Values.hpp"
-#include "World.hpp"
 
 int main(int ac, char **av)
 {

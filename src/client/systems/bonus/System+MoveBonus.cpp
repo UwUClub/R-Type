@@ -1,7 +1,7 @@
 #include "../System.hpp"
+#include "EwECS/World.hpp"
 #include "SFMLDisplayClass.hpp"
 #include "Values.hpp"
-#include "World.hpp"
 
 namespace ECS {
     void System::moveBonus(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
