@@ -67,12 +67,12 @@ If the packet format is not respected, the packet will be ignored by the server.
 #### 3.2.1. Sent by client
 
 ##### 3.2.1.1. Connect
-| Type | Bounds to | Payload format | Payload size (bytes) |
+| Type | Bounds to | Payload description | Payload type |
 | - | - | - | - |
 | `0x00` | Server | empty | 0 |
 
 ##### 3.2.1.2. Disconnect
-| Type | Bounds to | Payload format | Payload size (bytes) |
+| Type | Bounds to | Payload description | Payload type |
 | - | - | - | - |
 | `0x01` | Server | empty | 0 |
 
@@ -103,7 +103,7 @@ If the packet format is not respected, the packet will be ignored by the server.
 </table> 
 
 ##### 3.2.1.4. Shoot
-| Type | Bounds to | Payload format | Payload size (bytes) |
+| Type | Bounds to | Payload description | Payload type |
 | - | - | - | - |
 | `0x03` | Server | empty | 0 bytes |
 
@@ -122,7 +122,7 @@ If the packet format is not respected, the packet will be ignored by the server.
     <td>Client</td>
     <td>
        <table>
-          <tr><td>Entity ID</td></tr>
+          <tr><td>Player entity ID</td></tr>
           <tr><td>Is receiver the concerned player</td></tr>
           <tr><td>Player color</td></tr>
           <tr><td>Player horizontal position</td></tr>
@@ -142,59 +142,169 @@ If the packet format is not respected, the packet will be ignored by the server.
 </table> 
 
 ##### 3.2.2.2. Player left
-| Type | Bounds to | Payload format | Payload size |
-| - | - | - | - |
-| `0x01` | Client | <ol><li>Id of the entity who leaves</li></ol> | 4 bytes |
+ <table>
+   <tr>
+    <th>Type</th>
+    <th>Bound to</th>
+    <th>Payload description</th>
+    <th>Payload type</th>
+   </tr>
+   <tr>
+    <td><code>0x01</code></td>
+    <td>Client</td>
+    <td>
+       <table>
+          <tr><td>Player entity ID</td></tr>
+       </table>
+    </td>
+    <td>
+       <table>
+          <tr><td>unsigned short</td></tr>
+       </table>
+    </td>
+   </tr>
+</table>
 
 ##### 3.2.2.3. Player position update
-| Type | Bounds to | Payload format | Payload size |
-| - | - | - | - |
-| `0x02` | Client | <ol><li>Entity id</li><li>Entity horizontal position</li><li>Entity vertical position</li></ol> | 12 bytes |
+ <table>
+   <tr>
+    <th>Type</th>
+    <th>Bound to</th>
+    <th>Payload description</th>
+    <th>Payload type</th>
+   </tr>
+   <tr>
+    <td><code>0x02</code></td>
+    <td>Client</td>
+    <td>
+       <table>
+          <tr><td>Player entity ID</td></tr>
+          <tr><td>Player horizontal position</td></tr>
+          <tr><td>Player vertical position</td></tr>
+       </table>
+    </td>
+    <td>
+       <table>
+          <tr><td>unsigned short</td></tr>
+          <tr><td>float</td></tr>
+          <tr><td>float</td></tr>
+       </table>
+    </td>
+   </tr>
+</table>
 
-##### 3.2.2.4. Player shot
-| Type | Bounds to | Payload format | Payload size |
-| - | - | - | - |
-| `0x03` | Client | <ol><li>Shooting entity id</li></ol> | 4 bytes |
+##### 3.2.2.4. Entity shot
+ <table>
+   <tr>
+    <th>Type</th>
+    <th>Bound to</th>
+    <th>Payload description</th>
+    <th>Payload type</th>
+   </tr>
+   <tr>
+    <td><code>0x03</code></td>
+    <td>Client</td>
+    <td>
+       <table>
+          <tr><td>Player entity ID</td></tr>
+       </table>
+    </td>
+    <td>
+       <table>
+          <tr><td>unsigned short</td></tr>
+       </table>
+    </td>
+   </tr>
+</table>
 
 ##### 3.2.2.5. Player got bonus
-| Type | Bounds to | Payload format | Payload size |
-| - | - | - | - |
-| `0x04` | Client | <ol><li>Concerned entity id</li><li>Bonus type</li></ol> | 4 bytes |
+<table>
+   <tr>
+    <th>Type</th>
+    <th>Bound to</th>
+    <th>Payload description</th>
+    <th>Payload type</th>
+   </tr>
+   <tr>
+    <td><code>0x04</code></td>
+    <td>Client</td>
+    <td>
+       <table>
+          <tr><td>Player entity ID</td></tr>
+       </table>
+    </td>
+    <td>
+       <table>
+          <tr><td>bonus</td></tr>
+       </table>
+    </td>
+   </tr>
+</table>
 
-##### 3.2.2.6. Player died
-| Type | Bounds to | Payload format | Payload size |
-| - | - | - | - |
-| `0x05` | Client | <ol><li>Dying entity id</li></ol> | 4 bytes |
+##### 3.2.2.6. Entity died
+<table>
+   <tr>
+    <th>Type</th>
+    <th>Bound to</th>
+    <th>Payload description</th>
+    <th>Payload type</th>
+   </tr>
+   <tr>
+    <td><code>0x05</code></td>
+    <td>Client</td>
+    <td>
+       <table>
+          <tr><td>Entity ID</td></tr>
+       </table>
+    </td>
+    <td>
+       <table>
+          <tr><td>bonus</td></tr>
+       </table>
+    </td>
+   </tr>
+</table>
 
 ##### 3.2.2.7. Monster spawned
-| Type | Bounds to | Payload format | Payload size |
-| - | - | - | - |
-| `0x06` | Client | <ol><li>Spawning entity id</li><li>Entity horizontal position</li><li>Entity vertical position</li></ol> | 12 bytes |
-
-##### 3.2.2.8. Monster died
-| Type | Bounds to | Payload format | Payload size |
-| - | - | - | - |
-| `0x07` | Client | <ol><li>Dying entity id</li></ol> | 4 bytes |
-
-##### 3.2.2.9. Monster shot
-| Type | Bounds to | Payload format | Payload size |
-| - | - | - | - |
-| `0x08` | Client | <ol><li>Shooting entity id</li></ol> | 4 bytes |
+<table>
+   <tr>
+    <th>Type</th>
+    <th>Bound to</th>
+    <th>Payload description</th>
+    <th>Payload type</th>
+   </tr>
+   <tr>
+    <td><code>0x06</code></td>
+    <td>Client</td>
+    <td>
+       <table>
+          <tr><td>Monster entity ID</td></tr>
+          <tr><td>Monster horizontal position</td></tr>
+          <tr><td>Monster vertical position</td></tr>
+       </table>
+    </td>
+    <td>
+       <table>
+          <tr><td>bonus</td></tr>
+       </table>
+    </td>
+   </tr>
+</table>
 
 ##### 3.2.2.10. Server is full
-| Type | Bounds to | Payload format | Payload size |
+| Type | Bound to | Payload format | Payload size |
 | - | - | - | - |
 | `0x09` | Client | empty | 0 bytes |
 
 #### 3.2.3. Sent by client & server
 
 ##### 3.2.3.1. Answer aknowledgment 
-|  Type | Bounds to | Payload format | Payload size |
+|  Type | Bound to | Payload format | Payload size |
 | - | - | - | - |
 | `-1` | Client & Server | empty | 0 bytes |
 
 ##### 3.2.3.2. Answer error
-|  Type | Bounds to | Payload format | Payload size |
+|  Type | Bound to | Payload format | Payload size |
 | - | - | - | - |
 | `-2` | Client & Server | empty | 0 bytes |
 
