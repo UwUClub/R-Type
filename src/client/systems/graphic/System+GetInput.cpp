@@ -1,12 +1,12 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <functional>
-#include "EventManager.hpp"
-#include "KeyboardEvent.hpp"
+#include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Event/KeyboardEvent.hpp"
+#include "EwECS/World.hpp"
 #include "SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
-#include "World.hpp"
 #include <unordered_map>
 
 namespace ECS {

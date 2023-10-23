@@ -1,13 +1,13 @@
 #include <cstddef>
 #include <iostream>
 #include <vector>
-#include "EventManager.hpp"
+#include "EwECS/Event/EventManager.hpp"
+#include "EwECS/SparseArray.hpp"
+#include "EwECS/World.hpp"
 #include "ServerGameEvent.hpp"
 #include "ServerHandler.hpp"
-#include "SparseArray.hpp"
 #include "System.hpp"
 #include "Values.hpp"
-#include "World.hpp"
 
 namespace ECS {
     void System::playerShoot(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,

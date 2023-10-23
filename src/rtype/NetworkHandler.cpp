@@ -3,7 +3,6 @@
 #include <chrono>
 #include <iostream>
 #include <string>
-#include "EventManager.hpp"
 #include "Packets.hpp"
 #include <boost/archive/binary_iarchive.hpp>
 

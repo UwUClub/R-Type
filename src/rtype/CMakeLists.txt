@@ -37,6 +37,7 @@ target_include_directories(server PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${Boost_INCLUDE_DIRS}
 )
+target_include_directories(rtype PRIVATE "${PROJECT_SOURCE_DIR}/extern/EwECS/includes")
 
 set_target_properties(rtype PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin

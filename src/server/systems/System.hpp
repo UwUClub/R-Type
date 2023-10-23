@@ -2,13 +2,13 @@
 #define SYSTEM_HPP_
 
 #include "Components.hpp"
+#include "EwECS/Event/KeyboardEvent.hpp"
+#include "EwECS/Event/MouseEvent.hpp"
+#include "EwECS/Event/WindowEvent.hpp"
+#include "EwECS/SparseArray.hpp"
+#include "EwECS/Utils.hpp"
+#include "EwECS/World.hpp"
 #include "HitBox.hpp"
-#include "KeyboardEvent.hpp"
-#include "MouseEvent.hpp"
-#include "SparseArray.hpp"
-#include "Utils.hpp"
-#include "WindowEvent.hpp"
-#include "World.hpp"
 
 namespace ECS {
     class System

@@ -1,0 +1,3 @@
+[submodule "extern/EwECS"]
+	path = extern/EwECS
+	url = https://github.com/UwUClub/EwECS.git

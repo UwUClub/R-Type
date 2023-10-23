@@ -9,12 +9,12 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <algorithm>
+#include "EwECS/SparseArray.hpp"
+#include "EwECS/Utils.hpp"
+#include "EwECS/World.hpp"
 #include "IsAlive.hpp"
 #include "LoadedSprite.hpp"
-#include "SparseArray.hpp"
-#include "Utils.hpp"
 #include "Values.hpp"
-#include "World.hpp"
 #if defined(__linux__)
     #include <libgen.h>
     #include <limits.h>
