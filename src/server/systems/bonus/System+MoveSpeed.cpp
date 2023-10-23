@@ -8,7 +8,6 @@
 #include "ServerHandler.hpp"
 #include "System.hpp"
 #include "Values.hpp"
-#include "World.hpp"
 
 namespace ECS {
     void System::moveSpeedUp(Core::SparseArray<Component::Speed> &aSpeed,
