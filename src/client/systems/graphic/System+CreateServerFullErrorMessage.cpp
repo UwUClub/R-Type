@@ -2,7 +2,7 @@
 #include <iostream>
 <<<<<<< HEAD
 #include <vector>
-=======
+    =======
 >>>>>>> 0d29eee3be32994006876e9d9af91bad5767b555
 #include "AddEntity.hpp"
 #include "ClientGameEvent.hpp"
@@ -11,12 +11,13 @@
 #include "SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
-<<<<<<< HEAD
+    <<<<<<< HEAD
 =======
 #include "World.hpp"
->>>>>>> 0d29eee3be32994006876e9d9af91bad5767b555
+    >>>>>>> 0d29eee3be32994006876e9d9af91bad5767b555
 
-namespace ECS {
+    namespace ECS
+{
     void System::createServerFullErrorMessage()
     {
         auto &world = ECS::Core::World::getInstance();
@@ -52,13 +53,13 @@ namespace ECS {
             display.freeRects(0);
             world.killEntity(0);
             AddEntity::addEntity(ECS::Utils::Vector2f {SCREEN_WIDTH / 2 - SERVER_FULL_MESSAGE_TEX_WIDTH / 2,
-                                                    SCREEN_HEIGHT / 2 - SERVER_FULL_MESSAGE_TEX_HEIGHT / 2},
-                              Component::Speed {0},
-                              Component::TypeEntity {false, false, false, false, false, false, true},
-                              Component::LoadedSprite {SERVER_FULL_MESSAGE, nullptr, nullptr,
-                                                       new sf::IntRect {400, 15, SERVER_FULL_MESSAGE_TEX_WIDTH,
-                                                                        SERVER_FULL_MESSAGE_TEX_HEIGHT}},
-                              Component::HitBox {}, Component::IsAlive {false, 0});
+                                                       SCREEN_HEIGHT / 2 - SERVER_FULL_MESSAGE_TEX_HEIGHT / 2},
+                                 Component::Speed {0},
+                                 Component::TypeEntity {false, false, false, false, false, false, true},
+                                 Component::LoadedSprite {SERVER_FULL_MESSAGE, nullptr, nullptr,
+                                                          new sf::IntRect {400, 15, SERVER_FULL_MESSAGE_TEX_WIDTH,
+                                                                           SERVER_FULL_MESSAGE_TEX_HEIGHT}},
+                                 Component::HitBox {}, Component::IsAlive {false, 0});
 
             toRemove.push_back(i);
         }
