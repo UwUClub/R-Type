@@ -29,7 +29,7 @@ R-Type is an iconic series of horizontal-scrolling shoot 'em up video games deve
             * [Player joined](#player-joined)
             * [Player left](#player-left)
             * [Player got bonus](#player-got-bonus)
-            * [Enemy spawned](#Enemy-spawned)
+            * [Enemy spawned](#enemy-spawned)
             * [Entity position update](#entity-position-update)
             * [Entity shot](#entity-shot)
             * [Entity died](#entity-died)
@@ -57,9 +57,11 @@ The R-Type server accepts connections from UDP clients and communicates with the
 
 ### 2.2. Data Types
 
-| Name | Size (bytes) | Encodes |
-| - | - | - |
-| int | 4 | An integer between -2147483648 and 2147483647 |
+| Name | Size (bytes) | Encodes | Notes |
+| - | - | - | - |
+| boolean | 1 | Either false or true  | True is encoded as 0x01, false as 0x00 |
+| short | 2 | An integer between -32768 and 32767 | Signed 16-bit integer |
+| unsigned short | 2 | An integer between 0 and 65535 | Unsigned 16-bit integer |
 | float | 4 | A floating point number |
 | string | ≥ 1 | A sequence of bytes representing characters |
 
