@@ -78,7 +78,7 @@ A packet has the following properties:
 | `type` | byte | [Packet type](#32-packet-types) |
 | `payload` | depends on [packet type](#32-packet-types) | Data carried by the packet |
 
-If the packet format is not respected, the packet will be ignored by the server.
+If the packet format is not respected, the server will send back a packet of Error type.
 
 ### 3.2. Packet Types
 
