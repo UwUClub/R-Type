@@ -29,7 +29,7 @@ R-Type is an iconic series of horizontal-scrolling shoot 'em up video games deve
             * [Player joined](#player-joined)
             * [Player left](#player-left)
             * [Player got bonus](#player-got-bonus)
-            * [Monster spawned](#monster-spawned)
+            * [Enemy spawned](#Enemy-spawned)
             * [Entity position update](#entity-position-update)
             * [Entity shot](#entity-shot)
             * [Entity died](#entity-died)
@@ -47,7 +47,7 @@ R-Type is an iconic series of horizontal-scrolling shoot 'em up video games deve
 The multiplayer R-Type game protocol is designed to enable communication
 between clients and servers in a multiplayer R-Type game. This protocol
 defines various message types and associated data structures for in-game
-events, including player interactions and monster behavior.
+events, including player interactions and enemy behavior.
 
 ## 2. Definitions
 
@@ -205,7 +205,7 @@ If the packet format is not respected, the packet will be ignored by the server.
    </tr>
 </table>
 
-##### Monster spawned
+##### Enemy spawned
 <table>
    <tr>
     <th>Type</th>
@@ -218,9 +218,9 @@ If the packet format is not respected, the packet will be ignored by the server.
     <td>Client</td>
     <td>
        <table>
-          <tr><td>Monster entity ID</td></tr>
-          <tr><td>Monster horizontal position</td></tr>
-          <tr><td>Monster vertical position</td></tr>
+          <tr><td>Enemy entity ID</td></tr>
+          <tr><td>Enemy horizontal position</td></tr>
+          <tr><td>Enemy vertical position</td></tr>
        </table>
     </td>
     <td>
@@ -324,13 +324,13 @@ If the packet format is not respected, the packet will be ignored by the server.
 | - | - | - | - |
 | `-2` | Client & Server | empty | empty |
 
-The first packet sent by a client to its server **must** be of type [connect](#3211-connect). Otherwise, the server will not listen to any of its packets.
+The first packet sent by a client to its server **must** be of type [connect](#connect). Otherwise, the server will not listen to any of its packets.
 
 When a client connects the server should:
-   - send `PLAYER_SPAWN` packets to the connecting client, for each player already present in the server
-   - send `ENEMY_SPAWN` packets to the connecting client, for each enemy already present in the server
+   - send [player joined](#player-joined) to the new player and each player already present in the server
+   - send [enemy spawned](#enemy-spawned) packets to the connecting client, for each enemy already present in the server
 
-This way the connecting client is aware of what is going during the gameplay.
+This way the new client is aware of what is going during the gameplay.
 
 ### 3.3. Reception Aknowledgment
 
