@@ -28,10 +28,10 @@ R-Type is an iconic series of horizontal-scrolling shoot 'em up video games deve
         * 3.2.2. [From server](#322-from-server)
             * [Player joined](#player-joined)
             * [Player left](#player-left)
-            * [Entity position update](#entity-position-update)
-            * [Monster spawned](#monster-spawned)
-            * [Entity shot](#entity-shot)
             * [Player got bonus](#player-got-bonus)
+            * [Monster spawned](#monster-spawned)
+            * [Entity position update](#entity-position-update)
+            * [Entity shot](#entity-shot)
             * [Entity died](#entity-died)
             * [Server is full](#server-is-full)
 
