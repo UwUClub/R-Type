@@ -87,12 +87,12 @@ If the packet format is not respected, the packet will be ignored by the server.
 | - | - | - | - |
 | `0x00` | Server | empty | 0 |
 
-##### 3.2.1.2. Disconnect
+##### Disconnect
 | Type | Bounds to | Payload description | Payload type |
 | - | - | - | - |
 | `0x01` | Server | empty | 0 |
 
-##### 3.2.1.3. Move
+##### Move
  <table>
    <tr>
     <th>Type</th>
@@ -118,14 +118,14 @@ If the packet format is not respected, the packet will be ignored by the server.
    </tr>
 </table> 
 
-##### 3.2.1.4. Shoot
+##### Shoot
 | Type | Bounds to | Payload description | Payload type |
 | - | - | - | - |
 | `0x03` | Server | empty | 0 bytes |
 
 #### 3.2.2. From server
 
-##### 3.2.2.1. Player joined
+##### Player joined
  <table>
    <tr>
     <th>Type</th>
@@ -157,7 +157,7 @@ If the packet format is not respected, the packet will be ignored by the server.
    </tr>
 </table> 
 
-##### 3.2.2.2. Player left
+##### Player left
  <table>
    <tr>
     <th>Type</th>
@@ -181,7 +181,7 @@ If the packet format is not respected, the packet will be ignored by the server.
    </tr>
 </table>
 
-##### 3.2.2.5. Player position update
+##### Player position update
  <table>
    <tr>
     <th>Type</th>
