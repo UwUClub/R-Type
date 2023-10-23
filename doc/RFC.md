@@ -85,12 +85,12 @@ If the packet format is not respected, the packet will be ignored by the server.
 ##### Connect
 | Type | Bounds to | Payload description | Payload type |
 | - | - | - | - |
-| `0x00` | Server | empty | 0 |
+| `0x00` | Server | empty | empty |
 
 ##### Disconnect
 | Type | Bounds to | Payload description | Payload type |
 | - | - | - | - |
-| `0x01` | Server | empty | 0 |
+| `0x01` | Server | empty | empty |
 
 ##### Move
  <table>
@@ -121,7 +121,7 @@ If the packet format is not respected, the packet will be ignored by the server.
 ##### Shoot
 | Type | Bounds to | Payload description | Payload type |
 | - | - | - | - |
-| `0x03` | Server | empty | 0 bytes |
+| `0x03` | Server | empty | empty |
 
 #### 3.2.2. From server
 
@@ -181,8 +181,8 @@ If the packet format is not respected, the packet will be ignored by the server.
    </tr>
 </table>
 
-##### Player position update
- <table>
+##### Player got bonus
+<table>
    <tr>
     <th>Type</th>
     <th>Bound to</th>
@@ -195,21 +195,17 @@ If the packet format is not respected, the packet will be ignored by the server.
     <td>
        <table>
           <tr><td>Player entity ID</td></tr>
-          <tr><td>Player horizontal position</td></tr>
-          <tr><td>Player vertical position</td></tr>
        </table>
     </td>
     <td>
        <table>
-          <tr><td>unsigned short</td></tr>
-          <tr><td>float</td></tr>
-          <tr><td>float</td></tr>
+          <tr><td>bonus</td></tr>
        </table>
     </td>
    </tr>
 </table>
 
-##### 3.2.2.4. Monster spawned
+##### Monster spawned
 <table>
    <tr>
     <th>Type</th>
@@ -218,7 +214,7 @@ If the packet format is not respected, the packet will be ignored by the server.
     <th>Payload type</th>
    </tr>
    <tr>
-    <td><code>0x06</code></td>
+    <td><code>0x03</code></td>
     <td>Client</td>
     <td>
        <table>
@@ -235,7 +231,7 @@ If the packet format is not respected, the packet will be ignored by the server.
    </tr>
 </table>
 
-##### 3.2.2.5. Entity shot
+##### Entity position update
  <table>
    <tr>
     <th>Type</th>
@@ -244,7 +240,35 @@ If the packet format is not respected, the packet will be ignored by the server.
     <th>Payload type</th>
    </tr>
    <tr>
-    <td><code>0x03</code></td>
+    <td><code>0x04</code></td>
+    <td>Client</td>
+    <td>
+       <table>
+          <tr><td>Entity ID</td></tr>
+          <tr><td>Entity horizontal position</td></tr>
+          <tr><td>Entity vertical position</td></tr>
+       </table>
+    </td>
+    <td>
+       <table>
+          <tr><td>unsigned short</td></tr>
+          <tr><td>float</td></tr>
+          <tr><td>float</td></tr>
+       </table>
+    </td>
+   </tr>
+</table>
+
+##### Entity shot
+ <table>
+   <tr>
+    <th>Type</th>
+    <th>Bound to</th>
+    <th>Payload description</th>
+    <th>Payload type</th>
+   </tr>
+   <tr>
+    <td><code>0x05</code></td>
     <td>Client</td>
     <td>
        <table>
@@ -259,7 +283,7 @@ If the packet format is not respected, the packet will be ignored by the server.
    </tr>
 </table>
 
-##### 3.2.2.6. Player got bonus
+##### Entity died
 <table>
    <tr>
     <th>Type</th>
@@ -268,31 +292,7 @@ If the packet format is not respected, the packet will be ignored by the server.
     <th>Payload type</th>
    </tr>
    <tr>
-    <td><code>0x04</code></td>
-    <td>Client</td>
-    <td>
-       <table>
-          <tr><td>Player entity ID</td></tr>
-       </table>
-    </td>
-    <td>
-       <table>
-          <tr><td>bonus</td></tr>
-       </table>
-    </td>
-   </tr>
-</table>
-
-##### 3.2.2.7. Entity died
-<table>
-   <tr>
-    <th>Type</th>
-    <th>Bound to</th>
-    <th>Payload description</th>
-    <th>Payload type</th>
-   </tr>
-   <tr>
-    <td><code>0x05</code></td>
+    <td><code>0x06</code></td>
     <td>Client</td>
     <td>
        <table>
@@ -307,22 +307,22 @@ If the packet format is not respected, the packet will be ignored by the server.
    </tr>
 </table>
 
-##### 3.2.2.8. Server is full
-| Type | Bound to | Payload format | Payload size |
+##### Server is full
+| Type | Bound to | Payload description | Payload type |
 | - | - | - | - |
-| `0x09` | Client | empty | 0 bytes |
+| `0x07` | Client | empty | empty |
 
 #### 3.2.3. From client & server
 
-##### 3.2.3.1. Answer aknowledgment 
-|  Type | Bound to | Payload format | Payload size |
+##### Answer aknowledgment 
+|  Type | Bound to | Payload type | Payload size (bytes) |
 | - | - | - | - |
-| `-1` | Client & Server | empty | 0 bytes |
+| `-1` | Client & Server | empty | empty |
 
-##### 3.2.3.2. Answer error
-|  Type | Bound to | Payload format | Payload size |
+##### Answer error
+|  Type | Bound to | Payload type | Payload size (bytes) |
 | - | - | - | - |
-| `-2` | Client & Server | empty | 0 bytes |
+| `-2` | Client & Server | empty | empty |
 
 The first packet sent by a client to its server **must** be of type [connect](#3211-connect). Otherwise, the server will not listen to any of its packets.
 
