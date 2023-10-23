@@ -4,9 +4,10 @@
 #include <chrono>
 #include <iostream>
 #include <string>
-#include "EventManager.hpp"
+#include "EwECS/Event/EventManager.hpp"
 #include "NetworkHandler.hpp"
 #include "Packets.hpp"
+#include "Values.hpp"
 
 namespace Network {
 
@@ -25,13 +26,10 @@ namespace Network {
             (void) aEndpoint;
 
             if (aEndpoint == _serverEndpoint) {
-                receivePacket(aPacket);
+                if (aPacket.type >= 0 && aPacket.type < RType::ClientEventType::MAX_CLI_EVT) {
+                    receivePacket(aPacket);
+                }
             }
-        });
-
-        network.onReceiveAknowledgment([this](const std::string &aUuid, udp::endpoint &aEndpoint) {
-            (void) aUuid;
-            (void) aEndpoint;
         });
 
         network.start(udp::v4());
@@ -40,10 +38,10 @@ namespace Network {
 
     void ClientHandler::receivePacket(const RType::Packet &aPacket)
     {
-        RType::ClientEventType packetType = static_cast<RType::ClientEventType>(aPacket.type);
+        auto packetType = static_cast<RType::ClientEventType>(aPacket.type);
 
-        auto *evt = new RType::ClientGameEvent(packetType, aPacket.payload);
-        ECS::Event::EventManager::getInstance()->pushEvent(evt);
+        ECS::Event::EventManager::getInstance()->pushEvent<RType::ClientGameEvent>(
+            RType::ClientGameEvent(packetType, aPacket.payload));
     }
 
     void ClientHandler::send(RType::Packet &aPacket)

@@ -7,19 +7,27 @@ namespace ECS {
                           Core::SparseArray<Component::IsAlive> &aIsAlive)
     {
         auto &world = Core::World::getInstance();
+        const auto size = aType.size();
 
-        for (size_t enemyId = 0; enemyId < aType.size(); enemyId++) {
-            if (!aType[enemyId].has_value() || !aType[enemyId].value().isEnemy) {
+        for (size_t enemyId = 0; enemyId < size; enemyId++) {
+            if (!aType[enemyId].has_value() || !aType[enemyId].value().isEnemy || !aPos[enemyId].has_value()
+                || !aHitBox[enemyId].has_value() || !aIsAlive[enemyId].has_value()) {
                 continue;
             }
-            for (size_t bullet = 0; bullet < aPos.size(); bullet++) {
-                if (!aType[bullet].has_value() || !aType[bullet].value().isBullet) {
+
+            auto &posEnemy = aPos[enemyId].value();
+            auto &hitBoxEnemy = aHitBox[enemyId].value();
+            const auto posSize = aPos.size();
+
+            for (size_t bullet = 0; bullet < posSize; bullet++) {
+                if (!aType[bullet].has_value() || !aType[bullet].value().isBullet || !aPos[bullet].has_value()) {
                     continue;
                 }
-                if (aPos[bullet].value().x > aPos[enemyId].value().x
-                    && aPos[bullet].value().x < aPos[enemyId].value().x + aHitBox[enemyId].value().width
-                    && aPos[bullet].value().y > aPos[enemyId].value().y
-                    && aPos[bullet].value().y < aPos[enemyId].value().y + aHitBox[enemyId].value().height) {
+
+                auto &posBullet = aPos[bullet].value();
+
+                if (posBullet.x > posEnemy.x && posBullet.x < posEnemy.x + hitBoxEnemy.width && posBullet.y > posEnemy.y
+                    && posBullet.y < posEnemy.y + hitBoxEnemy.height) {
                     aIsAlive[enemyId].value().isAlive = false;
                     world.killEntity(bullet);
                     break;

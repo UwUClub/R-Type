@@ -1,27 +1,24 @@
-#include "SparseArray.hpp"
+#include "EwECS/SparseArray.hpp"
+#include "EwECS/Utils.hpp"
 #include "System.hpp"
 #include "components/HitBox.hpp"
 #include "components/IsAlive.hpp"
 
 namespace ECS {
-    bool checkHitBox(size_t playerId, size_t obstacleId, Core::SparseArray<Utils::Vector2f> &aPos,
-                     Core::SparseArray<Component::HitBox> &aHitBox)
+    bool checkHitBox(Utils::Vector2f &aPosPlayer, Component::HitBox &aHitBoxPlayer, Utils::Vector2f &aPosObstacle,
+                     Component::HitBox &aHitBoxObstacle)
     {
-        if (aPos[playerId].value().x > aPos[obstacleId].value().x
-            && aPos[playerId].value().x < aPos[obstacleId].value().x + aHitBox[obstacleId].value().width
-            && aPos[playerId].value().y > aPos[obstacleId].value().y
-            && aPos[playerId].value().y < aPos[obstacleId].value().y + aHitBox[obstacleId].value().height) {
+        if (aPosPlayer.x > aPosObstacle.x && aPosPlayer.x < aPosObstacle.x + aHitBoxObstacle.width
+            && aPosPlayer.y > aPosObstacle.y && aPosPlayer.y < aPosObstacle.y + aHitBoxObstacle.height) {
             return (true);
-        } else if ((aPos[playerId].value().x + aHitBox[playerId].value().width > aPos[obstacleId].value().x
-                    && aPos[playerId].value().x + aHitBox[playerId].value().width
-                           < aPos[obstacleId].value().x + aHitBox[obstacleId].value().width
-                    && aPos[playerId].value().y > aPos[obstacleId].value().y
-                    && aPos[playerId].value().y < aPos[obstacleId].value().y + aHitBox[obstacleId].value().height)) {
+        }
+        if ((aPosPlayer.x + aHitBoxPlayer.width > aPosObstacle.x
+             && aPosPlayer.x + aHitBoxPlayer.width < aPosObstacle.x + aHitBoxObstacle.width
+             && aPosPlayer.y > aPosObstacle.y && aPosPlayer.y < aPosObstacle.y + aHitBoxObstacle.height)) {
             return (true);
-        } else if (aPos[obstacleId].value().x > aPos[playerId].value().x
-                   && aPos[obstacleId].value().x < aPos[playerId].value().x + aHitBox[playerId].value().width
-                   && aPos[obstacleId].value().y > aPos[playerId].value().y
-                   && aPos[obstacleId].value().y < aPos[playerId].value().y + aHitBox[playerId].value().height) {
+        }
+        if (aPosObstacle.x > aPosPlayer.x && aPosObstacle.x < aPosPlayer.x + aHitBoxPlayer.width
+            && aPosObstacle.y > aPosPlayer.y && aPosObstacle.y < aPosPlayer.y + aHitBoxPlayer.height) {
             return (true);
         }
         return (false);
@@ -32,18 +29,29 @@ namespace ECS {
                            Core::SparseArray<Component::HitBox> &aHitBox)
     {
         auto &world = Core::World::getInstance();
+        const auto size = aType.size();
 
-        for (size_t playerId = 0; playerId < aType.size(); playerId++) {
+        for (size_t playerId = 0; playerId < size; playerId++) {
             if (!aType[playerId].has_value() || !aType[playerId].value().isPlayer) {
                 continue;
             }
-            for (size_t obstacleId = 0; obstacleId < aPos.size(); obstacleId++) {
+
+            const auto posSize = aPos.size();
+            auto &posPlayer = aPos[playerId].value();
+            auto &hitBoxPlayer = aHitBox[playerId].value();
+            auto &isPlayerAlive = aIsAlive[playerId].value();
+
+            for (size_t obstacleId = 0; obstacleId < posSize; obstacleId++) {
                 if (!aType[obstacleId].has_value()
                     || (!aType[obstacleId].value().isBullet && !aType[obstacleId].value().isEnemy)) {
                     continue;
                 }
-                if (checkHitBox(playerId, obstacleId, aPos, aHitBox)) {
-                    aIsAlive[playerId].value().isAlive = false;
+
+                auto &posObstacle = aPos[obstacleId].value();
+                auto &hitBoxObstacle = aHitBox[obstacleId].value();
+
+                if (checkHitBox(posPlayer, hitBoxPlayer, posObstacle, hitBoxObstacle)) {
+                    isPlayerAlive.isAlive = false;
                     world.killEntity(obstacleId);
                 }
             }

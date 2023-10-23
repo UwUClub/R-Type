@@ -1,4 +1,4 @@
-#include "KeyboardEvent.hpp"
+#include "EwECS/Event/KeyboardEvent.hpp"
 #include "SFMLDisplayClass.hpp"
 #include "System.hpp"
 
@@ -7,21 +7,27 @@ namespace ECS {
                                  Core::SparseArray<Utils::Vector2f> &aPos)
     {
         SFMLDisplayClass &display = SFMLDisplayClass::getInstance();
+        const auto size = aSprites.size();
 
         display._window.clear(sf::Color::Black);
-        for (size_t i = 0; i < aSprites.size(); i++) {
+        for (size_t i = 0; i < size; i++) {
             if (!aSprites[i].has_value() || aSprites[i]->texture == nullptr) {
                 continue;
             }
             if (!aPos[i].has_value()) {
                 continue;
             }
-            if (aSprites[i]->srcRect != nullptr) {
+
+            auto &spriteData = aSprites[i].value();
+            auto &pos = aPos[i].value();
+
+            if (spriteData.srcRect != nullptr) {
                 sf::Sprite sprite;
-                sprite.setTexture(*aSprites[i]->texture);
-                sprite.setTextureRect(*aSprites[i]->rect);
-                sprite.setPosition(aPos[i].value().x, aPos[i].value().y);
-                sprite.scale(aSprites[i]->scale, aSprites[i]->scale);
+
+                sprite.setTexture(*spriteData.texture);
+                sprite.setTextureRect(*spriteData.rect);
+                sprite.setPosition(pos.x, pos.y);
+                sprite.scale(spriteData.scale, spriteData.scale);
                 display._window.draw(sprite);
             }
         }

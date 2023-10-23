@@ -1,12 +1,12 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <functional>
-#include "EventManager.hpp"
-#include "KeyboardEvent.hpp"
+#include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Event/KeyboardEvent.hpp"
+#include "EwECS/World.hpp"
 #include "SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
-#include "World.hpp"
 #include <unordered_map>
 
 namespace ECS {
@@ -19,8 +19,8 @@ namespace ECS {
         while (display->_window.pollEvent(event)) {
             if (event.type == sf::Event::KeyPressed && (_keyMap.find(event.key.code) != _keyMap.end())) {
                 try {
-                    auto *keyEvent = new Event::KeyboardEvent(_keyMap.at(event.key.code), Event::KeyState::PRESSED);
-                    eventManager->pushEvent(keyEvent);
+                    eventManager->pushEvent<Event::KeyboardEvent>(
+                        Event::KeyboardEvent(_keyMap.at(event.key.code), Event::KeyState::PRESSED));
                 } catch (std::exception &e) {
                     std::cerr << e.what() << std::endl;
                 }

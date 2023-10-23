@@ -1,6 +1,7 @@
+#include "EwECS/World.hpp"
 #include "SFMLDisplayClass.hpp"
 #include "System.hpp"
-#include "World.hpp"
+#include "Values.hpp"
 
 namespace ECS {
     void System::moveEnemy(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
@@ -8,22 +9,24 @@ namespace ECS {
     {
         auto &world = Core::World::getInstance();
         auto &display = SFMLDisplayClass::getInstance();
+        const auto size = aPos.size();
 
-        for (size_t idx = 0; idx < aPos.size(); idx++) {
-            if (!aPos[idx].has_value()) {
+        for (size_t idx = 0; idx < size; idx++) {
+            if (!aPos[idx].has_value() || !aSpeed[idx].has_value() || !aType[idx].has_value()) {
                 continue;
             }
+
             auto &pos = aPos[idx].value();
             auto &speed = aSpeed[idx].value();
             auto &type = aType[idx].value();
+
             if (type.isEnemy) {
                 pos.x -= speed.speed * world.getDeltaTime();
-                if (pos.x < -30) {
+                if (pos.x < -ENEMY_TEX_WIDTH) {
                     display.freeRects(idx);
                     world.killEntity(idx);
                 }
             }
         }
     }
-
 } // namespace ECS

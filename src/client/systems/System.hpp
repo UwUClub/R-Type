@@ -8,13 +8,13 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Window.hpp>
 #include "Components.hpp"
+#include "EwECS/Event/KeyboardEvent.hpp"
+#include "EwECS/Event/WindowEvent.hpp"
+#include "EwECS/SparseArray.hpp"
+#include "EwECS/Utils.hpp"
+#include "EwECS/World.hpp"
 #include "IsAlive.hpp"
-#include "KeyboardEvent.hpp"
 #include "LoadedSprite.hpp"
-#include "SparseArray.hpp"
-#include "Utils.hpp"
-#include "WindowEvent.hpp"
-#include "World.hpp"
 #include "components/HitBox.hpp"
 
 namespace ECS {
@@ -79,12 +79,6 @@ namespace ECS {
              *
              */
             static void getInput();
-
-            /**
-             * @brief Close the SDL window (locally)
-             *
-             */
-            static void quitSDL();
 
             /**
              * @brief Load all the textures of the game (locally)
@@ -192,12 +186,10 @@ namespace ECS {
              *
              * @param aPos SparseArray of all entities position
              * @param aType SparseArray of all entities type
-             * @param aIsAlive SparseArray of all entities isAlive component
              * @param HitBox SparseArray of all entities hitbox component
              */
             static void botHit(Core::SparseArray<Utils::Vector2f> &aPos,
                                Core::SparseArray<Component::TypeEntity> &aType,
-                               Core::SparseArray<Component::IsAlive> &aIsAlive,
                                Core::SparseArray<Component::HitBox> &HitBox);
 
             /**
