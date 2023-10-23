@@ -28,8 +28,6 @@ namespace Network {
             if (aEndpoint == _serverEndpoint) {
                 if (aPacket.type >= 0 && aPacket.type < RType::ClientEventType::MAX_CLI_EVT) {
                     receivePacket(aPacket);
-                } else if (aPacket.type != AKNOWLEDGMENT_PACKET_TYPE) {
-                    // TODO: receiveError
                 }
             }
         });
