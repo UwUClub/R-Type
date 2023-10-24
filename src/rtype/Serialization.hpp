@@ -13,6 +13,20 @@
 
 namespace Network::Serialization {
 
+    template<typename T>
+    void pack(std::vector<uint8_t> &dst, T &data)
+    {
+        auto *src = static_cast<uint8_t *>(static_cast<void *>(&data));
+        // dst.insert(dst.end(), src, src + sizeof(T));
+        std::copy(src, src + sizeof(T), dst.end());
+    }
+
+    template<typename T>
+    void unpack(std::vector<uint8_t> &src, int index, T &data)
+    {
+        std::copy(&src[index], &src[index + sizeof(T)], &data);
+    }
+
     static std::vector<uint8_t> serialize(PacketHeader &header)
     {
         std::vector<uint8_t> bytes(sizeof(header));
@@ -20,10 +34,9 @@ namespace Network::Serialization {
         auto it = bytes.begin();
 
         // Serialize header
-        std::copy(ptr, ptr + sizeof(header.uuid), it);
-        it += sizeof(header.uuid);
+        std::copy(ptr, ptr + UUID_LENGTH, it);
+        it += UUID_LENGTH;
         std::copy(ptr, ptr + sizeof(header.type), it);
-        it += sizeof(header.type);
 
         return bytes;
     }
@@ -37,8 +50,8 @@ namespace Network::Serialization {
         auto it = bytes.begin();
 
         // Serialize header
-        std::copy(headerPtr, headerPtr + sizeof(header.uuid), it);
-        it += sizeof(header.uuid);
+        std::copy(headerPtr, headerPtr + UUID_LENGTH, it);
+        it += UUID_LENGTH;
         std::copy(headerPtr, headerPtr + sizeof(header.type), it);
         it += sizeof(header.type);
 
@@ -60,8 +73,8 @@ namespace Network::Serialization {
         }
 
         // Unserialize header
-        std::copy(it, it + sizeof(header.uuid), ptr);
-        it += sizeof(header.uuid);
+        std::copy(it, it + UUID_LENGTH, ptr);
+        it += UUID_LENGTH;
         std::copy(it, it + sizeof(header.type), ptr);
         it += sizeof(header.type);
 

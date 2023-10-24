@@ -65,7 +65,7 @@ namespace Network {
              * @param aPayload The packet payload
              */
             template<typename Payload>
-            void send(int8_t aType, const Payload &aPayload)
+            void send(int8_t aType, Payload &aPayload)
             {
                 NetworkHandler::getInstance().send<Payload>(aType, aPayload, _serverEndpoint);
             }
