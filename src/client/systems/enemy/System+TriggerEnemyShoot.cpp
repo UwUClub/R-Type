@@ -1,7 +1,10 @@
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <vector>
+<<<<<<< HEAD
 #include "AddEntity.hpp"
+=======
+>>>>>>> bf9ea2514a2d01e5c2b21eb96ab2e791b33bbd40
 #include "ClientGameEvent.hpp"
 #include "EwECS/Event/EventManager.hpp"
 #include "EwECS/SparseArray.hpp"
@@ -11,8 +14,14 @@
 #include "System.hpp"
 #include "Values.hpp"
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include "World.hpp"
+=======
+
+namespace ECS {
+    void System::triggerEnemyShoot()
+>>>>>>> bf9ea2514a2d01e5c2b21eb96ab2e791b33bbd40
     {
         auto &display = SFMLDisplayClass::getInstance();
         Event::EventManager *eventManager = Event::EventManager::getInstance();
@@ -38,7 +47,11 @@
             float posX = payload[1];
             auto posY = payload[2];
 
+<<<<<<< HEAD
             AddEntity::addEntity(
+=======
+            display.addEntity(
+>>>>>>> bf9ea2514a2d01e5c2b21eb96ab2e791b33bbd40
                 ECS::Utils::Vector2f {posX, posY}, Component::Speed {MISSILES_SPEED},
                 Component::TypeEntity {false, false, false, true, false, false, false, onlineMissileId},
                 Component::LoadedSprite {MISSILES_ASSET, nullptr,

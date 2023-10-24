@@ -75,9 +75,14 @@ namespace ECS {
                 sprite.rect->left = 146;
                 isAlive.timeToDie = 1;
                 if (rand() % 5 == 0) {
+<<<<<<< HEAD
                     AddEntity::addEntity(
                         ECS::Utils::Vector2f {aPos[enemy].value().x, aPos[enemy].value().y},
                         Component::Speed {BONUS_SPEED},
+=======
+                    display.addEntity(
+                        ECS::Utils::Vector2f {pos.x, pos.y}, Component::Speed {BONUS_SPEED},
+>>>>>>> bf9ea2514a2d01e5c2b21eb96ab2e791b33bbd40
                         Component::TypeEntity {false, false, false, false, false, true, false},
                         Component::LoadedSprite {BONUS_ASSET, nullptr,
                                                  new sf::IntRect {125, 520, BONUS_TEX_WIDTH, BONUS_TEX_HEIGHT},

@@ -1,6 +1,9 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <vector>
+<<<<<<< HEAD
 #include "AddEntity.hpp"
+=======
+>>>>>>> bf9ea2514a2d01e5c2b21eb96ab2e791b33bbd40
 #include "ClientGameEvent.hpp"
 #include "EwECS/Event/EventManager.hpp"
 #include "SFMLDisplayClass.hpp"
@@ -34,7 +37,11 @@ namespace ECS {
             float posX = payload[1];
             float posY = payload[2];
 
+<<<<<<< HEAD
             AddEntity::addEntity(ECS::Utils::Vector2f {posX, posY}, Component::Speed {ENEMY_SPEED},
+=======
+            display.addEntity(ECS::Utils::Vector2f {posX, posY}, Component::Speed {ENEMY_SPEED},
+>>>>>>> bf9ea2514a2d01e5c2b21eb96ab2e791b33bbd40
                               Component::TypeEntity {false, false, true, false, false, false, false, onlineEntityId},
                               Component::LoadedSprite {ENEMY_ASSET, nullptr,
                                                        new sf::IntRect {0, 0, ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT},
