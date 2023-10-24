@@ -3,9 +3,9 @@
 #include <vector>
 #include "Components.hpp"
 #include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Physic/HitBox.hpp"
 #include "EwECS/SparseArray.hpp"
 #include "EwECS/World.hpp"
-#include "HitBox.hpp"
 #include "NetworkHandler.hpp"
 #include "Packets.hpp"
 #include "PlayerColor.hpp"

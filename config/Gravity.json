@@ -1,0 +1,6 @@
+{
+    "physics": {
+        "gravity": 2,
+        "initial_fall_velocity": 2
+    }
+}
