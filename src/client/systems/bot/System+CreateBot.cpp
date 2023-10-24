@@ -44,11 +44,11 @@ namespace ECS {
             float posY = payload[4];
 
             AddEntity::addEntity(ECS::Utils::Vector2f {posX, posY}, Component::Speed {PLAYER_SPEED}, entityType,
-                              Component::LoadedSprite {
-                                  PLAYER_ASSET, nullptr,
-                                  new sf::IntRect {0, color * PLAYER_TEX_HEIGHT, PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT},
-                                  new sf::IntRect {0, 0, PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT}},
-                              Component::HitBox {PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT}, Component::IsAlive {true, 0});
+                                 Component::LoadedSprite {PLAYER_ASSET, nullptr,
+                                                          new sf::IntRect {0, color * PLAYER_TEX_HEIGHT,
+                                                                           PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT},
+                                                          new sf::IntRect {0, 0, PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT}},
+                                 Component::HitBox {PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT}, Component::IsAlive {true, 0});
             toRemove.push_back(i);
         }
         eventManager->removeEvent<RType::ClientGameEvent>(toRemove);
