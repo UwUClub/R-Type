@@ -3,7 +3,7 @@
 #include "EwECS/Event/EventManager.hpp"
 #include "EwECS/Event/KeyboardEvent.hpp"
 #include "EwECS/World.hpp"
-#include "SFMLDisplayClass.hpp"
+#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 #include "components/IsAlive.hpp"

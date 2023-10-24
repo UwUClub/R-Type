@@ -2,7 +2,7 @@
 #include "ClientGameEvent.hpp"
 #include "EwECS/Event/EventManager.hpp"
 #include "IsAlive.hpp"
-#include "SFMLDisplayClass.hpp"
+#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "TypeUtils.hpp"
 #include "Values.hpp"
@@ -60,15 +60,14 @@ namespace ECS {
             auto &isAlive = aIsAlive[botId].value();
 
             if (!isAlive.isAlive && isAlive.timeToDie < 0) {
-                display.freeRects(botId);
                 world.killEntity(botId);
             } else if (!isAlive.isAlive && isAlive.timeToDie == 0) {
                 sprite.path = EXPLOSION_ASSET;
                 sprite.texture = nullptr;
-                sprite.rect->height = EXPLOSION_TEX_HEIGHT;
-                sprite.rect->width = EXPLOSION_TEX_WIDTH;
-                sprite.rect->left = 146;
-                sprite.rect->top = 46;
+                sprite.rect.height = EXPLOSION_TEX_HEIGHT;
+                sprite.rect.width = EXPLOSION_TEX_WIDTH;
+                sprite.rect.left = 146;
+                sprite.rect.top = 46;
                 isAlive.timeToDie = 1;
             } else if (!isAlive.isAlive) {
                 isAlive.timeToDie -= world.getDeltaTime();

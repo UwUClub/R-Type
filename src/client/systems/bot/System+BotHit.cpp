@@ -1,6 +1,6 @@
 #include <iostream>
 #include "EwECS/SparseArray.hpp"
-#include "SFMLDisplayClass.hpp"
+#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "components/HitBox.hpp"
 #include "components/IsAlive.hpp"
@@ -31,7 +31,6 @@ namespace ECS {
                 auto &posMissile = aPos[missileId].value();
                 if ((posMissile.x > posPlayer.x && posMissile.x < posPlayer.x + hitBoxPlayer.width
                      && posMissile.y > posPlayer.y && posMissile.y < posPlayer.y + hitBoxPlayer.height)) {
-                    display.freeRects(missileId);
                     world.killEntity(missileId);
                 }
             }

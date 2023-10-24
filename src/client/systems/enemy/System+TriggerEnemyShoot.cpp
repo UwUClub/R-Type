@@ -7,15 +7,10 @@
 #include "EwECS/SparseArray.hpp"
 #include "EwECS/World.hpp"
 #include "IsAlive.hpp"
-#include "SFMLDisplayClass.hpp"
+#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-#include "World.hpp"
-<<<<<<< HEAD
-=======
+
 
 namespace ECS {
     void System::triggerEnemyShoot()
@@ -46,35 +41,10 @@ namespace ECS {
             AddEntity::addEntity(
                 ECS::Utils::Vector2f {posX, posY}, Component::Speed {MISSILES_SPEED},
                 Component::TypeEntity {false, false, false, true, false, false, false, onlineMissileId},
-                Component::LoadedSprite {MISSILES_ASSET, nullptr,
-                                         new sf::IntRect {304, 10, MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT},
-                                         new sf::IntRect {0, 0, MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT}},
+                Component::LoadedSprite {MISSILES_ASSET, nullptr, 304, 10, MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT},
                 Component::HitBox {MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT}, Component::IsAlive {false, 0});
-            toRemove.push_back(i);
-        if (gameEvent.getType() != RType::ClientEventType::ENEMY_SHOOT) {
-            continue;
+            toRemove.push_back(i);        
         }
-
-        const auto &payload = gameEvent.getPayload();
-
-        if (payload.size() != 3) {
-            toRemove.push_back(i);
-            continue;
-        }
-
-        std::size_t onlineMissileId = static_cast<int>(payload[0]);
-        float posX = payload[1];
-        auto posY = payload[2];
-
-        AddEntity::addEntity(
-            ECS::Utils::Vector2f {posX, posY}, Component::Speed {MISSILES_SPEED},
-            Component::TypeEntity {false, false, false, true, false, false, false, onlineMissileId},
-            Component::LoadedSprite {MISSILES_ASSET, nullptr,
-                                     new sf::IntRect {304, 10, MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT},
-                                     new sf::IntRect {0, 0, MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT}},
-            Component::HitBox {MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT}, Component::IsAlive {false, 0});
-        toRemove.push_back(i);
+        eventManager->removeEvent<RType::ClientGameEvent>(toRemove);
     }
-    eventManager->removeEvent<RType::ClientGameEvent>(toRemove);
-}
 } // namespace ECS

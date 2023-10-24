@@ -1,4 +1,4 @@
-#include "SFMLDisplayClass.hpp"
+#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 
@@ -28,7 +28,6 @@ namespace ECS {
 
                 if (posBullet.x > posEnemy.x && posBullet.x < posEnemy.x + hitBoxEnemy.width && posBullet.y > posEnemy.y
                     && posBullet.y < posEnemy.y + hitBoxEnemy.height) {
-                    display.freeRects(bullet);
                     world.killEntity(bullet);
                     break;
                 }

@@ -5,7 +5,7 @@
 #include "HitBox.hpp"
 #include "IsAlive.hpp"
 #include "SFML/Graphics/Rect.hpp"
-#include "SFMLDisplayClass.hpp"
+#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "TypeUtils.hpp"
 #include "Values.hpp"
@@ -64,29 +64,22 @@ namespace ECS {
             auto &isAlive = aIsAlive[enemy].value();
 
             if (!isAlive.isAlive && isAlive.timeToDie < 0) {
-                display.freeRects(enemy);
                 world.killEntity(enemy);
             } else if (!isAlive.isAlive && isAlive.timeToDie == 0) {
                 sprite.path = EXPLOSION_ASSET;
                 sprite.texture = nullptr;
-                sprite.rect->height = EXPLOSION_TEX_HEIGHT;
-                sprite.rect->width = EXPLOSION_TEX_WIDTH;
-                sprite.rect->top = 46;
-                sprite.rect->left = 146;
+                sprite.rect.height = EXPLOSION_TEX_HEIGHT;
+                sprite.rect.width = EXPLOSION_TEX_WIDTH;
+                sprite.rect.top = 46;
+                sprite.rect.left = 146;
                 isAlive.timeToDie = 1;
                 if (rand() % 5 == 0) {
-<<<<<<< HEAD
                     AddEntity::addEntity(
                         ECS::Utils::Vector2f {aPos[enemy].value().x, aPos[enemy].value().y},
                         Component::Speed {BONUS_SPEED},
-=======
-                    display.addEntity(
-                        ECS::Utils::Vector2f {pos.x, pos.y}, Component::Speed {BONUS_SPEED},
->>>>>>> bf9ea2514a2d01e5c2b21eb96ab2e791b33bbd40
                         Component::TypeEntity {false, false, false, false, false, true, false},
                         Component::LoadedSprite {BONUS_ASSET, nullptr,
-                                                 new sf::IntRect {125, 520, BONUS_TEX_WIDTH, BONUS_TEX_HEIGHT},
-                                                 new sf::IntRect {0, 0, 50, 50}, BONUS_SCALE},
+                                                 125, 520, BONUS_TEX_WIDTH, BONUS_TEX_HEIGHT, BONUS_SCALE},
                         Component::HitBox {BONUS_TEX_WIDTH, BONUS_TEX_HEIGHT}, Component::IsAlive {false, 0});
                 }
             } else if (!isAlive.isAlive) {

@@ -1,5 +1,5 @@
 #include "EwECS/World.hpp"
-#include "SFMLDisplayClass.hpp"
+#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 
@@ -23,7 +23,6 @@ namespace ECS {
             if (type.isEnemy) {
                 pos.x -= speed.speed * world.getDeltaTime();
                 if (pos.x < -ENEMY_TEX_WIDTH) {
-                    display.freeRects(idx);
                     world.killEntity(idx);
                 }
             }

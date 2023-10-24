@@ -2,7 +2,7 @@
 #include "ClientHandler.hpp"
 #include "EwECS/Event/EventManager.hpp"
 #include "EwECS/Event/KeyboardEvent.hpp"
-#include "SFMLDisplayClass.hpp"
+#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 #include <unordered_map>

@@ -14,7 +14,6 @@ target_link_libraries(client
     Threads::Threads
     ecs
     rtype
-    RenderPlugin
     ${Boost_LIBRARIES}
     Boost::asio
     Boost::thread

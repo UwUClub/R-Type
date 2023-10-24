@@ -3,7 +3,7 @@
 #include "AddEntity.hpp"
 #include "ClientGameEvent.hpp"
 #include "EwECS/Event/EventManager.hpp"
-#include "SFMLDisplayClass.hpp"
+#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 
@@ -35,16 +35,10 @@ namespace ECS {
             float posY = payload[2];
 
             AddEntity::addEntity(ECS::Utils::Vector2f {posX, posY}, Component::Speed {ENEMY_SPEED},
-                                Component::TypeEntity {false, false, true, false, false, false, false, onlineEntityId},
-                                Component::LoadedSprite {ENEMY_ASSET, nullptr,
-                                                        new sf::IntRect {0, 0, ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT},
-                                                        new sf::IntRect {0, 0, ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT}},
-                                Component::HitBox {ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT}, Component::IsAlive {true, 0});
-                                Component::TypeEntity {false, false, true, false, false, false, false, onlineEntityId},
-                                Component::LoadedSprite {ENEMY_ASSET, nullptr,
-                                                        new sf::IntRect {0, 0, ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT},
-                                                        new sf::IntRect {0, 0, ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT}},
-                                Component::HitBox {ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT}, Component::IsAlive {true, 0});
+                              Component::TypeEntity {false, false, true, false, false, false, false, onlineEntityId},
+                              Component::LoadedSprite {ENEMY_ASSET, nullptr,
+                                                       0, 0, ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT},
+                              Component::HitBox {ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT}, Component::IsAlive {true, 0});
             toRemove.push_back(i);
         }
         eventManager->removeEvent<RType::ClientGameEvent>(toRemove);

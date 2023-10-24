@@ -7,11 +7,12 @@
 #include "EwECS/EwECS.hpp"
 #include "EwECS/Utils.hpp"
 #include "EwECS/World.hpp"
+#include "EwECS/SFMLDisplayClass/RenderPlugin.hpp"
+#include "EwECS/Asset/AssetManager.hpp"
 #include "HitBox.hpp"
 #include "IsAlive.hpp"
 #include "NetworkHandler.hpp"
 #include "Packets.hpp"
-#include "SFMLDisplayClass.hpp"
 #include "ServerGameEvent.hpp"
 #include "System.hpp"
 #include "TypeEntity.hpp"
@@ -35,21 +36,19 @@ int main(int ac, char **av)
 
         // Setup ECS / graphic
         ECS::Core::World &world = ECS::Core::World::getInstance();
-        SFMLDisplayClass &display = SFMLDisplayClass::getInstance();
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
+        ECS::Render::RenderPlugin renderPlugin;
+        ECS::Asset::AssetManager &assetManager = ECS::Asset::AssetManager::getInstance();
+
+        // Graphic systems plug
+        renderPlugin.plug(world, assetManager);
 
         // Components
         world.registerComponent<ECS::Utils::Vector2f>();
         world.registerComponent<Component::Speed>();
         world.registerComponent<Component::TypeEntity>();
-        world.registerComponent<Component::LoadedSprite>();
         world.registerComponent<Component::HitBox>();
         world.registerComponent<Component::IsAlive>();
-
-        // Graphic systems
-        world.addSystem(ECS::System::getInput);
-        world.addSystem<Component::LoadedSprite>(ECS::System::loadTextures);
-        world.addSystem<Component::LoadedSprite, ECS::Utils::Vector2f>(ECS::System::displayEntities);
 
         // Background systems
         world.addSystem(ECS::System::createBackground);
@@ -96,8 +95,7 @@ int main(int ac, char **av)
                                   SCREEN_HEIGHT / 2 - LOADING_MESSAGE_TEX_HEIGHT / 2},
             Component::Speed {0}, Component::TypeEntity {false, false, false, false, false, false, false},
             Component::LoadedSprite {LOADING_MESSAGE_ASSET, nullptr,
-                                     new sf::IntRect {0, 0, LOADING_MESSAGE_TEX_WIDTH, LOADING_MESSAGE_TEX_HEIGHT},
-                                     new sf::IntRect {0, 0, LOADING_MESSAGE_TEX_WIDTH, LOADING_MESSAGE_TEX_HEIGHT}},
+                                0, 0, LOADING_MESSAGE_TEX_WIDTH, LOADING_MESSAGE_TEX_HEIGHT},
             Component::HitBox {}, Component::IsAlive {false, 0});
 
         // Game loop

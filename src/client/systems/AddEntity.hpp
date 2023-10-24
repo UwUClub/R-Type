@@ -2,8 +2,8 @@
 #define ADDENTITY_HPP_
 
 #include "Components.hpp"
-#include "LoadedSprite.hpp"
-#include "Utils.hpp"
+#include "EwECS/SFMLDisplayClass/LoadedSprite.hpp"
+#include "EwECS/Utils.hpp"
 
 class AddEntity
 {

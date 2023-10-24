@@ -1,5 +1,5 @@
 #include "AddEntity.hpp"
-#include "World.hpp"
+#include "EwECS/World.hpp"
 
 size_t AddEntity::addEntity(ECS::Utils::Vector2f aPos, Component::Speed aSpeed, Component::TypeEntity aType,
                             Component::LoadedSprite aSprite, Component::HitBox aHitBox, Component::IsAlive aIsAlive)
