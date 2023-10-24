@@ -1,11 +1,11 @@
 #include "AddEntity.hpp"
 #include "ClientGameEvent.hpp"
 #include "EwECS/Event/EventManager.hpp"
+#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "EwECS/World.hpp"
 #include "HitBox.hpp"
 #include "IsAlive.hpp"
 #include "SFML/Graphics/Rect.hpp"
-#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "TypeUtils.hpp"
 #include "Values.hpp"
@@ -74,13 +74,13 @@ namespace ECS {
                 sprite.rect.left = 146;
                 isAlive.timeToDie = 1;
                 if (rand() % 5 == 0) {
-                    AddEntity::addEntity(
-                        ECS::Utils::Vector2f {aPos[enemy].value().x, aPos[enemy].value().y},
-                        Component::Speed {BONUS_SPEED},
-                        Component::TypeEntity {false, false, false, false, false, true, false},
-                        Component::LoadedSprite {BONUS_ASSET, nullptr,
-                                                 125, 520, BONUS_TEX_WIDTH, BONUS_TEX_HEIGHT, BONUS_SCALE},
-                        Component::HitBox {BONUS_TEX_WIDTH, BONUS_TEX_HEIGHT}, Component::IsAlive {false, 0});
+                    AddEntity::addEntity(ECS::Utils::Vector2f {aPos[enemy].value().x, aPos[enemy].value().y},
+                                         Component::Speed {BONUS_SPEED},
+                                         Component::TypeEntity {false, false, false, false, false, true, false},
+                                         Component::LoadedSprite {BONUS_ASSET, nullptr, 125, 520, BONUS_TEX_WIDTH,
+                                                                  BONUS_TEX_HEIGHT, BONUS_SCALE},
+                                         Component::HitBox {BONUS_TEX_WIDTH, BONUS_TEX_HEIGHT},
+                                         Component::IsAlive {false, 0});
                 }
             } else if (!isAlive.isAlive) {
                 isAlive.timeToDie -= world.getDeltaTime();

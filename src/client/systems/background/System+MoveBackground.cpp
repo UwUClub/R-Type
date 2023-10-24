@@ -1,5 +1,5 @@
-#include "EwECS/World.hpp"
 #include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
+#include "EwECS/World.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 

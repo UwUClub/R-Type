@@ -1,8 +1,8 @@
 #include <vector>
 #include "ClientGameEvent.hpp"
 #include "EwECS/Event/EventManager.hpp"
-#include "IsAlive.hpp"
 #include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
+#include "IsAlive.hpp"
 #include "System.hpp"
 #include "TypeUtils.hpp"
 #include "Values.hpp"

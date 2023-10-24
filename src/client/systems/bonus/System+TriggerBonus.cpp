@@ -2,8 +2,8 @@
 #include <string>
 #include <vector>
 #include "ClientHandler.hpp"
-#include "Packets.hpp"
 #include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
+#include "Packets.hpp"
 #include "System.hpp"
 
 namespace ECS {

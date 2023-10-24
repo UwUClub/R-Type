@@ -1,6 +1,6 @@
 #include <iostream>
-#include "EwECS/SparseArray.hpp"
 #include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
+#include "EwECS/SparseArray.hpp"
 #include "System.hpp"
 #include "components/HitBox.hpp"
 #include "components/IsAlive.hpp"

@@ -10,11 +10,11 @@
 #include "Components.hpp"
 #include "EwECS/Event/KeyboardEvent.hpp"
 #include "EwECS/Event/WindowEvent.hpp"
+#include "EwECS/SFMLDisplayClass/LoadedSprite.hpp"
 #include "EwECS/SparseArray.hpp"
 #include "EwECS/Utils.hpp"
 #include "EwECS/World.hpp"
 #include "IsAlive.hpp"
-#include "EwECS/SFMLDisplayClass/LoadedSprite.hpp"
 #include "components/HitBox.hpp"
 
 namespace ECS {
@@ -73,7 +73,6 @@ namespace ECS {
              */
             static void updateBotPosition(Core::SparseArray<Utils::Vector2f> &aPos,
                                           Core::SparseArray<Component::TypeEntity> &aType);
-
 
             /**
              * @brief Handle the background's movements (locally)

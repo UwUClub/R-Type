@@ -4,13 +4,12 @@
 #include "AddEntity.hpp"
 #include "ClientGameEvent.hpp"
 #include "EwECS/Event/EventManager.hpp"
+#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "EwECS/SparseArray.hpp"
 #include "EwECS/World.hpp"
 #include "IsAlive.hpp"
-#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
-
 
 namespace ECS {
     void System::triggerEnemyShoot()
@@ -43,7 +42,7 @@ namespace ECS {
                 Component::TypeEntity {false, false, false, true, false, false, false, onlineMissileId},
                 Component::LoadedSprite {MISSILES_ASSET, nullptr, 304, 10, MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT},
                 Component::HitBox {MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT}, Component::IsAlive {false, 0});
-            toRemove.push_back(i);        
+            toRemove.push_back(i);
         }
         eventManager->removeEvent<RType::ClientGameEvent>(toRemove);
     }
