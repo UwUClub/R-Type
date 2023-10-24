@@ -4,6 +4,7 @@
 #include "ClientGameEvent.hpp"
 #include "EwECS/Event/EventManager.hpp"
 #include "SFMLDisplayClass.hpp"
+#include "ServerPackets.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 
@@ -23,30 +24,21 @@ namespace ECS {
                 continue;
             }
 
-            const auto &payload = gameEvent.getPayload();
-            if (payload.size() != 5) {
-                toRemove.push_back(i);
-                continue;
-            }
+            const auto &payload = gameEvent.getPayload<RType::Server::PlayerJoinedPayload>();
 
-            size_t onlineEntityId = static_cast<int>(payload[0]);
-            Component::TypeEntity entityType {false, true, false, false, false, false, false, onlineEntityId};
-            bool isLocalPlayer = payload[1] == 1;
+            Component::TypeEntity entityType {false, true, false, false, false, false, false, payload.playerId};
 
-            if (isLocalPlayer) {
+            if (payload.isReceiver) {
                 entityType.isPlayer = true;
                 entityType.isBot = false;
             }
 
-            int color = static_cast<int>(payload[2]);
-            float posX = payload[3];
-            float posY = payload[4];
-
-            display.addEntity(ECS::Utils::Vector2f {posX, posY}, Component::Speed {PLAYER_SPEED}, entityType,
-                              Component::LoadedSprite {
-                                  PLAYER_ASSET, nullptr,
-                                  new sf::IntRect {0, color * PLAYER_TEX_HEIGHT, PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT},
-                                  new sf::IntRect {0, 0, PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT}},
+            display.addEntity(ECS::Utils::Vector2f {payload.posX, payload.posY}, Component::Speed {PLAYER_SPEED},
+                              entityType,
+                              Component::LoadedSprite {PLAYER_ASSET, nullptr,
+                                                       new sf::IntRect {0, payload.playerColor * PLAYER_TEX_HEIGHT,
+                                                                        PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT},
+                                                       new sf::IntRect {0, 0, PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT}},
                               Component::HitBox {PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT}, Component::IsAlive {true, 0});
             toRemove.push_back(i);
         }

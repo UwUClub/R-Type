@@ -6,6 +6,7 @@
 #include "EwECS/World.hpp"
 #include "IsAlive.hpp"
 #include "SFMLDisplayClass.hpp"
+#include "ServerPackets.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 
@@ -25,19 +26,10 @@ namespace ECS {
                 continue;
             }
 
-            const auto &payload = gameEvent.getPayload();
+            const auto &payload = gameEvent.getPayload<RType::Server::PlayerShotPayload>();
 
-            if (payload.size() != 3) {
-                toRemove.push_back(i);
-                continue;
-            }
-
-            size_t onlineBulletId = static_cast<int>(payload[0]);
-            float posX = payload[1];
-            auto posY = payload[2];
-
-            display.addEntity(ECS::Utils::Vector2f {posX, posY}, Component::Speed {BULLET_SPEED},
-                              Component::TypeEntity {false, false, false, true, false, false, false, onlineBulletId},
+            display.addEntity(ECS::Utils::Vector2f {payload.posX, payload.posY}, Component::Speed {BULLET_SPEED},
+                              Component::TypeEntity {false, false, false, true, false, false, false, payload.bulletId},
                               Component::LoadedSprite {BULLET_ASSET, nullptr,
                                                        new sf::IntRect {207, 10, BULLET_TEX_WIDTH, BULLET_TEX_HEIGHT},
                                                        new sf::IntRect {0, 0, BULLET_TEX_WIDTH, BULLET_TEX_HEIGHT}},

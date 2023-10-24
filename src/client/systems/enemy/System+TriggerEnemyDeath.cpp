@@ -5,6 +5,7 @@
 #include "IsAlive.hpp"
 #include "SFML/Graphics/Rect.hpp"
 #include "SFMLDisplayClass.hpp"
+#include "ServerPackets.hpp"
 #include "System.hpp"
 #include "TypeUtils.hpp"
 #include "Values.hpp"
@@ -30,15 +31,9 @@ namespace ECS {
                 continue;
             }
 
-            const auto &payload = gameEvent.getPayload();
+            const auto &payload = gameEvent.getPayload<RType::Server::EnemyDiedPayload>();
 
-            if (payload.size() != 1) {
-                toRemove.push_back(i);
-                continue;
-            }
-
-            auto onlineEnemyId = static_cast<size_t>(payload[0]);
-            size_t localEnemyId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(aType, onlineEnemyId);
+            size_t localEnemyId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(aType, payload.enemyId);
 
             if (!aIsAlive[localEnemyId].has_value()) {
                 toRemove.push_back(i);

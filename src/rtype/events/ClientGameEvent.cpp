@@ -6,7 +6,7 @@ namespace RType {
         : _type(aType)
     {}
 
-    ClientGameEvent::ClientGameEvent(ClientEventType aType, const std::vector<float> &aPayload)
+    ClientGameEvent::ClientGameEvent(ClientEventType aType, Network::IPayload *aPayload)
         : _type(aType),
           _payload(aPayload)
     {}
@@ -14,11 +14,6 @@ namespace RType {
     ClientEventType ClientGameEvent::getType() const
     {
         return _type;
-    }
-
-    const std::vector<float> &ClientGameEvent::getPayload() const
-    {
-        return _payload;
     }
 
 } // namespace RType

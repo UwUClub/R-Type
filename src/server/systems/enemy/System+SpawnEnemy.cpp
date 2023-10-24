@@ -1,5 +1,7 @@
+#include "ClientGameEvent.hpp"
 #include "IsAlive.hpp"
 #include "ServerHandler.hpp"
+#include "ServerPackets.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 #include "Timer+SpawnEnemy.hpp"
@@ -23,7 +25,7 @@ namespace ECS {
         timer.reset();
 
         // Create entity
-        size_t enemyId = world.createEntity();
+        unsigned short enemyId = world.createEntity();
         auto posX = static_cast<float>(SCREEN_WIDTH - ENEMY_TEX_WIDTH);
         auto posY = static_cast<float>(rand() % SCREEN_HEIGHT);
 
@@ -34,8 +36,8 @@ namespace ECS {
                          Component::HitBox {static_cast<float>(ENEMY_TEX_WIDTH), static_cast<float>(ENEMY_TEX_HEIGHT)});
         aIsAlive.insertAt(enemyId, Component::IsAlive {true, 0});
 
-        std::vector<float> payload = {static_cast<float>(enemyId), posX, posY};
         // Send packet
-        server.broadcast(static_cast<int>(RType::ClientEventType::ENEMY_SPAWN), payload, aConnection);
+        RType::Server::EnemySpawnedPayload payload(enemyId, posX, posY);
+        server.broadcast(RType::ClientEventType::ENEMY_SPAWN, payload, aConnection);
     }
 } // namespace ECS

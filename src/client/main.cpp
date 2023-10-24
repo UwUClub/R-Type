@@ -1,6 +1,7 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <boost/asio.hpp>
 #include <iostream>
+#include "ClientGameEvent.hpp"
 #include "ClientHandler.hpp"
 #include "Components.hpp"
 #include "EwECS/EwECS.hpp"
@@ -9,7 +10,7 @@
 #include "HitBox.hpp"
 #include "IsAlive.hpp"
 #include "NetworkHandler.hpp"
-#include "Packets.hpp"
+#include "Packet.hpp"
 #include "SFMLDisplayClass.hpp"
 #include "ServerGameEvent.hpp"
 #include "System.hpp"
@@ -29,8 +30,7 @@ int main(int ac, char **av)
         std::string port(av[2]);
         auto &client = Network::ClientHandler::getInstance();
         client.start(host, port);
-        RType::Packet connectPacket(static_cast<int>(RType::ServerEventType::CONNECT));
-        client.send(connectPacket);
+        client.send(RType::ServerEventType::CONNECT);
 
         // Setup ECS / graphic
         ECS::Core::World &world = ECS::Core::World::getInstance();
@@ -107,8 +107,7 @@ int main(int ac, char **av)
         }
 
         // Quit server properly
-        RType::Packet disconnectPacket(static_cast<int>(RType::ServerEventType::DISCONNECT));
-        client.send(disconnectPacket);
+        client.send(RType::ServerEventType::DISCONNECT);
         Network::NetworkHandler::getInstance().stop();
     } catch (std::exception &e) {
         Network::NetworkHandler::getInstance().stop();

@@ -4,6 +4,7 @@
 #include "EwECS/Event/EventManager.hpp"
 #include "EwECS/World.hpp"
 #include "SFMLDisplayClass.hpp"
+#include "ServerPackets.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 
@@ -19,9 +20,9 @@ namespace ECS {
             if (gameEvent.getType() != RType::ClientEventType::PLAYER_SPAWN) {
                 continue;
             }
-            bool isLocalPlayer = gameEvent.getPayload()[1] == 1;
+            const auto &payload = gameEvent.getPayload<RType::Server::PlayerJoinedPayload>();
 
-            if (isLocalPlayer) {
+            if (payload.isReceiver) {
                 display.freeRects(0);
                 world.killEntity(0);
                 display.addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {BACKGROUND_SPEED},

@@ -4,6 +4,7 @@
 #include "EwECS/World.hpp"
 #include "IsAlive.hpp"
 #include "ServerHandler.hpp"
+#include "ServerPackets.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 
@@ -28,7 +29,7 @@ namespace ECS {
             auto &isAlive = aIsAlive[idx].value();
 
             if (type.isEnemy && rand() % PROBABILTY_SHOOT_ENEMY == 0 && isAlive.isAlive) {
-                size_t missileId = world.createEntity();
+                unsigned short missileId = world.createEntity();
                 auto posX = pos.x - MISSILES_TEX_WIDTH;
                 auto posY = pos.y + ENEMY_TEX_HEIGHT / 2.0F - MISSILES_TEX_HEIGHT / 2.0F;
                 ECS::Utils::Vector2f entityPos(posX, posY);
@@ -39,9 +40,8 @@ namespace ECS {
                 aHitBox.insertAt(missileId, Component::HitBox {MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT});
 
                 // Send packet
-                std::vector<float> payload = {static_cast<float>(missileId), posX, posY};
-
-                server.broadcast(static_cast<int>(RType::ClientEventType::ENEMY_SHOOT), payload, aConnection);
+                RType::Server::EnemyShotPayload payload(missileId, posX, posY);
+                server.broadcast(RType::ClientEventType::ENEMY_SHOOT, payload, aConnection);
             }
         }
     }

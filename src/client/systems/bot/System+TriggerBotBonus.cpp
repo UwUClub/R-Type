@@ -1,5 +1,6 @@
 #include "ClientGameEvent.hpp"
 #include "EwECS/Event/EventManager.hpp"
+#include "ServerPackets.hpp"
 #include "System.hpp"
 #include "TypeUtils.hpp"
 
@@ -20,18 +21,11 @@ namespace ECS {
                 continue;
             }
 
-            const auto &payload = gameEvent.getPayload();
+            const auto &payload = gameEvent.getPayload<RType::Server::PlayerGotBonusPayload>();
 
-            if (payload.size() != 2) {
-                toRemove.push_back(i);
-                continue;
-            }
+            std::size_t const localBotId = typeUtils.getEntityIdByOnlineId(aType, payload.playerId);
 
-            auto const onlineBotId = static_cast<const size_t>(payload[0]);
-            std::size_t const localBotId = typeUtils.getEntityIdByOnlineId(aType, onlineBotId);
-            float const type = payload[1];
-
-            if (type == 1) {
+            if (payload.bonusId == 1) {
                 if (!aSpeed[localBotId].has_value()) {
                     toRemove.push_back(i);
                     continue;

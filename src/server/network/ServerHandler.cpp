@@ -3,7 +3,7 @@
 #include <iostream>
 #include "EwECS/Event/EventManager.hpp"
 #include "NetworkHandler.hpp"
-#include "Packets.hpp"
+#include "Packet.hpp"
 #include "PlayerColor.hpp"
 #include "ServerGameEvent.hpp"
 #include "Values.hpp"
@@ -21,16 +21,16 @@ namespace Network {
             _clientColors[i] = -1;
         }
 
-        network.onReceive([this](const RType::Packet &aPacket, udp::endpoint &aClientEndpoint) {
-            if (aPacket.type == AKNOWLEDGMENT_PACKET_TYPE) {
+        network.onReceive([this](uint8_t aType, IPayload &aPayload, udp::endpoint &aClientEndpoint) {
+            if (aType == AKNOWLEDGMENT_PACKET_TYPE) {
                 receiveAknowledgment(aClientEndpoint);
-            } else if (aPacket.type == ERROR_PACKET_TYPE) {
+            } else if (aType == ERROR_PACKET_TYPE) {
                 // receive error packet
-            } else if (aPacket.type >= 0 && aPacket.type < RType::ServerEventType::MAX_SRV_EVT) {
-                receivePacket(aPacket, aClientEndpoint);
+            } else if (aType >= 0 && aType < RType::ServerEventType::MAX_SRV_EVT) {
+                receivePacket(aType, aPayload, aClientEndpoint);
             } else {
                 NetworkHandler &network = NetworkHandler::getInstance();
-                network.send(RType::Packet(ERROR_PACKET_TYPE), aClientEndpoint);
+                network.send(ERROR_PACKET_TYPE, aClientEndpoint);
             }
         });
 
@@ -39,20 +39,24 @@ namespace Network {
         std::cout << "Server " << endpoint << " listening" << std::endl;
     }
 
-    void ServerHandler::receivePacket(const RType::Packet &aPacket, const udp::endpoint &aClientEndpoint)
+    void ServerHandler::receivePacket(uint8_t aType, IPayload &aPayload, const udp::endpoint &aClientEndpoint)
     {
         auto client = std::find_if(_clients.begin(), _clients.end(),
                                    [aClientEndpoint](const std::pair<size_t, udp::endpoint> &aPair) {
                                        return aPair.second == aClientEndpoint;
                                    });
-        auto packetType = static_cast<RType::ServerEventType>(aPacket.type);
+        auto packetType = static_cast<RType::ServerEventType>(aType);
 
-        int entityId = -1;
+        unsigned short entityId = 0;
         if (client != _clients.end()) {
             entityId = client->first;
+        } else if (packetType == RType::ServerEventType::CONNECT) {
+            _waitingQueue.push_back(std::make_unique<udp::endpoint>(aClientEndpoint));
+        } else {
+            return;
         }
         ECS::Event::EventManager::getInstance()->pushEvent<RType::ServerGameEvent>(
-            RType::ServerGameEvent(packetType, entityId, aPacket.payload, aClientEndpoint));
+            RType::ServerGameEvent(packetType, entityId, &aPayload));
     }
 
     void ServerHandler::receiveAknowledgment(const udp::endpoint &aClientEndpoint)
@@ -65,13 +69,16 @@ namespace Network {
             return;
         }
         ECS::Event::EventManager::getInstance()->pushEvent<RType::ServerGameEvent>(
-            RType::ServerGameEvent(RType::ServerEventType::AKNOWLEDGMENT, client->first, {}, aClientEndpoint));
+            RType::ServerGameEvent(RType::ServerEventType::AKNOWLEDGMENT, client->first, {}));
     }
 
-    void ServerHandler::addClient(size_t aClientId, const udp::endpoint &aEndpoint)
+    void ServerHandler::addClient(unsigned short aClientId)
     {
-        _clients[aClientId] = aEndpoint;
-        std::cout << "Player " << aClientId << " joined" << std::endl;
+        if (_waitingQueue.size() > 0) {
+            _clients[aClientId] = *_waitingQueue[0];
+            _waitingQueue.erase(_waitingQueue.begin());
+            std::cout << "Player " << aClientId << " joined" << std::endl;
+        }
     }
 
     RType::PLAYER_COLOR ServerHandler::addClientColor(size_t aClientId)
@@ -113,24 +120,10 @@ namespace Network {
         return _clients.size();
     }
 
-    void ServerHandler::send(const RType::Packet &aPacket, size_t aClientId,
-                             ECS::Core::SparseArray<Component::Connection> &aConnection)
+    void ServerHandler::sendError(unsigned short aClientId)
     {
-        if (aConnection[aClientId].has_value()) {
-            aConnection[aClientId].value().status = Network::ConnectionStatus::PENDING;
-            NetworkHandler::getInstance().send(aPacket, _clients[aClientId]);
-        }
-    }
-
-    void ServerHandler::broadcast(int aType, std::vector<float> &aPayload,
-                                  ECS::Core::SparseArray<Component::Connection> &aConnection)
-    {
-        for (auto &client : _clients) {
-            if (aConnection[client.first].has_value()) {
-                aConnection[client.first].value().status = Network::ConnectionStatus::PENDING;
-                NetworkHandler::getInstance().send(RType::Packet(aType, aPayload), client.second);
-            }
-        }
+        NetworkHandler &network = NetworkHandler::getInstance();
+        network.send(ERROR_PACKET_TYPE, _clients[aClientId]);
     }
 
     bool ServerHandler::isFull() const

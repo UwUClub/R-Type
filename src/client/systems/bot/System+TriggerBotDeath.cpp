@@ -3,6 +3,7 @@
 #include "EwECS/Event/EventManager.hpp"
 #include "IsAlive.hpp"
 #include "SFMLDisplayClass.hpp"
+#include "ServerPackets.hpp"
 #include "System.hpp"
 #include "TypeUtils.hpp"
 #include "Values.hpp"
@@ -26,15 +27,9 @@ namespace ECS {
                 continue;
             }
 
-            const auto &payload = gameEvent.getPayload();
+            const auto &payload = gameEvent.getPayload<RType::Server::PlayerDiedPayload>();
 
-            if (payload.size() != 1) {
-                toRemove.push_back(i);
-                continue;
-            }
-
-            auto onlineBotId = static_cast<size_t>(payload[0]);
-            size_t localBotId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(aType, onlineBotId);
+            unsigned short localBotId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(aType, payload.playerId);
 
             if (!aIsAlive[localBotId].has_value()) {
                 toRemove.push_back(i);

@@ -7,6 +7,7 @@
 #include "EwECS/World.hpp"
 #include "IsAlive.hpp"
 #include "SFMLDisplayClass.hpp"
+#include "ServerPackets.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 
@@ -26,20 +27,11 @@ namespace ECS {
                 continue;
             }
 
-            const auto &payload = gameEvent.getPayload();
-
-            if (payload.size() != 3) {
-                toRemove.push_back(i);
-                continue;
-            }
-
-            std::size_t onlineMissileId = static_cast<int>(payload[0]);
-            float posX = payload[1];
-            auto posY = payload[2];
+            const auto &payload = gameEvent.getPayload<RType::Server::EnemyShotPayload>();
 
             display.addEntity(
-                ECS::Utils::Vector2f {posX, posY}, Component::Speed {MISSILES_SPEED},
-                Component::TypeEntity {false, false, false, true, false, false, false, onlineMissileId},
+                ECS::Utils::Vector2f {payload.posX, payload.posY}, Component::Speed {MISSILES_SPEED},
+                Component::TypeEntity {false, false, false, true, false, false, false, payload.bulletId},
                 Component::LoadedSprite {MISSILES_ASSET, nullptr,
                                          new sf::IntRect {304, 10, MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT},
                                          new sf::IntRect {0, 0, MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT}},

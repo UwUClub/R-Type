@@ -1,11 +1,13 @@
 #include <cstddef>
 #include <iostream>
 #include <vector>
+#include "ClientGameEvent.hpp"
 #include "EwECS/Event/EventManager.hpp"
 #include "EwECS/SparseArray.hpp"
 #include "EwECS/World.hpp"
 #include "ServerGameEvent.hpp"
 #include "ServerHandler.hpp"
+#include "ServerPackets.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 
@@ -17,41 +19,19 @@ namespace ECS {
     {
         auto &world = Core::World::getInstance();
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
-        Network::NetworkHandler &network = Network::NetworkHandler::getInstance();
         Network::ServerHandler &server = Network::ServerHandler::getInstance();
         auto &events = eventManager->getEventsByType<RType::ServerGameEvent>();
         const auto size = events.size();
         std::vector<size_t> toRemove;
 
-        for (size_t i = 0; i < size; i++) {
+        for (unsigned short i = 0; i < size; i++) {
             auto &gameEvent = events[i];
 
             if (gameEvent.getType() != RType::ServerEventType::SHOOT) {
-                network.send(RType::Packet(ERROR_PACKET_TYPE), gameEvent.getClientEndpoint());
                 continue;
             }
 
-            const auto &payloadReceived = gameEvent.getPayload();
-
-            if (payloadReceived.size() != 1) {
-                toRemove.push_back(i);
-                network.send(RType::Packet(ERROR_PACKET_TYPE), gameEvent.getClientEndpoint());
-                continue;
-            }
-
-            auto playerId = static_cast<size_t>(payloadReceived[0]);
-
-            if (playerId < 0 || playerId >= aPos.size()) {
-                toRemove.push_back(i);
-                network.send(RType::Packet(ERROR_PACKET_TYPE), gameEvent.getClientEndpoint());
-                continue;
-            }
-            if (!aPos[playerId].has_value()) {
-                toRemove.push_back(i);
-                network.send(RType::Packet(ERROR_PACKET_TYPE), gameEvent.getClientEndpoint());
-                continue;
-            }
-
+            const auto playerId = gameEvent.getEntityId();
             auto &pos = aPos[playerId].value();
 
             // Create entity
@@ -65,9 +45,9 @@ namespace ECS {
             aHitBox.insertAt(bulletId, Component::HitBox {BULLET_TEX_WIDTH, BULLET_TEX_HEIGHT});
 
             // Send packet
-            std::vector<float> payload = {static_cast<float>(bulletId), posX, posY};
+            RType::Server::PlayerShotPayload payloadToSend(bulletId, posX, posY);
+            server.broadcast(RType::ClientEventType::PLAYER_SHOOT, payloadToSend, aConnection);
 
-            server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_SHOOT), payload, aConnection);
             toRemove.push_back(i);
         }
         eventManager->removeEvent<RType::ServerGameEvent>(toRemove);

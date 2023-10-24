@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 #include "ClientHandler.hpp"
-#include "Packets.hpp"
+#include "Packet.hpp"
 #include "SFMLDisplayClass.hpp"
 #include "System.hpp"
 
@@ -43,8 +43,8 @@ namespace ECS {
                      && posBonus.y > posPlayer.y && posBonus.y < posPlayer.y + hitBoxPlayer.height)) {
                     isAliveBonus.isAlive = false;
                     display.freeRects(bonus);
-                    RType::Packet packet(static_cast<int>(RType::ServerEventType::BONUS), {1});
-                    client.send(packet);
+                    // RType::Packet packet(static_cast<int>(RType::ServerEventType::BONUS), {1});
+                    // client.send(packet);
                     world.killEntity(bonus);
                     break;
                 }

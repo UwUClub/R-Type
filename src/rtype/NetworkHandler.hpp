@@ -1,7 +1,8 @@
 #include <boost/asio.hpp>
 #include <boost/thread.hpp>
 #include <iostream>
-#include "Packets.hpp"
+#include "Packet.hpp"
+#include "Serialization.hpp"
 #include "Values.hpp"
 #include <unordered_map>
 
@@ -17,6 +18,8 @@ namespace Network {
 
     using boost::asio::ip::udp;
     using Sender = std::pair<std::thread, std::atomic<bool>>;
+    using Buffer = std::vector<unsigned char>;
+    using ReceiveCallback = std::function<void(uint8_t, IPayload &, udp::endpoint &)>;
 
     class NetworkHandler
     {
@@ -27,8 +30,10 @@ namespace Network {
             boost::asio::streambuf _readInbound;
             boost::asio::streambuf::mutable_buffers_type _readBuffer = _readInbound.prepare(READ_BUFFER_SIZE);
 
+            std::unordered_map<unsigned char, std::function<IPayload &(Buffer &)>> _packetFactory;
+
             udp::endpoint _readEndpoint;
-            std::function<void(const RType::Packet &, udp::endpoint &)> _onReceive;
+            ReceiveCallback _onReceive;
             boost::thread _ioThread;
 
             std::unordered_map<std::string, Sender> _senders;
@@ -85,7 +90,7 @@ namespace Network {
              * @brief Set the on receive callback
              * @param aOnReceive The callback to set
              */
-            void onReceive(std::function<void(const RType::Packet &, udp::endpoint &)>);
+            void onReceive(ReceiveCallback);
 
             /**
              * @brief Listen to clients
@@ -93,11 +98,27 @@ namespace Network {
             void listen();
 
             /**
-             * @brief Send a message to the server
-             * @param aPacket The packet to send
+             * @brief Send a packet
+             * @param aType The packet type
              * @param aEndpoint The id of the client to send the message to
              */
-            void send(const RType::Packet &, const udp::endpoint &);
+            void send(int8_t, const udp::endpoint &);
+
+            /**
+             * @brief Send a packet
+             * @param aType The packet type
+             * @param aPayload The payload to send
+             * @param aEndpoint The id of the client to send the message to
+             */
+            template<typename Payload>
+            void send(int8_t aType, Payload &aPayload, const udp::endpoint &aEndpoint)
+            {
+                boost::asio::streambuf buf = boost::asio::streambuf();
+                PacketHeader header(aType);
+                auto strBuff = Network::Serialization::serialize<Payload>(header, aPayload);
+
+                _socket.send_to(buf.data(), aEndpoint);
+            }
 
             /**
              * @brief Get the io service

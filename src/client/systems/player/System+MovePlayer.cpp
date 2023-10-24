@@ -1,9 +1,11 @@
 #include <functional>
 #include "ClientHandler.hpp"
+#include "ClientPackets.hpp"
 #include "EwECS/Event/EventManager.hpp"
 #include "EwECS/Event/KeyboardEvent.hpp"
 #include "EwECS/World.hpp"
 #include "SFMLDisplayClass.hpp"
+#include "ServerGameEvent.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 #include "components/IsAlive.hpp"
@@ -17,31 +19,28 @@ namespace ECS {
         Network::ClientHandler &network = Network::ClientHandler::getInstance();
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         auto &keyboardEvent = eventManager->getEventsByType<Event::KeyboardEvent>();
-        static const std::unordered_map<Event::KeyIdentifier, std::function<void(float &, Utils::Vector2f &)>> keyMap =
-            {
+        static const std::unordered_map<Event::KeyIdentifier,
+                                        std::function<RType::Client::MovePayload(float &, Utils::Vector2f &)>>
+            keyMap = {
                 {Event::KeyIdentifier::UP,
                  [&network](float &spd, Utils::Vector2f &xy) {
                      xy.y -= spd;
-                     RType::Packet packet(RType::ServerEventType::MOVE, {0, 1});
-                     network.send(packet);
+                     return RType::Client::MovePayload {0, 1};
                  }},
                 {Event::KeyIdentifier::DOWN,
                  [&network](float &spd, Utils::Vector2f &xy) {
                      xy.y += spd;
-                     RType::Packet packet(RType::ServerEventType::MOVE, {0, -1});
-                     network.send(packet);
+                     return RType::Client::MovePayload {0, -1};
                  }},
                 {Event::KeyIdentifier::LEFT,
                  [&network](float &spd, Utils::Vector2f &xy) {
                      xy.x -= spd;
-                     RType::Packet packet(RType::ServerEventType::MOVE, {-1, 0});
-                     network.send(packet);
+                     return RType::Client::MovePayload {-1, 0};
                  }},
                 {Event::KeyIdentifier::RIGHT,
                  [&network](float &spd, Utils::Vector2f &xy) {
                      xy.x += spd;
-                     RType::Packet packet(RType::ServerEventType::MOVE, {1, 0});
-                     network.send(packet);
+                     return RType::Client::MovePayload {1, 0};
                  }},
             };
         const auto size = aPos.size();
@@ -58,7 +57,9 @@ namespace ECS {
                 auto &pos = aPos[i].value();
                 auto &speed = aSpeed[i].value().speed;
 
-                keyMap.at(event._keyId)(speed, pos);
+                auto payload = keyMap.at(event._keyId)(speed, pos);
+
+                network.send(RType::ServerEventType::MOVE, payload);
 
                 if (pos.x < 0) {
                     pos.x = 0;

@@ -1,16 +1,16 @@
 #include <boost/asio.hpp>
 #include <iostream>
 #include <vector>
+#include "ClientGameEvent.hpp"
 #include "Components.hpp"
 #include "EwECS/Event/EventManager.hpp"
 #include "EwECS/SparseArray.hpp"
 #include "EwECS/World.hpp"
 #include "HitBox.hpp"
-#include "NetworkHandler.hpp"
-#include "Packets.hpp"
 #include "PlayerColor.hpp"
 #include "ServerGameEvent.hpp"
 #include "ServerHandler.hpp"
+#include "ServerPackets.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 
@@ -24,7 +24,6 @@ namespace ECS {
         ECS::Core::World &world = ECS::Core::World::getInstance();
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
         Network::ServerHandler &server = Network::ServerHandler::getInstance();
-        Network::NetworkHandler &network = Network::NetworkHandler::getInstance();
         auto &events = eventManager->getEventsByType<RType::ServerGameEvent>();
         const auto size = events.size();
         std::vector<size_t> toRemove;
@@ -35,14 +34,11 @@ namespace ECS {
             if (gameEvent.getType() != RType::ServerEventType::CONNECT) {
                 continue;
             }
-            if (gameEvent.getEntityId() != -1) {
-                network.send(RType::Packet(ERROR_PACKET_TYPE), gameEvent.getClientEndpoint());
-                continue;
-            }
-            if (server.isFull()) {
-                const auto &cliEndpoint = gameEvent.getClientEndpoint();
 
-                network.send(RType::Packet(RType::ClientEventType::SERVER_FULL), cliEndpoint);
+            const auto entityId = gameEvent.getEntityId();
+
+            if (entityId > 0 || server.isFull()) {
+                server.sendError(entityId);
                 toRemove.push_back(i);
                 continue;
             }
@@ -52,6 +48,7 @@ namespace ECS {
 
             if (playerColor == RType::PLAYER_COLOR::NONE) {
                 world.killEntity(playerId);
+                toRemove.push_back(i);
                 continue;
             }
 
@@ -62,13 +59,14 @@ namespace ECS {
             aIsAlive.insertAt(playerId, Component::IsAlive {true, 0});
             aConnection.insertAt(playerId, Component::Connection {Network::ConnectionStatus::CONNECTED});
 
-            std::vector<float> payload = {static_cast<float>(playerId), 0, static_cast<float>(playerColor), 10, 10};
+            RType::Server::PlayerJoinedPayload payloadToBroadcast(playerId, false, playerColor, 10, 10);
 
-            server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_SPAWN), payload, aConnection);
-            server.addClient(playerId, gameEvent.getClientEndpoint());
-            server.send(RType::Packet(static_cast<int>(RType::ClientEventType::PLAYER_SPAWN),
-                                      {static_cast<float>(playerId), 1, static_cast<float>(playerColor), 10, 10}),
-                        playerId, aConnection);
+            server.broadcast<RType::Server::PlayerJoinedPayload>(RType::ClientEventType::PLAYER_SPAWN,
+                                                                 payloadToBroadcast, aConnection);
+            server.addClient(playerId);
+
+            RType::Server::PlayerJoinedPayload payload(playerId, true, playerColor, 10, 10);
+            server.send(RType::ClientEventType::PLAYER_SPAWN, payload, playerId, aConnection);
 
             const auto posSize = aPos.size();
             for (std::size_t idx = 0; idx < posSize; idx++) {
@@ -82,14 +80,12 @@ namespace ECS {
                 if (idx != playerId && type.isPlayer) {
                     auto color = static_cast<float>(server.getClientColor(idx));
 
-                    server.send(RType::Packet(static_cast<int>(RType::ClientEventType::PLAYER_SPAWN),
-                                              {static_cast<float>(idx), 0, color, pos.x, pos.y}),
-                                playerId, aConnection);
+                    RType::Server::PlayerJoinedPayload playersPayload(idx, false, color, pos.x, pos.y);
+                    server.send(RType::ClientEventType::PLAYER_SPAWN, playersPayload, playerId, aConnection);
                 }
                 if (type.isEnemy) {
-                    server.send(RType::Packet(static_cast<int>(RType::ClientEventType::ENEMY_SPAWN),
-                                              {static_cast<float>(idx), pos.x, pos.y}),
-                                playerId, aConnection);
+                    RType::Server::EnemySpawnedPayload enemiesPayload(idx, pos.x, pos.y);
+                    server.send(RType::ClientEventType::ENEMY_SPAWN, enemiesPayload, playerId, aConnection);
                 }
             }
             toRemove.push_back(i);

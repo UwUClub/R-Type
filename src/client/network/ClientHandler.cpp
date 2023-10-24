@@ -4,9 +4,10 @@
 #include <chrono>
 #include <iostream>
 #include <string>
+#include "ClientGameEvent.hpp"
 #include "EwECS/Event/EventManager.hpp"
 #include "NetworkHandler.hpp"
-#include "Packets.hpp"
+#include "Packet.hpp"
 #include "Values.hpp"
 
 namespace Network {
@@ -22,12 +23,12 @@ namespace Network {
         NetworkHandler &network = NetworkHandler::getInstance();
         _serverEndpoint = *_resolver.resolve(udp::v4(), aHost, aPort).begin();
 
-        network.onReceive([this](const RType::Packet &aPacket, udp::endpoint &aEndpoint) {
+        network.onReceive([this](uint8_t aType, IPayload &aPayload, udp::endpoint &aEndpoint) {
             (void) aEndpoint;
 
             if (aEndpoint == _serverEndpoint) {
-                if (aPacket.type >= 0 && aPacket.type < RType::ClientEventType::MAX_CLI_EVT) {
-                    receivePacket(aPacket);
+                if (aType >= 0 && aType < RType::ClientEventType::MAX_CLI_EVT) {
+                    receivePacket(aType, aPayload);
                 }
             }
         });
@@ -36,17 +37,17 @@ namespace Network {
         std::cout << "Connected to " << _serverEndpoint << std::endl;
     }
 
-    void ClientHandler::receivePacket(const RType::Packet &aPacket)
+    void ClientHandler::receivePacket(uint8_t aType, IPayload &aPayload)
     {
-        auto packetType = static_cast<RType::ClientEventType>(aPacket.type);
+        auto packetType = static_cast<RType::ClientEventType>(aType);
 
         ECS::Event::EventManager::getInstance()->pushEvent<RType::ClientGameEvent>(
-            RType::ClientGameEvent(packetType, aPacket.payload));
+            RType::ClientGameEvent(packetType, &aPayload));
     }
 
-    void ClientHandler::send(RType::Packet &aPacket)
+    void ClientHandler::send(int8_t aType)
     {
-        NetworkHandler::getInstance().send(aPacket, _serverEndpoint);
+        NetworkHandler::getInstance().send(aType, _serverEndpoint);
     }
 
 } // namespace Network

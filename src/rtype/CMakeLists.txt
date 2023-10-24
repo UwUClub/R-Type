@@ -1,13 +1,8 @@
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
 target_sources(rtype PRIVATE
-        Packets.hpp
-        Values.hpp
-        NetworkHandler.hpp
         NetworkHandler.cpp
-        TypeUtils.hpp
         TypeUtils.cpp
-        PlayerColor.hpp
 )
 
 add_subdirectory(events)

@@ -5,7 +5,7 @@
 #include "EwECS/SparseArray.hpp"
 #include "EwECS/World.hpp"
 #include "NetworkHandler.hpp"
-#include "Packets.hpp"
+#include "Packet.hpp"
 #include "ServerGameEvent.hpp"
 #include "ServerHandler.hpp"
 #include "System.hpp"

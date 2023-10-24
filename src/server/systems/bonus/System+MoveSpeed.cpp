@@ -1,14 +1,14 @@
 #include <cstddef>
 #include <vector>
+#include "ClientGameEvent.hpp"
 #include "Components.hpp"
 #include "EwECS/Event/EventManager.hpp"
 #include "EwECS/World.hpp"
-#include "Packets.hpp"
 #include "ServerGameEvent.hpp"
 #include "ServerHandler.hpp"
+#include "ServerPackets.hpp"
 #include "System.hpp"
 #include "Values.hpp"
-
 namespace ECS {
     void System::moveSpeedUp(Core::SparseArray<Component::Speed> &aSpeed,
                              Core::SparseArray<Component::Connection> &aConnection)
@@ -27,17 +27,15 @@ namespace ECS {
                 continue;
             }
 
-            auto playerId = static_cast<size_t>(gameEvent.getEntityId());
-            float const bonusType = gameEvent.getPayload()[0];
+            // auto playerId = gameEvent.getEntityId();
+            // float const bonusType = gameEvent.getPayload()[0];
 
-            if (bonusType == 1) {
-                std::vector<float> payload = {static_cast<float>(playerId), 1};
-
-                aSpeed[playerId].value().speed += 10;
-                server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_BONUS), payload, aConnection);
-            } else {
-                network.send(RType::Packet(ERROR_PACKET_TYPE), gameEvent.getClientEndpoint());
-            }
+            // if (bonusType == 1) {
+            //     aSpeed[playerId].value().speed += 10;
+            //     server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_BONUS), payload, aConnection);
+            // } else {
+            //     network.send(Network::PacketHeader(ERROR_PACKET_TYPE), gameEvent.getClientEndpoint());
+            // }
             toRemove.push_back(i);
         }
         eventManager->removeEvent<RType::ServerGameEvent>(toRemove);
