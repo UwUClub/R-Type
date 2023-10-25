@@ -1,7 +1,6 @@
 #include "ClientGameEvent.hpp"
 #include "EwECS/Event/EventManager.hpp"
 #include "EwECS/World.hpp"
-#include "HitBox.hpp"
 #include "IsAlive.hpp"
 #include "SFML/Graphics/Rect.hpp"
 #include "SFMLDisplayClass.hpp"

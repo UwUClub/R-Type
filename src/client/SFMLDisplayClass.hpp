@@ -18,6 +18,7 @@
 #include "EwECS/Event/KeyboardEvent.hpp"
 #include "EwECS/Event/MouseEvent.hpp"
 #include "EwECS/Event/WindowEvent.hpp"
+#include "EwECS/Physic/HitBox.hpp"
 #include "EwECS/Utils.hpp"
 #include "LoadedSprite.hpp"
 #include <unordered_map>

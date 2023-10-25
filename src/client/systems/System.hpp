@@ -10,12 +10,12 @@
 #include "Components.hpp"
 #include "EwECS/Event/KeyboardEvent.hpp"
 #include "EwECS/Event/WindowEvent.hpp"
+#include "EwECS/Physic/HitBox.hpp"
 #include "EwECS/SparseArray.hpp"
 #include "EwECS/Utils.hpp"
 #include "EwECS/World.hpp"
 #include "IsAlive.hpp"
 #include "LoadedSprite.hpp"
-#include "components/HitBox.hpp"
 
 namespace ECS {
     class System
@@ -155,12 +155,10 @@ namespace ECS {
             /**
              * @brief Handle enemies who get hit (locally)
              *
-             * @param aPos SparseArray of all entities position
              * @param aType SparseArray of all entities type
              * @param aHitBox SparseArray of all entities hitbox
              */
-            static void enemyHit(Core::SparseArray<Utils::Vector2f> &aPos,
-                                 Core::SparseArray<Component::TypeEntity> &aType,
+            static void enemyHit(Core::SparseArray<Component::TypeEntity> &aType,
                                  Core::SparseArray<Component::HitBox> &aHitBox);
 
             /**
@@ -184,12 +182,10 @@ namespace ECS {
             /**
              * @brief Handle bots who get hit (locally)
              *
-             * @param aPos SparseArray of all entities position
              * @param aType SparseArray of all entities type
              * @param HitBox SparseArray of all entities hitbox component
              */
-            static void botHit(Core::SparseArray<Utils::Vector2f> &aPos,
-                               Core::SparseArray<Component::TypeEntity> &aType,
+            static void botHit(Core::SparseArray<Component::TypeEntity> &aType,
                                Core::SparseArray<Component::HitBox> &HitBox);
 
             /**
