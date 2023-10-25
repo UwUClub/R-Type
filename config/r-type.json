@@ -4,7 +4,7 @@
         "width": 1920,
         "height": 1080
     },
-        "physics": {
+    "physics": {
         "gravity": 2,
         "initial_fall_velocity": 2
     }

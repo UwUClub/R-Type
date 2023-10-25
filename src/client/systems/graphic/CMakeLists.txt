@@ -3,4 +3,3 @@ target_sources(client PRIVATE
 )
 
 target_include_directories(client PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
-target_include_directories(ecs PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
