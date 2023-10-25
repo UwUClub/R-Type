@@ -100,6 +100,7 @@ namespace Network {
 
     void ServerHandler::removeClient(size_t aClientId)
     {
+        std::cout << "Player " << aClientId << " removed" << std::endl;
         _clients.erase(aClientId);
         for (int i = 0; i < MAX_NUMBER_PLAYER; i++) {
             if (_clientColors[i] == aClientId) {
