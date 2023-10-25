@@ -23,7 +23,7 @@ namespace ECS {
 
             const auto &payload = gameEvent.getPayload<RType::Server::PlayerGotBonusPayload>();
 
-            std::unsigned short const localBotId = typeUtils.getEntityIdByOnlineId(aType, payload.playerId);
+            unsigned short const localBotId = typeUtils.getEntityIdByOnlineId(aType, payload.playerId);
 
             if (payload.bonusId == 1) {
                 if (!aSpeed[localBotId].has_value()) {

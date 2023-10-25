@@ -69,7 +69,7 @@ namespace ECS {
             server.send(RType::ClientEventType::PLAYER_SPAWN, payload, playerId, aConnection);
 
             const auto posSize = aPos.size();
-            for (std::unsigned short idx = 0; idx < posSize; idx++) {
+            for (unsigned short idx = 0; idx < posSize; idx++) {
                 if (!aType[idx].has_value() || !aPos[idx].has_value()) {
                     continue;
                 }
