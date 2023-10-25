@@ -5,8 +5,8 @@
 #include "Components.hpp"
 #include "EventManager.hpp"
 #include "EwECS/Asset/AssetManager.hpp"
-#include "EwECS/SFMLDisplayClass/RenderPlugin.hpp"
 #include "EwECS/Physic/PhysicPlugin.hpp"
+#include "EwECS/SFMLDisplayClass/RenderPlugin.hpp"
 #include "EwECS/Utils.hpp"
 #include "EwECS/World.hpp"
 #include "IsAlive.hpp"
@@ -39,7 +39,6 @@ int main(int ac, char **av)
         ECS::Render::RenderPlugin renderPlugin;
         ECS::Asset::AssetManager &assetManager = ECS::Asset::AssetManager::getInstance();
         ECS::Physic::PhysicPlugin physicPlugin;
-
 
         // Graphic systems plug
         renderPlugin.plug(world, assetManager);

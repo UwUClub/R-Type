@@ -2,9 +2,9 @@
 #define ADDENTITY_HPP_
 
 #include "Components.hpp"
+#include "EwECS/Physic/HitBox.hpp"
 #include "EwECS/SFMLDisplayClass/LoadedSprite.hpp"
 #include "EwECS/Utils.hpp"
-#include "EwECS/Physic/HitBox.hpp"
 
 class AddEntity
 {
