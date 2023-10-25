@@ -38,7 +38,6 @@ function(R_Type_setup_dependencies)
     set(Boost_USE_STATIC_RUNTIME OFF)
     FetchContent_MakeAvailable(Boost)
 
-
     FetchContent_Declare(
         SFML
         GIT_REPOSITORY https://github.com/SFML/SFML.git

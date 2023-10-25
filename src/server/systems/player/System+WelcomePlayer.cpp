@@ -4,6 +4,7 @@
 #include "ClientGameEvent.hpp"
 #include "Components.hpp"
 #include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Physic/HitBox.hpp"
 #include "EwECS/SparseArray.hpp"
 #include "EwECS/World.hpp"
 #include "HitBox.hpp"

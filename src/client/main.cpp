@@ -4,10 +4,11 @@
 #include "ClientGameEvent.hpp"
 #include "ClientHandler.hpp"
 #include "Components.hpp"
+#include "EwECS/Asset/AssetManager.hpp"
 #include "EwECS/EwECS.hpp"
+#include "EwECS/Physic/PhysicPlugin.hpp"
 #include "EwECS/Utils.hpp"
 #include "EwECS/World.hpp"
-#include "HitBox.hpp"
 #include "IsAlive.hpp"
 #include "NetworkHandler.hpp"
 #include "Packet.hpp"
@@ -38,15 +39,18 @@ int main(int ac, char **av)
         ECS::Core::World &world = ECS::Core::World::getInstance();
         SFMLDisplayClass &display = SFMLDisplayClass::getInstance();
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
+        auto &assetManager = ECS::Asset::AssetManager::getInstance();
+
+        ECS::Physic::PhysicPlugin physicPlugin;
 
         // Components
         world.registerComponent<ECS::Utils::Vector2f>();
         world.registerComponent<Component::Speed>();
         world.registerComponent<Component::TypeEntity>();
         world.registerComponent<Component::LoadedSprite>();
-        world.registerComponent<Component::HitBox>();
         world.registerComponent<Component::IsAlive>();
 
+        physicPlugin.plug(world, assetManager);
         // Graphic systems
         world.addSystem(ECS::System::getInput);
         world.addSystem<Component::LoadedSprite>(ECS::System::loadTextures);
@@ -66,7 +70,7 @@ int main(int ac, char **av)
         world.addSystem(ECS::System::createBot);
         world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::updateBotPosition);
         world.addSystem(ECS::System::triggerBotShoot);
-        world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::HitBox>(ECS::System::botHit);
+        world.addSystem<Component::TypeEntity, Component::HitBox>(ECS::System::botHit);
         world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite>(
             ECS::System::triggerBotDeath);
         world.addSystem<Component::TypeEntity>(ECS::System::triggerBotDisconnect);
@@ -75,7 +79,7 @@ int main(int ac, char **av)
         world.addSystem(ECS::System::createEnemy);
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveEnemy);
         world.addSystem(ECS::System::triggerEnemyShoot);
-        world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::HitBox>(ECS::System::enemyHit);
+        world.addSystem<Component::TypeEntity, Component::HitBox>(ECS::System::enemyHit);
         world.addSystem<Component::TypeEntity, Component::IsAlive, Component::LoadedSprite, ECS::Utils::Vector2f>(
             ECS::System::triggerEnemyDeath);
 
