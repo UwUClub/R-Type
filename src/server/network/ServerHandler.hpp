@@ -50,9 +50,10 @@ namespace Network {
              * @brief Start the server
              * @param aHost The host to listen to
              * @param aPort The port to listen to
+             * @param aPacketFactory The packet factory
              * @return ServerHandler & The instance of the singleton
              */
-            void start(std::string &, unsigned short);
+            void start(std::string &, unsigned short, PacketFactory &);
 
             /**
              * @brief Handle packet reception
@@ -60,7 +61,7 @@ namespace Network {
              * @param aPayload The received payload
              * @param aEndpoint The endpoint of the sender
              */
-            void receivePacket(uint8_t, IPayload &, const udp::endpoint &);
+            void receivePacket(uint8_t, IPayload *, const udp::endpoint &);
 
             /**
              * @brief Handle aknowledgment reception

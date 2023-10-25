@@ -6,6 +6,7 @@
 #include "HitBox.hpp"
 #include "IsAlive.hpp"
 #include "NetworkHandler.hpp"
+#include "PacketFactory.hpp"
 #include "ServerGameEvent.hpp"
 #include "ServerHandler.hpp"
 #include "System.hpp"
@@ -22,7 +23,7 @@ int main(int ac, char **av)
         std::string host(av[1]);
         unsigned short port = static_cast<unsigned short>(std::stoi(av[2]));
         Network::ServerHandler &server = Network::ServerHandler::getInstance();
-        server.start(host, port);
+        server.start(host, port, RType::packetFactory);
 
         // Setup ECS
         ECS::Core::World &world = ECS::Core::World::getInstance();

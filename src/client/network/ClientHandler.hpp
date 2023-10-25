@@ -43,15 +43,16 @@ namespace Network {
              * @brief Run the client
              * @param aHost The host to connect to
              * @param aPort THe port to connect to
+             * @param aPacketFactory The packet factory
              */
-            void start(std::string &, std::string &);
+            void start(std::string &, std::string &, PacketFactory &);
 
             /**
              * @brief Handle packet reception
              * @param aType The type of the packet
              * @param aPayload The received payload
              */
-            void receivePacket(uint8_t, IPayload &);
+            void receivePacket(uint8_t, IPayload *);
 
             /**
              * @brief Send a packet to the server

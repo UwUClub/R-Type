@@ -18,14 +18,13 @@ namespace Network {
         : _resolver(udp::resolver(NetworkHandler::getInstance().getIoService()))
     {}
 
-    void ClientHandler::start(std::string &aHost, std::string &aPort)
+    void ClientHandler::start(std::string &aHost, std::string &aPort, PacketFactory &aPacketFactory)
     {
         NetworkHandler &network = NetworkHandler::getInstance();
         _serverEndpoint = *_resolver.resolve(udp::v4(), aHost, aPort).begin();
 
-        network.onReceive([this](uint8_t aType, IPayload &aPayload, udp::endpoint &aEndpoint) {
+        network.onReceive([this](int8_t aType, IPayload *aPayload, udp::endpoint &aEndpoint) {
             (void) aEndpoint;
-
             if (aEndpoint == _serverEndpoint) {
                 if (aType >= 0 && aType < RType::ClientEventType::MAX_CLI_EVT) {
                     receivePacket(aType, aPayload);
@@ -33,16 +32,16 @@ namespace Network {
             }
         });
 
-        network.start(udp::v4());
+        network.start(udp::v4(), aPacketFactory);
         std::cout << "Connected to " << _serverEndpoint << std::endl;
     }
 
-    void ClientHandler::receivePacket(uint8_t aType, IPayload &aPayload)
+    void ClientHandler::receivePacket(uint8_t aType, IPayload *aPayload)
     {
         auto packetType = static_cast<RType::ClientEventType>(aType);
 
         ECS::Event::EventManager::getInstance()->pushEvent<RType::ClientGameEvent>(
-            RType::ClientGameEvent(packetType, &aPayload));
+            RType::ClientGameEvent(packetType, aPayload));
     }
 
     void ClientHandler::send(int8_t aType)

@@ -13,6 +13,8 @@ namespace RType::Server {
              float posX;
              float posY;
 
+             PlayerJoinedPayload() = default;
+
              PlayerJoinedPayload(unsigned short aPlayerId, bool aIsReceiver, uint8_t aPlayerColor, float aPosX,
                                  float aPosY)
              {
@@ -28,6 +30,8 @@ namespace RType::Server {
          : Network::IPayload {
              unsigned short playerId;
 
+             PlayerLeftPayload() = default;
+
              PlayerLeftPayload(unsigned short aPlayerId)
              {
                  playerId = aPlayerId;
@@ -39,6 +43,8 @@ namespace RType::Server {
              unsigned short playerId;
              float posX;
              float posY;
+
+             PlayerPositionPayload() = default;
 
              PlayerPositionPayload(unsigned short aPlayerId, float aPosX, float aPosY)
              {
@@ -53,6 +59,8 @@ namespace RType::Server {
              unsigned short playerId;
              uint8_t bonusId;
 
+             PlayerGotBonusPayload() = default;
+
              PlayerGotBonusPayload(unsigned short aPlayerId, uint8_t aBonusId)
              {
                  playerId = aPlayerId;
@@ -66,6 +74,8 @@ namespace RType::Server {
              float posX;
              float posY;
 
+             PlayerShotPayload() = default;
+
              PlayerShotPayload(unsigned short aBulletId, float aPosX, float aPosY)
              {
                  bulletId = aBulletId;
@@ -78,6 +88,8 @@ namespace RType::Server {
          : Network::IPayload {
              unsigned short playerId;
 
+             PlayerDiedPayload() = default;
+
              PlayerDiedPayload(unsigned short aPlayerId)
              {
                  playerId = aPlayerId;
@@ -89,6 +101,8 @@ namespace RType::Server {
              unsigned short enemyId;
              float posX;
              float posY;
+
+             EnemySpawnedPayload() = default;
 
              EnemySpawnedPayload(unsigned short aEnemyId, float aPosX, float aPosY)
              {
@@ -104,6 +118,8 @@ namespace RType::Server {
              float posX;
              float posY;
 
+             EnemyPositionPayload() = default;
+
              EnemyPositionPayload(uint8_t aEnemyId, float aPosX, float aPosY)
              {
                  enemyId = aEnemyId;
@@ -118,6 +134,8 @@ namespace RType::Server {
              float posX;
              float posY;
 
+             EnemyShotPayload() = default;
+
              EnemyShotPayload(unsigned short aBulletId, float aPosX, float aPosY)
              {
                  bulletId = aBulletId;
@@ -129,6 +147,8 @@ namespace RType::Server {
     PACK(struct EnemyDiedPayload
          : Network::IPayload {
              unsigned short enemyId;
+
+             EnemyDiedPayload() = default;
 
              EnemyDiedPayload(unsigned short aEnemyId)
              {

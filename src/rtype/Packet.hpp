@@ -34,6 +34,16 @@ namespace Network {
             }
             uuid[UUID_LENGTH] = '\0';
         }
+
+        PacketHeader(uint8_t aType, std::string aUuid)
+        {
+            type = aType;
+
+            for (int i = 0; i < UUID_LENGTH; i++) {
+                uuid[i] = aUuid[i];
+            }
+            uuid[UUID_LENGTH] = '\0';
+        }
     });
     struct IPayload
     {};

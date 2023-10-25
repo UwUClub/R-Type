@@ -11,6 +11,7 @@
 #include "IsAlive.hpp"
 #include "NetworkHandler.hpp"
 #include "Packet.hpp"
+#include "PacketFactory.hpp"
 #include "SFMLDisplayClass.hpp"
 #include "ServerGameEvent.hpp"
 #include "System.hpp"
@@ -29,7 +30,8 @@ int main(int ac, char **av)
         std::string host(av[1]);
         std::string port(av[2]);
         auto &client = Network::ClientHandler::getInstance();
-        client.start(host, port);
+
+        client.start(host, port, RType::packetFactory);
         client.send(RType::ServerEventType::CONNECT);
 
         // Setup ECS / graphic

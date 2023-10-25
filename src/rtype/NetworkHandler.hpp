@@ -19,7 +19,8 @@ namespace Network {
     using boost::asio::ip::udp;
     using Sender = std::pair<std::thread, std::atomic<bool>>;
     using Buffer = std::vector<unsigned char>;
-    using ReceiveCallback = std::function<void(uint8_t, IPayload &, udp::endpoint &)>;
+    using ReceiveCallback = std::function<void(int8_t, IPayload *, udp::endpoint &)>;
+    using PacketFactory = std::unordered_map<unsigned char, std::function<IPayload *(Buffer &)>>;
 
     class NetworkHandler
     {
@@ -30,7 +31,7 @@ namespace Network {
             boost::asio::streambuf _readInbound;
             boost::asio::streambuf::mutable_buffers_type _readBuffer = _readInbound.prepare(READ_BUFFER_SIZE);
 
-            std::unordered_map<unsigned char, std::function<IPayload &(Buffer &)>> _packetFactory;
+            PacketFactory _packetFactory;
 
             udp::endpoint _readEndpoint;
             ReceiveCallback _onReceive;
@@ -77,8 +78,9 @@ namespace Network {
             /**
              * @brief Start handler with specific protocol
              * @param aProtocol The protocol to use
+             * @param aPacketFactory The packet factory to use
              */
-            void start(const boost::asio::basic_socket<boost::asio::ip::udp>::protocol_type &);
+            void start(const boost::asio::basic_socket<boost::asio::ip::udp>::protocol_type &, PacketFactory &);
 
             /**
              * @brief Start handler with specific protocol
@@ -105,6 +107,13 @@ namespace Network {
             void send(int8_t, const udp::endpoint &);
 
             /**
+             * @brief Send aknowledgment packet
+             * @param aUuid The packet uuid
+             * @param aEndpoint The id of the client to send the message to
+             */
+            void sendAknowledgment(std::string &, const udp::endpoint &);
+
+            /**
              * @brief Send a packet
              * @param aType The packet type
              * @param aPayload The payload to send
@@ -113,11 +122,13 @@ namespace Network {
             template<typename Payload>
             void send(int8_t aType, Payload &aPayload, const udp::endpoint &aEndpoint)
             {
-                boost::asio::streambuf buf = boost::asio::streambuf();
                 PacketHeader header(aType);
-                auto strBuff = Network::Serialization::serialize<Payload>(header, aPayload);
+                auto buff = Network::Serialization::serialize<PacketHeader>(header);
+                auto payloadBuff = Network::Serialization::serialize<Payload>(aPayload);
 
-                _socket.send_to(buf.data(), aEndpoint);
+                buff.insert(buff.end(), payloadBuff.begin(), payloadBuff.end());
+
+                _socket.send_to(boost::asio::buffer(buff), aEndpoint);
             }
 
             /**

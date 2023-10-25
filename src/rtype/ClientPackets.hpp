@@ -14,6 +14,8 @@ namespace RType::Client {
              float moveX;
              float moveY;
 
+             MovePayload() = default;
+
              MovePayload(float aMoveX, float aMoveY)
              {
                  moveX = aMoveX;

@@ -12,7 +12,7 @@ namespace Network {
 
     using boost::asio::ip::udp;
 
-    void ServerHandler::start(std::string &aHost, unsigned short aPort)
+    void ServerHandler::start(std::string &aHost, unsigned short aPort, PacketFactory &aPacketFactory)
     {
         NetworkHandler &network = NetworkHandler::getInstance();
         udp::endpoint endpoint(boost::asio::ip::address::from_string(aHost), aPort);
@@ -21,7 +21,7 @@ namespace Network {
             _clientColors[i] = -1;
         }
 
-        network.onReceive([this](uint8_t aType, IPayload &aPayload, udp::endpoint &aClientEndpoint) {
+        network.onReceive([this](int8_t aType, IPayload *aPayload, udp::endpoint &aClientEndpoint) {
             if (aType == AKNOWLEDGMENT_PACKET_TYPE) {
                 receiveAknowledgment(aClientEndpoint);
             } else if (aType == ERROR_PACKET_TYPE) {
@@ -34,12 +34,12 @@ namespace Network {
             }
         });
 
-        network.start(endpoint.protocol());
+        network.start(endpoint.protocol(), aPacketFactory);
         network.bind(endpoint);
         std::cout << "Server " << endpoint << " listening" << std::endl;
     }
 
-    void ServerHandler::receivePacket(uint8_t aType, IPayload &aPayload, const udp::endpoint &aClientEndpoint)
+    void ServerHandler::receivePacket(uint8_t aType, IPayload *aPayload, const udp::endpoint &aClientEndpoint)
     {
         auto client = std::find_if(_clients.begin(), _clients.end(),
                                    [aClientEndpoint](const std::pair<size_t, udp::endpoint> &aPair) {
@@ -56,7 +56,7 @@ namespace Network {
             return;
         }
         ECS::Event::EventManager::getInstance()->pushEvent<RType::ServerGameEvent>(
-            RType::ServerGameEvent(packetType, entityId, &aPayload));
+            RType::ServerGameEvent(packetType, entityId, aPayload));
     }
 
     void ServerHandler::receiveAknowledgment(const udp::endpoint &aClientEndpoint)
