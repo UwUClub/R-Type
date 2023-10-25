@@ -5,7 +5,7 @@ namespace RType {
 
     using boost::asio::ip::udp;
 
-    ServerGameEvent::ServerGameEvent(ServerEventType aType, unsigned short aEntityId, Network::IPayload *aPayload)
+    ServerGameEvent::ServerGameEvent(ServerEventType aType, unsigned short aEntityId, ECS::Network::IPayload *aPayload)
         : _type(aType),
           _entityId(aEntityId),
           _payload(aPayload)

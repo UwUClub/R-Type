@@ -1,8 +1,8 @@
 #include <functional>
-#include "ClientHandler.hpp"
 #include "ClientPackets.hpp"
 #include "EwECS/Event/EventManager.hpp"
 #include "EwECS/Event/KeyboardEvent.hpp"
+#include "EwECS/Network/ClientHandler.hpp"
 #include "EwECS/World.hpp"
 #include "SFMLDisplayClass.hpp"
 #include "ServerGameEvent.hpp"
@@ -16,29 +16,29 @@ namespace ECS {
                             Core::SparseArray<Component::TypeEntity> &aType,
                             Core::SparseArray<Component::IsAlive> &aIsAlive)
     {
-        Network::ClientHandler &network = Network::ClientHandler::getInstance();
+        ECS::Network::ClientHandler &client = ECS::Network::ClientHandler::getInstance();
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         auto &keyboardEvent = eventManager->getEventsByType<Event::KeyboardEvent>();
         static const std::unordered_map<Event::KeyIdentifier,
                                         std::function<RType::Client::MovePayload(float &, Utils::Vector2f &)>>
             keyMap = {
                 {Event::KeyIdentifier::UP,
-                 [&network](float &spd, Utils::Vector2f &xy) {
+                 [](float &spd, Utils::Vector2f &xy) {
                      xy.y -= spd;
                      return RType::Client::MovePayload {0, 1};
                  }},
                 {Event::KeyIdentifier::DOWN,
-                 [&network](float &spd, Utils::Vector2f &xy) {
+                 [](float &spd, Utils::Vector2f &xy) {
                      xy.y += spd;
                      return RType::Client::MovePayload {0, -1};
                  }},
                 {Event::KeyIdentifier::LEFT,
-                 [&network](float &spd, Utils::Vector2f &xy) {
+                 [](float &spd, Utils::Vector2f &xy) {
                      xy.x -= spd;
                      return RType::Client::MovePayload {-1, 0};
                  }},
                 {Event::KeyIdentifier::RIGHT,
-                 [&network](float &spd, Utils::Vector2f &xy) {
+                 [](float &spd, Utils::Vector2f &xy) {
                      xy.x += spd;
                      return RType::Client::MovePayload {1, 0};
                  }},
@@ -59,7 +59,7 @@ namespace ECS {
 
                 auto payload = keyMap.at(event._keyId)(speed, pos);
 
-                network.send(RType::ServerEventType::MOVE, payload);
+                client.send(RType::ServerEventType::MOVE, payload);
 
                 if (pos.x < 0) {
                     pos.x = 0;

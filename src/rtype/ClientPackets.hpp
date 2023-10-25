@@ -1,4 +1,4 @@
-#include "Packet.hpp"
+#include "EwECS/Network/Packet.hpp"
 
 #ifndef CLIENTPACKETS_HPP
     #define CLIENTPACKETS_HPP
@@ -6,7 +6,7 @@
 namespace RType::Client {
 
     PACK(struct MovePayload
-         : Network::IPayload {
+         : ECS::Network::IPayload {
              float moveX;
              float moveY;
 

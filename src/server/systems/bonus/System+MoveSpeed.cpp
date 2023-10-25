@@ -3,9 +3,9 @@
 #include "ClientGameEvent.hpp"
 #include "Components.hpp"
 #include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Network/ServerHandler.hpp"
 #include "EwECS/World.hpp"
 #include "ServerGameEvent.hpp"
-#include "ServerHandler.hpp"
 #include "ServerPackets.hpp"
 #include "System.hpp"
 #include "Values.hpp"
@@ -14,8 +14,7 @@ namespace ECS {
                              Core::SparseArray<Component::Connection> &aConnection)
     {
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
-        Network::NetworkHandler &network = Network::NetworkHandler::getInstance();
-        Network::ServerHandler &server = Network::ServerHandler::getInstance();
+        ECS::Network::ServerHandler &server = ECS::Network::ServerHandler::getInstance();
         auto &events = eventManager->getEventsByType<RType::ServerGameEvent>();
         const auto size = events.size();
         std::vector<size_t> toRemove;
@@ -34,7 +33,7 @@ namespace ECS {
             //     aSpeed[playerId].value().speed += 10;
             //     server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_BONUS), payload, aConnection);
             // } else {
-            //     network.send(Network::PacketHeader(ERROR_PACKET_TYPE), gameEvent.getClientEndpoint());
+            //     network.send(ECS::Network::PacketHeader(ERROR_PACKET_TYPE), gameEvent.getClientEndpoint());
             // }
             toRemove.push_back(i);
         }

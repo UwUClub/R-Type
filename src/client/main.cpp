@@ -2,16 +2,15 @@
 #include <boost/asio.hpp>
 #include <iostream>
 #include "ClientGameEvent.hpp"
-#include "ClientHandler.hpp"
 #include "Components.hpp"
 #include "EwECS/Asset/AssetManager.hpp"
 #include "EwECS/EwECS.hpp"
+#include "EwECS/Network/ClientHandler.hpp"
+#include "EwECS/Network/Packet.hpp"
 #include "EwECS/Physic/PhysicPlugin.hpp"
 #include "EwECS/Utils.hpp"
 #include "EwECS/World.hpp"
 #include "IsAlive.hpp"
-#include "NetworkHandler.hpp"
-#include "Packet.hpp"
 #include "PacketFactory.hpp"
 #include "SFMLDisplayClass.hpp"
 #include "ServerGameEvent.hpp"
@@ -30,7 +29,14 @@ int main(int ac, char **av)
         // Network
         std::string host(av[1]);
         std::string port(av[2]);
-        auto &client = Network::ClientHandler::getInstance();
+        auto &client = ECS::Network::ClientHandler::getInstance();
+
+        client.onReceive([](int8_t aPacketType, ECS::Network::IPayload *aPayload) {
+            auto eventType = static_cast<RType::ClientEventType>(aPacketType);
+
+            ECS::Event::EventManager::getInstance()->pushEvent<RType::ClientGameEvent>(
+                RType::ClientGameEvent(eventType, aPayload));
+        });
 
         client.start(host, port, RType::packetFactory);
         client.send(RType::ServerEventType::CONNECT);
@@ -112,9 +118,9 @@ int main(int ac, char **av)
 
         // Quit server properly
         client.send(RType::ServerEventType::DISCONNECT);
-        Network::NetworkHandler::getInstance().stop();
+        ECS::Network::ClientHandler::getInstance().stop();
     } catch (std::exception &e) {
-        Network::NetworkHandler::getInstance().stop();
+        ECS::Network::ClientHandler::getInstance().stop();
         std::cerr << "[RType client exception] " << e.what() << std::endl;
         return FAILURE;
     }

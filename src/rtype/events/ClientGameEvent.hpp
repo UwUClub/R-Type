@@ -1,7 +1,7 @@
 #include <cstddef>
 #include <memory>
 #include <vector>
-#include "Packet.hpp"
+#include "EwECS/Network/Packet.hpp"
 
 #ifndef CLIENTGAMEEVENT_HPP
     #define CLIENTGAMEEVENT_HPP
@@ -30,7 +30,7 @@ namespace RType {
     {
         private:
             ClientEventType _type;
-            std::shared_ptr<Network::IPayload> _payload;
+            std::shared_ptr<ECS::Network::IPayload> _payload;
 
         public:
             //-------------------CONSTRUCTORS / DESTRUCTOR-------------------//
@@ -50,7 +50,7 @@ namespace RType {
              * @param aType the type of the event
              * @param aPayload the payload of the event
              */
-            explicit ClientGameEvent(ClientEventType aType, Network::IPayload *aPayload);
+            explicit ClientGameEvent(ClientEventType aType, ECS::Network::IPayload *aPayload);
 
             /**
              * @brief Get event type

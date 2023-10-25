@@ -1,8 +1,8 @@
 #include <functional>
-#include "ClientHandler.hpp"
 #include "ClientPackets.hpp"
 #include "EwECS/Event/EventManager.hpp"
 #include "EwECS/Event/KeyboardEvent.hpp"
+#include "EwECS/Network/ClientHandler.hpp"
 #include "SFMLDisplayClass.hpp"
 #include "ServerGameEvent.hpp"
 #include "System.hpp"
@@ -14,7 +14,7 @@ namespace ECS {
                                     Core::SparseArray<Component::TypeEntity> &aType,
                                     Core::SparseArray<Component::IsAlive> &aIsAlive)
     {
-        Network::ClientHandler &client = Network::ClientHandler::getInstance();
+        ECS::Network::ClientHandler &client = ECS::Network::ClientHandler::getInstance();
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         auto &keyboardEvent = eventManager->getEventsByType<Event::KeyboardEvent>();
         const auto size = aPos.size();

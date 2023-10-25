@@ -1,7 +1,6 @@
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
 target_sources(rtype PRIVATE
-        NetworkHandler.cpp
         TypeUtils.cpp
 )
 

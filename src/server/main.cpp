@@ -2,15 +2,15 @@
 #include "Components.hpp"
 #include "EwECS/Asset/AssetManager.hpp"
 #include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Network/ServerHandler.hpp"
 #include "EwECS/Physic/PhysicPlugin.hpp"
 #include "EwECS/Utils.hpp"
 #include "EwECS/World.hpp"
 #include "IsAlive.hpp"
-#include "NetworkHandler.hpp"
 #include "PacketFactory.hpp"
 #include "ServerGameEvent.hpp"
-#include "ServerHandler.hpp"
 #include "System.hpp"
+#include "Values.hpp"
 
 int main(int ac, char **av)
 {
@@ -23,8 +23,18 @@ int main(int ac, char **av)
         // Network
         std::string host(av[1]);
         unsigned short port = static_cast<unsigned short>(std::stoi(av[2]));
-        Network::ServerHandler &server = Network::ServerHandler::getInstance();
-        server.start(host, port, RType::packetFactory);
+        ECS::Network::ServerHandler &server = ECS::Network::ServerHandler::getInstance();
+        server.onReceive([](int8_t aPacketType, ECS::Network::IPayload *aPayload, unsigned short entityId) {
+            auto eventType = static_cast<RType::ServerEventType>(aPacketType);
+
+            ECS::Event::EventManager::getInstance()->pushEvent<RType::ServerGameEvent>(
+                RType::ServerGameEvent(eventType, entityId, aPayload));
+        });
+        server.onReceiveAknowledgment([](unsigned short aEntityId) {
+            ECS::Event::EventManager::getInstance()->pushEvent<RType::ServerGameEvent>(
+                RType::ServerGameEvent(RType::ServerEventType::AKNOWLEDGMENT, aEntityId, {}));
+        });
+        server.start(host, port, 4, RType::packetFactory);
 
         // Setup ECS
         ECS::Core::World &world = ECS::Core::World::getInstance();
@@ -77,9 +87,9 @@ int main(int ac, char **av)
             world.calcDeltaTime();
         }
 
-        Network::NetworkHandler::getInstance().stop();
+        ECS::Network::ServerHandler::getInstance().stop();
     } catch (std::exception &e) {
-        Network::NetworkHandler::getInstance().stop();
+        ECS::Network::ServerHandler::getInstance().stop();
         std::cerr << "[RType server exception] " << e.what() << std::endl;
         return FAILURE;
     }

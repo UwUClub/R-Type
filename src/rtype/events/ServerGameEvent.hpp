@@ -1,6 +1,6 @@
 #include <boost/asio.hpp>
 #include <memory>
-#include "Packet.hpp"
+#include "EwECS/Network/Packet.hpp"
 
 #ifndef SERVERGAMEEVENT_HPP
     #define SERVERGAMEEVENT_HPP
@@ -28,7 +28,7 @@ namespace RType {
         private:
             ServerEventType _type;
             unsigned short _entityId;
-            std::shared_ptr<Network::IPayload> _payload;
+            std::shared_ptr<ECS::Network::IPayload> _payload;
 
         public:
             //-------------------CONSTRUCTORS / DESTRUCTOR-------------------//
@@ -38,7 +38,7 @@ namespace RType {
              * @param aEntityId the entity id
              * @param aPayload the payload
              */
-            ServerGameEvent(ServerEventType aType, unsigned short aEntityId, Network::IPayload *aPayload);
+            ServerGameEvent(ServerEventType aType, unsigned short aEntityId, ECS::Network::IPayload *aPayload);
 
             ServerGameEvent(const ServerGameEvent &gameEvent) = default;
             ServerGameEvent(ServerGameEvent &&gameEvent) = default;

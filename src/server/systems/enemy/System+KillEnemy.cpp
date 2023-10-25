@@ -1,7 +1,7 @@
 #include <iostream>
 #include "ClientGameEvent.hpp"
+#include "EwECS/Network/ServerHandler.hpp"
 #include "IsAlive.hpp"
-#include "ServerHandler.hpp"
 #include "ServerPackets.hpp"
 #include "System.hpp"
 #include "Values.hpp"
@@ -12,7 +12,7 @@ namespace ECS {
                            Core::SparseArray<Component::Connection> &aConnection)
     {
         auto &world = Core::World::getInstance();
-        auto &server = Network::ServerHandler::getInstance();
+        auto &server = ECS::Network::ServerHandler::getInstance();
         const auto size = aType.size();
 
         for (size_t enemyId = 0; enemyId < size; enemyId++) {

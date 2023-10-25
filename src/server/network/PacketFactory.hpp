@@ -1,17 +1,17 @@
 #include <iostream>
 #include "ClientPackets.hpp"
-#include "Serialization.hpp"
+#include "EwECS/Network/Serialization.hpp"
+#include "EwECS/Network/ServerHandler.hpp"
 #include "ServerGameEvent.hpp"
-#include "ServerHandler.hpp"
 
 #ifndef PACKET_FACTORY_HPP_
     #define PACKET_FACTORY_HPP_
 
 namespace RType {
 
-    static Network::PacketFactory packetFactory = {
-        {ServerEventType::MOVE, [](Network::Buffer &aBuffer) -> Network::IPayload * {
-             return Network::Serialization::unserializePointer<Client::MovePayload>(aBuffer);
+    static ECS::Network::PacketFactory packetFactory = {
+        {ServerEventType::MOVE, [](ECS::Network::Buffer &aBuffer) -> ECS::Network::IPayload * {
+             return ECS::Network::unserializePointer<Client::MovePayload>(aBuffer);
          }}};
 } // namespace RType
 

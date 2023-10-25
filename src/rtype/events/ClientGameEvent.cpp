@@ -6,7 +6,7 @@ namespace RType {
         : _type(aType)
     {}
 
-    ClientGameEvent::ClientGameEvent(ClientEventType aType, Network::IPayload *aPayload)
+    ClientGameEvent::ClientGameEvent(ClientEventType aType, ECS::Network::IPayload *aPayload)
         : _type(aType),
           _payload(aPayload)
     {}
