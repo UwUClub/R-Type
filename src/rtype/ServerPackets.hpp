@@ -155,9 +155,6 @@ namespace RType::Server {
                  enemyId = aEnemyId;
              }
          });
-
-    PACK(struct ServerFullPayload : Network::IPayload {});
-
 } // namespace RType::Server
 
 #endif

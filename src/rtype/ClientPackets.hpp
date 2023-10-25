@@ -5,10 +5,6 @@
 
 namespace RType::Client {
 
-    PACK(struct ConnectPayload : Network::IPayload {});
-
-    PACK(struct DisconnectPayload : Network::IPayload {});
-
     PACK(struct MovePayload
          : Network::IPayload {
              float moveX;
@@ -22,9 +18,6 @@ namespace RType::Client {
                  moveY = aMoveY;
              }
          });
-
-    PACK(struct ShootPayload : Network::IPayload {});
-
 } // namespace RType::Client
 
 #endif

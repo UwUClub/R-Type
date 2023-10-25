@@ -10,20 +10,8 @@
 namespace RType {
 
     static Network::PacketFactory packetFactory = {
-        {ServerEventType::CONNECT,
-         [](Network::Buffer &aBuffer) -> Network::IPayload * {
-             return nullptr;
-         }},
-        {ServerEventType::DISCONNECT,
-         [](Network::Buffer &aBuffer) -> Network::IPayload * {
-             return nullptr;
-         }},
-        {ServerEventType::MOVE,
-         [](Network::Buffer &aBuffer) -> Network::IPayload * {
-             return Network::Serialization::unserializePayload<Client::MovePayload>(aBuffer);
-         }},
-        {ServerEventType::SHOOT, [](Network::Buffer &aBuffer) -> Network::IPayload * {
-             return nullptr;
+        {ServerEventType::MOVE, [](Network::Buffer &aBuffer) -> Network::IPayload * {
+             return Network::Serialization::unserializePointer<Client::MovePayload>(aBuffer);
          }}};
 } // namespace RType
 

@@ -39,7 +39,7 @@ namespace Network::Serialization {
     }
 
     template<typename T>
-    IPayload *unserializePayload(std::vector<uint8_t> &bytes)
+    IPayload *unserializePointer(std::vector<uint8_t> &bytes)
     {
         T *data = new T;
         try {
