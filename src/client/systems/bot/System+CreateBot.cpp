@@ -1,4 +1,3 @@
-#include <SFML/Graphics/Rect.hpp>
 #include <cstddef>
 #include <vector>
 #include "AddEntity.hpp"

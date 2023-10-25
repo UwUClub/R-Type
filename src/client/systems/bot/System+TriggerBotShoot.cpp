@@ -1,4 +1,3 @@
-#include <SFML/Graphics/Rect.hpp>
 #include <vector>
 #include "AddEntity.hpp"
 #include "ClientGameEvent.hpp"
