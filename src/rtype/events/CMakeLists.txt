@@ -7,15 +7,12 @@ target_sources(rtype PRIVATE
 
 target_include_directories(rtype PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
-        ${Boost_INCLUDE_DIRS}
 )
 
 target_include_directories(client PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
-        ${Boost_INCLUDE_DIRS}
 )
 
 target_include_directories(server PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
-        ${Boost_INCLUDE_DIRS}
 )

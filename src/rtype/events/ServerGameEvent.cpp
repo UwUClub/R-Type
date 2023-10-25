@@ -1,9 +1,6 @@
 #include "ServerGameEvent.hpp"
-#include <boost/asio.hpp>
 
 namespace RType {
-
-    using boost::asio::ip::udp;
 
     ServerGameEvent::ServerGameEvent(ServerEventType aType, unsigned short aEntityId, ECS::Network::IPayload *aPayload)
         : _type(aType),

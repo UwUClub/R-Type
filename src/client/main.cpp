@@ -1,5 +1,4 @@
 #include <SFML/Graphics/Rect.hpp>
-#include <boost/asio.hpp>
 #include <iostream>
 #include "ClientGameEvent.hpp"
 #include "Components.hpp"

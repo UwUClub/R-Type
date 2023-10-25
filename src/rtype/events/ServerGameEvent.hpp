@@ -1,4 +1,3 @@
-#include <boost/asio.hpp>
 #include <memory>
 #include "EwECS/Network/Packet.hpp"
 
@@ -6,8 +5,6 @@
     #define SERVERGAMEEVENT_HPP
 
 namespace RType {
-
-    using boost::asio::ip::udp;
 
     enum ServerEventType
     {
