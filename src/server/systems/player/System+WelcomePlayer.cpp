@@ -7,7 +7,6 @@
 #include "EwECS/Physic/HitBox.hpp"
 #include "EwECS/SparseArray.hpp"
 #include "EwECS/World.hpp"
-#include "HitBox.hpp"
 #include "PlayerColor.hpp"
 #include "ServerGameEvent.hpp"
 #include "ServerHandler.hpp"

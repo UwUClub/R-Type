@@ -1,6 +1,5 @@
 #include <iostream>
 #include "ClientGameEvent.hpp"
-#include "HitBox.hpp"
 #include "IsAlive.hpp"
 #include "ServerHandler.hpp"
 #include "ServerPackets.hpp"
