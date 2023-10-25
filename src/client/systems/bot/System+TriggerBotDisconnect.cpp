@@ -14,7 +14,7 @@ namespace ECS {
         std::vector<size_t> toRemove;
         const auto size = events.size();
 
-        for (unsigned short i = 0; i < size; i++) {
+        for (size_t i = 0; i < size; i++) {
             auto &gameEvent = events[i];
 
             if (gameEvent.getType() != RType::ClientEventType::PLAYER_DISCONNECTION) {
@@ -23,7 +23,7 @@ namespace ECS {
 
             const auto &payload = gameEvent.getPayload<RType::Server::PlayerLeftPayload>();
 
-            unsigned short localBotId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(aType, payload.playerId);
+            const auto localBotId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(aType, payload.playerId);
 
             if (!aType[localBotId].has_value()) {
                 toRemove.push_back(i);

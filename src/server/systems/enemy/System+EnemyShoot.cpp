@@ -19,7 +19,7 @@ namespace ECS {
         auto &world = Core::World::getInstance();
         const auto size = aPos.size();
 
-        for (unsigned short idx = 0; idx < size; idx++) {
+        for (size_t idx = 0; idx < size; idx++) {
             if (!aPos[idx].has_value() || !aType[idx].has_value() || !aIsAlive[idx].has_value()) {
                 continue;
             }
@@ -29,7 +29,7 @@ namespace ECS {
             auto &isAlive = aIsAlive[idx].value();
 
             if (type.isEnemy && rand() % PROBABILTY_SHOOT_ENEMY == 0 && isAlive.isAlive) {
-                unsigned short missileId = world.createEntity();
+                auto missileId = world.createEntity();
                 auto posX = pos.x - MISSILES_TEX_WIDTH;
                 auto posY = pos.y + ENEMY_TEX_HEIGHT / 2.0F - MISSILES_TEX_HEIGHT / 2.0F;
                 ECS::Utils::Vector2f entityPos(posX, posY);
