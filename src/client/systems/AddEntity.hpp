@@ -4,6 +4,7 @@
 #include "Components.hpp"
 #include "EwECS/SFMLDisplayClass/LoadedSprite.hpp"
 #include "EwECS/Utils.hpp"
+#include "EwECS/Physic/HitBox.hpp"
 
 class AddEntity
 {

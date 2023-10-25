@@ -3,35 +3,31 @@
 #include "Values.hpp"
 
 namespace ECS {
-    void System::enemyHit(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::TypeEntity> &aType,
+    void System::enemyHit(Core::SparseArray<Component::TypeEntity> &aType,
                           Core::SparseArray<Component::HitBox> &aHitBox)
     {
         auto &world = Core::World::getInstance();
         auto &display = SFMLDisplayClass::getInstance();
-        const auto size = aType.size();
+        const auto size = aHitBox.size();
 
         for (size_t enemy = 0; enemy < size; enemy++) {
-            if (!aType[enemy].has_value() || !aType[enemy].value().isEnemy) {
+            if (!aType[enemy].has_value() || !aType[enemy].value().isEnemy || !aHitBox[enemy].has_value()) {
                 continue;
             }
 
-            auto &posEnemy = aPos[enemy].value();
             auto &hitBoxEnemy = aHitBox[enemy].value();
-            const auto size = aPos.size();
 
-            for (size_t bullet = 0; bullet < size; bullet++) {
-                if (!aType[bullet].has_value() || !aType[bullet].value().isBullet || !aPos[bullet].has_value()) {
-                    continue;
-                }
-
-                auto &posBullet = aPos[bullet].value();
-
-                if (posBullet.x > posEnemy.x && posBullet.x < posEnemy.x + hitBoxEnemy.width && posBullet.y > posEnemy.y
-                    && posBullet.y < posEnemy.y + hitBoxEnemy.height) {
-                    world.killEntity(bullet);
-                    break;
-                }
+            if (!hitBoxEnemy.isColliding) {
+                continue;
             }
+
+            auto &collider = hitBoxEnemy.collidingId;
+
+            if (!aType[collider].has_value() || !aType[collider].value().isBullet) {
+                continue;
+            }
+            std::cout << "enemy hit" << std::endl;
+            world.killEntity(collider);
         }
     }
 } // namespace ECS

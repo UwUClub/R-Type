@@ -1,9 +1,10 @@
 #include <iostream>
 #include "Components.hpp"
+#include "EwECS/Asset/AssetManager.hpp"
 #include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Physic/PhysicPlugin.hpp"
 #include "EwECS/Utils.hpp"
 #include "EwECS/World.hpp"
-#include "HitBox.hpp"
 #include "IsAlive.hpp"
 #include "NetworkHandler.hpp"
 #include "ServerHandler.hpp"
@@ -26,14 +27,18 @@ int main(int ac, char **av)
         // Setup ECS
         ECS::Core::World &world = ECS::Core::World::getInstance();
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
+        ECS::Asset::AssetManager &assetManager = ECS::Asset::AssetManager::getInstance();
 
         // Components
         world.registerComponent<ECS::Utils::Vector2f>();
         world.registerComponent<Component::Speed>();
         world.registerComponent<Component::TypeEntity>();
-        world.registerComponent<Component::HitBox>();
         world.registerComponent<Component::IsAlive>();
         world.registerComponent<Component::Connection>();
+
+        ECS::Physic::PhysicPlugin physicPlugin;
+
+        physicPlugin.plug(world, assetManager);
 
         // Player systems
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::HitBox,
@@ -41,8 +46,7 @@ int main(int ac, char **av)
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::Connection>(ECS::System::movePlayer);
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::HitBox,
                         Component::Connection>(ECS::System::playerShoot);
-        world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive, Component::HitBox>(
-            ECS::System::playerHit);
+        world.addSystem<Component::TypeEntity, Component::IsAlive, Component::HitBox>(ECS::System::playerHit);
         world.addSystem<Component::TypeEntity, Component::IsAlive, Component::Connection>(ECS::System::killPlayer);
         world.addSystem<Component::Speed, Component::Connection>(ECS::System::moveSpeedUp);
         world.addSystem<Component::Connection>(ECS::System::disconnectPlayer);
@@ -58,8 +62,7 @@ int main(int ac, char **av)
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveEnemy);
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::HitBox,
                         Component::IsAlive, Component::Connection>(ECS::System::enemyShoot);
-        world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::HitBox, Component::IsAlive>(
-            ECS::System::enemyHit);
+        world.addSystem<Component::TypeEntity, Component::HitBox, Component::IsAlive>(ECS::System::enemyHit);
         world.addSystem<Component::TypeEntity, Component::IsAlive, Component::Connection>(ECS::System::killEnemy);
 
         // Missile systems

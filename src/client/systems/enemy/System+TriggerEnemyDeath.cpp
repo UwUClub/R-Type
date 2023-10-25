@@ -3,7 +3,6 @@
 #include "EwECS/Event/EventManager.hpp"
 #include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "EwECS/World.hpp"
-#include "HitBox.hpp"
 #include "IsAlive.hpp"
 #include "SFML/Graphics/Rect.hpp"
 #include "System.hpp"
@@ -17,7 +16,6 @@ namespace ECS {
                                    Core::SparseArray<Utils::Vector2f> &aPos)
     {
         auto &world = Core::World::getInstance();
-        auto &display = SFMLDisplayClass::getInstance();
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         auto &events = eventManager->getEventsByType<RType::ClientGameEvent>();
         const auto size = events.size();
@@ -45,6 +43,7 @@ namespace ECS {
                 toRemove.push_back(i);
                 continue;
             }
+            std::cout << "Enemy " << localEnemyId << " is dead" << std::endl;
             aIsAlive[localEnemyId].value().isAlive = false;
             toRemove.push_back(i);
         }

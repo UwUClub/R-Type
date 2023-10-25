@@ -1,5 +1,4 @@
 #include <iostream>
-#include "HitBox.hpp"
 #include "IsAlive.hpp"
 #include "ServerHandler.hpp"
 #include "System.hpp"
