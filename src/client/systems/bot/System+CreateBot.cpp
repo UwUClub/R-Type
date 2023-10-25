@@ -1,9 +1,9 @@
-#include <SFML/Graphics/Rect.hpp>
 #include <cstddef>
 #include <vector>
+#include "AddEntity.hpp"
 #include "ClientGameEvent.hpp"
 #include "EwECS/Event/EventManager.hpp"
-#include "SFMLDisplayClass.hpp"
+#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 
@@ -42,12 +42,10 @@ namespace ECS {
             float posX = payload[3];
             float posY = payload[4];
 
-            display.addEntity(ECS::Utils::Vector2f {posX, posY}, Component::Speed {PLAYER_SPEED}, entityType,
-                              Component::LoadedSprite {
-                                  PLAYER_ASSET, nullptr,
-                                  new sf::IntRect {0, color * PLAYER_TEX_HEIGHT, PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT},
-                                  new sf::IntRect {0, 0, PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT}},
-                              Component::HitBox {PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT}, Component::IsAlive {true, 0});
+            AddEntity::addEntity(ECS::Utils::Vector2f {posX, posY}, Component::Speed {PLAYER_SPEED}, entityType,
+                                 Component::LoadedSprite {PLAYER_ASSET, nullptr, 0, color * PLAYER_TEX_HEIGHT,
+                                                          PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT},
+                                 Component::HitBox {PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT}, Component::IsAlive {true, 0});
             toRemove.push_back(i);
         }
         eventManager->removeEvent<RType::ClientGameEvent>(toRemove);

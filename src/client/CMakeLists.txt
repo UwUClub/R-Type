@@ -4,7 +4,6 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
 target_sources(client PRIVATE
         main.cpp
-        SFMLDisplayClass.cpp
 )
 
 add_subdirectory(network)
@@ -12,9 +11,6 @@ add_subdirectory(systems)
 
 target_link_libraries(client
     PRIVATE
-    sfml-graphics
-    sfml-window
-    sfml-system
     Threads::Threads
     ecs
     rtype

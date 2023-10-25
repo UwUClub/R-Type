@@ -1,6 +1,6 @@
 #include <iostream>
+#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "EwECS/SparseArray.hpp"
-#include "SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "components/IsAlive.hpp"
 
@@ -24,11 +24,10 @@ namespace ECS {
 
             auto &collider = hitBoxPlayer.collidingId;
 
-            if (!aType[collider].has_value() || !aType[collider].value().isBullet) {
+            if (!aType[collider].has_value() || !aType[collider].value().isEnemyMissile) {
                 continue;
             }
 
-            display.freeRects(collider);
             world.killEntity(collider);
         }
     }

@@ -1,5 +1,5 @@
+#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "EwECS/World.hpp"
-#include "SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 
@@ -20,14 +20,13 @@ namespace ECS {
             auto &speed = aSpeed[idx].value();
             auto &type = aType[idx].value();
 
-            if (type.isBullet) {
+            if (type.isBullet || type.isEnemyMissile) {
                 if (speed.speed == MISSILES_SPEED) {
                     pos.x -= speed.speed * world.getDeltaTime();
                 } else if (speed.speed == BULLET_SPEED) {
                     pos.x += speed.speed * world.getDeltaTime();
                 }
                 if (pos.x > SCREEN_WIDTH + MISSILES_TEX_WIDTH || pos.x < -MISSILES_TEX_WIDTH) {
-                    display.freeRects(idx);
                     world.killEntity(idx);
                 }
             }

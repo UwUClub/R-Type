@@ -2,8 +2,8 @@
 #include <string>
 #include <vector>
 #include "ClientHandler.hpp"
+#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "Packets.hpp"
-#include "SFMLDisplayClass.hpp"
 #include "System.hpp"
 
 namespace ECS {
@@ -42,7 +42,6 @@ namespace ECS {
                 if ((posBonus.x > posPlayer.x && posBonus.x < posPlayer.x + hitBoxPlayer.width
                      && posBonus.y > posPlayer.y && posBonus.y < posPlayer.y + hitBoxPlayer.height)) {
                     isAliveBonus.isAlive = false;
-                    display.freeRects(bonus);
                     RType::Packet packet(static_cast<int>(RType::ServerEventType::BONUS), {1});
                     client.send(packet);
                     world.killEntity(bonus);
