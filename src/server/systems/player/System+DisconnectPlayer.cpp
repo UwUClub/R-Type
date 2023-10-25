@@ -28,6 +28,10 @@ namespace ECS {
 
             unsigned short playerId = gameEvent.getEntityId();
 
+            if (!aConnection[playerId].has_value()) {
+                continue;
+            }
+
             world.killEntity(playerId);
             server.removeClient(playerId);
 
