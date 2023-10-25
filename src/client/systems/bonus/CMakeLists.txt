@@ -1,5 +1,4 @@
 target_sources(client PRIVATE
-        System+TriggerBonus.cpp
         System+MoveBonus.cpp
 )
 

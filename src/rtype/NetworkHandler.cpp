@@ -49,21 +49,15 @@ namespace Network {
             _readInbound.commit(aBytesTransferred);
             auto buff = Buffer(boost::asio::buffers_begin(_readInbound.data()),
                                boost::asio::buffers_begin(_readInbound.data()) + aBytesTransferred);
-            std::cout << "Got new packet (" << buff.size() << "):" << std::endl;
             auto header = Serialization::unserialize<PacketHeader>(buff);
             int type = header.type;
             std::string uuid(header.uuid);
-
-            std::cout << "    @HEADER    " << type << " " << uuid << std::endl;
 
             IPayload *payload = nullptr;
 
             if (_packetFactory.find(type) != _packetFactory.end()) {
                 buff.erase(buff.begin(), buff.begin() + sizeof(PacketHeader));
-                std::cout << "  total size: " << aBytesTransferred << " header size: " << sizeof(PacketHeader)
-                          << " payload size: " << buff.size() << std::endl;
                 payload = _packetFactory[type](buff);
-                std::cout << "    @PAYLOAD" << std::endl;
             }
 
             if (header.type == AKNOWLEDGMENT_PACKET_TYPE) { // receive aknowledgment
@@ -78,7 +72,6 @@ namespace Network {
             _onReceive(header.type, payload, _readEndpoint);
         } catch (const std::exception &e) {
             send(ERROR_PACKET_TYPE, _readEndpoint);
-            std::cout << "unserialization error: " << e.what() << std::endl;
         }
         _readInbound.consume(_readInbound.size());
         listen();
@@ -89,7 +82,6 @@ namespace Network {
 
     void NetworkHandler::send(int8_t aType, const udp::endpoint &aEndpoint)
     {
-        std::cout << "Send packet of type " << (int) aType << std::endl;
         PacketHeader header(aType);
 
         std::vector<uint8_t> strBuff = Serialization::serialize(header);
@@ -98,7 +90,6 @@ namespace Network {
 
     void NetworkHandler::sendAknowledgment(std::string &aUuid, const udp::endpoint &aEndpoint)
     {
-        std::cout << "Send aknowledgment for " << aUuid << std::endl;
         PacketHeader header(AKNOWLEDGMENT_PACKET_TYPE, aUuid);
 
         std::vector<uint8_t> strBuff = Serialization::serialize(header);
