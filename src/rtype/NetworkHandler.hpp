@@ -3,6 +3,7 @@
 #include <iostream>
 #include "Packet.hpp"
 #include "Serialization.hpp"
+#include "ServerPackets.hpp"
 #include "Values.hpp"
 #include <unordered_map>
 

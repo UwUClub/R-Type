@@ -58,6 +58,9 @@ namespace Network {
             if (_packetFactory.find(type) != _packetFactory.end()) {
                 buff.erase(buff.begin(), buff.begin() + sizeof(PacketHeader));
                 payload = _packetFactory[type](buff);
+                if (payload == nullptr) {
+                    throw std::runtime_error("Invalid payload");
+                }
             }
 
             if (header.type == AKNOWLEDGMENT_PACKET_TYPE) { // receive aknowledgment

@@ -32,7 +32,6 @@ namespace Network::Serialization {
             }
             std::memcpy(&data, bytes.data(), sizeof(T));
         } catch (std::exception &e) {
-            std::cout << "unpack error: " << e.what() << std::endl;
             throw e;
         }
         return data;

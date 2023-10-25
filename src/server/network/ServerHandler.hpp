@@ -151,10 +151,6 @@ namespace Network {
             {
                 for (auto &client : _clients) {
                     send(aType, aPayload, client.first, aConnection);
-                    // if (aConnection[client.first].has_value()) {
-                    //     aConnection[client.first].value().status = Network::ConnectionStatus::PENDING;
-                    //     NetworkHandler::getInstance().send<Payload>(aType, aPayload, client.second);
-                    // }
                 }
             }
 
