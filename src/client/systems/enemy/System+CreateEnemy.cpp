@@ -10,7 +10,6 @@ namespace ECS {
     void System::createEnemy()
     {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
-        SFMLDisplayClass &display = SFMLDisplayClass::getInstance();
         auto &events = eventManager->getEventsByType<RType::ClientGameEvent>();
         std::vector<size_t> toRemove;
         const auto size = events.size();

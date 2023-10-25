@@ -29,13 +29,14 @@ namespace ECS {
 
             if (type.isEnemy && rand() % PROBABILTY_SHOOT_ENEMY == 0 && isAlive.isAlive) {
                 size_t missileId = world.createEntity();
-                auto posX = pos.x - MISSILES_TEX_WIDTH;
+                auto posX = pos.x - (MISSILES_TEX_WIDTH * 2);
                 auto posY = pos.y + ENEMY_TEX_HEIGHT / 2.0F - MISSILES_TEX_HEIGHT / 2.0F;
                 ECS::Utils::Vector2f entityPos(posX, posY);
 
                 aPos.insertAt(missileId, entityPos);
                 aSpeed.insertAt(missileId, Component::Speed {MISSILES_SPEED});
-                aType.insertAt(missileId, Component::TypeEntity {false, false, false, true, false, false, false});
+                aType.insertAt(missileId,
+                               Component::TypeEntity {false, false, false, false, false, false, false, true});
                 aHitBox.insertAt(missileId, Component::HitBox {MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT});
 
                 // Send packet

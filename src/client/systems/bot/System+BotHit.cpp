@@ -24,7 +24,7 @@ namespace ECS {
 
             auto &collider = hitBoxPlayer.collidingId;
 
-            if (!aType[collider].has_value() || !aType[collider].value().isBullet) {
+            if (!aType[collider].has_value() || !aType[collider].value().isEnemyMissile) {
                 continue;
             }
 

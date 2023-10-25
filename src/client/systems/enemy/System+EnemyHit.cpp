@@ -7,7 +7,6 @@ namespace ECS {
                           Core::SparseArray<Component::HitBox> &aHitBox)
     {
         auto &world = Core::World::getInstance();
-        auto &display = SFMLDisplayClass::getInstance();
         const auto size = aHitBox.size();
 
         for (size_t enemy = 0; enemy < size; enemy++) {
@@ -26,7 +25,6 @@ namespace ECS {
             if (!aType[collider].has_value() || !aType[collider].value().isBullet) {
                 continue;
             }
-            std::cout << "enemy hit" << std::endl;
             world.killEntity(collider);
         }
     }

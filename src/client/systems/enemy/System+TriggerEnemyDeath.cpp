@@ -43,7 +43,6 @@ namespace ECS {
                 toRemove.push_back(i);
                 continue;
             }
-            std::cout << "Enemy " << localEnemyId << " is dead" << std::endl;
             aIsAlive[localEnemyId].value().isAlive = false;
             toRemove.push_back(i);
         }
@@ -58,7 +57,6 @@ namespace ECS {
                 continue;
             }
 
-            auto &pos = aPos[enemy].value();
             auto &sprite = aSprites[enemy].value();
             auto &isAlive = aIsAlive[enemy].value();
 

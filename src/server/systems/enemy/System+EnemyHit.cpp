@@ -34,7 +34,6 @@ namespace ECS {
             }
 
             isAliveEnemy.isAlive = false;
-            std::cout << "enemy hit" << std::endl;
             world.killEntity(collider);
         }
     }

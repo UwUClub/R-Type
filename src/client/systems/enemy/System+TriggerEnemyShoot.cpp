@@ -37,7 +37,7 @@ namespace ECS {
 
             AddEntity::addEntity(
                 ECS::Utils::Vector2f {posX, posY}, Component::Speed {MISSILES_SPEED},
-                Component::TypeEntity {false, false, false, true, false, false, false, onlineMissileId},
+                Component::TypeEntity {false, false, false, false, false, false, false, onlineMissileId, true},
                 Component::LoadedSprite {MISSILES_ASSET, nullptr, 304, 10, MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT},
                 Component::HitBox {MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT}, Component::IsAlive {false, 0});
             toRemove.push_back(i);
