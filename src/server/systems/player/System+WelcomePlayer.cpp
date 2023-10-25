@@ -43,7 +43,9 @@ namespace ECS {
             }
 
             auto playerId = world.createEntity();
-            RType::PLAYER_COLOR playerColor = RType::PLAYER_COLOR::BLUE; // server.addClientColor(playerId);
+
+            int playerSeat = server.addClient(playerId);
+            auto playerColor = static_cast<RType::PLAYER_COLOR>(playerSeat);
 
             if (playerColor == RType::PLAYER_COLOR::NONE) {
                 world.killEntity(playerId);
@@ -60,9 +62,8 @@ namespace ECS {
 
             RType::Server::PlayerJoinedPayload payloadToBroadcast(playerId, false, playerColor, 10, 10);
 
-            server.broadcast<RType::Server::PlayerJoinedPayload>(RType::ClientEventType::PLAYER_SPAWN,
-                                                                 payloadToBroadcast, aConnection);
-            server.addClient(playerId);
+            server.broadcastExcept<RType::Server::PlayerJoinedPayload>(RType::ClientEventType::PLAYER_SPAWN,
+                                                                       payloadToBroadcast, aConnection, playerId);
 
             RType::Server::PlayerJoinedPayload payload(playerId, true, playerColor, 10, 10);
             server.send(RType::ClientEventType::PLAYER_SPAWN, payload, playerId, aConnection);
@@ -77,7 +78,7 @@ namespace ECS {
                 auto &pos = aPos[idx].value();
 
                 if (idx != playerId && type.isPlayer) {
-                    RType::PLAYER_COLOR color = RType::PLAYER_COLOR::RED; // TODO get color
+                    auto color = static_cast<RType::PLAYER_COLOR>(server.getClientSeat(idx));
 
                     RType::Server::PlayerJoinedPayload playersPayload(idx, false, color, pos.x, pos.y);
                     server.send(RType::ClientEventType::PLAYER_SPAWN, playersPayload, playerId, aConnection);
