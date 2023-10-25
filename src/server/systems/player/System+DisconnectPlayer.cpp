@@ -19,14 +19,14 @@ namespace ECS {
         const auto size = events.size();
         std::vector<size_t> toRemove;
 
-        for (unsigned short i = 0; i < size; i++) {
+        for (size_t i = 0; i < size; i++) {
             auto &gameEvent = events[i];
 
             if (gameEvent.getType() != RType::ServerEventType::DISCONNECT) {
                 continue;
             }
 
-            unsigned short playerId = gameEvent.getEntityId();
+            auto playerId = gameEvent.getEntityId();
 
             if (!aConnection[playerId].has_value()) {
                 continue;

@@ -16,7 +16,7 @@ namespace ECS {
         std::vector<size_t> toRemove;
         const auto size = events.size();
 
-        for (unsigned short i = 0; i < size; i++) {
+        for (size_t i = 0; i < size; i++) {
             auto &gameEvent = events[i];
 
             if (gameEvent.getType() != RType::ClientEventType::ENEMY_SPAWN) {

@@ -31,7 +31,7 @@ namespace ECS {
         auto &world = Core::World::getInstance();
         const auto size = aType.size();
 
-        for (unsigned short playerId = 0; playerId < size; playerId++) {
+        for (size_t playerId = 0; playerId < size; playerId++) {
             if (!aType[playerId].has_value() || !aType[playerId].value().isPlayer) {
                 continue;
             }
@@ -41,7 +41,7 @@ namespace ECS {
             auto &hitBoxPlayer = aHitBox[playerId].value();
             auto &isPlayerAlive = aIsAlive[playerId].value();
 
-            for (unsigned short obstacleId = 0; obstacleId < posSize; obstacleId++) {
+            for (size_t obstacleId = 0; obstacleId < posSize; obstacleId++) {
                 if (!aType[obstacleId].has_value()
                     || (!aType[obstacleId].value().isBullet && !aType[obstacleId].value().isEnemy)) {
                     continue;

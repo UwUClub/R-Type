@@ -10,7 +10,7 @@ namespace ECS {
         auto &display = SFMLDisplayClass::getInstance();
         const auto size = aType.size();
 
-        for (unsigned short enemy = 0; enemy < size; enemy++) {
+        for (size_t enemy = 0; enemy < size; enemy++) {
             if (!aType[enemy].has_value() || !aType[enemy].value().isEnemy) {
                 continue;
             }
@@ -19,7 +19,7 @@ namespace ECS {
             auto &hitBoxEnemy = aHitBox[enemy].value();
             const auto size = aPos.size();
 
-            for (unsigned short bullet = 0; bullet < size; bullet++) {
+            for (size_t bullet = 0; bullet < size; bullet++) {
                 if (!aType[bullet].has_value() || !aType[bullet].value().isBullet || !aPos[bullet].has_value()) {
                     continue;
                 }

@@ -28,7 +28,7 @@ namespace ECS {
         const auto size = events.size();
         std::vector<size_t> toRemove;
 
-        for (unsigned short i = 0; i < size; i++) {
+        for (size_t i = 0; i < size; i++) {
             auto &gameEvent = events[i];
 
             if (gameEvent.getType() != RType::ServerEventType::CONNECT) {
@@ -43,7 +43,7 @@ namespace ECS {
                 continue;
             }
 
-            unsigned short playerId = world.createEntity();
+            auto playerId = world.createEntity();
             RType::PLAYER_COLOR playerColor = server.addClientColor(playerId);
 
             if (playerColor == RType::PLAYER_COLOR::NONE) {
@@ -69,7 +69,7 @@ namespace ECS {
             server.send(RType::ClientEventType::PLAYER_SPAWN, payload, playerId, aConnection);
 
             const auto posSize = aPos.size();
-            for (unsigned short idx = 0; idx < posSize; idx++) {
+            for (size_t idx = 0; idx < posSize; idx++) {
                 if (!aType[idx].has_value() || !aPos[idx].has_value()) {
                     continue;
                 }

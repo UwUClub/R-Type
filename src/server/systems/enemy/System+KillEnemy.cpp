@@ -16,7 +16,7 @@ namespace ECS {
         auto &server = Network::ServerHandler::getInstance();
         const auto size = aType.size();
 
-        for (unsigned short enemyId = 0; enemyId < size; enemyId++) {
+        for (size_t enemyId = 0; enemyId < size; enemyId++) {
             if (!aType[enemyId].has_value() || !aType[enemyId].value().isEnemy) {
                 continue;
             }

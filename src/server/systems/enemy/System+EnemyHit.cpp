@@ -9,7 +9,7 @@ namespace ECS {
         auto &world = Core::World::getInstance();
         const auto size = aType.size();
 
-        for (unsigned short enemyId = 0; enemyId < size; enemyId++) {
+        for (size_t enemyId = 0; enemyId < size; enemyId++) {
             if (!aType[enemyId].has_value() || !aType[enemyId].value().isEnemy || !aPos[enemyId].has_value()
                 || !aHitBox[enemyId].has_value() || !aIsAlive[enemyId].has_value()) {
                 continue;
@@ -19,7 +19,7 @@ namespace ECS {
             auto &hitBoxEnemy = aHitBox[enemyId].value();
             const auto posSize = aPos.size();
 
-            for (unsigned short bullet = 0; bullet < posSize; bullet++) {
+            for (size_t bullet = 0; bullet < posSize; bullet++) {
                 if (!aType[bullet].has_value() || !aType[bullet].value().isBullet || !aPos[bullet].has_value()) {
                     continue;
                 }

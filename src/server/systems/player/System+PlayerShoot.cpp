@@ -24,7 +24,7 @@ namespace ECS {
         const auto size = events.size();
         std::vector<size_t> toRemove;
 
-        for (unsigned short i = 0; i < size; i++) {
+        for (size_t i = 0; i < size; i++) {
             auto &gameEvent = events[i];
 
             if (gameEvent.getType() != RType::ServerEventType::SHOOT) {
@@ -35,7 +35,7 @@ namespace ECS {
             auto &pos = aPos[playerId].value();
 
             // Create entity
-            unsigned short bulletId = world.createEntity();
+            auto bulletId = world.createEntity();
             float posX = pos.x + BULLET_TEX_WIDTH + PLAYER_TEX_WIDTH;
             float posY = pos.y;
 

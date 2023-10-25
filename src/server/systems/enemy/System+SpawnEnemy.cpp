@@ -25,7 +25,7 @@ namespace ECS {
         timer.reset();
 
         // Create entity
-        unsigned short enemyId = world.createEntity();
+        auto enemyId = world.createEntity();
         auto posX = static_cast<float>(SCREEN_WIDTH - ENEMY_TEX_WIDTH);
         auto posY = static_cast<float>(rand() % SCREEN_HEIGHT);
 
