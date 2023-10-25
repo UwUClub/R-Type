@@ -10,25 +10,31 @@
 
 namespace Network {
 
-    struct PacketHeader
-    {
-            char uuid[UUID_LENGTH + 1] = {0};
-            int8_t type = 0;
+    #if defined(_MSC_VER)
+        #define PACK(definition) __pragma(pack(push, 1)) definition __pragma(pack(pop))
+    #elif defined(__GNUC__) || defined(__clang__)
+        #define PACK(definition) definition __attribute__((packed))
+    #else
+        #error "Unknown compiler, please provide a way to align structures"
+    #endif
 
-            PacketHeader() = default;
+    PACK(struct PacketHeader {
+        char uuid[UUID_LENGTH + 1] = {0};
+        int8_t type = 0;
 
-            PacketHeader(uint8_t aType)
-                : type(aType)
-            {
-                std::string strUuid = boost::uuids::to_string(boost::uuids::uuid(boost::uuids::random_generator()()));
+        PacketHeader() = default;
 
-                for (int i = 0; i < UUID_LENGTH; i++) {
-                    uuid[i] = strUuid[i];
-                }
-                uuid[UUID_LENGTH] = '\0';
+        PacketHeader(uint8_t aType)
+        {
+            type = aType;
+            std::string strUuid = boost::uuids::to_string(boost::uuids::uuid(boost::uuids::random_generator()()));
+
+            for (int i = 0; i < UUID_LENGTH; i++) {
+                uuid[i] = strUuid[i];
             }
-    };
-
+            uuid[UUID_LENGTH] = '\0';
+        }
+    });
     struct IPayload
     {};
 
