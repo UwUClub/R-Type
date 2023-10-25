@@ -41,7 +41,6 @@ int main(int ac, char **av)
         ECS::Physic::PhysicPlugin physicPlugin;
 
         // Graphic systems plug
-        renderPlugin.plug(world, assetManager);
 
         // Components
         world.registerComponent<ECS::Utils::Vector2f>();
@@ -49,7 +48,10 @@ int main(int ac, char **av)
         world.registerComponent<Component::TypeEntity>();
         world.registerComponent<Component::IsAlive>();
 
+        ECS::Physic::PhysicPluginConfig::getInstance().load("config/r-type.json");
+        ECS::Render::RenderPluginConfig::getInstance().load("config/r-type.json");
         physicPlugin.plug(world, assetManager);
+        renderPlugin.plug(world, assetManager);
 
         // Background systems
         world.addSystem(ECS::System::createBackground);

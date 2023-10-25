@@ -38,21 +38,4 @@ function(R_Type_setup_dependencies)
     set(Boost_USE_STATIC_RUNTIME OFF)
     FetchContent_MakeAvailable(Boost)
 
-    FetchContent_Declare(
-        SFML
-        GIT_REPOSITORY https://github.com/SFML/SFML.git
-        GIT_TAG 2.6.0
-    )
-    FetchContent_MakeAvailable(SFML)
-
-    if (NOT TARGET nlohmann_json)
-    CPMAddPackage(
-            NAME nlohmann_json
-            VERSION 3.11.2
-            GITHUB_REPOSITORY "nlohmann/json"
-            GIT_TAG v3.11.2
-            GIT_SHALLOW TRUE
-    )
-    endif()
-
 endfunction()
