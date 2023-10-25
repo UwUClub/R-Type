@@ -26,11 +26,16 @@ namespace ECS {
             }
 
             size_t playerId = gameEvent.getEntityId();
+
+            if (!aConnection[playerId].has_value()) {
+                continue;
+            }
+
             std::vector<float> payload = {static_cast<float>(playerId)};
 
-            world.killEntity(playerId);
-            server.removeClient(playerId);
             server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_DISCONNECTION), payload, aConnection);
+            server.removeClient(playerId);
+            world.killEntity(playerId);
             toRemove.push_back(i);
         }
         eventManager->removeEvent<RType::ServerGameEvent>(toRemove);

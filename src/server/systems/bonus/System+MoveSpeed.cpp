@@ -30,6 +30,10 @@ namespace ECS {
             auto playerId = static_cast<size_t>(gameEvent.getEntityId());
             float const bonusType = gameEvent.getPayload()[0];
 
+            if (!aSpeed[playerId].has_value() || !aConnection[playerId].has_value()) {
+                continue;
+            }
+
             if (bonusType == 1) {
                 std::vector<float> payload = {static_cast<float>(playerId), 1};
 
