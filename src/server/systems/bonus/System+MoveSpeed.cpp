@@ -20,7 +20,7 @@ namespace ECS {
         const auto size = events.size();
         std::vector<size_t> toRemove;
 
-        for (size_t i = 0; i < size; i++) {
+        for (unsigned short i = 0; i < size; i++) {
             auto &gameEvent = events[i];
 
             if (gameEvent.getType() != RType::ServerEventType::BONUS) {

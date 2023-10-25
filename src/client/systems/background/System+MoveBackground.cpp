@@ -10,7 +10,7 @@ namespace ECS {
         auto deltaTime = Core::World::getInstance().getDeltaTime();
         const auto size = aType.size();
 
-        for (size_t i = 0; i < size; i++) {
+        for (unsigned short i = 0; i < size; i++) {
             if (!aType[i].has_value() || !aType[i].value().isBackground || !aPos[i].has_value()
                 || !aSpeed[i].has_value()) {
                 continue;

@@ -24,7 +24,7 @@ namespace ECS {
         std::vector<size_t> toRemove;
 
         // Receive death event from server
-        for (size_t i = 0; i < size; i++) {
+        for (unsigned short i = 0; i < size; i++) {
             auto &gameEvent = events[i];
 
             if (gameEvent.getType() != RType::ClientEventType::ENEMY_DEATH) {
@@ -33,7 +33,7 @@ namespace ECS {
 
             const auto &payload = gameEvent.getPayload<RType::Server::EnemyDiedPayload>();
 
-            size_t localEnemyId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(aType, payload.enemyId);
+            unsigned short localEnemyId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(aType, payload.enemyId);
 
             if (!aIsAlive[localEnemyId].has_value()) {
                 toRemove.push_back(i);
@@ -47,7 +47,7 @@ namespace ECS {
         // Explosion + entity removal
         const auto typeSize = aType.size();
 
-        for (size_t enemy = 0; enemy < typeSize; enemy++) {
+        for (unsigned short enemy = 0; enemy < typeSize; enemy++) {
             if (!aType[enemy].has_value() || !aType[enemy].value().isEnemy || !aIsAlive[enemy].has_value()
                 || !aSprites[enemy].has_value() || !aPos[enemy].has_value()) {
                 continue;

@@ -10,7 +10,7 @@ namespace ECS {
         auto &world = Core::World::getInstance();
         const auto size = aType.size();
 
-        for (size_t idx = 0; idx < size; idx++) {
+        for (unsigned short idx = 0; idx < size; idx++) {
             if (!aPos[idx].has_value() || !aSpeed[idx].has_value() || !aType[idx].has_value()) {
                 continue;
             }

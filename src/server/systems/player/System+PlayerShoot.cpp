@@ -35,7 +35,7 @@ namespace ECS {
             auto &pos = aPos[playerId].value();
 
             // Create entity
-            size_t bulletId = world.createEntity();
+            unsigned short bulletId = world.createEntity();
             float posX = pos.x + BULLET_TEX_WIDTH + PLAYER_TEX_WIDTH;
             float posY = pos.y;
 

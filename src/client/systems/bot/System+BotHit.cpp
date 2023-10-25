@@ -13,7 +13,7 @@ namespace ECS {
         auto &display = SFMLDisplayClass::getInstance();
         const auto size = aType.size();
 
-        for (size_t player = 0; player < size; player++) {
+        for (unsigned short player = 0; player < size; player++) {
             if (!aType[player].has_value() || !aType[player].value().isPlayer || !aPos[player].has_value()
                 || !aHitBox[player].has_value()) {
                 continue;
@@ -23,7 +23,7 @@ namespace ECS {
             auto &hitBoxPlayer = aHitBox[player].value();
             const auto missileSize = aPos.size();
 
-            for (size_t missileId = 0; missileId < missileSize; missileId++) {
+            for (unsigned short missileId = 0; missileId < missileSize; missileId++) {
                 if (!aType[missileId].has_value() || !aType[missileId].value().isBullet
                     || !aPos[missileId].has_value()) {
                     continue;

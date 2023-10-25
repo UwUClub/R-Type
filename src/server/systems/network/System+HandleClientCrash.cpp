@@ -19,7 +19,7 @@ namespace ECS {
         Core::World &world = Core::World::getInstance();
         const auto size = aConnection.size();
 
-        for (size_t i = 0; i < size; i++) {
+        for (unsigned short i = 0; i < size; i++) {
             if (aType[i].has_value() && aType[i]->isPlayer && aConnection[i].has_value() && aIsAlive[i].has_value()
                 && aConnection[i].value().status == Network::ConnectionStatus::PENDING) {
                 aConnection[i].value().age += world.getDeltaTime();

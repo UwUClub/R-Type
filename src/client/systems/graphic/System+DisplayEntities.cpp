@@ -10,7 +10,7 @@ namespace ECS {
         const auto size = aSprites.size();
 
         display._window.clear(sf::Color::Black);
-        for (size_t i = 0; i < size; i++) {
+        for (unsigned short i = 0; i < size; i++) {
             if (!aSprites[i].has_value() || aSprites[i]->texture == nullptr) {
                 continue;
             }

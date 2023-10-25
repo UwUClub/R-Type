@@ -45,7 +45,7 @@ namespace ECS {
             };
         const auto size = aPos.size();
 
-        for (size_t i = 0; i < size; i++) {
+        for (unsigned short i = 0; i < size; i++) {
             if (!aType[i].has_value() || !aType[i].value().isPlayer) {
                 continue;
             }
