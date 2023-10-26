@@ -39,11 +39,11 @@ int main(int ac, char **av)
     ECS::Render::RenderPlugin renderPlugin;
     ECS::Physic::PhysicPlugin physicPlugin;
 
-    auto &sprite = world.getComponent<Component::LoadedSprite>();
-    auto &weight = world.registerComponent<Component::Weight>();
-
     renderPlugin.plug(world, assetManager);
     physicPlugin.plug(world, assetManager);
+
+    auto &sprite = world.getComponent<Component::LoadedSprite>();
+    auto &weight = world.getComponent<Component::Weight>();
 
     // Setup background
     size_t backgroundId = world.createEntity();
