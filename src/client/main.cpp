@@ -92,12 +92,11 @@ int main(int ac, char **av)
         world.addSystem(ECS::System::createServerFullErrorMessage);
 
         // Loading message
-        AddEntity::addEntity(ECS::Utils::Vector2f {SCREEN_WIDTH / 2 - LOADING_MESSAGE_TEX_WIDTH / 2,
-                                                   SCREEN_HEIGHT / 2 - LOADING_MESSAGE_TEX_HEIGHT / 2},
-                             Component::Speed {0},
-                             Component::TypeEntity {false, false, false, false, false, false, false},
-                             Component::LoadedSprite {"config/serverMessage.json"},
-                             Component::HitBox {}, Component::IsAlive {false, 0});
+        AddEntity::addEntity(
+            ECS::Utils::Vector2f {SCREEN_WIDTH / 2 - LOADING_MESSAGE_TEX_WIDTH / 2,
+                                  SCREEN_HEIGHT / 2 - LOADING_MESSAGE_TEX_HEIGHT / 2},
+            Component::Speed {0}, Component::TypeEntity {false, false, false, false, false, false, false},
+            Component::LoadedSprite {"config/serverMessage.json"}, Component::HitBox {}, Component::IsAlive {false, 0});
 
         // Game loop
         while (world.isRunning()) {
