@@ -18,7 +18,8 @@ namespace ECS {
         const auto size = aPos.size();
 
         for (size_t i = 0; i < size; i++) {
-            if (!aType[i].has_value() || !aType[i].value().isPlayer || !aIsAlive[i].value().isAlive) {
+            if (!aType[i].has_value() || !aType[i].value().isPlayer || !aIsAlive[i].has_value()
+                || !aIsAlive[i].value().isAlive) {
                 continue;
             }
             for (auto &event : keyboardEvent) {
