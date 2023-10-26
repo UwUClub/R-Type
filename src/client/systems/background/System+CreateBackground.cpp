@@ -23,7 +23,6 @@ namespace ECS {
             const auto &payload = gameEvent.getPayload<RType::Server::PlayerJoinedPayload>();
 
             if (payload.isReceiver) {
-                display.freeRects(0);
                 world.killEntity(0);
                 AddEntity::addEntity(
                     ECS::Utils::Vector2f {0, 0}, Component::Speed {BACKGROUND_SPEED},
