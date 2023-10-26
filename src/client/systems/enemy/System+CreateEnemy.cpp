@@ -35,7 +35,7 @@ namespace ECS {
             AddEntity::addEntity(
                 ECS::Utils::Vector2f {posX, posY}, Component::Speed {ENEMY_SPEED},
                 Component::TypeEntity {false, false, true, false, false, false, false, onlineEntityId},
-                Component::LoadedSprite {ENEMY_ASSET, nullptr, 0, 0, ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT},
+                Component::LoadedSprite {"config/enemy.json"},
                 Component::HitBox {ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT}, Component::IsAlive {true, 0});
             toRemove.push_back(i);
         }
