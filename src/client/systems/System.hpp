@@ -169,8 +169,8 @@ namespace ECS {
              * @brief Handle the death of a bot (triggered by server)
              * @param aSpeed
              */
-            static void triggerBotBonus(Core::SparseArray<Component::Speed> &aSpeed,
-                                        Core::SparseArray<Component::TypeEntity> &aType);
+            static void triggerBonus(Core::SparseArray<Component::Speed> &aSpeed,
+                                     Core::SparseArray<Component::TypeEntity> &aType);
 
             /**
              * @brief Handle the disconnection of a player (triggered by server)

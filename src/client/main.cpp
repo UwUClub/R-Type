@@ -84,7 +84,7 @@ int main(int ac, char **av)
 
         // Bonus systems
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBonus);
-        world.addSystem<Component::Speed, Component::TypeEntity>(ECS::System::triggerBotBonus);
+        world.addSystem<Component::Speed, Component::TypeEntity>(ECS::System::triggerBonus);
 
         // Missile systems
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveMissiles);

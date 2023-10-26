@@ -1,5 +1,6 @@
 target_sources(server PRIVATE
-        System+MoveSpeed.cpp
+        System+MoveBonus.cpp
+        System+TriggerBonus.cpp
 )
 
 target_include_directories(server PRIVATE

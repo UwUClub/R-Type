@@ -1,3 +1,4 @@
+#include <iostream>
 #include "AddEntity.hpp"
 #include "ClientGameEvent.hpp"
 #include "EwECS/Event/EventManager.hpp"
@@ -39,6 +40,15 @@ namespace ECS {
                 continue;
             }
             aIsAlive[localEnemyId].value().isAlive = false;
+
+            AddEntity::addEntity(
+                ECS::Utils::Vector2f {aPos[localEnemyId].value().x, aPos[localEnemyId].value().y},
+                Component::Speed {BONUS_SPEED},
+                Component::TypeEntity {false, false, false, false, false, true, false, payload.bonusId, false},
+                Component::LoadedSprite {BONUS_ASSET, nullptr, 125, 520, BONUS_TEX_WIDTH, BONUS_TEX_HEIGHT,
+                                         BONUS_SCALE},
+                Component::HitBox {BONUS_TEX_WIDTH, BONUS_TEX_HEIGHT}, Component::IsAlive {false, 0});
+
             toRemove.push_back(i);
         }
         eventManager->removeEvent<RType::ClientGameEvent>(toRemove);
@@ -65,15 +75,6 @@ namespace ECS {
                 sprite.rect.top = 46;
                 sprite.rect.left = 146;
                 isAlive.timeToDie = 1;
-                if (rand() % 5 == 0) {
-                    AddEntity::addEntity(ECS::Utils::Vector2f {aPos[enemy].value().x, aPos[enemy].value().y},
-                                         Component::Speed {BONUS_SPEED},
-                                         Component::TypeEntity {false, false, false, false, false, true, false},
-                                         Component::LoadedSprite {BONUS_ASSET, nullptr, 125, 520, BONUS_TEX_WIDTH,
-                                                                  BONUS_TEX_HEIGHT, BONUS_SCALE},
-                                         Component::HitBox {BONUS_TEX_WIDTH, BONUS_TEX_HEIGHT},
-                                         Component::IsAlive {false, 0});
-                }
             } else if (!isAlive.isAlive) {
                 isAlive.timeToDie -= world.getDeltaTime();
             }
