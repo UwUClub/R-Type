@@ -1,4 +1,3 @@
-add_subdirectory(graphic)
 add_subdirectory(physics)
 add_subdirectory(ground)
 

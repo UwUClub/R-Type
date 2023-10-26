@@ -12,6 +12,9 @@
 //------------------ NETWORK ------------------//
 const constexpr unsigned short READ_BUFFER_SIZE = 1024;
 const constexpr float PACKET_TIMEOUT = 2.0F; // in seconds
+const constexpr int AKNOWLEDGMENT_PACKET_TYPE = -1;
+const constexpr int ERROR_PACKET_TYPE = -2;
+const constexpr int UUID_LENGTH = 36;
 
 // ------------------ DISPLAY ------------------ //
 const constexpr int SCREEN_WIDTH = 1920;
@@ -65,6 +68,7 @@ static const std::string BONUS_ASSET = "assets/sprites/powerup.png";
 const constexpr float BONUS_SPEED = 800;
 const constexpr int BONUS_TEX_WIDTH = 250;
 const constexpr int BONUS_TEX_HEIGHT = 280;
+const constexpr float BONUS_SCALE = 0.1;
 
 // ------------------ LOADING MESSAGE ------------------ //
 static const std::string LOADING_MESSAGE_ASSET = "assets/sprites/loading-message.png";

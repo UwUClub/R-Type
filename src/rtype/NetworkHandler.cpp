@@ -1,11 +1,11 @@
 #include "NetworkHandler.hpp"
-#include <boost/asio.hpp>
 #include <boost/bind.hpp>
 #include <chrono>
 #include <iostream>
 #include <string>
-#include "EventManager.hpp"
 #include "Packets.hpp"
+#include "Serialization.hpp"
+#include "Values.hpp"
 
 namespace Network {
 
@@ -27,77 +27,72 @@ namespace Network {
         _onReceive = aOnReceive;
     }
 
-    void NetworkHandler::onReceiveAknowledgment(
-        std::function<void(const std::string &, udp::endpoint &)> aOnReceiveAknowledgment)
-    {
-        _onReceiveAknowledgment = aOnReceiveAknowledgment;
-    }
-
     void NetworkHandler::listen()
     {
+        _readBuffer = _readInbound.prepare(READ_BUFFER_SIZE);
         _socket.async_receive_from(boost::asio::buffer(_readBuffer), _readEndpoint,
-                                   boost::bind(&NetworkHandler::handleRequest, this, boost::asio::placeholders::error,
+                                   boost::bind(&NetworkHandler::tryHandleRequest, this,
+                                               boost::asio::placeholders::error,
                                                boost::asio::placeholders::bytes_transferred));
 
         if (!_ioThread.joinable()) {
-            _ioThread = std::thread(boost::bind(&boost::asio::io_service::run, &_ioService));
+            _ioThread = boost::thread(boost::bind(&boost::asio::io_service::run, &_ioService));
         }
     }
 
-    void NetworkHandler::handleRequest(const boost::system::error_code &aError, std::size_t aBytesTransferred)
+    void NetworkHandler::tryHandleRequest(const boost::system::error_code &aError, std::size_t aBytesTransferred)
     {
         (void) aError;
-        (void) aBytesTransferred;
 
+        try {
+            handleRequest(aBytesTransferred);
+        } catch (const std::exception &e) {
+            send(RType::Packet(ERROR_PACKET_TYPE), _readEndpoint);
+        }
+        _readInbound.consume(_readInbound.size());
+        listen();
+    }
+
+    void NetworkHandler::handleRequest(std::size_t aBytesTransferred)
+    {
+        _readInbound.commit(aBytesTransferred);
         RType::Packet packet;
-        RType::unserializePacket<std::array<char, READ_BUFFER_SIZE>>(&packet, _readBuffer);
+        Network::Serialization::unserialize(&packet, _readInbound);
 
         if (packet.type == -1) { // receive aknowledgment
-            _onReceiveAknowledgment(packet.uuid, _readEndpoint);
             if (_senders.find(packet.uuid) != _senders.end() && _senders[packet.uuid].first.joinable()) {
                 _senders[packet.uuid].second = false;
                 _senders[packet.uuid].first.join();
                 _senders.erase(packet.uuid);
             }
-        } else {
-            answerAknowledgment(packet.uuid, _readEndpoint);
-            _onReceive(packet, _readEndpoint);
+        } else if (packet.type >= 0) { // send aknowledgment
+            RType::Packet aknowledgment(packet.uuid, AKNOWLEDGMENT_PACKET_TYPE);
+            send(aknowledgment, _readEndpoint);
         }
-        listen();
+        _onReceive(packet, _readEndpoint);
     }
 
-    void NetworkHandler::send(const RType::Packet &aPacket, udp::endpoint &aClientEndpoint)
+    void NetworkHandler::send(const RType::Packet &aPacket, const udp::endpoint &aEndpoint)
     {
-        boost::asio::streambuf buf;
-        RType::serializePacket(&buf, aPacket);
-        _socket.send_to(buf.data(), aClientEndpoint);
+        boost::asio::streambuf buf = boost::asio::streambuf();
+        Network::Serialization::serialize(&buf, aPacket);
+
+        _socket.send_to(buf.data(), aEndpoint);
 
         // _senders[aPacket.uuid].second = true;
-        // _senders[aPacket.uuid].first = std::thread([this, aPacket, aClientEndpoint]() {
+        // _senders[aPacket.uuid].first = std::thread([this, aPacket, aEndpoint]() {
         //     try {
         //         boost::asio::streambuf buf;
         //         RType::serializePacket(&buf, aPacket);
 
         //         while (_senders[aPacket.uuid].second.load()) {
-        //             _socket.send_to(buf.data(), aClientEndpoint);
+        //             _socket.send_to(buf.data(), aEndpoint);
         //             std::this_thread::sleep_for(std::chrono::milliseconds(200));
         //         }
         //     } catch (std::exception &e) {
         //         std::cerr << "NetworkHandler send error: " << e.what() << std::endl;
         //     }
         // });
-    }
-
-    void NetworkHandler::answerAknowledgment(const std::string &aPacketUuid, udp::endpoint &aEndpoint)
-    {
-        try {
-            boost::asio::streambuf buf;
-            RType::Packet packet(aPacketUuid);
-            RType::serializePacket(&buf, packet);
-            _socket.send_to(buf.data(), aEndpoint);
-        } catch (std::exception &e) {
-            std::cerr << "NetworkHandler send error: " << e.what() << std::endl;
-        }
     }
 
     boost::asio::io_service &NetworkHandler::getIoService()

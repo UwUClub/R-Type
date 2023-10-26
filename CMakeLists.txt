@@ -33,6 +33,13 @@ R_Type_set_project_warnings(
 include(Dependencies.cmake)
 R_Type_setup_dependencies()
 
+include(cmake/StandardProjectSettings.cmake)
+
+# exec submodules init and update
+execute_process(COMMAND git submodule update --init --recursive --remote)
+add_subdirectory(extern)
+# expose the includes folder of the submodules
+
 add_library(R_Type::R_Type_warnings ALIAS R_Type_warnings)
 
 # Adding the src:

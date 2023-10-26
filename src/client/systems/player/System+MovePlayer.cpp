@@ -1,11 +1,11 @@
 #include <functional>
 #include "ClientHandler.hpp"
-#include "EventManager.hpp"
-#include "KeyboardEvent.hpp"
-#include "SDLDisplayClass.hpp"
+#include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Event/KeyboardEvent.hpp"
+#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
+#include "EwECS/World.hpp"
 #include "System.hpp"
 #include "Values.hpp"
-#include "World.hpp"
 #include "components/IsAlive.hpp"
 #include <unordered_map>
 
@@ -15,52 +15,50 @@ namespace ECS {
                             Core::SparseArray<Component::IsAlive> &aIsAlive)
     {
         Network::ClientHandler &network = Network::ClientHandler::getInstance();
-
         Event::EventManager *eventManager = Event::EventManager::getInstance();
-        auto keyboardEvent = eventManager->getEventsByType(Event::EventType::KEYBOARD);
-        static const std::unordered_map<Event::KeyIdentifier, std::function<void(float &, Utils::Vector2f &, float)>>
-            keyMap = {
+        auto &keyboardEvent = eventManager->getEventsByType<Event::KeyboardEvent>();
+        static const std::unordered_map<Event::KeyIdentifier, std::function<void(float &, Utils::Vector2f &)>> keyMap =
+            {
                 {Event::KeyIdentifier::UP,
-                 [&network](float &spd, Utils::Vector2f &xy, float onlineId) {
+                 [&network](float &spd, Utils::Vector2f &xy) {
                      xy.y -= spd;
-                     RType::Packet packet(static_cast<int>(RType::ServerEventType::MOVE), {onlineId, 0, 1});
+                     RType::Packet packet(RType::ServerEventType::MOVE, {0, 1});
                      network.send(packet);
                  }},
                 {Event::KeyIdentifier::DOWN,
-                 [&network](float &spd, Utils::Vector2f &xy, float onlineId) {
+                 [&network](float &spd, Utils::Vector2f &xy) {
                      xy.y += spd;
-                     RType::Packet packet(static_cast<int>(RType::ServerEventType::MOVE), {onlineId, 0, -1});
+                     RType::Packet packet(RType::ServerEventType::MOVE, {0, -1});
                      network.send(packet);
                  }},
                 {Event::KeyIdentifier::LEFT,
-                 [&network](float &spd, Utils::Vector2f &xy, float onlineId) {
+                 [&network](float &spd, Utils::Vector2f &xy) {
                      xy.x -= spd;
-                     RType::Packet packet(static_cast<int>(RType::ServerEventType::MOVE), {onlineId, -1, 0});
+                     RType::Packet packet(RType::ServerEventType::MOVE, {-1, 0});
                      network.send(packet);
                  }},
                 {Event::KeyIdentifier::RIGHT,
-                 [&network](float &spd, Utils::Vector2f &xy, float onlineId) {
+                 [&network](float &spd, Utils::Vector2f &xy) {
                      xy.x += spd;
-                     RType::Packet packet(static_cast<int>(RType::ServerEventType::MOVE), {onlineId, 1, 0});
+                     RType::Packet packet(RType::ServerEventType::MOVE, {1, 0});
                      network.send(packet);
                  }},
             };
+        const auto size = aPos.size();
 
-        for (size_t i = 0; i < aPos.size(); i++) {
+        for (size_t i = 0; i < size; i++) {
             if (!aType[i].has_value() || !aType[i].value().isPlayer) {
                 continue;
             }
             for (auto &event : keyboardEvent) {
-                auto *keyEvent = static_cast<Event::KeyboardEvent *>(event);
-                if (keyMap.find(keyEvent->_keyId) == keyMap.end() || !aIsAlive[i].value().isAlive) {
+                if (keyMap.find(event._keyId) == keyMap.end() || !aIsAlive[i].value().isAlive) {
                     continue;
                 }
+
                 auto &pos = aPos[i].value();
-                float onlinePlayerId = static_cast<float>(aType[i].value().onlineId.value_or(-1));
-                if (onlinePlayerId == -1) {
-                    continue;
-                }
-                keyMap.at(keyEvent->_keyId)(aSpeed[i].value().speed, pos, onlinePlayerId);
+                auto &speed = aSpeed[i].value().speed;
+
+                keyMap.at(event._keyId)(speed, pos);
 
                 if (pos.x < 0) {
                     pos.x = 0;

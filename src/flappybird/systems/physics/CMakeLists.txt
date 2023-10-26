@@ -1,5 +1,4 @@
 target_sources(flappybird PRIVATE
-        System+ApplyGravity.cpp
         System+Jump.cpp
 )
 

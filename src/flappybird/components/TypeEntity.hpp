@@ -27,14 +27,13 @@ namespace Component {
              * @brief Construct a new Type Entity object
              *
              */
-            TypeEntity()
-            {}
+            TypeEntity() = default;
             /**
              * @brief Construct a new Type Entity object
              *
              *
              */
-            TypeEntity(EntityType aType)
+            explicit TypeEntity(EntityType aType)
                 : type(aType)
             {}
 

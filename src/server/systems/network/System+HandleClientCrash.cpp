@@ -1,16 +1,15 @@
 #include <cstddef>
 #include <iostream>
 #include "Components.hpp"
-#include "Event.hpp"
-#include "EventManager.hpp"
+#include "EwECS/Event/EventManager.hpp"
+#include "EwECS/SparseArray.hpp"
+#include "EwECS/World.hpp"
 #include "NetworkHandler.hpp"
 #include "Packets.hpp"
 #include "ServerGameEvent.hpp"
 #include "ServerHandler.hpp"
-#include "SparseArray.hpp"
 #include "System.hpp"
 #include "Values.hpp"
-#include "World.hpp"
 
 namespace ECS {
     void System::handlePlayerCrash(Core::SparseArray<Component::IsAlive> &aIsAlive,
@@ -18,13 +17,14 @@ namespace ECS {
                                    Core::SparseArray<Component::Connection> &aConnection)
     {
         Core::World &world = Core::World::getInstance();
+        const auto size = aConnection.size();
 
-        for (int i = 0; i < aConnection.size(); i++) {
+        for (size_t i = 0; i < size; i++) {
             if (aType[i].has_value() && aType[i]->isPlayer && aConnection[i].has_value() && aIsAlive[i].has_value()
                 && aConnection[i].value().status == Network::ConnectionStatus::PENDING) {
                 aConnection[i].value().age += world.getDeltaTime();
                 if (aConnection[i].value().age >= PACKET_TIMEOUT) {
-                    std::cout << "Player " << i << " timed out" << std::endl;
+                    std::cout << "Player " << i << " crashed" << std::endl;
                     aIsAlive[i].value().isAlive = false;
                 }
             }

@@ -5,16 +5,20 @@ namespace Component {
     struct Jump
     {
             Jump()
-                : isJumping(false),
+                : strength(0),
+                  height(0),
+                  floating(0),
+                  isJumping(false),
                   initialAltitude(0)
             {}
             Jump(float aStrength, float aHeight, float aFloating)
-                : isJumping(false),
-                  initialAltitude(0),
-                  strength(aStrength),
+                : strength(aStrength),
                   height(aHeight),
-                  floating(aFloating)
+                  floating(aFloating),
+                  isJumping(false),
+                  initialAltitude(0)
             {}
+
             float strength;
             float height;
             float floating;

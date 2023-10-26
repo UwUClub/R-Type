@@ -1,9 +1,9 @@
 #include <boost/asio.hpp>
 #include <iostream>
 #include "Components.hpp"
+#include "EwECS/SparseArray.hpp"
 #include "Packets.hpp"
 #include "PlayerColor.hpp"
-#include "SparseArray.hpp"
 #include "Values.hpp"
 #include <unordered_map>
 
@@ -54,16 +54,22 @@ namespace Network {
             /**
              * @brief Handle packet reception
              * @param aPacket The received packet
-             * @param aEndpoint The endpoint of the server
+             * @param aEndpoint The endpoint of the sender
              */
-            void receivePacket(const RType::Packet &, udp::endpoint &);
+            void receivePacket(const RType::Packet &, const udp::endpoint &);
+
+            /**
+             * @brief Handle aknowledgment reception
+             * @param aEndpoint The endpoint of the sender
+             */
+            void receiveAknowledgment(const udp::endpoint &);
 
             /**
              * @brief Register a client to the server
              * @param aClientId The id of the client
              * @param aEndpoint The endpoint of the client
              */
-            void addClient(size_t, udp::endpoint);
+            void addClient(size_t, const udp::endpoint &);
 
             /**
              * @brief Get the client color
@@ -105,7 +111,7 @@ namespace Network {
              * @param aPayload The payload to send
              * @param aConnections Connection components of clients
              */
-            void broadcast(int, std::vector<float>, ECS::Core::SparseArray<Component::Connection> &);
+            void broadcast(int, std::vector<float> &, ECS::Core::SparseArray<Component::Connection> &);
 
             /**
              * @brief Check if the server is full

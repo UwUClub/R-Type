@@ -1,6 +1,9 @@
+#include <cstddef>
+#include <vector>
+#include "AddEntity.hpp"
 #include "ClientGameEvent.hpp"
-#include "EventManager.hpp"
-#include "SDLDisplayClass.hpp"
+#include "EwECS/Event/EventManager.hpp"
+#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 
@@ -8,43 +11,43 @@ namespace ECS {
     void System::createBot()
     {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
-        SDLDisplayClass &display = SDLDisplayClass::getInstance();
-        auto events = eventManager->getEventsByType(Event::EventType::GAME);
+        SFMLDisplayClass &display = SFMLDisplayClass::getInstance();
+        auto &events = eventManager->getEventsByType<RType::ClientGameEvent>();
+        std::vector<size_t> toRemove;
+        const auto size = events.size();
 
-        for (auto &event : events) {
-            auto &gameEvent = static_cast<RType::ClientGameEvent &>(*event);
+        for (size_t i = 0; i < size; i++) {
+            auto &gameEvent = events[i];
 
-            if (gameEvent.getType() == RType::ClientEventType::PLAYER_SPAWN) {
-                if (gameEvent.getPayload().size() != 5) {
-                    eventManager->removeEvent(event);
-                    continue;
-                }
-
-                size_t onlineEntityId = static_cast<int>(gameEvent.getPayload()[0]);
-                Component::TypeEntity entityType {false, true, false, false, false, false, false, onlineEntityId};
-
-                bool isLocalPlayer = gameEvent.getPayload()[1] == 1;
-                if (isLocalPlayer) {
-                    entityType.isPlayer = true;
-                    entityType.isBot = false;
-                }
-
-                int color = static_cast<int>(gameEvent.getPayload()[2]);
-                float posX = gameEvent.getPayload()[3];
-                float posY = gameEvent.getPayload()[4];
-                std::cout << "Player with color " << color << " joined" << std::endl;
-
-                display.addEntity(ECS::Utils::Vector2f {posX, posY}, Component::Speed {PLAYER_SPEED}, entityType,
-                                  Component::LoadedSprite {
-                                      PLAYER_ASSET, nullptr,
-                                      new SDL_Rect {0, color * PLAYER_TEX_HEIGHT, PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT},
-                                      new SDL_Rect {0, 0, PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT}},
-                                  Component::HitBox {PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT},
-                                  Component::IsAlive {true, 0});
-
-                eventManager->removeEvent(event);
+            if (gameEvent.getType() != RType::ClientEventType::PLAYER_SPAWN) {
+                continue;
             }
-        }
-    }
 
+            const auto &payload = gameEvent.getPayload();
+            if (payload.size() != 5) {
+                toRemove.push_back(i);
+                continue;
+            }
+
+            size_t onlineEntityId = static_cast<int>(payload[0]);
+            Component::TypeEntity entityType {false, true, false, false, false, false, false, onlineEntityId};
+            bool isLocalPlayer = payload[1] == 1;
+
+            if (isLocalPlayer) {
+                entityType.isPlayer = true;
+                entityType.isBot = false;
+            }
+
+            int color = static_cast<int>(payload[2]);
+            float posX = payload[3];
+            float posY = payload[4];
+
+            AddEntity::addEntity(ECS::Utils::Vector2f {posX, posY}, Component::Speed {PLAYER_SPEED}, entityType,
+                                 Component::LoadedSprite {PLAYER_ASSET, nullptr, 0, color * PLAYER_TEX_HEIGHT,
+                                                          PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT},
+                                 Component::HitBox {PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT}, Component::IsAlive {true, 0});
+            toRemove.push_back(i);
+        }
+        eventManager->removeEvent<RType::ClientGameEvent>(toRemove);
+    }
 } // namespace ECS

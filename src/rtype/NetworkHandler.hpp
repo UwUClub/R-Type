@@ -1,4 +1,5 @@
 #include <boost/asio.hpp>
+#include <boost/thread.hpp>
 #include <iostream>
 #include "Packets.hpp"
 #include "Values.hpp"
@@ -22,11 +23,13 @@ namespace Network {
         private:
             boost::asio::io_service _ioService;
             udp::socket _socket = udp::socket(_ioService);
-            std::array<char, READ_BUFFER_SIZE> _readBuffer = std::array<char, READ_BUFFER_SIZE>();
+
+            boost::asio::streambuf _readInbound;
+            boost::asio::streambuf::mutable_buffers_type _readBuffer = _readInbound.prepare(READ_BUFFER_SIZE);
+
             udp::endpoint _readEndpoint;
             std::function<void(const RType::Packet &, udp::endpoint &)> _onReceive;
-            std::function<void(const std::string, udp::endpoint &)> _onReceiveAknowledgment;
-            std::thread _ioThread;
+            boost::thread _ioThread;
 
             std::unordered_map<std::string, Sender> _senders;
 
@@ -37,10 +40,18 @@ namespace Network {
 
             /**
              * @brief Handle a request from a client
+             *
              * @param aError The error code
              * @param aBytesTransferred The number of bytes transferred
              */
-            void handleRequest(const boost::system::error_code &, std::size_t);
+            void tryHandleRequest(const boost::system::error_code &, std::size_t);
+
+            /**
+             * @brief Handle a request from a client
+             *
+             * @param aBytesTransferred The number of bytes transferred
+             */
+            void handleRequest(std::size_t);
 
         public:
             /**
@@ -77,12 +88,6 @@ namespace Network {
             void onReceive(std::function<void(const RType::Packet &, udp::endpoint &)>);
 
             /**
-             * @brief Set the on receive aknowledgment callback
-             * @param aOnReceiveAlnowledgment The callback to set
-             */
-            void onReceiveAknowledgment(std::function<void(const std::string &, udp::endpoint &)>);
-
-            /**
              * @brief Listen to clients
              */
             void listen();
@@ -90,16 +95,9 @@ namespace Network {
             /**
              * @brief Send a message to the server
              * @param aPacket The packet to send
-             * @param aClientEndpoint The id of the client to send the message to
+             * @param aEndpoint The id of the client to send the message to
              */
-            void send(const RType::Packet &, udp::endpoint &);
-
-            /**
-             * @brief Answer to a sender as the packet has been received
-             * @param aPacketUuid The uuid of the packet
-             * @param aEndpoint The endpoint of the sender
-             */
-            void answerAknowledgment(const std::string &, udp::endpoint &);
+            void send(const RType::Packet &, const udp::endpoint &);
 
             /**
              * @brief Get the io service

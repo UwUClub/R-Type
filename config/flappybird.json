@@ -1,5 +1,6 @@
 {
     "graphics": {
+        "name": "Flappy Bird",
         "width": 288,
         "height": 512
     },

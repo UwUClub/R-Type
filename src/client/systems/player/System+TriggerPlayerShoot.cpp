@@ -1,8 +1,8 @@
 #include <functional>
 #include "ClientHandler.hpp"
-#include "EventManager.hpp"
-#include "KeyboardEvent.hpp"
-#include "SDLDisplayClass.hpp"
+#include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Event/KeyboardEvent.hpp"
+#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 #include <unordered_map>
@@ -14,18 +14,17 @@ namespace ECS {
     {
         Network::ClientHandler &client = Network::ClientHandler::getInstance();
         Event::EventManager *eventManager = Event::EventManager::getInstance();
-        auto keyboardEvent = eventManager->getEventsByType(Event::EventType::KEYBOARD);
+        auto &keyboardEvent = eventManager->getEventsByType<Event::KeyboardEvent>();
+        const auto size = aPos.size();
 
-        for (size_t i = 0; i < aPos.size(); i++) {
+        for (size_t i = 0; i < size; i++) {
             if (!aType[i].has_value() || !aType[i].value().isPlayer || !aIsAlive[i].value().isAlive) {
                 continue;
             }
             for (auto &event : keyboardEvent) {
-                auto *keyEvent = static_cast<Event::KeyboardEvent *>(event);
-
-                if (keyEvent->_keyId == Event::KeyIdentifier::SPACE) {
-                    std::cout << "Shoot !" << std::endl;
+                if (event._keyId == Event::KeyIdentifier::SPACE) {
                     int playerOnlineId = aType[i].value().onlineId.value_or(-1);
+
                     if (playerOnlineId == -1) {
                         continue;
                     }
