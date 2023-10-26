@@ -32,12 +32,10 @@ namespace ECS {
                 continue;
             }
 
-            world.killEntity(playerId);
-            server.removeClient(playerId);
-
             RType::Server::PlayerLeftPayload payload(playerId);
             server.broadcast(RType::ClientEventType::PLAYER_DISCONNECTION, payload, aConnection);
-
+            world.killEntity(playerId);
+            server.removeClient(playerId);
             toRemove.push_back(i);
         }
         eventManager->removeEvent<RType::ServerGameEvent>(toRemove);

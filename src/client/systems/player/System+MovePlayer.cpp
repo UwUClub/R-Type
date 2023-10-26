@@ -3,8 +3,8 @@
 #include "ClientPackets.hpp"
 #include "EwECS/Event/EventManager.hpp"
 #include "EwECS/Event/KeyboardEvent.hpp"
+#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "EwECS/World.hpp"
-#include "SFMLDisplayClass.hpp"
 #include "ServerGameEvent.hpp"
 #include "System.hpp"
 #include "Values.hpp"
@@ -50,7 +50,8 @@ namespace ECS {
                 continue;
             }
             for (auto &event : keyboardEvent) {
-                if (keyMap.find(event._keyId) == keyMap.end() || !aIsAlive[i].value().isAlive) {
+                if (keyMap.find(event._keyId) == keyMap.end() || !aIsAlive[i].has_value() || !aPos[i].has_value()
+                    || !aSpeed[i].has_value() || !aIsAlive[i].value().isAlive) {
                     continue;
                 }
 

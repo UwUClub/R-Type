@@ -1,9 +1,9 @@
-#include <SFML/Graphics/Rect.hpp>
 #include <iostream>
+#include "AddEntity.hpp"
 #include "ClientGameEvent.hpp"
 #include "EwECS/Event/EventManager.hpp"
+#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "EwECS/World.hpp"
-#include "SFMLDisplayClass.hpp"
 #include "ServerPackets.hpp"
 #include "System.hpp"
 #include "Values.hpp"
@@ -25,18 +25,16 @@ namespace ECS {
             if (payload.isReceiver) {
                 display.freeRects(0);
                 world.killEntity(0);
-                display.addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {BACKGROUND_SPEED},
-                                  Component::TypeEntity {false, false, false, false, false, false, true},
-                                  Component::LoadedSprite {BACKGROUND_ASSET, nullptr,
-                                                           new sf::IntRect {400, 15, SCREEN_WIDTH, SCREEN_HEIGHT},
-                                                           new sf::IntRect {400, 15, SCREEN_WIDTH, SCREEN_HEIGHT}},
-                                  Component::HitBox {}, Component::IsAlive {false, 0});
-                display.addEntity(ECS::Utils::Vector2f {SCREEN_WIDTH, 0}, Component::Speed {BACKGROUND_SPEED},
-                                  Component::TypeEntity {false, false, false, false, false, false, true},
-                                  Component::LoadedSprite {BACKGROUND_ASSET, nullptr,
-                                                           new sf::IntRect {400, 15, SCREEN_WIDTH, SCREEN_HEIGHT},
-                                                           new sf::IntRect {400, 15, SCREEN_WIDTH, SCREEN_HEIGHT}},
-                                  Component::HitBox {}, Component::IsAlive {false, 0});
+                AddEntity::addEntity(
+                    ECS::Utils::Vector2f {0, 0}, Component::Speed {BACKGROUND_SPEED},
+                    Component::TypeEntity {false, false, false, false, false, false, true},
+                    Component::LoadedSprite {BACKGROUND_ASSET, nullptr, 400, 15, SCREEN_WIDTH, SCREEN_HEIGHT},
+                    Component::HitBox {}, Component::IsAlive {false, 0});
+                AddEntity::addEntity(
+                    ECS::Utils::Vector2f {SCREEN_WIDTH, 0}, Component::Speed {BACKGROUND_SPEED},
+                    Component::TypeEntity {false, false, false, false, false, false, true},
+                    Component::LoadedSprite {BACKGROUND_ASSET, nullptr, 400, 15, SCREEN_WIDTH, SCREEN_HEIGHT},
+                    Component::HitBox {}, Component::IsAlive {false, 0});
             }
         }
     }

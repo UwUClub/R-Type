@@ -1,6 +1,6 @@
 #include <cstddef>
+#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "EwECS/World.hpp"
-#include "SFMLDisplayClass.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 

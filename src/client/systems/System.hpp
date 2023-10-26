@@ -11,11 +11,11 @@
 #include "EwECS/Event/KeyboardEvent.hpp"
 #include "EwECS/Event/WindowEvent.hpp"
 #include "EwECS/Physic/HitBox.hpp"
+#include "EwECS/SFMLDisplayClass/LoadedSprite.hpp"
 #include "EwECS/SparseArray.hpp"
 #include "EwECS/Utils.hpp"
 #include "EwECS/World.hpp"
 #include "IsAlive.hpp"
-#include "LoadedSprite.hpp"
 
 namespace ECS {
     class System
@@ -61,28 +61,6 @@ namespace ECS {
              */
             static void updateBotPosition(Core::SparseArray<Utils::Vector2f> &aPos,
                                           Core::SparseArray<Component::TypeEntity> &aType);
-
-            /**
-             * @brief Get the all the input of the user (locally)
-             *
-             */
-            static void getInput();
-
-            /**
-             * @brief Load all the textures of the game (locally)
-             *
-             * @param aSprites SparseArray of all the entities sprites
-             */
-            static void loadTextures(Core::SparseArray<Component::LoadedSprite> &aSprites);
-
-            /**
-             * @brief Display all the entities on the screen (locally)
-             *
-             * @param aSprites SparseArray of all the entities sprites
-             * @param aPos SparseArray of all the entities position
-             */
-            static void displayEntities(Core::SparseArray<Component::LoadedSprite> &aSprites,
-                                        Core::SparseArray<Utils::Vector2f> &aPos);
 
             /**
              * @brief Handle the background's movements (locally)

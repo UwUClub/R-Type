@@ -1,6 +1,6 @@
 #include "../System.hpp"
+#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "EwECS/World.hpp"
-#include "SFMLDisplayClass.hpp"
 #include "Values.hpp"
 
 namespace ECS {
@@ -22,7 +22,6 @@ namespace ECS {
             if (type.isBonus) {
                 pos.x -= speed.speed * world.getDeltaTime();
                 if (pos.x < -30) {
-                    SFMLDisplayClass::getInstance().freeRects(idx);
                     world.killEntity(idx);
                 }
             }

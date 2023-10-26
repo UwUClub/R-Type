@@ -1,7 +1,4 @@
 target_sources(client PRIVATE
-        System+DisplayEntities.cpp
-        System+GetInput.cpp
-        System+LoadTextures.cpp
         System+CreateServerFullErrorMessage.cpp
 )
 

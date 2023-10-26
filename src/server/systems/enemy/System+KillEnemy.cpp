@@ -20,10 +20,9 @@ namespace ECS {
                 continue;
             }
             if (!aIsAlive[enemyId].value().isAlive) {
-                world.killEntity(enemyId);
-
                 RType::Server::EnemyDiedPayload payload(enemyId);
                 server.broadcast(RType::ClientEventType::ENEMY_DEATH, payload, aConnection);
+                world.killEntity(enemyId);
             }
         }
     }

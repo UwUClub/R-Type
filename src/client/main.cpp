@@ -1,19 +1,19 @@
-#include <SFML/Graphics/Rect.hpp>
 #include <boost/asio.hpp>
 #include <iostream>
+#include "AddEntity.hpp"
 #include "ClientGameEvent.hpp"
 #include "ClientHandler.hpp"
 #include "Components.hpp"
 #include "EwECS/Asset/AssetManager.hpp"
-#include "EwECS/EwECS.hpp"
+#include "EwECS/Event/EventManager.hpp"
 #include "EwECS/Physic/PhysicPlugin.hpp"
+#include "EwECS/SFMLDisplayClass/RenderPlugin.hpp"
 #include "EwECS/Utils.hpp"
 #include "EwECS/World.hpp"
 #include "IsAlive.hpp"
 #include "NetworkHandler.hpp"
 #include "Packet.hpp"
 #include "PacketFactory.hpp"
-#include "SFMLDisplayClass.hpp"
 #include "ServerGameEvent.hpp"
 #include "System.hpp"
 #include "TypeEntity.hpp"
@@ -37,24 +37,23 @@ int main(int ac, char **av)
 
         // Setup ECS / graphic
         ECS::Core::World &world = ECS::Core::World::getInstance();
-        SFMLDisplayClass &display = SFMLDisplayClass::getInstance();
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
-        auto &assetManager = ECS::Asset::AssetManager::getInstance();
-
+        ECS::Render::RenderPlugin renderPlugin;
+        ECS::Asset::AssetManager &assetManager = ECS::Asset::AssetManager::getInstance();
         ECS::Physic::PhysicPlugin physicPlugin;
+
+        // Graphic systems plug
 
         // Components
         world.registerComponent<ECS::Utils::Vector2f>();
         world.registerComponent<Component::Speed>();
         world.registerComponent<Component::TypeEntity>();
-        world.registerComponent<Component::LoadedSprite>();
         world.registerComponent<Component::IsAlive>();
 
+        ECS::Physic::PhysicPluginConfig::getInstance().load("config/r-type.json");
+        ECS::Render::RenderPluginConfig::getInstance().load("config/r-type.json");
         physicPlugin.plug(world, assetManager);
-        // Graphic systems
-        world.addSystem(ECS::System::getInput);
-        world.addSystem<Component::LoadedSprite>(ECS::System::loadTextures);
-        world.addSystem<Component::LoadedSprite, ECS::Utils::Vector2f>(ECS::System::displayEntities);
+        renderPlugin.plug(world, assetManager);
 
         // Background systems
         world.addSystem(ECS::System::createBackground);
@@ -94,14 +93,13 @@ int main(int ac, char **av)
         world.addSystem(ECS::System::createServerFullErrorMessage);
 
         // Loading message
-        display.addEntity(
-            ECS::Utils::Vector2f {SCREEN_WIDTH / 2 - LOADING_MESSAGE_TEX_WIDTH / 2,
-                                  SCREEN_HEIGHT / 2 - LOADING_MESSAGE_TEX_HEIGHT / 2},
-            Component::Speed {0}, Component::TypeEntity {false, false, false, false, false, false, false},
-            Component::LoadedSprite {LOADING_MESSAGE_ASSET, nullptr,
-                                     new sf::IntRect {0, 0, LOADING_MESSAGE_TEX_WIDTH, LOADING_MESSAGE_TEX_HEIGHT},
-                                     new sf::IntRect {0, 0, LOADING_MESSAGE_TEX_WIDTH, LOADING_MESSAGE_TEX_HEIGHT}},
-            Component::HitBox {}, Component::IsAlive {false, 0});
+        AddEntity::addEntity(ECS::Utils::Vector2f {SCREEN_WIDTH / 2 - LOADING_MESSAGE_TEX_WIDTH / 2,
+                                                   SCREEN_HEIGHT / 2 - LOADING_MESSAGE_TEX_HEIGHT / 2},
+                             Component::Speed {0},
+                             Component::TypeEntity {false, false, false, false, false, false, false},
+                             Component::LoadedSprite {LOADING_MESSAGE_ASSET, nullptr, 0, 0, LOADING_MESSAGE_TEX_WIDTH,
+                                                      LOADING_MESSAGE_TEX_HEIGHT},
+                             Component::HitBox {}, Component::IsAlive {false, 0});
 
         // Game loop
         while (world.isRunning()) {

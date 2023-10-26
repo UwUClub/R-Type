@@ -1,9 +1,10 @@
+#include "AddEntity.hpp"
 #include "ClientGameEvent.hpp"
 #include "EwECS/Event/EventManager.hpp"
+#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "EwECS/World.hpp"
 #include "IsAlive.hpp"
 #include "SFML/Graphics/Rect.hpp"
-#include "SFMLDisplayClass.hpp"
 #include "ServerPackets.hpp"
 #include "System.hpp"
 #include "TypeUtils.hpp"
@@ -16,7 +17,6 @@ namespace ECS {
                                    Core::SparseArray<Utils::Vector2f> &aPos)
     {
         auto &world = Core::World::getInstance();
-        auto &display = SFMLDisplayClass::getInstance();
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         auto &events = eventManager->getEventsByType<RType::ClientGameEvent>();
         const auto size = events.size();
@@ -52,29 +52,27 @@ namespace ECS {
                 continue;
             }
 
-            auto &pos = aPos[enemy].value();
             auto &sprite = aSprites[enemy].value();
             auto &isAlive = aIsAlive[enemy].value();
 
             if (!isAlive.isAlive && isAlive.timeToDie < 0) {
-                display.freeRects(enemy);
                 world.killEntity(enemy);
             } else if (!isAlive.isAlive && isAlive.timeToDie == 0) {
                 sprite.path = EXPLOSION_ASSET;
                 sprite.texture = nullptr;
-                sprite.rect->height = EXPLOSION_TEX_HEIGHT;
-                sprite.rect->width = EXPLOSION_TEX_WIDTH;
-                sprite.rect->top = 46;
-                sprite.rect->left = 146;
+                sprite.rect.height = EXPLOSION_TEX_HEIGHT;
+                sprite.rect.width = EXPLOSION_TEX_WIDTH;
+                sprite.rect.top = 46;
+                sprite.rect.left = 146;
                 isAlive.timeToDie = 1;
                 if (rand() % 5 == 0) {
-                    display.addEntity(
-                        ECS::Utils::Vector2f {pos.x, pos.y}, Component::Speed {BONUS_SPEED},
-                        Component::TypeEntity {false, false, false, false, false, true, false},
-                        Component::LoadedSprite {BONUS_ASSET, nullptr,
-                                                 new sf::IntRect {125, 520, BONUS_TEX_WIDTH, BONUS_TEX_HEIGHT},
-                                                 new sf::IntRect {0, 0, 50, 50}, BONUS_SCALE},
-                        Component::HitBox {BONUS_TEX_WIDTH, BONUS_TEX_HEIGHT}, Component::IsAlive {false, 0});
+                    AddEntity::addEntity(ECS::Utils::Vector2f {aPos[enemy].value().x, aPos[enemy].value().y},
+                                         Component::Speed {BONUS_SPEED},
+                                         Component::TypeEntity {false, false, false, false, false, true, false},
+                                         Component::LoadedSprite {BONUS_ASSET, nullptr, 125, 520, BONUS_TEX_WIDTH,
+                                                                  BONUS_TEX_HEIGHT, BONUS_SCALE},
+                                         Component::HitBox {BONUS_TEX_WIDTH, BONUS_TEX_HEIGHT},
+                                         Component::IsAlive {false, 0});
                 }
             } else if (!isAlive.isAlive) {
                 isAlive.timeToDie -= world.getDeltaTime();
