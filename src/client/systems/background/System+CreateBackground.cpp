@@ -13,7 +13,6 @@ namespace ECS {
     {
         auto &world = ECS::Core::World::getInstance();
         Event::EventManager *eventManager = Event::EventManager::getInstance();
-        SFMLDisplayClass &display = SFMLDisplayClass::getInstance();
         auto &events = eventManager->getEventsByType<RType::ClientGameEvent>();
 
         for (auto &gameEvent : events) {
