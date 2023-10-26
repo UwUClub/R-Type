@@ -12,7 +12,8 @@ namespace ECS {
         const auto size = aType.size();
 
         for (size_t playerId = 0; playerId < size; playerId++) {
-            if (!aType[playerId].has_value() || !aType[playerId].value().isPlayer || !aHitBox[playerId].has_value()) {
+            if (!aType[playerId].has_value() || !aType[playerId].value().isPlayer || !aHitBox[playerId].has_value()
+                || !aIsAlive[playerId].has_value()) {
                 continue;
             }
 

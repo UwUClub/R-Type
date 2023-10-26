@@ -2,7 +2,8 @@
     "graphics": {
         "name": "R-Type",
         "width": 1920,
-        "height": 1080
+        "height": 1080,
+        "font": "assets/font.ttf"
     },
     "physics": {
         "gravity": 2,
