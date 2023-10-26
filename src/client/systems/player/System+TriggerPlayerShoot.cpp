@@ -3,7 +3,7 @@
 #include "EwECS/Event/EventManager.hpp"
 #include "EwECS/Event/KeyboardEvent.hpp"
 #include "EwECS/Network/ClientHandler.hpp"
-#include "SFMLDisplayClass.hpp"
+#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "ServerGameEvent.hpp"
 #include "System.hpp"
 #include "Values.hpp"
@@ -20,7 +20,8 @@ namespace ECS {
         const auto size = aPos.size();
 
         for (size_t i = 0; i < size; i++) {
-            if (!aType[i].has_value() || !aType[i].value().isPlayer || !aIsAlive[i].value().isAlive) {
+            if (!aType[i].has_value() || !aType[i].value().isPlayer || !aIsAlive[i].has_value()
+                || !aIsAlive[i].value().isAlive) {
                 continue;
             }
             for (auto &event : keyboardEvent) {

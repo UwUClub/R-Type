@@ -1,9 +1,9 @@
-#include <SFML/Graphics/Rect.hpp>
 #include <cstddef>
 #include <vector>
+#include "AddEntity.hpp"
 #include "ClientGameEvent.hpp"
 #include "EwECS/Event/EventManager.hpp"
-#include "SFMLDisplayClass.hpp"
+#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "ServerPackets.hpp"
 #include "System.hpp"
 #include "Values.hpp"
@@ -26,20 +26,18 @@ namespace ECS {
 
             const auto &payload = gameEvent.getPayload<RType::Server::PlayerJoinedPayload>();
 
-            Component::TypeEntity entityType {false, true, false, false, false, false, false, payload.playerId};
+            Component::TypeEntity entityType {false, true, false, false, false, false, false, payload.playerId, false};
 
             if (payload.isReceiver) {
                 entityType.isPlayer = true;
                 entityType.isBot = false;
             }
 
-            display.addEntity(ECS::Utils::Vector2f {payload.posX, payload.posY}, Component::Speed {PLAYER_SPEED},
-                              entityType,
-                              Component::LoadedSprite {PLAYER_ASSET, nullptr,
-                                                       new sf::IntRect {0, payload.playerColor * PLAYER_TEX_HEIGHT,
-                                                                        PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT},
-                                                       new sf::IntRect {0, 0, PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT}},
-                              Component::HitBox {PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT}, Component::IsAlive {true, 0});
+            AddEntity::addEntity(
+                ECS::Utils::Vector2f {payload.posX, payload.posY}, Component::Speed {PLAYER_SPEED}, entityType,
+                Component::LoadedSprite {PLAYER_ASSET, nullptr, 0, payload.playerColor * PLAYER_TEX_HEIGHT,
+                                         PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT},
+                Component::HitBox {PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT}, Component::IsAlive {true, 0});
             toRemove.push_back(i);
         }
         eventManager->removeEvent<RType::ClientGameEvent>(toRemove);

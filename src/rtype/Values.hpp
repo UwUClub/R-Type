@@ -58,10 +58,11 @@ const constexpr int FAILURE = 84;
 
 //------------------ BONUS ------------------//
 static const std::string BONUS_ASSET = "assets/sprites/powerup.png";
-const constexpr float BONUS_SPEED = 800;
+const constexpr float BONUS_SPEED = 200;
 const constexpr int BONUS_TEX_WIDTH = 250;
 const constexpr int BONUS_TEX_HEIGHT = 280;
 const constexpr float BONUS_SCALE = 0.1;
+const constexpr float BONUS_GAIN_FACTOR = 1.5;
 
 // ------------------ LOADING MESSAGE ------------------ //
 static const std::string LOADING_MESSAGE_ASSET = "assets/sprites/loading-message.png";

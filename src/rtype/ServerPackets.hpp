@@ -57,11 +57,11 @@ namespace RType::Server {
     PACK(struct PlayerGotBonusPayload
          : ECS::Network::IPayload {
              unsigned short playerId;
-             uint8_t bonusId;
+             unsigned short bonusId;
 
              PlayerGotBonusPayload() = default;
 
-             PlayerGotBonusPayload(unsigned short aPlayerId, uint8_t aBonusId)
+             PlayerGotBonusPayload(unsigned short aPlayerId, unsigned short aBonusId)
              {
                  playerId = aPlayerId;
                  bonusId = aBonusId;
@@ -147,12 +147,14 @@ namespace RType::Server {
     PACK(struct EnemyDiedPayload
          : ECS::Network::IPayload {
              unsigned short enemyId;
+             unsigned short bonusId;
 
              EnemyDiedPayload() = default;
 
-             EnemyDiedPayload(unsigned short aEnemyId)
+             EnemyDiedPayload(unsigned short aEnemyId, unsigned short aBonusId)
              {
                  enemyId = aEnemyId;
+                 bonusId = aBonusId;
              }
          });
 } // namespace RType::Server

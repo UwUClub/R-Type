@@ -1,16 +1,22 @@
+#include <vector>
 #include "ClientGameEvent.hpp"
 #include "EwECS/Event/EventManager.hpp"
+#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
+#include "EwECS/SparseArray.hpp"
+#include "EwECS/World.hpp"
+#include "IsAlive.hpp"
 #include "ServerPackets.hpp"
 #include "System.hpp"
 #include "TypeUtils.hpp"
+#include "Values.hpp"
 
 namespace ECS {
-    void System::triggerBotBonus(Core::SparseArray<Component::Speed> &aSpeed,
-                                 Core::SparseArray<Component::TypeEntity> &aType)
+    void System::triggerBonus(Core::SparseArray<Component::Speed> &aSpeed,
+                              Core::SparseArray<Component::TypeEntity> &aType)
     {
+        auto &world = Core::World::getInstance();
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         auto &events = eventManager->getEventsByType<RType::ClientGameEvent>();
-        auto &typeUtils = RType::TypeUtils::getInstance();
         std::vector<size_t> toRemove;
         const auto size = events.size();
 
@@ -23,15 +29,18 @@ namespace ECS {
 
             const auto &payload = gameEvent.getPayload<RType::Server::PlayerGotBonusPayload>();
 
-            const auto localBotId = typeUtils.getEntityIdByOnlineId(aType, payload.playerId);
+            auto localPlayerId = RType::TypeUtils::getEntityIdByOnlineId(aType, payload.playerId);
 
-            if (payload.bonusId == 1) {
-                if (!aSpeed[localBotId].has_value()) {
-                    toRemove.push_back(i);
-                    continue;
-                }
-                aSpeed[localBotId].value().speed += (10.F);
+            if (!aSpeed[localPlayerId].has_value()) {
+                continue;
             }
+
+            aSpeed[localPlayerId].value().speed *= BONUS_GAIN_FACTOR;
+
+            auto localBonusId = RType::TypeUtils::getEntityIdByOnlineId(aType, payload.bonusId);
+
+            world.killEntity(localBonusId);
+
             toRemove.push_back(i);
         }
         eventManager->removeEvent<RType::ClientGameEvent>(toRemove);

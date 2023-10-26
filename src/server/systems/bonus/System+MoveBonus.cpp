@@ -1,10 +1,18 @@
-#include "../System.hpp"
-#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
+#include <cstddef>
+#include <vector>
+#include "ClientGameEvent.hpp"
+#include "Components.hpp"
+#include "EwECS/Event/EventManager.hpp"
 #include "EwECS/World.hpp"
+#include "ServerGameEvent.hpp"
+#include "ServerHandler.hpp"
+#include "ServerPackets.hpp"
+#include "SparseArray.hpp"
+#include "System.hpp"
 #include "Values.hpp"
 
 namespace ECS {
-    void System::moveBonus(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::Speed> &aSpeed,
+    void System::moveBonus(Core::SparseArray<Component::Speed> &aSpeed, Core::SparseArray<Utils::Vector2f> &aPos,
                            Core::SparseArray<Component::TypeEntity> &aType)
     {
         auto &world = Core::World::getInstance();
@@ -27,5 +35,4 @@ namespace ECS {
             }
         }
     }
-
 } // namespace ECS

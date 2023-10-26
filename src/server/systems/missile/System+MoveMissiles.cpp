@@ -18,7 +18,7 @@ namespace ECS {
             auto &speed = aSpeed[idx].value();
             auto &type = aType[idx].value();
 
-            if (type.isBullet) {
+            if (type.isBullet || type.isEnemyMissile) {
                 if (speed.speed == MISSILES_SPEED) {
                     pos.x -= speed.speed * world.getDeltaTime();
                 } else if (speed.speed == BULLET_SPEED) {

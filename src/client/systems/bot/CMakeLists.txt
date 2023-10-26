@@ -4,7 +4,6 @@ target_sources(client PRIVATE
         System+TriggerBotShoot.cpp
         System+BotHit.cpp
         System+TriggerBotDeath.cpp
-        System+TriggerBotBonus.cpp
         System+TriggerBotDisconnect.cpp
 )
 

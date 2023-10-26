@@ -6,6 +6,7 @@
 #include "EwECS/Physic/PhysicPlugin.hpp"
 #include "EwECS/Utils.hpp"
 #include "EwECS/World.hpp"
+#include "HitBox.hpp"
 #include "IsAlive.hpp"
 #include "PacketFactory.hpp"
 #include "ServerGameEvent.hpp"
@@ -60,8 +61,12 @@ int main(int ac, char **av)
                         Component::Connection>(ECS::System::playerShoot);
         world.addSystem<Component::TypeEntity, Component::IsAlive, Component::HitBox>(ECS::System::playerHit);
         world.addSystem<Component::TypeEntity, Component::IsAlive, Component::Connection>(ECS::System::killPlayer);
-        world.addSystem<Component::Speed, Component::Connection>(ECS::System::moveSpeedUp);
         world.addSystem<Component::Connection>(ECS::System::disconnectPlayer);
+
+        // Bonus systems
+        world.addSystem<Component::Speed, ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::moveBonus);
+        world.addSystem<Component::TypeEntity, Component::IsAlive, Component::HitBox, Component::Connection,
+                        Component::Speed>(ECS::System::triggerBonus);
 
         // Network systems
         world.addSystem<Component::Connection>(ECS::System::receiveAknowledgment);
@@ -75,7 +80,8 @@ int main(int ac, char **av)
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::HitBox,
                         Component::IsAlive, Component::Connection>(ECS::System::enemyShoot);
         world.addSystem<Component::TypeEntity, Component::HitBox, Component::IsAlive>(ECS::System::enemyHit);
-        world.addSystem<Component::TypeEntity, Component::IsAlive, Component::Connection>(ECS::System::killEnemy);
+        world.addSystem<Component::TypeEntity, Component::IsAlive, Component::Connection, ECS::Utils::Vector2f,
+                        Component::HitBox, Component::Speed>(ECS::System::killEnemy);
 
         // Missile systems
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveMissiles);
