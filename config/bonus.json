@@ -1,0 +1,69 @@
+{
+    "path": "assets/sprites/powerup.png",
+    "scale": 0.1,
+    "rects": {
+        "frame1": {
+            "top": 24,
+            "left": 96,
+            "width": 345,
+            "height": 384,
+            "time": 0.1
+        },
+        "frame2": {
+            "top": 24,
+            "left": 441,
+            "width": 345,
+            "height": 384,
+            "time": 0.1
+        },
+        "frame3": {
+            "top": 24,
+            "left": 786,
+            "width": 345,
+            "height": 384,
+            "time": 0.1
+        },
+        "frame4": {
+            "top": 24,
+            "left": 1131,
+            "width": 345,
+            "height": 384,
+            "time": 0.1
+        },
+        "frame5": {
+            "top": 24,
+            "left": 1476,
+            "width": 345,
+            "height": 384,
+            "time": 0.1
+        },
+        "frame6": {
+            "top": 24,
+            "left": 1131,
+            "width": 345,
+            "height": 384,
+            "time": 0.1
+        },
+        "frame7": {
+            "top": 24,
+            "left": 786,
+            "width": 345,
+            "height": 384,
+            "time": 0.1
+        },
+        "frame8": {
+            "top": 24,
+            "left": 441,
+            "width": 345,
+            "height": 384,
+            "time": 0.1
+        },
+        "frame9": {
+            "top": 24,
+            "left": 96,
+            "width": 345,
+            "height": 384,
+            "time": 0.1
+        }
+    }
+}
