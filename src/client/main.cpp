@@ -8,6 +8,7 @@
 #include "EwECS/EwECS.hpp"
 #include "EwECS/Network/ClientHandler.hpp"
 #include "EwECS/Network/Packet.hpp"
+#include "EwECS/Logger.hpp"
 #include "EwECS/Physic/PhysicPlugin.hpp"
 #include "EwECS/SFMLDisplayClass/RenderPlugin.hpp"
 #include "EwECS/Utils.hpp"
@@ -22,7 +23,7 @@
 int main(int ac, char **av)
 {
     if (ac < 3) {
-        std::cerr << "Usage: " << av[0] << " <host> <port>" << std::endl;
+        ECS::Logger::error("Usage: " + std::string(av[0]) + " <host> <port>");
         return FAILURE;
     }
 
@@ -52,7 +53,6 @@ int main(int ac, char **av)
         // Graphic systems plug
 
         // Components
-        world.registerComponent<ECS::Utils::Vector2f>();
         world.registerComponent<Component::Speed>();
         world.registerComponent<Component::TypeEntity>();
         world.registerComponent<Component::IsAlive>();
@@ -100,13 +100,18 @@ int main(int ac, char **av)
         world.addSystem(ECS::System::createServerFullErrorMessage);
 
         // Loading message
-        AddEntity::addEntity(ECS::Utils::Vector2f {SCREEN_WIDTH / 2 - LOADING_MESSAGE_TEX_WIDTH / 2,
-                                                   SCREEN_HEIGHT / 2 - LOADING_MESSAGE_TEX_HEIGHT / 2},
-                             Component::Speed {0},
-                             Component::TypeEntity {false, false, false, false, false, false, false},
-                             Component::LoadedSprite {LOADING_MESSAGE_ASSET, nullptr, 0, 0, LOADING_MESSAGE_TEX_WIDTH,
-                                                      LOADING_MESSAGE_TEX_HEIGHT},
-                             Component::HitBox {}, Component::IsAlive {false, 0});
+        try {
+            AddEntity::addEntity(ECS::Utils::Vector2f {SCREEN_WIDTH / 2 - LOADING_MESSAGE_TEX_WIDTH / 2,
+                                                       SCREEN_HEIGHT / 2 - LOADING_MESSAGE_TEX_HEIGHT / 2},
+                                 Component::Speed {0},
+                                 Component::TypeEntity {false, false, false, false, false, false, false},
+                                 Component::LoadedSprite {"config/serverMessage.json"}, Component::HitBox {},
+                                 Component::IsAlive {false, 0});
+        } catch (std::exception &e) {
+            ECS::Logger::error("[RType client exception] " + std::string(e.what()));
+            Network::NetworkHandler::getInstance().stop();
+            return FAILURE;
+        }
 
         // Game loop
         while (world.isRunning()) {
@@ -120,7 +125,7 @@ int main(int ac, char **av)
         ECS::Network::ClientHandler::getInstance().stop();
     } catch (std::exception &e) {
         ECS::Network::ClientHandler::getInstance().stop();
-        std::cerr << "[RType client exception] " << e.what() << std::endl;
+        ECS::Logger::error("[RType client exception] " + std::string(e.what()));
         return FAILURE;
     }
     return SUCCESS;

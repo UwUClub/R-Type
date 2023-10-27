@@ -59,10 +59,13 @@ namespace ECS {
             } else if (!isAlive.isAlive && isAlive.timeToDie == 0) {
                 sprite.path = EXPLOSION_ASSET;
                 sprite.texture = nullptr;
-                sprite.rect.height = EXPLOSION_TEX_HEIGHT;
-                sprite.rect.width = EXPLOSION_TEX_WIDTH;
-                sprite.rect.left = 146;
-                sprite.rect.top = 46;
+                for (size_t i = 0; i < sprite.rect.size(); i++) {
+                    sprite.rect[i].height = EXPLOSION_TEX_HEIGHT;
+                    sprite.rect[i].width = EXPLOSION_TEX_WIDTH;
+                    sprite.rect[i].left = 146 * (i + 1);
+                    sprite.rect[i].top = 46;
+                    sprite.rectTime[i] = 0.2;
+                }
                 isAlive.timeToDie = 1;
             } else if (!isAlive.isAlive) {
                 isAlive.timeToDie -= world.getDeltaTime();

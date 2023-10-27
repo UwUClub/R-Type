@@ -2,6 +2,7 @@
 #include "AddEntity.hpp"
 #include "ClientGameEvent.hpp"
 #include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Logger.hpp"
 #include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "EwECS/World.hpp"
 #include "IsAlive.hpp"
@@ -41,14 +42,18 @@ namespace ECS {
             }
             aIsAlive[localEnemyId].value().isAlive = false;
 
-            AddEntity::addEntity(
-                ECS::Utils::Vector2f {aPos[localEnemyId].value().x, aPos[localEnemyId].value().y},
-                Component::Speed {BONUS_SPEED},
-                Component::TypeEntity {false, false, false, false, false, true, false, payload.bonusId, false},
-                Component::LoadedSprite {BONUS_ASSET, nullptr, 125, 520, BONUS_TEX_WIDTH, BONUS_TEX_HEIGHT,
-                                         BONUS_SCALE},
-                Component::HitBox {BONUS_TEX_WIDTH, BONUS_TEX_HEIGHT}, Component::IsAlive {false, 0});
-
+            if (rand() % 5 == 0 && aPos[localEnemyId].has_value()) {
+                try {
+                    AddEntity::addEntity(
+                        ECS::Utils::Vector2f {aPos[localEnemyId].value().x, aPos[localEnemyId].value().y},
+                        Component::Speed {BONUS_SPEED},
+                        Component::TypeEntity {false, false, false, false, false, true, false, payload.bonusId, false},
+                        Component::LoadedSprite {"config/bonus.json"},
+                        Component::HitBox {BONUS_TEX_WIDTH, BONUS_TEX_HEIGHT}, Component::IsAlive {false, 0});
+                } catch (const std::exception &e) {
+                    ECS::Logger::error("[RType client exception] " + std::string(e.what()));
+                }
+            }
             toRemove.push_back(i);
         }
         eventManager->removeEvent<RType::ClientGameEvent>(toRemove);
@@ -70,11 +75,15 @@ namespace ECS {
             } else if (!isAlive.isAlive && isAlive.timeToDie == 0) {
                 sprite.path = EXPLOSION_ASSET;
                 sprite.texture = nullptr;
-                sprite.rect.height = EXPLOSION_TEX_HEIGHT;
-                sprite.rect.width = EXPLOSION_TEX_WIDTH;
-                sprite.rect.top = 46;
-                sprite.rect.left = 146;
+                for (size_t i = 0; i < sprite.rect.size(); i++) {
+                    sprite.rect[i].height = EXPLOSION_TEX_HEIGHT;
+                    sprite.rect[i].width = EXPLOSION_TEX_WIDTH;
+                    sprite.rect[i].left = 146 * (i + 1);
+                    sprite.rect[i].top = 46;
+                    sprite.rectTime[i] = 0.2;
+                }
                 isAlive.timeToDie = 1;
+
             } else if (!isAlive.isAlive) {
                 isAlive.timeToDie -= world.getDeltaTime();
             }
