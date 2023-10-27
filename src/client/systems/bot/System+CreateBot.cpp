@@ -3,6 +3,7 @@
 #include "AddEntity.hpp"
 #include "ClientGameEvent.hpp"
 #include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Logger.hpp"
 #include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "ServerPackets.hpp"
 #include "System.hpp"
@@ -12,7 +13,6 @@ namespace ECS {
     void System::createBot()
     {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
-        SFMLDisplayClass &display = SFMLDisplayClass::getInstance();
         auto &events = eventManager->getEventsByType<RType::ClientGameEvent>();
         std::vector<size_t> toRemove;
         const auto size = events.size();
@@ -33,11 +33,16 @@ namespace ECS {
                 entityType.isBot = false;
             }
 
-            AddEntity::addEntity(
-                ECS::Utils::Vector2f {payload.posX, payload.posY}, Component::Speed {PLAYER_SPEED}, entityType,
-                Component::LoadedSprite {PLAYER_ASSET, nullptr, 0, payload.playerColor * PLAYER_TEX_HEIGHT,
-                                         PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT},
-                Component::HitBox {PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT}, Component::IsAlive {true, 0});
+            std::string path = "config/player_" + std::to_string(payload.playerColor + 1) + ".json";
+
+            try {
+                AddEntity::addEntity(ECS::Utils::Vector2f {payload.posX, payload.posY}, Component::Speed {PLAYER_SPEED},
+                                     entityType, Component::LoadedSprite {path},
+                                     Component::HitBox {PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT},
+                                     Component::IsAlive {true, 0});
+            } catch (const std::exception &e) {
+                ECS::Logger::error("[RType client exception] " + std::string(e.what()));
+            }
             toRemove.push_back(i);
         }
         eventManager->removeEvent<RType::ClientGameEvent>(toRemove);

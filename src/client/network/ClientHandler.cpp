@@ -6,6 +6,7 @@
 #include <string>
 #include "ClientGameEvent.hpp"
 #include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Logger.hpp"
 #include "NetworkHandler.hpp"
 #include "Packet.hpp"
 #include "Values.hpp"
@@ -33,7 +34,7 @@ namespace Network {
         });
 
         network.start(udp::v4(), aPacketFactory);
-        std::cout << "Connected to " << _serverEndpoint << std::endl;
+        ECS::Logger::log("Connecting to server");
     }
 
     void ClientHandler::receivePacket(uint8_t aType, IPayload *aPayload)

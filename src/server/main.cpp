@@ -2,6 +2,7 @@
 #include "Components.hpp"
 #include "EwECS/Asset/AssetManager.hpp"
 #include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Logger.hpp"
 #include "EwECS/Physic/PhysicPlugin.hpp"
 #include "EwECS/Utils.hpp"
 #include "EwECS/World.hpp"
@@ -16,7 +17,7 @@
 int main(int ac, char **av)
 {
     if (ac < 3) {
-        std::cerr << "Usage: " << av[0] << " <host> <port>" << std::endl;
+        ECS::Logger::error("Usage: " + std::string(av[0]) + " <host> <port>");
         return FAILURE;
     }
 
@@ -86,7 +87,7 @@ int main(int ac, char **av)
         Network::NetworkHandler::getInstance().stop();
     } catch (std::exception &e) {
         Network::NetworkHandler::getInstance().stop();
-        std::cerr << "[RType server exception] " << e.what() << std::endl;
+        ECS::Logger::error("[RType server exception] " + std::string(e.what()));
         return FAILURE;
     }
     return SUCCESS;

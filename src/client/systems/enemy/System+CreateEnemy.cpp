@@ -2,11 +2,11 @@
 #include "AddEntity.hpp"
 #include "ClientGameEvent.hpp"
 #include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Logger.hpp"
 #include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "ServerPackets.hpp"
 #include "System.hpp"
 #include "Values.hpp"
-
 namespace ECS {
     void System::createEnemy()
     {
@@ -24,11 +24,15 @@ namespace ECS {
 
             const auto &payload = gameEvent.getPayload<RType::Server::EnemySpawnedPayload>();
 
-            AddEntity::addEntity(
-                ECS::Utils::Vector2f {payload.posX, payload.posY}, Component::Speed {ENEMY_SPEED},
-                Component::TypeEntity {false, false, true, false, false, false, false, payload.enemyId, false},
-                Component::LoadedSprite {ENEMY_ASSET, nullptr, 0, 0, ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT},
-                Component::HitBox {ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT}, Component::IsAlive {true, 0});
+            try {
+                AddEntity::addEntity(
+                    ECS::Utils::Vector2f {payload.posX, payload.posY}, Component::Speed {ENEMY_SPEED},
+                    Component::TypeEntity {false, false, true, false, false, false, false, payload.enemyId, false},
+                    Component::LoadedSprite {"config/enemy.json"},
+                    Component::HitBox {ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT}, Component::IsAlive {true, 0});
+            } catch (const std::exception &e) {
+                ECS::Logger::error("[RType client exception] " + std::string(e.what()));
+            }
             toRemove.push_back(i);
         }
         eventManager->removeEvent<RType::ClientGameEvent>(toRemove);

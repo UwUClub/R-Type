@@ -2,6 +2,7 @@
 #include <boost/bind.hpp>
 #include <iostream>
 #include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Logger.hpp"
 #include "NetworkHandler.hpp"
 #include "Packet.hpp"
 #include "PlayerColor.hpp"
@@ -77,7 +78,7 @@ namespace Network {
         if (_waitingQueue.size() > 0) {
             _clients[aClientId] = *_waitingQueue[0];
             _waitingQueue.erase(_waitingQueue.begin());
-            std::cout << "Player " << aClientId << " joined" << std::endl;
+            ECS::Logger::log("Player " + std::to_string(aClientId) + " joined");
         }
     }
 
