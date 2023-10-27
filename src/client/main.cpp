@@ -109,7 +109,7 @@ int main(int ac, char **av)
                                  Component::IsAlive {false, 0});
         } catch (std::exception &e) {
             ECS::Logger::error("[RType client exception] " + std::string(e.what()));
-            Network::NetworkHandler::getInstance().stop();
+            ECS::Network::ClientHandler::getInstance().stop();
             return FAILURE;
         }
 
