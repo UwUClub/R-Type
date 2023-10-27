@@ -2,9 +2,9 @@
 #include <iostream>
 #include "Components.hpp"
 #include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Logger.hpp"
 #include "EwECS/Network/Packet.hpp"
 #include "EwECS/Network/ServerHandler.hpp"
-#include "EwECS/Logger.hpp"
 #include "EwECS/SparseArray.hpp"
 #include "EwECS/World.hpp"
 #include "ServerGameEvent.hpp"
