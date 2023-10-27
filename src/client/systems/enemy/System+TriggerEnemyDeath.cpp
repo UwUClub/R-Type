@@ -42,7 +42,7 @@ namespace ECS {
             }
             aIsAlive[localEnemyId].value().isAlive = false;
 
-            if (rand() % 5 == 0 && aPos[localEnemyId].has_value()) {
+            if (aPos[localEnemyId].has_value()) {
                 try {
                     AddEntity::addEntity(
                         ECS::Utils::Vector2f {aPos[localEnemyId].value().x, aPos[localEnemyId].value().y},
