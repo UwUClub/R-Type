@@ -1,8 +1,10 @@
 #include <functional>
 #include "ClientHandler.hpp"
+#include "ClientPackets.hpp"
 #include "EwECS/Event/EventManager.hpp"
 #include "EwECS/Event/KeyboardEvent.hpp"
 #include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
+#include "ServerGameEvent.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 #include <unordered_map>
@@ -29,9 +31,8 @@ namespace ECS {
                     if (playerOnlineId == -1) {
                         continue;
                     }
-                    RType::Packet packet(static_cast<int>(RType::ServerEventType::SHOOT),
-                                         {static_cast<float>(playerOnlineId)});
-                    client.send(packet);
+
+                    client.send(RType::ServerEventType::SHOOT);
                 }
             }
         }

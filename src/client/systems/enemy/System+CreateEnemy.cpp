@@ -2,10 +2,11 @@
 #include "AddEntity.hpp"
 #include "ClientGameEvent.hpp"
 #include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Logger.hpp"
 #include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
+#include "ServerPackets.hpp"
 #include "System.hpp"
 #include "Values.hpp"
-
 namespace ECS {
     void System::createEnemy()
     {
@@ -21,21 +22,17 @@ namespace ECS {
                 continue;
             }
 
-            const auto &payload = gameEvent.getPayload();
+            const auto &payload = gameEvent.getPayload<RType::Server::EnemySpawnedPayload>();
 
-            if (payload.size() != 3) {
-                toRemove.push_back(i);
-                continue;
+            try {
+                AddEntity::addEntity(
+                    ECS::Utils::Vector2f {payload.posX, payload.posY}, Component::Speed {ENEMY_SPEED},
+                    Component::TypeEntity {false, false, true, false, false, false, false, payload.enemyId, false},
+                    Component::LoadedSprite {"config/enemy.json"},
+                    Component::HitBox {ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT}, Component::IsAlive {true, 0});
+            } catch (const std::exception &e) {
+                ECS::Logger::error("[RType client exception] " + std::string(e.what()));
             }
-
-            auto onlineEntityId = static_cast<std::size_t>(payload[0]);
-            float posX = payload[1];
-            float posY = payload[2];
-
-            AddEntity::addEntity(ECS::Utils::Vector2f {posX, posY}, Component::Speed {ENEMY_SPEED},
-                                 Component::TypeEntity {false, false, true, false, false, false, false, onlineEntityId},
-                                 Component::LoadedSprite {"config/enemy.json"},
-                                 Component::HitBox {ENEMY_TEX_WIDTH, ENEMY_TEX_HEIGHT}, Component::IsAlive {true, 0});
             toRemove.push_back(i);
         }
         eventManager->removeEvent<RType::ClientGameEvent>(toRemove);

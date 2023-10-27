@@ -1,8 +1,10 @@
 #include <boost/asio.hpp>
 #include <iostream>
+#include <memory>
+#include <vector>
 #include "Components.hpp"
 #include "EwECS/SparseArray.hpp"
-#include "Packets.hpp"
+#include "Packet.hpp"
 #include "PlayerColor.hpp"
 #include "Values.hpp"
 #include <unordered_map>
@@ -21,6 +23,7 @@ namespace Network {
         private:
             std::unordered_map<size_t, udp::endpoint> _clients;
             std::array<int, MAX_NUMBER_PLAYER> _clientColors;
+            std::vector<std::unique_ptr<udp::endpoint>> _waitingQueue = std::vector<std::unique_ptr<udp::endpoint>>();
 
             /**
              * @brief Launch the server
@@ -47,16 +50,18 @@ namespace Network {
              * @brief Start the server
              * @param aHost The host to listen to
              * @param aPort The port to listen to
+             * @param aPacketFactory The packet factory
              * @return ServerHandler & The instance of the singleton
              */
-            void start(std::string &, unsigned short);
+            void start(std::string &, unsigned short, PacketFactory &);
 
             /**
              * @brief Handle packet reception
-             * @param aPacket The received packet
+             * @param aType The type of the packet
+             * @param aPayload The received payload
              * @param aEndpoint The endpoint of the sender
              */
-            void receivePacket(const RType::Packet &, const udp::endpoint &);
+            void receivePacket(uint8_t, IPayload *, const udp::endpoint &);
 
             /**
              * @brief Handle aknowledgment reception
@@ -67,9 +72,8 @@ namespace Network {
             /**
              * @brief Register a client to the server
              * @param aClientId The id of the client
-             * @param aEndpoint The endpoint of the client
              */
-            void addClient(size_t, const udp::endpoint &);
+            void addClient(unsigned short);
 
             /**
              * @brief Get the client color
@@ -99,11 +103,42 @@ namespace Network {
             int getNumberClients() const;
 
             /**
-             * @brief Send a packet to a client
-             * @param aPacket The packet to send
+             * @brief Tell the client there is an error
              * @param aClientId The id of the client to send the message to
              */
-            void send(const RType::Packet &, size_t, ECS::Core::SparseArray<Component::Connection> &);
+            void sendError(unsigned short aClientId);
+
+            /**
+             * @brief Send a packet to a client
+             * @param aHeader The packet header
+             * @param aPayload The packet payload
+             * @param aClientId The id of the client to send the message to
+             */
+            template<typename Payload>
+            void send(PacketHeader &aHeader, Payload &aPayload, unsigned short aClientId,
+                      ECS::Core::SparseArray<Component::Connection> &aConnection)
+            {
+                if (aConnection[aClientId].has_value()) {
+                    aConnection[aClientId].value().status = Network::ConnectionStatus::PENDING;
+                    NetworkHandler::getInstance().send<Payload>(aHeader, aPayload, _clients[aClientId]);
+                }
+            }
+
+            /**
+             * @brief Send a packet to a client
+             * @param aType The packet type to send
+             * @param aPayload The packet payload
+             * @param aClientId The id of the client to send the message to
+             */
+            template<typename Payload>
+            void send(int8_t aType, Payload &aPayload, unsigned short aClientId,
+                      ECS::Core::SparseArray<Component::Connection> &aConnection)
+            {
+                if (aConnection[aClientId].has_value()) {
+                    aConnection[aClientId].value().status = Network::ConnectionStatus::PENDING;
+                    NetworkHandler::getInstance().send<Payload>(aType, aPayload, _clients[aClientId]);
+                }
+            }
 
             /**
              * @brief Broadcast a message to all clients. Each client receives a packet with a unique uuid.
@@ -111,7 +146,13 @@ namespace Network {
              * @param aPayload The payload to send
              * @param aConnections Connection components of clients
              */
-            void broadcast(int, std::vector<float> &, ECS::Core::SparseArray<Component::Connection> &);
+            template<typename Payload>
+            void broadcast(int8_t aType, Payload &aPayload, ECS::Core::SparseArray<Component::Connection> &aConnection)
+            {
+                for (auto &client : _clients) {
+                    send(aType, aPayload, client.first, aConnection);
+                }
+            }
 
             /**
              * @brief Check if the server is full

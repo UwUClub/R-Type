@@ -1,17 +1,20 @@
 #include <boost/asio.hpp>
 #include <iostream>
 #include "AddEntity.hpp"
+#include "ClientGameEvent.hpp"
 #include "ClientHandler.hpp"
 #include "Components.hpp"
 #include "EwECS/Asset/AssetManager.hpp"
 #include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Logger.hpp"
 #include "EwECS/Physic/PhysicPlugin.hpp"
 #include "EwECS/SFMLDisplayClass/RenderPlugin.hpp"
 #include "EwECS/Utils.hpp"
 #include "EwECS/World.hpp"
 #include "IsAlive.hpp"
 #include "NetworkHandler.hpp"
-#include "Packets.hpp"
+#include "Packet.hpp"
+#include "PacketFactory.hpp"
 #include "ServerGameEvent.hpp"
 #include "System.hpp"
 #include "TypeEntity.hpp"
@@ -20,7 +23,7 @@
 int main(int ac, char **av)
 {
     if (ac < 3) {
-        std::cerr << "Usage: " << av[0] << " <host> <port>" << std::endl;
+        ECS::Logger::error("Usage: " + std::string(av[0]) + " <host> <port>");
         return FAILURE;
     }
 
@@ -29,9 +32,9 @@ int main(int ac, char **av)
         std::string host(av[1]);
         std::string port(av[2]);
         auto &client = Network::ClientHandler::getInstance();
-        client.start(host, port);
-        RType::Packet connectPacket(static_cast<int>(RType::ServerEventType::CONNECT));
-        client.send(connectPacket);
+
+        client.start(host, port, RType::packetFactory);
+        client.send(RType::ServerEventType::CONNECT);
 
         // Setup ECS / graphic
         ECS::Core::World &world = ECS::Core::World::getInstance();
@@ -81,9 +84,7 @@ int main(int ac, char **av)
 
         // Bonus systems
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBonus);
-        world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity, Component::IsAlive, Component::HitBox>(
-            ECS::System::triggerBonus);
-        world.addSystem<Component::Speed, Component::TypeEntity>(ECS::System::triggerBotBonus);
+        world.addSystem<Component::Speed, Component::TypeEntity>(ECS::System::triggerBonus);
 
         // Missile systems
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveMissiles);
@@ -92,11 +93,18 @@ int main(int ac, char **av)
         world.addSystem(ECS::System::createServerFullErrorMessage);
 
         // Loading message
-        AddEntity::addEntity(
-            ECS::Utils::Vector2f {SCREEN_WIDTH / 2 - LOADING_MESSAGE_TEX_WIDTH / 2,
-                                  SCREEN_HEIGHT / 2 - LOADING_MESSAGE_TEX_HEIGHT / 2},
-            Component::Speed {0}, Component::TypeEntity {false, false, false, false, false, false, false},
-            Component::LoadedSprite {"config/serverMessage.json"}, Component::HitBox {}, Component::IsAlive {false, 0});
+        try {
+            AddEntity::addEntity(ECS::Utils::Vector2f {SCREEN_WIDTH / 2 - LOADING_MESSAGE_TEX_WIDTH / 2,
+                                                       SCREEN_HEIGHT / 2 - LOADING_MESSAGE_TEX_HEIGHT / 2},
+                                 Component::Speed {0},
+                                 Component::TypeEntity {false, false, false, false, false, false, false},
+                                 Component::LoadedSprite {"config/serverMessage.json"}, Component::HitBox {},
+                                 Component::IsAlive {false, 0});
+        } catch (std::exception &e) {
+            ECS::Logger::error("[RType client exception] " + std::string(e.what()));
+            Network::NetworkHandler::getInstance().stop();
+            return FAILURE;
+        }
 
         // Game loop
         while (world.isRunning()) {
@@ -106,12 +114,11 @@ int main(int ac, char **av)
         }
 
         // Quit server properly
-        RType::Packet disconnectPacket(static_cast<int>(RType::ServerEventType::DISCONNECT));
-        client.send(disconnectPacket);
+        client.send(RType::ServerEventType::DISCONNECT);
         Network::NetworkHandler::getInstance().stop();
     } catch (std::exception &e) {
         Network::NetworkHandler::getInstance().stop();
-        std::cerr << "[RType client exception] " << e.what() << std::endl;
+        ECS::Logger::error("[RType client exception] " + std::string(e.what()));
         return FAILURE;
     }
     return SUCCESS;

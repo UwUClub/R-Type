@@ -5,12 +5,10 @@ namespace RType {
 
     using boost::asio::ip::udp;
 
-    ServerGameEvent::ServerGameEvent(ServerEventType aType, int aEntityId, const std::vector<float> &aPayload,
-                                     const udp::endpoint &aClientEndpoint)
+    ServerGameEvent::ServerGameEvent(ServerEventType aType, unsigned short aEntityId, Network::IPayload *aPayload)
         : _type(aType),
           _entityId(aEntityId),
-          _payload(aPayload),
-          _clientEndpoint(aClientEndpoint)
+          _payload(aPayload)
     {}
 
     ServerEventType ServerGameEvent::getType() const
@@ -18,19 +16,9 @@ namespace RType {
         return _type;
     }
 
-    int ServerGameEvent::getEntityId() const
+    unsigned short ServerGameEvent::getEntityId() const
     {
         return _entityId;
-    }
-
-    const std::vector<float> &ServerGameEvent::getPayload() const
-    {
-        return _payload;
-    }
-
-    const udp::endpoint &ServerGameEvent::getClientEndpoint() const
-    {
-        return _clientEndpoint;
     }
 
 } // namespace RType

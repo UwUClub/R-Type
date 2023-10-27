@@ -1,4 +1,6 @@
 #include <boost/asio.hpp>
+#include <memory>
+#include "Packet.hpp"
 
 #ifndef SERVERGAMEEVENT_HPP
     #define SERVERGAMEEVENT_HPP
@@ -25,9 +27,8 @@ namespace RType {
     {
         private:
             ServerEventType _type;
-            int _entityId;
-            std::vector<float> _payload;
-            udp::endpoint _clientEndpoint;
+            unsigned short _entityId;
+            std::shared_ptr<Network::IPayload> _payload;
 
         public:
             //-------------------CONSTRUCTORS / DESTRUCTOR-------------------//
@@ -36,10 +37,8 @@ namespace RType {
              * @param aType the type of the event
              * @param aEntityId the entity id
              * @param aPayload the payload
-             * @param aClientEndpoint the endpoint of the client who triggers the event
              */
-            explicit ServerGameEvent(ServerEventType aType, int aEntityId, const std::vector<float> &aPayload,
-                                     const udp::endpoint &aClientEndpoint);
+            ServerGameEvent(ServerEventType aType, unsigned short aEntityId, Network::IPayload *aPayload);
 
             ServerGameEvent(const ServerGameEvent &gameEvent) = default;
             ServerGameEvent(ServerGameEvent &&gameEvent) = default;
@@ -56,19 +55,17 @@ namespace RType {
              * @brief Get entity id
              * @return The entity id
              */
-            [[nodiscard]] int getEntityId() const;
+            [[nodiscard]] unsigned short getEntityId() const;
 
             /**
              * @brief Get payload
              * @return The payload
              */
-            [[nodiscard]] const std::vector<float> &getPayload() const;
-
-            /**
-             * @brief Get client endpoint
-             * @return udp::endpoint
-             */
-            [[nodiscard]] const udp::endpoint &getClientEndpoint() const;
+            template<typename Payload>
+            [[nodiscard]] const Payload &getPayload() const
+            {
+                return *reinterpret_cast<Payload *>(_payload.get());
+            }
     };
 } // namespace RType
 

@@ -1,6 +1,7 @@
 #include <array>
 #include <boost/asio.hpp>
-#include "Packets.hpp"
+#include "NetworkHandler.hpp"
+#include "Packet.hpp"
 #include "Values.hpp"
 #include <unordered_map>
 
@@ -42,20 +43,33 @@ namespace Network {
              * @brief Run the client
              * @param aHost The host to connect to
              * @param aPort THe port to connect to
+             * @param aPacketFactory The packet factory
              */
-            void start(std::string &, std::string &);
+            void start(std::string &, std::string &, PacketFactory &);
 
             /**
              * @brief Handle packet reception
-             * @param aPacket The received packet
+             * @param aType The type of the packet
+             * @param aPayload The received payload
              */
-            void receivePacket(const RType::Packet &);
+            void receivePacket(uint8_t, IPayload *);
 
             /**
              * @brief Send a packet to the server
-             * @param aPacket The packet to send
+             * @param aType The packet type
              */
-            void send(RType::Packet &aPacket);
+            void send(int8_t aType);
+
+            /**
+             * @brief Send a packet to the server
+             * @param aType The packet type
+             * @param aPayload The packet payload
+             */
+            template<typename Payload>
+            void send(int8_t aType, Payload &aPayload)
+            {
+                NetworkHandler::getInstance().send<Payload>(aType, aPayload, _serverEndpoint);
+            }
     };
 
 } // namespace Network

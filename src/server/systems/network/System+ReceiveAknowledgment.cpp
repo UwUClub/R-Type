@@ -5,7 +5,7 @@
 #include "EwECS/Event/EventManager.hpp"
 #include "EwECS/SparseArray.hpp"
 #include "NetworkHandler.hpp"
-#include "Packets.hpp"
+#include "Packet.hpp"
 #include "ServerGameEvent.hpp"
 #include "ServerHandler.hpp"
 #include "System.hpp"
@@ -22,7 +22,7 @@ namespace ECS {
             auto &gameEvent = events[i];
 
             if (gameEvent.getType() == RType::ServerEventType::AKNOWLEDGMENT) {
-                size_t playerId = gameEvent.getEntityId();
+                auto playerId = gameEvent.getEntityId();
 
                 if (aConnection[playerId].has_value()) {
                     auto &connection = aConnection[playerId].value();

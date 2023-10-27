@@ -2,17 +2,18 @@
 #include "AddEntity.hpp"
 #include "ClientGameEvent.hpp"
 #include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Logger.hpp"
 #include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "EwECS/SparseArray.hpp"
 #include "EwECS/World.hpp"
 #include "IsAlive.hpp"
+#include "ServerPackets.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 
 namespace ECS {
     void System::triggerEnemyShoot()
     {
-        auto &display = SFMLDisplayClass::getInstance();
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         auto &events = eventManager->getEventsByType<RType::ClientGameEvent>();
         const auto size = events.size();
@@ -24,22 +25,17 @@ namespace ECS {
                 continue;
             }
 
-            const auto &payload = gameEvent.getPayload();
+            const auto &payload = gameEvent.getPayload<RType::Server::EnemyShotPayload>();
 
-            if (payload.size() != 3) {
-                toRemove.push_back(i);
-                continue;
+            try {
+                AddEntity::addEntity(
+                    ECS::Utils::Vector2f {payload.posX, payload.posY}, Component::Speed {MISSILES_SPEED},
+                    Component::TypeEntity {false, false, false, false, false, false, false, payload.bulletId, true},
+                    Component::LoadedSprite {"config/bullet.json"},
+                    Component::HitBox {MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT}, Component::IsAlive {false, 0});
+            } catch (const std::exception &e) {
+                ECS::Logger::error("[RType client exception] " + std::string(e.what()));
             }
-
-            std::size_t onlineMissileId = static_cast<int>(payload[0]);
-            float posX = payload[1];
-            auto posY = payload[2];
-
-            AddEntity::addEntity(
-                ECS::Utils::Vector2f {posX, posY}, Component::Speed {MISSILES_SPEED},
-                Component::TypeEntity {false, false, false, false, false, false, false, onlineMissileId, true},
-                Component::LoadedSprite {"config/bullet.json"},
-                Component::HitBox {MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT}, Component::IsAlive {false, 0});
             toRemove.push_back(i);
         }
         eventManager->removeEvent<RType::ClientGameEvent>(toRemove);

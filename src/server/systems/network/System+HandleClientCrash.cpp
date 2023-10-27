@@ -2,10 +2,11 @@
 #include <iostream>
 #include "Components.hpp"
 #include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Logger.hpp"
 #include "EwECS/SparseArray.hpp"
 #include "EwECS/World.hpp"
 #include "NetworkHandler.hpp"
-#include "Packets.hpp"
+#include "Packet.hpp"
 #include "ServerGameEvent.hpp"
 #include "ServerHandler.hpp"
 #include "System.hpp"
@@ -24,7 +25,7 @@ namespace ECS {
                 && aConnection[i].value().status == Network::ConnectionStatus::PENDING) {
                 aConnection[i].value().age += world.getDeltaTime();
                 if (aConnection[i].value().age >= PACKET_TIMEOUT) {
-                    std::cout << "Player " << i << " crashed" << std::endl;
+                    ECS::Logger::info("Player " + std::to_string(i) + " crashed");
                     aIsAlive[i].value().isAlive = false;
                 }
             }

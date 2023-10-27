@@ -1,3 +1,4 @@
+#include <cstddef>
 #include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "EwECS/World.hpp"
 #include "System.hpp"
