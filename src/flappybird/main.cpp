@@ -49,31 +49,26 @@ int main(int ac, char **av)
     size_t backgroundId = world.createEntity();
     vec.insertAt(backgroundId, ECS::Utils::Vector2f {0, 0});
     type.insertAt(backgroundId, Component::TypeEntity {EntityType::BACKGROUND});
-    sprite.insertAt(backgroundId,
-                    Component::LoadedSprite {backgroundConf["sprite"], nullptr, 0, 0, backgroundConf["size"]["width"],
-                                             backgroundConf["size"]["height"]});
+    sprite.insertAt(backgroundId, Component::LoadedSprite {"config/flappybird/background.json"});
 
     // Setup ground entities
     size_t ground1Id = world.createEntity();
     vec.insertAt(ground1Id, ECS::Utils::Vector2f {0, ground1Conf["position"]["y"]});
     speed.insertAt(ground1Id, Component::Speed {ground1Conf["speed"]});
     type.insertAt(ground1Id, Component::TypeEntity {EntityType::GROUND});
-    sprite.insertAt(ground1Id, Component::LoadedSprite {ground1Conf["sprite"], nullptr, 0, 0,
-                                                        ground1Conf["size"]["width"], ground1Conf["size"]["height"]});
+    sprite.insertAt(ground1Id, Component::LoadedSprite {"config/flappybird/ground.json"});
 
     size_t ground2Id = world.createEntity();
     vec.insertAt(ground2Id, ECS::Utils::Vector2f {ground2Conf["position"]["x"], ground2Conf["position"]["y"]});
     speed.insertAt(ground2Id, Component::Speed {ground2Conf["speed"]});
     type.insertAt(ground2Id, Component::TypeEntity {EntityType::GROUND});
-    sprite.insertAt(ground2Id, Component::LoadedSprite {ground2Conf["sprite"], nullptr, 0, 0,
-                                                        ground2Conf["size"]["width"], ground2Conf["size"]["height"]});
+    sprite.insertAt(ground2Id, Component::LoadedSprite {"config/flappybird/ground.json"});
 
     // Setup player entity
     size_t birdId = world.createEntity();
     vec.insertAt(birdId, ECS::Utils::Vector2f {birdConf["position"]["x"], birdConf["position"]["y"]});
     type.insertAt(birdId, Component::TypeEntity {EntityType::BIRD});
-    sprite.insertAt(birdId, Component::LoadedSprite {birdConf["sprite"], nullptr, 0, 0, birdConf["size"]["width"],
-                                                     birdConf["size"]["height"]});
+    sprite.insertAt(birdId, Component::LoadedSprite {"config/flappybird/bird.json"});
     weight.insertAt(birdId, Component::Weight(birdConf["weight"], physicConf._initialJumpVelocity));
     jump.insertAt(birdId, Component::Jump(birdConf["jump"]["strength"], birdConf["jump"]["height"],
                                           birdConf["jump"]["floating"]));

@@ -11,19 +11,9 @@
     },
     "entities": {
         "background": {
-            "sprite": "assets/flappybird/sprites/background-day.png",
-            "size": {
-                "width": 288,
-                "height": 512
-            },
             "type": 0
         },
         "ground_1": {
-            "sprite": "assets/flappybird/sprites/ground.png",
-            "size": {
-                "width": 336,
-                "height": 112
-            },
             "speed": 100,
             "position": {
                 "y": 400
@@ -31,11 +21,6 @@
             "type": 1
         },
         "ground_2": {
-            "sprite": "assets/flappybird/sprites/ground.png",
-            "size": {
-                "width": 336,
-                "height": 112
-            },
             "speed": 100,
             "position": {
                 "x": 288,
@@ -44,11 +29,6 @@
             "type": 1
         },
         "bird": {
-            "sprite": "assets/flappybird/sprites/bluebird-upflap.png",
-            "size": {
-                "width": 34,
-                "height": 24
-            },
             "position": {
                 "x": 127,
                 "y": 10

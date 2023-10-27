@@ -1,0 +1,13 @@
+{
+    "path": "assets/flappybird/sprites/background-day.png",
+    "scale": 1,
+    "rects": {
+        "frame1": {
+            "top": 0,
+            "left": 0,
+            "width":288,
+            "height": 512,
+            "time": 0
+        }
+    }
+}

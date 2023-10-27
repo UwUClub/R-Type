@@ -1,0 +1,13 @@
+{
+    "path": "assets/flappybird/sprites/ground.png",
+    "scale": 1,
+    "rects": {
+        "frame1": {
+            "top": 0,
+            "left": 0,
+            "width":336,
+            "height": 112,
+            "time": 0
+        }
+    }
+}

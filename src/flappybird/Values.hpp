@@ -14,7 +14,7 @@ const constexpr int SCREEN_WIDTH = 1000;
 const constexpr int SCREEN_HEIGHT = 1000;
 
 // //--------------- CONFIG ------------------ //
-static const std::string CONFIG_PATH = "config/flappybird.json";
+static const std::string CONFIG_PATH = "config/flappybird/flappybird.json";
 
 // ------------------ RETURN STATUS ------------------ //
 const constexpr int SUCCESS = 0;
