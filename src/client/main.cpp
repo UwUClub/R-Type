@@ -1,19 +1,19 @@
-#include <boost/asio.hpp>
+#include <SFML/Graphics/Rect.hpp>
 #include <iostream>
 #include "AddEntity.hpp"
 #include "ClientGameEvent.hpp"
-#include "ClientHandler.hpp"
 #include "Components.hpp"
 #include "EwECS/Asset/AssetManager.hpp"
 #include "EwECS/Event/EventManager.hpp"
+#include "EwECS/EwECS.hpp"
 #include "EwECS/Logger.hpp"
+#include "EwECS/Network/ClientHandler.hpp"
+#include "EwECS/Network/Packet.hpp"
 #include "EwECS/Physic/PhysicPlugin.hpp"
 #include "EwECS/SFMLDisplayClass/RenderPlugin.hpp"
 #include "EwECS/Utils.hpp"
 #include "EwECS/World.hpp"
 #include "IsAlive.hpp"
-#include "NetworkHandler.hpp"
-#include "Packet.hpp"
 #include "PacketFactory.hpp"
 #include "ServerGameEvent.hpp"
 #include "System.hpp"
@@ -31,7 +31,19 @@ int main(int ac, char **av)
         // Network
         std::string host(av[1]);
         std::string port(av[2]);
-        auto &client = Network::ClientHandler::getInstance();
+        auto &client = ECS::Network::ClientHandler::getInstance();
+
+        client.onReceive([](int8_t aPacketType, ECS::Network::IPayload *aPayload) {
+            if (aPacketType >= RType::ClientEventType::MAX_CLI_EVT) {
+                return;
+            }
+            if (aPacketType >= 0) {
+                auto eventType = static_cast<RType::ClientEventType>(aPacketType);
+
+                ECS::Event::EventManager::getInstance()->pushEvent<RType::ClientGameEvent>(
+                    RType::ClientGameEvent(eventType, aPayload));
+            }
+        });
 
         client.start(host, port, RType::packetFactory);
         client.send(RType::ServerEventType::CONNECT);
@@ -102,7 +114,7 @@ int main(int ac, char **av)
                                  Component::IsAlive {false, 0});
         } catch (std::exception &e) {
             ECS::Logger::error("[RType client exception] " + std::string(e.what()));
-            Network::NetworkHandler::getInstance().stop();
+            ECS::Network::ClientHandler::getInstance().stop();
             return FAILURE;
         }
 
@@ -115,9 +127,9 @@ int main(int ac, char **av)
 
         // Quit server properly
         client.send(RType::ServerEventType::DISCONNECT);
-        Network::NetworkHandler::getInstance().stop();
+        ECS::Network::ClientHandler::getInstance().stop();
     } catch (std::exception &e) {
-        Network::NetworkHandler::getInstance().stop();
+        ECS::Network::ClientHandler::getInstance().stop();
         ECS::Logger::error("[RType client exception] " + std::string(e.what()));
         return FAILURE;
     }

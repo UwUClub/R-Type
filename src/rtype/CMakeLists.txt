@@ -1,7 +1,6 @@
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 
 target_sources(rtype PRIVATE
-        NetworkHandler.cpp
         TypeUtils.cpp
 )
 
@@ -11,26 +10,19 @@ add_subdirectory(components)
 target_link_libraries(rtype
         PRIVATE
         R_Type::R_Type_warnings
-        ${Boost_LIBRARIES}
-        Boost::asio
-        Boost::thread
-        Boost::uuid
         ecs
 )
 
 target_include_directories(rtype PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
-        ${Boost_INCLUDE_DIRS}
 )
 
 target_include_directories(client PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
-        ${Boost_INCLUDE_DIRS}
 )
 
 target_include_directories(server PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
-        ${Boost_INCLUDE_DIRS}
 )
 target_include_directories(rtype PRIVATE "${PROJECT_SOURCE_DIR}/extern/EwECS/includes")
 

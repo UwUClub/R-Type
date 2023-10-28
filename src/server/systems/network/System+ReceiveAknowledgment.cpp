@@ -3,11 +3,10 @@
 #include <vector>
 #include "Components.hpp"
 #include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Network/Packet.hpp"
+#include "EwECS/Network/ServerHandler.hpp"
 #include "EwECS/SparseArray.hpp"
-#include "NetworkHandler.hpp"
-#include "Packet.hpp"
 #include "ServerGameEvent.hpp"
-#include "ServerHandler.hpp"
 #include "System.hpp"
 
 namespace ECS {
@@ -27,7 +26,7 @@ namespace ECS {
                 if (aConnection[playerId].has_value()) {
                     auto &connection = aConnection[playerId].value();
 
-                    connection.status = Network::ConnectionStatus::CONNECTED;
+                    connection.status = ECS::Network::ConnectionStatus::CONNECTED;
                     connection.age = 0;
                 }
                 toRemove.push_back(i);

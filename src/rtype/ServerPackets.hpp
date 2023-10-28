@@ -1,4 +1,4 @@
-#include "Packet.hpp"
+#include "EwECS/Network/Packet.hpp"
 
 #ifndef SERVERPACKETS_HPP
     #define SERVERPACKETS_HPP
@@ -6,7 +6,7 @@
 namespace RType::Server {
 
     PACK(struct PlayerJoinedPayload
-         : Network::IPayload {
+         : ECS::Network::IPayload {
              unsigned short playerId;
              bool isReceiver;
              uint8_t playerColor;
@@ -27,7 +27,7 @@ namespace RType::Server {
          });
 
     PACK(struct PlayerLeftPayload
-         : Network::IPayload {
+         : ECS::Network::IPayload {
              unsigned short playerId;
 
              PlayerLeftPayload() = default;
@@ -39,7 +39,7 @@ namespace RType::Server {
          });
 
     PACK(struct PlayerPositionPayload
-         : Network::IPayload {
+         : ECS::Network::IPayload {
              unsigned short playerId;
              float posX;
              float posY;
@@ -55,7 +55,7 @@ namespace RType::Server {
          });
 
     PACK(struct PlayerGotBonusPayload
-         : Network::IPayload {
+         : ECS::Network::IPayload {
              unsigned short playerId;
              unsigned short bonusId;
 
@@ -69,7 +69,7 @@ namespace RType::Server {
          });
 
     PACK(struct PlayerShotPayload
-         : Network::IPayload {
+         : ECS::Network::IPayload {
              unsigned short bulletId;
              float posX;
              float posY;
@@ -85,7 +85,7 @@ namespace RType::Server {
          });
 
     PACK(struct PlayerDiedPayload
-         : Network::IPayload {
+         : ECS::Network::IPayload {
              unsigned short playerId;
 
              PlayerDiedPayload() = default;
@@ -97,7 +97,7 @@ namespace RType::Server {
          });
 
     PACK(struct EnemySpawnedPayload
-         : Network::IPayload {
+         : ECS::Network::IPayload {
              unsigned short enemyId;
              float posX;
              float posY;
@@ -113,7 +113,7 @@ namespace RType::Server {
          });
 
     PACK(struct EnemyPositionPayload
-         : Network::IPayload {
+         : ECS::Network::IPayload {
              uint8_t enemyId;
              float posX;
              float posY;
@@ -129,7 +129,7 @@ namespace RType::Server {
          });
 
     PACK(struct EnemyShotPayload
-         : Network::IPayload {
+         : ECS::Network::IPayload {
              unsigned short bulletId;
              float posX;
              float posY;
@@ -145,7 +145,7 @@ namespace RType::Server {
          });
 
     PACK(struct EnemyDiedPayload
-         : Network::IPayload {
+         : ECS::Network::IPayload {
              unsigned short enemyId;
              unsigned short bonusId;
 

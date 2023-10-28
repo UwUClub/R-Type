@@ -3,10 +3,10 @@
 #include <vector>
 #include "ClientGameEvent.hpp"
 #include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Network/ServerHandler.hpp"
 #include "EwECS/SparseArray.hpp"
 #include "EwECS/World.hpp"
 #include "ServerGameEvent.hpp"
-#include "ServerHandler.hpp"
 #include "ServerPackets.hpp"
 #include "System.hpp"
 #include "Values.hpp"
@@ -19,7 +19,7 @@ namespace ECS {
     {
         auto &world = Core::World::getInstance();
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
-        Network::ServerHandler &server = Network::ServerHandler::getInstance();
+        ECS::Network::ServerHandler &server = ECS::Network::ServerHandler::getInstance();
         auto &events = eventManager->getEventsByType<RType::ServerGameEvent>();
         const auto size = events.size();
         std::vector<size_t> toRemove;

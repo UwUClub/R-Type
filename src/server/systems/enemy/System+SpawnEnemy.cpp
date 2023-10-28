@@ -1,6 +1,6 @@
 #include "ClientGameEvent.hpp"
+#include "EwECS/Network/ServerHandler.hpp"
 #include "IsAlive.hpp"
-#include "ServerHandler.hpp"
 #include "ServerPackets.hpp"
 #include "System.hpp"
 #include "Values.hpp"
@@ -13,7 +13,7 @@ namespace ECS {
                             Core::SparseArray<Component::IsAlive> &aIsAlive,
                             Core::SparseArray<Component::Connection> &aConnection)
     {
-        Network::ServerHandler &server = Network::ServerHandler::getInstance();
+        ECS::Network::ServerHandler &server = ECS::Network::ServerHandler::getInstance();
         Timer::TimerSpawnEnemy &timer = Timer::TimerSpawnEnemy::getInstance();
         auto &world = Core::World::getInstance();
 

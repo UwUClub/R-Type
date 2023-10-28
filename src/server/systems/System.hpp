@@ -5,6 +5,7 @@
 #include "EwECS/Event/KeyboardEvent.hpp"
 #include "EwECS/Event/MouseEvent.hpp"
 #include "EwECS/Event/WindowEvent.hpp"
+#include "EwECS/Network/Connection.hpp"
 #include "EwECS/Physic/HitBox.hpp"
 #include "EwECS/SparseArray.hpp"
 #include "EwECS/Utils.hpp"

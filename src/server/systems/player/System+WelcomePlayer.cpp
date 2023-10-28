@@ -1,15 +1,14 @@
-#include <boost/asio.hpp>
 #include <iostream>
 #include <vector>
 #include "ClientGameEvent.hpp"
 #include "Components.hpp"
 #include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Network/ServerHandler.hpp"
 #include "EwECS/Physic/HitBox.hpp"
 #include "EwECS/SparseArray.hpp"
 #include "EwECS/World.hpp"
 #include "PlayerColor.hpp"
 #include "ServerGameEvent.hpp"
-#include "ServerHandler.hpp"
 #include "ServerPackets.hpp"
 #include "System.hpp"
 #include "Values.hpp"
@@ -23,7 +22,7 @@ namespace ECS {
     {
         ECS::Core::World &world = ECS::Core::World::getInstance();
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
-        Network::ServerHandler &server = Network::ServerHandler::getInstance();
+        ECS::Network::ServerHandler &server = ECS::Network::ServerHandler::getInstance();
         auto &events = eventManager->getEventsByType<RType::ServerGameEvent>();
         const auto size = events.size();
         std::vector<size_t> toRemove;
@@ -44,7 +43,9 @@ namespace ECS {
             }
 
             auto playerId = world.createEntity();
-            RType::PLAYER_COLOR playerColor = server.addClientColor(playerId);
+
+            int playerSeat = server.addClient(playerId);
+            auto playerColor = static_cast<RType::PLAYER_COLOR>(playerSeat);
 
             if (playerColor == RType::PLAYER_COLOR::NONE) {
                 world.killEntity(playerId);
@@ -57,13 +58,12 @@ namespace ECS {
             aType.insertAt(playerId, Component::TypeEntity {true, false, false, false, false, false, false});
             aHitBox.insertAt(playerId, Component::HitBox {PLAYER_TEX_WIDTH, PLAYER_TEX_HEIGHT});
             aIsAlive.insertAt(playerId, Component::IsAlive {true, 0});
-            aConnection.insertAt(playerId, Component::Connection {Network::ConnectionStatus::CONNECTED});
+            aConnection.insertAt(playerId, Component::Connection {ECS::Network::ConnectionStatus::CONNECTED});
 
             RType::Server::PlayerJoinedPayload payloadToBroadcast(playerId, false, playerColor, 10, 10);
 
-            server.broadcast<RType::Server::PlayerJoinedPayload>(RType::ClientEventType::PLAYER_SPAWN,
-                                                                 payloadToBroadcast, aConnection);
-            server.addClient(playerId);
+            server.broadcastExcept<RType::Server::PlayerJoinedPayload>(RType::ClientEventType::PLAYER_SPAWN,
+                                                                       payloadToBroadcast, aConnection, playerId);
 
             RType::Server::PlayerJoinedPayload payload(playerId, true, playerColor, 10, 10);
             server.send(RType::ClientEventType::PLAYER_SPAWN, payload, playerId, aConnection);
@@ -78,7 +78,7 @@ namespace ECS {
                 auto &pos = aPos[idx].value();
 
                 if (idx != playerId && type.isPlayer) {
-                    auto color = static_cast<float>(server.getClientColor(idx));
+                    auto color = static_cast<RType::PLAYER_COLOR>(server.getClientSeat(idx));
 
                     RType::Server::PlayerJoinedPayload playersPayload(idx, false, color, pos.x, pos.y);
                     server.send(RType::ClientEventType::PLAYER_SPAWN, playersPayload, playerId, aConnection);
