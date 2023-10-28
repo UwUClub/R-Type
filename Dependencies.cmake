@@ -22,11 +22,4 @@ function(R_Type_setup_dependencies)
 
     set(FETCHCONTENT_QUIET FALSE)
 
-    FetchContent_Declare(
-        SFML
-        GIT_REPOSITORY https://github.com/SFML/SFML.git
-        GIT_TAG 2.6.0
-    )
-    FetchContent_MakeAvailable(SFML)
-
 endfunction()
