@@ -34,10 +34,15 @@ int main(int ac, char **av)
         auto &client = ECS::Network::ClientHandler::getInstance();
 
         client.onReceive([](int8_t aPacketType, ECS::Network::IPayload *aPayload) {
-            auto eventType = static_cast<RType::ClientEventType>(aPacketType);
+            if (aPacketType >= RType::ClientEventType::MAX_CLI_EVT) {
+                return;
+            }
+            if (aPacketType >= 0) {
+                auto eventType = static_cast<RType::ClientEventType>(aPacketType);
 
-            ECS::Event::EventManager::getInstance()->pushEvent<RType::ClientGameEvent>(
-                RType::ClientGameEvent(eventType, aPayload));
+                ECS::Event::EventManager::getInstance()->pushEvent<RType::ClientGameEvent>(
+                    RType::ClientGameEvent(eventType, aPayload));
+            }
         });
 
         client.start(host, port, RType::packetFactory);

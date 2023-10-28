@@ -26,15 +26,20 @@ int main(int ac, char **av)
         std::string host(av[1]);
         unsigned short port = static_cast<unsigned short>(std::stoi(av[2]));
         ECS::Network::ServerHandler &server = ECS::Network::ServerHandler::getInstance();
-        server.onReceive([](int8_t aPacketType, ECS::Network::IPayload *aPayload, unsigned short entityId) {
-            auto eventType = static_cast<RType::ServerEventType>(aPacketType);
+        server.onReceive([&server](int8_t aPacketType, ECS::Network::IPayload *aPayload, unsigned short aEntityId) {
+            if (aPacketType >= RType::ServerEventType::MAX_SRV_EVT) {
+                server.sendError(aEntityId);
+                return;
+            }
+            if (aPacketType >= 0) {
+                auto eventType = static_cast<RType::ServerEventType>(aPacketType);
 
-            ECS::Event::EventManager::getInstance()->pushEvent<RType::ServerGameEvent>(
-                RType::ServerGameEvent(eventType, entityId, aPayload));
-        });
-        server.onReceiveAknowledgment([](unsigned short aEntityId) {
-            ECS::Event::EventManager::getInstance()->pushEvent<RType::ServerGameEvent>(
-                RType::ServerGameEvent(RType::ServerEventType::AKNOWLEDGMENT, aEntityId, {}));
+                ECS::Event::EventManager::getInstance()->pushEvent<RType::ServerGameEvent>(
+                    RType::ServerGameEvent(eventType, aEntityId, aPayload));
+            } else if (aPacketType == AKNOWLEDGMENT_PACKET_TYPE) {
+                ECS::Event::EventManager::getInstance()->pushEvent<RType::ServerGameEvent>(
+                    RType::ServerGameEvent(RType::ServerEventType::AKNOWLEDGMENT, aEntityId, {}));
+            }
         });
         server.start(host, port, 4, RType::packetFactory);
 
