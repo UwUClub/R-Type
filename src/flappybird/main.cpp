@@ -7,6 +7,7 @@
 #include "EwECS/SFMLDisplayClass/RenderPlugin.hpp"
 #include "EwECS/Utils.hpp"
 #include "EwECS/World.hpp"
+#include "EwECS/SFMLDisplayClass/TextComponent.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 
@@ -73,9 +74,18 @@ int main(int ac, char **av)
     jump.insertAt(birdId, Component::Jump(birdConf["jump"]["strength"], birdConf["jump"]["height"],
                                           birdConf["jump"]["floating"]));
 
+    // Setup pipes
+    size_t pipeId = world.createEntity();
+    type.insertAt(pipeId, Component::TypeEntity {EntityType::PIPE});
+    sprite.insertAt(pipeId, Component::LoadedSprite {"config/flappybird/pipe.json"});
+    vec.insertAt(pipeId, ECS::Utils::Vector2f {0, 0});
+
     // Load systems
     world.addSystem<ECS::Utils::Vector2f, Component::Jump, Component::Weight>(ECS::System::jump);
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveGround);
+    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::killOnTouch);
+//    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::killOnPipe);
+    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::displayScore);
 
     // Game loop
     ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();

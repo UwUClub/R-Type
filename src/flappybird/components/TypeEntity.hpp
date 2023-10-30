@@ -17,7 +17,9 @@ enum EntityType
     GROUND = 1,
     PIPE = 2,
     BIRD = 3,
-    NONE = -1
+    DEAD = 4,
+    TEXT = 5,
+    NONE = -1,
 };
 
 namespace Component {
@@ -41,4 +43,4 @@ namespace Component {
     };
 } // namespace Component
 
-#endif // !
+#endif /* TYPEENTITY_HPP */
