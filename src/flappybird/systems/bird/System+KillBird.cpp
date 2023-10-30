@@ -50,12 +50,13 @@ namespace ECS {
                 }
 
                 // Add info message
-                auto replayMessageId = world.createEntity();
-                vec.insertAt(replayMessageId, ECS::Utils::Vector2f {replayMessageConf["position"]["x"],
-                                                                    replayMessageConf["position"]["y"]});
-                text.insertAt(replayMessageId,
-                              Component::TextComponent("Press ENTER to play again", Component::TextColor::WHITE,
-                                                       replayMessageConf["size"]));
+                // auto replayMessageId = world.createEntity();
+                // vec.insertAt(replayMessageId, ECS::Utils::Vector2f {replayMessageConf["position"]["x"],
+                //                                                     replayMessageConf["position"]["y"]});
+                // type.insertAt(replayMessageId, Component::TypeEntity {EntityType::TEXT});
+                // text.insertAt(replayMessageId,
+                //               Component::TextComponent(replayMessageConf["text"], Component::TextColor::WHITE,
+                //                                        replayMessageConf["size"]));
                 return;
             }
         }

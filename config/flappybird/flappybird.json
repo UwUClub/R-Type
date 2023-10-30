@@ -80,7 +80,8 @@
                 "x": 25,
                 "y": 110
             },
-            "size": 20
+            "size": 20,
+            "text": "Press escape to replay"
         }
     }
 }

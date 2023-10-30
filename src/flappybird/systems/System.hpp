@@ -46,6 +46,12 @@ namespace ECS {
              *
              */
             static void updateScore();
+
+            /**
+             * @brief Replay the game if the player press enter
+             *
+             */
+            static void replay();
     };
 } // namespace ECS
 #endif /* !SYSTEM_HPP_ */

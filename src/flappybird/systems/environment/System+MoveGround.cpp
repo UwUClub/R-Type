@@ -22,7 +22,7 @@ namespace ECS {
             auto &posVal = pos[i].value();
             auto &speedVal = speed[i].value().speed;
 
-            posVal.x -= speedVal * Core::World::getInstance().getDeltaTime();
+            posVal.x -= speedVal * world.getDeltaTime();
             if (posVal.x <= -screenWidth) {
                 posVal.x = screenWidth;
             }
