@@ -60,8 +60,10 @@ namespace ECS {
             float speed = aSpeed[entityId].value().speed;
             auto &pos = aPos[entityId].value();
 
-            pos.x += payload.moveX * speed * 2000 * world.getDeltaTime();
-            pos.y -= payload.moveY * speed * 2000 * world.getDeltaTime();
+            auto deltaTime = world.getDeltaTime() * 10000;
+
+            pos.x += payload.moveX * speed * deltaTime;
+            pos.y -= payload.moveY * speed * deltaTime;
 
             if (pos.x < 0) {
                 pos.x = 0;
