@@ -26,13 +26,8 @@ namespace ECS {
             /**
              * @brief Move the ground
              *
-             * @param aPos SparseArray of all the entities position
-             * @param aSpeed SparseArray of all the entities speed
-             * @param aType SparseArray of all the entities type
              */
-            static void moveGround(Core::SparseArray<Utils::Vector2f> &aPos,
-                                   Core::SparseArray<Component::Speed> &aSpeed,
-                                   Core::SparseArray<Component::TypeEntity> &aType);
+            static void moveGround();
 
             /**
              * @brief Kill the bird if it touches the ground or a pipe

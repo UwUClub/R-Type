@@ -23,6 +23,7 @@ int main(int ac, char **av)
     auto &ground1Conf = conf["entities"]["ground_1"];
     auto &ground2Conf = conf["entities"]["ground_2"];
     auto &birdConf = conf["entities"]["bird"];
+    auto &pipe1Conf = conf["entities"]["pipe_1"];
 
     // Load components
     ECS::Core::World &world = ECS::Core::World::getInstance();
@@ -53,6 +54,14 @@ int main(int ac, char **av)
     type.insertAt(backgroundId, Component::TypeEntity {EntityType::BACKGROUND});
     sprite.insertAt(backgroundId, Component::LoadedSprite {"config/flappybird/sprites/background.json"});
 
+    // Setup pipes
+    size_t pipe1Id = world.createEntity();
+    vec.insertAt(pipe1Id, ECS::Utils::Vector2f {pipe1Conf["position"]["x"], pipe1Conf["position"]["y"]});
+    speed.insertAt(pipe1Id, Component::Speed {pipe1Conf["speed"]});
+    type.insertAt(pipe1Id, Component::TypeEntity {EntityType::PIPE});
+    sprite.insertAt(pipe1Id, Component::LoadedSprite {"config/flappybird/sprites/pipe.json"});
+    hitbox.insertAt(pipe1Id, Component::HitBox {pipe1Conf["hitbox"]["width"], pipe1Conf["hitbox"]["height"]});
+
     // Setup ground entities
     size_t ground1Id = world.createEntity();
     vec.insertAt(ground1Id, ECS::Utils::Vector2f {0, ground1Conf["position"]["y"]});
@@ -78,17 +87,10 @@ int main(int ac, char **av)
                                           birdConf["jump"]["floating"]));
     hitbox.insertAt(birdId, Component::HitBox {birdConf["hitbox"]["width"], birdConf["hitbox"]["height"]});
 
-    // Setup pipes
-    size_t pipeId = world.createEntity();
-    type.insertAt(pipeId, Component::TypeEntity {EntityType::PIPE});
-    sprite.insertAt(pipeId, Component::LoadedSprite {"config/flappybird/sprites/pipe.json"});
-    vec.insertAt(pipeId, ECS::Utils::Vector2f {0, 0});
-
     // Load systems
     world.addSystem<ECS::Utils::Vector2f, Component::Jump, Component::Weight>(ECS::System::jump);
-    world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveGround);
+    world.addSystem(ECS::System::moveGround);
     world.addSystem(ECS::System::killBird);
-    //    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::killOnPipe);
     world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::displayScore);
 
     // Game loop

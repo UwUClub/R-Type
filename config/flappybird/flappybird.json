@@ -39,10 +39,14 @@
         "pipe_1": {
             "speed": 100,
             "position": {
-                "x": 288,
-                "y": 0
+                "x": 450,
+                "y": 192
             },
-            "type": 2
+            "type": 2,
+            "hitbox": {
+                "width": 52,
+                "height": 320
+            }
         },
         "pipe_2": {
             "speed": 100,
