@@ -9,6 +9,7 @@
 #include "System.hpp"
 #include "Values.hpp"
 #include "components/IsAlive.hpp"
+#include "PlayerMoveState.hpp"
 #include <unordered_map>
 
 namespace ECS {
@@ -16,30 +17,36 @@ namespace ECS {
                             Core::SparseArray<Component::TypeEntity> &aType,
                             Core::SparseArray<Component::IsAlive> &aIsAlive)
     {
+        Core::World &world = Core::World::getInstance();
         ECS::Network::ClientHandler &client = ECS::Network::ClientHandler::getInstance();
         Event::EventManager *eventManager = Event::EventManager::getInstance();
+        PlayerMoveState &playerMoveState = PlayerMoveState::getInstance();
         auto &keyboardEvent = eventManager->getEventsByType<Event::KeyboardEvent>();
         static const std::unordered_map<Event::KeyIdentifier,
-                                        std::function<RType::Client::MovePayload(float &, Utils::Vector2f &)>>
+                                        std::function<RType::Client::MovePayload(PlayerMoveState &, Event::KeyState, float)>>
             keyMap = {
                 {Event::KeyIdentifier::UP,
-                 [](float &spd, Utils::Vector2f &xy) {
-                     xy.y -= spd;
+                 [](PlayerMoveState &moveState, Event::KeyState state, float speed) {
+                     moveState.runningY = (state == Event::KeyState::PRESSED) ? true : false;
+                     moveState.speedY = -speed;
                      return RType::Client::MovePayload {0, 1};
                  }},
                 {Event::KeyIdentifier::DOWN,
-                 [](float &spd, Utils::Vector2f &xy) {
-                     xy.y += spd;
+                 [](PlayerMoveState &moveState, Event::KeyState state, float speed) {
+                     moveState.runningY = (state == Event::KeyState::PRESSED) ? true : false;
+                     moveState.speedY = speed;
                      return RType::Client::MovePayload {0, -1};
                  }},
                 {Event::KeyIdentifier::LEFT,
-                 [](float &spd, Utils::Vector2f &xy) {
-                     xy.x -= spd;
+                 [](PlayerMoveState &moveState, Event::KeyState state, float speed) {
+                     moveState.runningX = (state == Event::KeyState::PRESSED) ? true : false;
+                     moveState.speedX = -speed;
                      return RType::Client::MovePayload {-1, 0};
                  }},
                 {Event::KeyIdentifier::RIGHT,
-                 [](float &spd, Utils::Vector2f &xy) {
-                     xy.x += spd;
+                 [](PlayerMoveState &moveState, Event::KeyState state, float speed) {
+                     moveState.runningX = (state == Event::KeyState::PRESSED) ? true : false;
+                     moveState.speedX = speed;
                      return RType::Client::MovePayload {1, 0};
                  }},
             };
@@ -49,31 +56,47 @@ namespace ECS {
             if (!aType[i].has_value() || !aType[i].value().isPlayer) {
                 continue;
             }
+            auto &pos = aPos[i].value();
+            auto &speed = aSpeed[i].value().speed;
+            RType::Client::MovePayload payload {0, 0};
             for (auto &event : keyboardEvent) {
                 if (keyMap.find(event._keyId) == keyMap.end() || !aIsAlive[i].has_value() || !aPos[i].has_value()
                     || !aSpeed[i].has_value() || !aIsAlive[i].value().isAlive) {
                     continue;
                 }
 
-                auto &pos = aPos[i].value();
-                auto &speed = aSpeed[i].value().speed;
+                payload = keyMap.at(event._keyId)(playerMoveState, event._state, speed);
+            }
+            if (playerMoveState.runningX) {
+                pos.x += speed * world.getDeltaTime() * 2000;
+                if (playerMoveState.speedX < 0) {
+                    payload.moveX = -1;
+                } else {
+                    payload.moveX = 1;
+                }
+            }
+            if (playerMoveState.runningY) {
+                pos.y += speed * world.getDeltaTime() * 2000;
+                if (playerMoveState.speedY < 0) {
+                    payload.moveY = 1;
+                } else {
+                    payload.moveY = -1;
+                }
+            }
 
-                auto payload = keyMap.at(event._keyId)(speed, pos);
+            client.send(RType::ServerEventType::MOVE, payload);
 
-                client.send(RType::ServerEventType::MOVE, payload);
-
-                if (pos.x < 0) {
-                    pos.x = 0;
-                }
-                if (pos.x > SCREEN_WIDTH) {
-                    pos.x = SCREEN_WIDTH;
-                }
-                if (pos.y < 0) {
-                    pos.y = 0;
-                }
-                if (pos.y > SCREEN_HEIGHT) {
-                    pos.y = SCREEN_HEIGHT;
-                }
+            if (pos.x < 0) {
+                pos.x = 0;
+            }
+            if (pos.x > SCREEN_WIDTH) {
+                pos.x = SCREEN_WIDTH;
+            }
+            if (pos.y < 0) {
+                pos.y = 0;
+            }
+            if (pos.y > SCREEN_HEIGHT) {
+                pos.y = SCREEN_HEIGHT;
             }
         }
     }
