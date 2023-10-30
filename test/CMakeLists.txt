@@ -11,10 +11,6 @@ if(PROJECT_IS_TOP_LEVEL OR TEST_INSTALLED_VERSION)
 
   find_package(R_Type CONFIG REQUIRED) # for intro, project_options, ...
 
-  if(NOT TARGET R_Type_options)
-    message(FATAL_ERROR "Requiered config package not found!")
-    return() # be strictly paranoid for Template Janitor github action! CK
-  endif()
 endif()
 
 # ---- Dependencies ----
@@ -25,7 +21,6 @@ add_executable(tests tests.cpp tests+World.cpp)
 target_link_libraries(
   tests
   PRIVATE R_Type::R_Type_warnings
-          R_Type::R_Type_options
           Catch2::Catch2WithMain)
 
 if(WIN32 AND BUILD_SHARED_LIBS)

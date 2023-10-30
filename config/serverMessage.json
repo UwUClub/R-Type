@@ -1,0 +1,13 @@
+{
+    "path": "assets/sprites/loading-message.png",
+    "scale": 1,
+    "rects": {
+        "frame1": {
+            "top": 15,
+            "left": 400,
+            "width": 700,
+            "height": 400,
+            "time": 0
+        }
+    }
+}

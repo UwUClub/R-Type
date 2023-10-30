@@ -85,6 +85,11 @@ jobs:
           gcovr: true
           opencppcoverage: true
 
+      - name: Install xrand
+        if: runner.os != 'Windows'
+        run: |
+          sudo apt-get install -y freeglut3-dev libfreetype6-dev libx11-dev libxrandr-dev libudev-dev libgl1-mesa-dev libflac-dev libogg-dev libvorbis-dev libvorbisenc2 libvorbisfile3 libopenal-dev libpthread-stubs0-dev xorg-dev
+
       - name: Configure CMake
         run: |
           cmake -S . -B ./build -G "${{matrix.generator}}" -D${{ env.PROJECT_NAME }}_ENABLE_IPO=${{matrix.enable_ipo }} -DCMAKE_BUILD_TYPE:STRING=Release -D${{ env.PROJECT_NAME }}_PACKAGING_MAINTAINER_MODE:BOOL=False -D${{ env.PROJECT_NAME }}_ENABLE_COVERAGE:BOOL=True -DGIT_SHA:STRING=${{ github.sha }} -DR_Type_ENABLE_SANITIZER_ADDRESS=OFF -DR_Type_ENABLE_SANITIZER_UNDEFINED=OFF

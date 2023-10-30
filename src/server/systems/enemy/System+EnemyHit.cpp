@@ -2,29 +2,39 @@
 #include "Values.hpp"
 
 namespace ECS {
-    void System::enemyHit(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::TypeEntity> &aType,
+    void System::enemyHit(Core::SparseArray<Component::TypeEntity> &aType,
                           Core::SparseArray<Component::HitBox> &aHitBox,
                           Core::SparseArray<Component::IsAlive> &aIsAlive)
     {
         auto &world = Core::World::getInstance();
+        const auto size = aType.size();
 
-        for (size_t enemyId = 0; enemyId < aType.size(); enemyId++) {
-            if (!aType[enemyId].has_value() || !aType[enemyId].value().isEnemy) {
+        for (size_t enemyId = 0; enemyId < size; enemyId++) {
+            if (!aType[enemyId].has_value() || !aType[enemyId].value().isEnemy || !aHitBox[enemyId].has_value()
+                || !aIsAlive[enemyId].has_value()) {
                 continue;
             }
-            for (size_t bullet = 0; bullet < aPos.size(); bullet++) {
-                if (!aType[bullet].has_value() || !aType[bullet].value().isBullet) {
-                    continue;
-                }
-                if (aPos[bullet].value().x > aPos[enemyId].value().x
-                    && aPos[bullet].value().x < aPos[enemyId].value().x + aHitBox[enemyId].value().width
-                    && aPos[bullet].value().y > aPos[enemyId].value().y
-                    && aPos[bullet].value().y < aPos[enemyId].value().y + aHitBox[enemyId].value().height) {
-                    aIsAlive[enemyId].value().isAlive = false;
-                    world.killEntity(bullet);
-                    break;
-                }
+
+            auto &hitBoxEnemy = aHitBox[enemyId].value();
+
+            if (!hitBoxEnemy.isColliding) {
+                continue;
             }
+
+            auto &isAliveEnemy = aIsAlive[enemyId].value();
+
+            if (!isAliveEnemy.isAlive) {
+                continue;
+            }
+
+            auto &collider = hitBoxEnemy.collidingId;
+
+            if (!aType[collider].has_value() || !aType[collider].value().isBullet) {
+                continue;
+            }
+
+            isAliveEnemy.isAlive = false;
+            world.killEntity(collider);
         }
     }
 } // namespace ECS

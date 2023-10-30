@@ -1,0 +1,41 @@
+{
+    "path": "assets/sprites/r-typesheet42.png",
+    "scale": 1,
+    "rects": {
+        "frame1": {
+            "top": 0,
+            "left": 0,
+            "width": 33,
+            "height": 17,
+            "time": 0.2
+        },
+        "frame2": {
+            "top": 0,
+            "left": 33,
+            "width": 33,
+            "height": 17,
+            "time": 0.2
+        },
+        "frame3": {
+            "top": 0,
+            "left": 66,
+            "width": 33,
+            "height": 17,
+            "time": 0.2
+        },
+        "frame4": {
+            "top": 0,
+            "left": 99,
+            "width": 33,
+            "height": 17,
+            "time": 0.2
+        },
+        "frame5": {
+            "top": 0,
+            "left": 132,
+            "width": 33,
+            "height": 17,
+            "time": 0.2
+        }
+    }
+}

@@ -1,5 +1,7 @@
+#include "ClientGameEvent.hpp"
+#include "EwECS/Network/ServerHandler.hpp"
 #include "IsAlive.hpp"
-#include "ServerHandler.hpp"
+#include "ServerPackets.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 #include "Timer+SpawnEnemy.hpp"
@@ -11,7 +13,7 @@ namespace ECS {
                             Core::SparseArray<Component::IsAlive> &aIsAlive,
                             Core::SparseArray<Component::Connection> &aConnection)
     {
-        Network::ServerHandler &server = Network::ServerHandler::getInstance();
+        ECS::Network::ServerHandler &server = ECS::Network::ServerHandler::getInstance();
         Timer::TimerSpawnEnemy &timer = Timer::TimerSpawnEnemy::getInstance();
         auto &world = Core::World::getInstance();
 
@@ -23,9 +25,10 @@ namespace ECS {
         timer.reset();
 
         // Create entity
-        size_t enemyId = world.createEntity();
-        float posX = static_cast<float>(SCREEN_WIDTH - ENEMY_TEX_WIDTH);
-        float posY = static_cast<float>(rand() % SCREEN_HEIGHT);
+        auto enemyId = world.createEntity();
+        auto posX = static_cast<float>(SCREEN_WIDTH - ENEMY_TEX_WIDTH);
+        auto posY = static_cast<float>(rand() % SCREEN_HEIGHT);
+
         aPos.insertAt(enemyId, ECS::Utils::Vector2f {posX, posY});
         aSpeed.insertAt(enemyId, Component::Speed {ENEMY_SPEED});
         aType.insertAt(enemyId, Component::TypeEntity {false, false, true, false, false, false, false});
@@ -34,7 +37,7 @@ namespace ECS {
         aIsAlive.insertAt(enemyId, Component::IsAlive {true, 0});
 
         // Send packet
-        server.broadcast(static_cast<int>(RType::ClientEventType::ENEMY_SPAWN),
-                         {static_cast<float>(enemyId), posX, posY}, aConnection);
+        RType::Server::EnemySpawnedPayload payload(enemyId, posX, posY);
+        server.broadcast(RType::ClientEventType::ENEMY_SPAWN, payload, aConnection);
     }
 } // namespace ECS

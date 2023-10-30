@@ -38,14 +38,15 @@ namespace Component {
              * @param aIsBackground a boolean to know if the entity is a background
              */
             TypeEntity(bool aIsPlayer, bool aIsBot, bool aIsEnemy, bool aIsBullet, bool aIsWall, bool aIsBonus,
-                       bool aIsBackground)
+                       bool aIsBackground, bool aIsEnemyMissile = false)
                 : isPlayer(aIsPlayer),
                   isBot(aIsBot),
                   isEnemy(aIsEnemy),
                   isBullet(aIsBullet),
                   isWall(aIsWall),
                   isBonus(aIsBonus),
-                  isBackground(aIsBackground)
+                  isBackground(aIsBackground),
+                  isEnemyMissile(aIsEnemyMissile)
             {}
             /**
              * @brief Construct a new Type Entity object
@@ -60,7 +61,7 @@ namespace Component {
              * @param aOnlineId an optional size_t to know the online id of the entity
              */
             TypeEntity(bool aIsPlayer, bool aIsBot, bool aIsEnemy, bool aIsBullet, bool aIsWall, bool aIsBonus,
-                       bool aIsBackground, size_t aOnlineId)
+                       bool aIsBackground, size_t aOnlineId, bool aIsEnemyMissile = false)
                 : isPlayer(aIsPlayer),
                   isBot(aIsBot),
                   isEnemy(aIsEnemy),
@@ -68,7 +69,8 @@ namespace Component {
                   isWall(aIsWall),
                   isBonus(aIsBonus),
                   isBackground(aIsBackground),
-                  onlineId(aOnlineId)
+                  onlineId(aOnlineId),
+                  isEnemyMissile(aIsEnemyMissile)
             {}
 
             bool isPlayer;
@@ -79,6 +81,7 @@ namespace Component {
             bool isBonus;
             bool isBackground;
             std::optional<size_t> onlineId;
+            bool isEnemyMissile;
     };
 } // namespace Component
 
