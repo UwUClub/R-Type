@@ -366,7 +366,7 @@ If the packet format is not respected, the server will send back a packet of Err
 ##### Server is full
 | Type | Bound to | Payload description | Payload type |
 | - | - | - | - |
-| `0x07` | Client | empty | empty |
+| `0x09` | Client | empty | empty |
 
 #### 3.2.3. From client & server
 
