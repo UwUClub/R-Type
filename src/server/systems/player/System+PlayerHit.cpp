@@ -31,7 +31,6 @@ namespace ECS {
             auto &colliders = hitBoxPlayer.collidingId;
 
             for (auto &collider : colliders) {
-                std::cout << "collider: " << collider << std::endl;
                 if (!aType[collider].has_value()
                     || (!aType[collider].value().isEnemy && !aType[collider].value().isEnemyMissile)) {
                     continue;
