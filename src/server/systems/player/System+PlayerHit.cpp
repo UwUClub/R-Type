@@ -28,15 +28,17 @@ namespace ECS {
                 continue;
             }
 
-            auto &collider = hitBoxPlayer.collidingId;
+            auto &colliders = hitBoxPlayer.collidingId;
 
-            if (!aType[collider].has_value()
-                || (!aType[collider].value().isEnemy && !aType[collider].value().isEnemyMissile)) {
-                continue;
+            for (auto &collider : colliders) {
+                if (!aType[collider].has_value()
+                    || (!aType[collider].value().isEnemy && !aType[collider].value().isEnemyMissile)) {
+                    continue;
+                }
+
+                isPlayerAlive.isAlive = false;
+                world.killEntity(collider);
             }
-
-            isPlayerAlive.isAlive = false;
-            world.killEntity(collider);
         }
     }
 } // namespace ECS

@@ -27,14 +27,16 @@ namespace ECS {
                 continue;
             }
 
-            auto &collider = hitBoxEnemy.collidingId;
+            auto &colliders = hitBoxEnemy.collidingId;
 
-            if (!aType[collider].has_value() || !aType[collider].value().isBullet) {
-                continue;
+            for (auto &collider : colliders) {
+                if (!aType[collider].has_value() || !aType[collider].value().isBullet) {
+                    continue;
+                }
+
+                isAliveEnemy.isAlive = false;
+                world.killEntity(collider);
             }
-
-            isAliveEnemy.isAlive = false;
-            world.killEntity(collider);
         }
     }
 } // namespace ECS
