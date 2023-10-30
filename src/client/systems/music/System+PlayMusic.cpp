@@ -2,8 +2,8 @@
 // Created by beafowl on 30/10/23.
 //
 
-#include "System.hpp"
 #include "EwECS/Music/Music.hpp"
+#include "System.hpp"
 
 namespace ECS {
     void System::playMusic(ECS::Core::SparseArray<Component::MusicComponents> &aMusic)
@@ -22,4 +22,4 @@ namespace ECS {
             musicComponent.value()._isPlayed = true;
         }
     }
-}
+} // namespace ECS

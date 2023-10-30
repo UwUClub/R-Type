@@ -21,4 +21,4 @@ namespace ECS {
             music.createMusic("assets/sounds/r-type.ogg");
         }
     }
-}
+} // namespace ECS
