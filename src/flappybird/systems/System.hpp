@@ -30,6 +30,12 @@ namespace ECS {
             static void moveGround();
 
             /**
+             * @brief Move the pipes
+             *
+             */
+            static void movePipes();
+
+            /**
              * @brief Kill the bird if it touches the ground or a pipe
              *
              */

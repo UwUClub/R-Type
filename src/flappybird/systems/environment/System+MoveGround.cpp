@@ -16,7 +16,7 @@ namespace ECS {
                 continue;
             }
             auto &typeVal = type[i].value().type;
-            if (typeVal != EntityType::GROUND && typeVal != EntityType::PIPE) {
+            if (typeVal != EntityType::GROUND) {
                 continue;
             }
             auto &posVal = pos[i].value();

@@ -9,11 +9,14 @@
         "gravity": 2,
         "initial_fall_velocity": 2
     },
+    "environment": {
+        "pipe_loop_width": 1000
+    },
     "entities": {
         "score": {
             "size": 50,
             "position": {
-                "x": 144,
+                "x": 131,
                 "y": 50
             }
         },
@@ -71,6 +74,13 @@
                 "width": 34,
                 "height": 24
             }
+        },
+        "replay_message": {
+            "position": {
+                "x": 25,
+                "y": 110
+            },
+            "size": 20
         }
     }
 }

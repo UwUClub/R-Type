@@ -11,43 +11,29 @@
 #include "System.hpp"
 #include "Values.hpp"
 
-int main(int ac, char **av)
+int setupEntities()
 {
-    (void) ac;
-    (void) av;
+    auto &world = ECS::Core::World::getInstance();
 
-    // Load config
-    ConfigReader &configReader = ConfigReader::getInstance();
+    // Get config
+    auto &configReader = ConfigReader::ConfigReader::getInstance();
     auto &conf = configReader.loadConfig(CONFIG_PATH);
     auto &scoreConf = conf["entities"]["score"];
     auto &ground1Conf = conf["entities"]["ground_1"];
     auto &ground2Conf = conf["entities"]["ground_2"];
     auto &birdConf = conf["entities"]["bird"];
     auto &pipe1Conf = conf["entities"]["pipe_1"];
-
-    // Load components
-    ECS::Core::World &world = ECS::Core::World::getInstance();
-    ECS::Asset::AssetManager &assetManager = ECS::Asset::AssetManager::getInstance();
-
-    auto &vec = world.registerComponent<ECS::Utils::Vector2f>();
-    auto &speed = world.registerComponent<Component::Speed>();
-    auto &type = world.registerComponent<Component::TypeEntity>();
-    auto &jump = world.registerComponent<Component::Jump>();
-    auto &score = world.registerComponent<Component::Score>();
-
-    auto &renderConf = ECS::Render::RenderPluginConfig::getInstance();
     auto &physicConf = ECS::Physic::PhysicPluginConfig::getInstance();
-    renderConf.load(CONFIG_PATH);
-    physicConf.load(CONFIG_PATH);
-    ECS::Render::RenderPlugin renderPlugin;
-    ECS::Physic::PhysicPlugin physicPlugin;
 
-    renderPlugin.plug(world, assetManager);
-    physicPlugin.plug(world, assetManager);
-
+    // Get components
+    auto &vec = world.getComponent<ECS::Utils::Vector2f>();
+    auto &speed = world.getComponent<Component::Speed>();
+    auto &type = world.getComponent<Component::TypeEntity>();
     auto &sprite = world.getComponent<Component::LoadedSprite>();
     auto &weight = world.getComponent<Component::Weight>();
+    auto &jump = world.getComponent<Component::Jump>();
     auto &hitbox = world.getComponent<Component::HitBox>();
+    auto &score = world.getComponent<Component::Score>();
     auto &text = world.getComponent<Component::TextComponent>();
 
     // Setup background
@@ -96,12 +82,46 @@ int main(int ac, char **av)
     jump.insertAt(birdId, Component::Jump(birdConf["jump"]["strength"], birdConf["jump"]["height"],
                                           birdConf["jump"]["floating"]));
     hitbox.insertAt(birdId, Component::HitBox {birdConf["hitbox"]["width"], birdConf["hitbox"]["height"]});
+}
+
+int main(int ac, char **av)
+{
+    (void) ac;
+    (void) av;
+
+    // Load components
+    ECS::Core::World &world = ECS::Core::World::getInstance();
+    ECS::Asset::AssetManager &assetManager = ECS::Asset::AssetManager::getInstance();
+
+    auto &vec = world.registerComponent<ECS::Utils::Vector2f>();
+    auto &speed = world.registerComponent<Component::Speed>();
+    auto &type = world.registerComponent<Component::TypeEntity>();
+    auto &jump = world.registerComponent<Component::Jump>();
+    auto &score = world.registerComponent<Component::Score>();
+
+    auto &renderConf = ECS::Render::RenderPluginConfig::getInstance();
+    auto &physicConf = ECS::Physic::PhysicPluginConfig::getInstance();
+    renderConf.load(CONFIG_PATH);
+    physicConf.load(CONFIG_PATH);
+    ECS::Render::RenderPlugin renderPlugin;
+    ECS::Physic::PhysicPlugin physicPlugin;
+
+    renderPlugin.plug(world, assetManager);
+    physicPlugin.plug(world, assetManager);
+
+    auto &sprite = world.getComponent<Component::LoadedSprite>();
+    auto &weight = world.getComponent<Component::Weight>();
+    auto &hitbox = world.getComponent<Component::HitBox>();
+    auto &text = world.getComponent<Component::TextComponent>();
 
     // Load systems
     world.addSystem<ECS::Utils::Vector2f, Component::Jump, Component::Weight>(ECS::System::jump);
     world.addSystem(ECS::System::moveGround);
+    world.addSystem(ECS::System::movePipes);
     world.addSystem(ECS::System::killBird);
     world.addSystem(ECS::System::updateScore);
+
+    setupEntities();
 
     // Game loop
     ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
