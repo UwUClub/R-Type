@@ -53,12 +53,14 @@ namespace ECS {
 
             auto &sprite = aSprites[botId].value();
             auto &isAlive = aIsAlive[botId].value();
+            auto &type = aType[botId].value();
 
             if (!isAlive.isAlive && isAlive.timeToDie < 0) {
                 world.killEntity(botId);
             } else if (!isAlive.isAlive && isAlive.timeToDie == 0) {
                 sprite.path = EXPLOSION_ASSET;
                 sprite.texture = nullptr;
+                type.isPlayer = false;
                 for (size_t i = 0; i < sprite.rect.size(); i++) {
                     sprite.rect[i].height = EXPLOSION_TEX_HEIGHT;
                     sprite.rect[i].width = EXPLOSION_TEX_WIDTH;

@@ -68,7 +68,7 @@ namespace ECS {
                 payload = keyMap.at(event._keyId)(playerMoveState, event._state, speed);
             }
             if (playerMoveState.runningX) {
-                pos.x += speed * world.getDeltaTime() * 2000;
+                pos.x += speed;
                 if (playerMoveState.speedX < 0) {
                     payload.moveX = -1;
                 } else {
@@ -76,7 +76,8 @@ namespace ECS {
                 }
             }
             if (playerMoveState.runningY) {
-                pos.y += speed * world.getDeltaTime() * 2000;
+                pos.y += speed;
+
                 if (playerMoveState.speedY < 0) {
                     payload.moveY = 1;
                 } else {
