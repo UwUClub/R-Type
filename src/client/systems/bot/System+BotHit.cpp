@@ -22,13 +22,15 @@ namespace ECS {
                 continue;
             }
 
-            auto &collider = hitBoxPlayer.collidingId;
+            auto &colliders = hitBoxPlayer.collidingId;
 
-            if (!aType[collider].has_value() || !aType[collider].value().isEnemyMissile) {
-                continue;
+            for (auto &collider : colliders) {
+                if (!aType[collider].has_value() || !aType[collider].value().isEnemyMissile) {
+                    continue;
+                }
+
+                world.killEntity(collider);
             }
-
-            world.killEntity(collider);
         }
     }
 } // namespace ECS

@@ -36,7 +36,7 @@ R_Type_setup_dependencies()
 include(cmake/StandardProjectSettings.cmake)
 
 # exec submodules init and update
-execute_process(COMMAND git submodule update --init --recursive --remote)
+#execute_process(COMMAND git submodule update --init --recursive --remote)
 add_subdirectory(extern)
 # expose the includes folder of the submodules
 
