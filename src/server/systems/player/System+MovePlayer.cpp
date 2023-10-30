@@ -2,10 +2,10 @@
 #include <vector>
 #include "ClientGameEvent.hpp"
 #include "ClientPackets.hpp"
-#include "EwECS/World.hpp"
 #include "EwECS/Event/EventManager.hpp"
 #include "EwECS/Network/ServerHandler.hpp"
 #include "EwECS/SparseArray.hpp"
+#include "EwECS/World.hpp"
 #include "ServerGameEvent.hpp"
 #include "ServerPackets.hpp"
 #include "System.hpp"

@@ -5,11 +5,11 @@
 #include "EwECS/Network/ClientHandler.hpp"
 #include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "EwECS/World.hpp"
+#include "PlayerMoveState.hpp"
 #include "ServerGameEvent.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 #include "components/IsAlive.hpp"
-#include "PlayerMoveState.hpp"
 #include <unordered_map>
 
 namespace ECS {
@@ -22,8 +22,8 @@ namespace ECS {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         PlayerMoveState &playerMoveState = PlayerMoveState::getInstance();
         auto &keyboardEvent = eventManager->getEventsByType<Event::KeyboardEvent>();
-        static const std::unordered_map<Event::KeyIdentifier,
-                                        std::function<RType::Client::MovePayload(PlayerMoveState &, Event::KeyState, float)>>
+        static const std::unordered_map<
+            Event::KeyIdentifier, std::function<RType::Client::MovePayload(PlayerMoveState &, Event::KeyState, float)>>
             keyMap = {
                 {Event::KeyIdentifier::UP,
                  [](PlayerMoveState &moveState, Event::KeyState state, float speed) {
