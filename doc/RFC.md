@@ -28,11 +28,13 @@ R-Type is an iconic series of horizontal-scrolling shoot 'em up video games deve
         * 3.2.2. [From server](#322-from-server)
             * [Player joined](#player-joined)
             * [Player left](#player-left)
+            * [Player position update](#player-position-update)
+            * [Player shot](#player-shot)
             * [Player got bonus](#player-got-bonus)
+            * [Player died](#player-died)
             * [Enemy spawned](#enemy-spawned)
-            * [Entity position update](#entity-position-update)
-            * [Entity shot](#entity-shot)
-            * [Entity died](#entity-died)
+            * [Enemy died](#enemy-died)
+            * [Enemy shot](#enemy-shot)
             * [Server is full](#server-is-full)
 
    * 3.3. [Reception Aknowledgment](#33-reception-aknowledgment)
@@ -62,7 +64,7 @@ The R-Type server accepts connections from UDP clients and communicates with the
 | boolean | 1 | Either false or true  | True is encoded as 0x01, false as 0x00 |
 | unsigned byte | 1 | An integer between 0 and 255 | Unsigned 8-bit integer |
 | unsigned short | 2 | An integer between 0 and 65535 | Unsigned 16-bit integer |
-| float | 4 | A floating point number |
+| float | 4 | A single-precision 32-bit IEEE 754 floating point number |
 | string | ≥ 1 | A sequence of bytes representing characters |
 
 ## 3. Protocol Specification
@@ -78,7 +80,7 @@ A packet has the following properties:
 | `type` | byte | [Packet type](#32-packet-types) |
 | `payload` | depends on [packet type](#32-packet-types) | Data carried by the packet |
 
-If the packet format is not respected, the server will send back a packet of Error type.
+If the packet format is not respected, the server will send back a packet of Error type (see [packet types](#32-packet-types))
 
 ### 3.2. Packet Types
 
@@ -183,61 +185,7 @@ If the packet format is not respected, the server will send back a packet of Err
    </tr>
 </table>
 
-##### Player got bonus
-<table>
-   <tr>
-    <th>Type</th>
-    <th>Bound to</th>
-    <th>Payload description</th>
-    <th>Payload type</th>
-   </tr>
-   <tr>
-    <td><code>0x02</code></td>
-    <td>Client</td>
-    <td>
-       <table>
-          <tr><td>Player entity ID</td></tr>
-          <tr><td>Bonus type</td></tr>
-       </table>
-    </td>
-    <td>
-       <table>
-          <tr><td>unsigned short</td></tr>
-          <tr><td>unsigned byte</td></tr>
-       </table>
-    </td>
-   </tr>
-</table>
-
-##### Enemy spawned
-<table>
-   <tr>
-    <th>Type</th>
-    <th>Bound to</th>
-    <th>Payload description</th>
-    <th>Payload type</th>
-   </tr>
-   <tr>
-    <td><code>0x03</code></td>
-    <td>Client</td>
-    <td>
-       <table>
-          <tr><td>Enemy entity ID</td></tr>
-          <tr><td>Enemy horizontal position</td></tr>
-          <tr><td>Enemy vertical position</td></tr>
-       </table>
-    </td>
-    <td>
-       <table>
-          <tr><td>unsigned short</td></tr>
-          <tr><td>float</td></tr>
-          <tr><td>float</td></tr>
-       </table>
-    </td>
-   </tr>
-</table>
-
-##### Entity position update
+##### Player position update
  <table>
    <tr>
     <th>Type</th>
@@ -246,7 +194,7 @@ If the packet format is not respected, the server will send back a packet of Err
     <th>Payload type</th>
    </tr>
    <tr>
-    <td><code>0x04</code></td>
+    <td><code>0x02</code></td>
     <td>Client</td>
     <td>
        <table>
@@ -265,8 +213,58 @@ If the packet format is not respected, the server will send back a packet of Err
    </tr>
 </table>
 
-##### Entity shot
+##### Player shot
  <table>
+   <tr>
+    <th>Type</th>
+    <th>Bound to</th>
+    <th>Payload description</th>
+    <th>Payload type</th>
+   </tr>
+   <tr>
+    <td><code>0x03</code></td>
+    <td>Client</td>
+    <td>
+       <table>
+          <tr><td>Shooter entity ID</td></tr>
+       </table>
+    </td>
+    <td>
+       <table>
+          <tr><td>unsigned short</td></tr>
+       </table>
+    </td>
+   </tr>
+</table>
+
+##### Player got bonus
+<table>
+   <tr>
+    <th>Type</th>
+    <th>Bound to</th>
+    <th>Payload description</th>
+    <th>Payload type</th>
+   </tr>
+   <tr>
+    <td><code>0x04</code></td>
+    <td>Client</td>
+    <td>
+       <table>
+          <tr><td>Player entity ID</td></tr>
+          <tr><td>Bonus type</td></tr>
+       </table>
+    </td>
+    <td>
+       <table>
+          <tr><td>unsigned short</td></tr>
+          <tr><td>unsigned byte</td></tr>
+       </table>
+    </td>
+   </tr>
+</table>
+
+##### Player died
+<table>
    <tr>
     <th>Type</th>
     <th>Bound to</th>
@@ -278,7 +276,7 @@ If the packet format is not respected, the server will send back a packet of Err
     <td>Client</td>
     <td>
        <table>
-          <tr><td>Player entity ID</td></tr>
+          <tr><td>Entity ID</td></tr>
        </table>
     </td>
     <td>
@@ -289,7 +287,7 @@ If the packet format is not respected, the server will send back a packet of Err
    </tr>
 </table>
 
-##### Entity died
+##### Enemy spawned
 <table>
    <tr>
     <th>Type</th>
@@ -302,7 +300,59 @@ If the packet format is not respected, the server will send back a packet of Err
     <td>Client</td>
     <td>
        <table>
+          <tr><td>Enemy entity ID</td></tr>
+          <tr><td>Enemy horizontal position</td></tr>
+          <tr><td>Enemy vertical position</td></tr>
+       </table>
+    </td>
+    <td>
+       <table>
+          <tr><td>unsigned short</td></tr>
+          <tr><td>float</td></tr>
+          <tr><td>float</td></tr>
+       </table>
+    </td>
+   </tr>
+</table>
+
+##### Enemy died
+<table>
+   <tr>
+    <th>Type</th>
+    <th>Bound to</th>
+    <th>Payload description</th>
+    <th>Payload type</th>
+   </tr>
+   <tr>
+    <td><code>0x07</code></td>
+    <td>Client</td>
+    <td>
+       <table>
           <tr><td>Entity ID</td></tr>
+       </table>
+    </td>
+    <td>
+       <table>
+          <tr><td>unsigned short</td></tr>
+       </table>
+    </td>
+   </tr>
+</table>
+
+##### Enemy shot
+ <table>
+   <tr>
+    <th>Type</th>
+    <th>Bound to</th>
+    <th>Payload description</th>
+    <th>Payload type</th>
+   </tr>
+   <tr>
+    <td><code>0x08</code></td>
+    <td>Client</td>
+    <td>
+       <table>
+          <tr><td>Shooter entity ID</td></tr>
        </table>
     </td>
     <td>
@@ -333,7 +383,7 @@ If the packet format is not respected, the server will send back a packet of Err
 The first packet sent by a client to its server **must** be of type [connect](#connect). Otherwise, the server will not listen to any of its packets.
 
 When a client connects the server should:
-   - send [player joined](#player-joined) to the new player and each player already present in the server
+   - send a [player joined](#player-joined) to the new player for each player already present in the server
    - send [enemy spawned](#enemy-spawned) packets to the connecting client, for each enemy already present in the server
 
 This way the new client is aware of what is going during the gameplay.
