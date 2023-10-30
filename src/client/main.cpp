@@ -61,6 +61,8 @@ int main(int ac, char **av)
         world.registerComponent<Component::Speed>();
         world.registerComponent<Component::TypeEntity>();
         world.registerComponent<Component::IsAlive>();
+        world.registerComponent<Component::SoundsComponents>();
+        world.registerComponent<Component::MusicComponents>();
 
         ECS::Physic::PhysicPluginConfig::getInstance().load("config/r-type.json");
         ECS::Render::RenderPluginConfig::getInstance().load("config/r-type.json");
@@ -70,6 +72,10 @@ int main(int ac, char **av)
         // Background systems
         world.addSystem(ECS::System::createBackground);
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBackground);
+
+        // Music systems
+        world.addSystem<Component::MusicComponents>(ECS::System::createMusic);
+        world.addSystem<Component::MusicComponents>(ECS::System::playMusic);
 
         // Player systems
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::IsAlive>(

@@ -10,6 +10,7 @@
 #include "ServerPackets.hpp"
 #include "System.hpp"
 #include "Values.hpp"
+#include "EwECS/Sound/Sound.hpp"
 
 namespace ECS {
     void System::triggerBotShoot()
@@ -29,11 +30,14 @@ namespace ECS {
             const auto &payload = gameEvent.getPayload<RType::Server::PlayerShotPayload>();
 
             try {
-                AddEntity::addEntity(
+                auto &world = Core::World::getInstance();
+                auto &sound = world.getComponent<Component::SoundsComponents>();
+                auto entity_id = AddEntity::addEntity(
                     ECS::Utils::Vector2f {payload.posX, payload.posY}, Component::Speed {BULLET_SPEED},
                     Component::TypeEntity {false, false, false, true, false, false, false, payload.bulletId, false},
                     Component::LoadedSprite {"config/missiles.json"},
                     Component::HitBox {BULLET_TEX_WIDTH, BULLET_TEX_HEIGHT}, Component::IsAlive {false, 0});
+                sound.insertAt(entity_id, Component::SoundsComponents {"assets/sounds/pew.mp3", false, 100, false});
             } catch (const std::exception &e) {
                 ECS::Logger::error("[RType client exception] " + std::string(e.what()));
             }
