@@ -6,7 +6,5 @@
 
 namespace ECS {
     void System::displayPipes(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::TypeEntity> &aType)
-    {
-        
-    }
-}
+    {}
+} // namespace ECS

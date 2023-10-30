@@ -5,9 +5,9 @@
 #include "EwECS/Event/EventManager.hpp"
 #include "EwECS/Physic/PhysicPlugin.hpp"
 #include "EwECS/SFMLDisplayClass/RenderPlugin.hpp"
+#include "EwECS/SFMLDisplayClass/TextComponent.hpp"
 #include "EwECS/Utils.hpp"
 #include "EwECS/World.hpp"
-#include "EwECS/SFMLDisplayClass/TextComponent.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 
@@ -84,7 +84,7 @@ int main(int ac, char **av)
     world.addSystem<ECS::Utils::Vector2f, Component::Jump, Component::Weight>(ECS::System::jump);
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveGround);
     world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::killOnTouch);
-//    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::killOnPipe);
+    //    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::killOnPipe);
     world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::displayScore);
 
     // Game loop

@@ -2,15 +2,14 @@
 // Created by beafowl on 27/10/23.
 //
 
-#include "System.hpp"
-#include "SFMLDisplayClass.hpp"
-#include "World.hpp"
 #include "EwECS/SFMLDisplayClass/TextComponent.hpp"
+#include "SFMLDisplayClass.hpp"
+#include "System.hpp"
 #include "Values.hpp"
+#include "World.hpp"
 
 namespace ECS {
-    void System::displayScore(Core::SparseArray <Utils::Vector2f> &aPos,
-                              Core::SparseArray <Component::TypeEntity> &aType)
+    void System::displayScore(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::TypeEntity> &aType)
     {
         auto &world = Core::World::getInstance();
         auto &type = world.getComponent<Component::TypeEntity>();
@@ -18,8 +17,8 @@ namespace ECS {
 
         // Setup score entity
         size_t scoreId = world.createEntity();
-        type.insertAt(scoreId, Component::TypeEntity{EntityType::TEXT});
-        text.insertAt(scoreId, Component::TextComponent{});
+        type.insertAt(scoreId, Component::TypeEntity {EntityType::TEXT});
+        text.insertAt(scoreId, Component::TextComponent {});
 
         ConfigReader &configReader = ConfigReader::getInstance();
         auto &conf = configReader.loadConfig(CONFIG_PATH);
@@ -37,4 +36,4 @@ namespace ECS {
         text[scoreId]->text.setPosition(width / 2, 20);
         text[scoreId]->text.setString(std::to_string(score));
     }
-}
+} // namespace ECS

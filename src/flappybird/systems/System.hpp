@@ -50,7 +50,7 @@ namespace ECS {
              * @param aType SparseArray of all the entities type
              */
             static void displayPipes(Core::SparseArray<Utils::Vector2f> &aPos,
-                                    Core::SparseArray<Component::TypeEntity> &aType);
+                                     Core::SparseArray<Component::TypeEntity> &aType);
 
             /**
              * @brief Kill the bird if it touch a pipe
@@ -59,7 +59,7 @@ namespace ECS {
              * @param aType SparseArray of all the entities type
              */
             static void killOnPipe(Core::SparseArray<Utils::Vector2f> &aPos,
-                                    Core::SparseArray<Component::TypeEntity> &aType);
+                                   Core::SparseArray<Component::TypeEntity> &aType);
 
             /**
              * @brief Display the score
@@ -68,7 +68,7 @@ namespace ECS {
              * @param aType SparseArray of all the entities type
              */
             static void displayScore(Core::SparseArray<Utils::Vector2f> &aPos,
-                                    Core::SparseArray<Component::TypeEntity> &aType);
+                                     Core::SparseArray<Component::TypeEntity> &aType);
     };
 } // namespace ECS
 #endif /* !SYSTEM_HPP_ */

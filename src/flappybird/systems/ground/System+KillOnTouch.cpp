@@ -2,17 +2,16 @@
 // Created by beafowl on 27/10/23.
 //
 
+#include "EwECS/ConfigReader/ConfigReader.hpp"
 #include "EwECS/SFMLDisplayClass/RenderPlugin.hpp"
 #include "SparseArray.hpp"
 #include "System.hpp"
+#include "Values.hpp"
 #include "components/Speed.hpp"
 #include "components/TypeEntity.hpp"
-#include "EwECS/ConfigReader/ConfigReader.hpp"
-#include "Values.hpp"
 
 namespace ECS {
-    void System::killOnTouch(Core::SparseArray<Utils::Vector2f> &aPos,
-                             Core::SparseArray<Component::TypeEntity> &aType)
+    void System::killOnTouch(Core::SparseArray<Utils::Vector2f> &aPos, Core::SparseArray<Component::TypeEntity> &aType)
     {
         ConfigReader &configReader = ConfigReader::getInstance();
         auto &conf = configReader.loadConfig(CONFIG_PATH);
@@ -37,4 +36,4 @@ namespace ECS {
             }
         }
     }
-}
+} // namespace ECS
