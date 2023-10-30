@@ -19,7 +19,7 @@ int main(int ac, char **av)
     // Load config
     ConfigReader &configReader = ConfigReader::getInstance();
     auto &conf = configReader.loadConfig(CONFIG_PATH);
-    auto &backgroundConf = conf["entities"]["background"];
+    auto &scoreConf = conf["entities"]["score"];
     auto &ground1Conf = conf["entities"]["ground_1"];
     auto &ground2Conf = conf["entities"]["ground_2"];
     auto &birdConf = conf["entities"]["bird"];
@@ -33,6 +33,7 @@ int main(int ac, char **av)
     auto &speed = world.registerComponent<Component::Speed>();
     auto &type = world.registerComponent<Component::TypeEntity>();
     auto &jump = world.registerComponent<Component::Jump>();
+    auto &score = world.registerComponent<Component::Score>();
 
     auto &renderConf = ECS::Render::RenderPluginConfig::getInstance();
     auto &physicConf = ECS::Physic::PhysicPluginConfig::getInstance();
@@ -47,12 +48,20 @@ int main(int ac, char **av)
     auto &sprite = world.getComponent<Component::LoadedSprite>();
     auto &weight = world.getComponent<Component::Weight>();
     auto &hitbox = world.getComponent<Component::HitBox>();
+    auto &text = world.getComponent<Component::TextComponent>();
 
     // Setup background
     size_t backgroundId = world.createEntity();
     vec.insertAt(backgroundId, ECS::Utils::Vector2f {0, 0});
     type.insertAt(backgroundId, Component::TypeEntity {EntityType::BACKGROUND});
     sprite.insertAt(backgroundId, Component::LoadedSprite {"config/flappybird/sprites/background.json"});
+
+    // Setup score entity
+    size_t scoreId = world.createEntity();
+    vec.insertAt(scoreId, ECS::Utils::Vector2f {scoreConf["position"]["x"], scoreConf["position"]["y"]});
+    type.insertAt(scoreId, Component::TypeEntity {EntityType::TEXT});
+    score.insertAt(scoreId, Component::Score {0});
+    text.insertAt(scoreId, Component::TextComponent("0", Component::TextColor::WHITE, scoreConf["size"]));
 
     // Setup pipes
     size_t pipe1Id = world.createEntity();
@@ -61,6 +70,7 @@ int main(int ac, char **av)
     type.insertAt(pipe1Id, Component::TypeEntity {EntityType::PIPE});
     sprite.insertAt(pipe1Id, Component::LoadedSprite {"config/flappybird/sprites/pipe.json"});
     hitbox.insertAt(pipe1Id, Component::HitBox {pipe1Conf["hitbox"]["width"], pipe1Conf["hitbox"]["height"]});
+    score.insertAt(pipe1Id, Component::Score {0});
 
     // Setup ground entities
     size_t ground1Id = world.createEntity();
@@ -91,7 +101,7 @@ int main(int ac, char **av)
     world.addSystem<ECS::Utils::Vector2f, Component::Jump, Component::Weight>(ECS::System::jump);
     world.addSystem(ECS::System::moveGround);
     world.addSystem(ECS::System::killBird);
-    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::displayScore);
+    world.addSystem(ECS::System::updateScore);
 
     // Game loop
     ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();

@@ -17,36 +17,24 @@ namespace ECS {
         ECS::Core::World &world = ECS::Core::World::getInstance();
         auto &hitbox = world.getComponent<Component::HitBox>();
         auto &type = world.getComponent<Component::TypeEntity>();
+        size_t typeSize = type.size();
 
-        for (size_t birdId = 0; birdId < type.size(); birdId++) {
+        for (size_t birdId = 0; birdId < typeSize; birdId++) {
             if (!type[birdId].has_value() || type[birdId].value().type != EntityType::BIRD
                 || !hitbox[birdId].has_value() || !hitbox[birdId].value().isColliding) {
                 continue;
             }
-            auto &colliderId = hitbox[birdId].value().collidingId;
-            if (!type[colliderId].has_value()) {
-                continue;
+            auto &colliders = hitbox[birdId].value().collidingId;
+            for (auto &collider : colliders) {
+                if (!type[collider].has_value()) {
+                    continue;
+                }
+                auto &colliderType = type[collider].value().type;
+                if (colliderType != EntityType::GROUND && colliderType != EntityType::PIPE) {
+                    continue;
+                }
+                world.killEntity(birdId);
             }
-            auto &colliderType = type[colliderId].value().type;
-            if (colliderType != EntityType::GROUND && colliderType != EntityType::PIPE) {
-                continue;
-            }
-            world.killEntity(birdId);
-            // if (!aPos[i].has_value() || !aType[i].has_value() || aType[i].value().type != EntityType::BIRD) {
-            //     continue;
-            // }
-            // auto &pos = aPos[i].value();
-
-            // if (pos.y >= (ground1Conf["position"]["y"]) || pos.y >= ground2Conf["position"]["y"] || pos.y <= 0) {
-            //     aType[i].value().type = EntityType::DEAD;
-            // }
-
-            // if (aType[i].value().type == EntityType::DEAD) {
-            //     auto &speed = Core::World::getInstance().getComponent<Component::Speed>();
-            //     auto &world = Core::World::getInstance();
-            //     speed[i]->speed = 0;
-            //     world.killEntity(i);
-            // }
         }
     }
 } // namespace ECS

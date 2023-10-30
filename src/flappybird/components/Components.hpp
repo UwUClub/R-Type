@@ -4,6 +4,7 @@
 #include "EwECS/Physic/Weight.hpp"
 #include "EwECS/SFMLDisplayClass/LoadedSprite.hpp"
 #include "Jump.hpp"
+#include "Score.hpp"
 #include "Speed.hpp"
 #include "TypeEntity.hpp"
 

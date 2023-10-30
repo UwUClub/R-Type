@@ -10,15 +10,18 @@
         "initial_fall_velocity": 2
     },
     "entities": {
-        "background": {
-            "type": 0
+        "score": {
+            "size": 50,
+            "position": {
+                "x": 144,
+                "y": 50
+            }
         },
         "ground_1": {
             "speed": 100,
             "position": {
                 "y": 400
             },
-            "type": 1,
             "hitbox": {
                 "width": 336,
                 "height": 112
@@ -30,7 +33,6 @@
                 "x": 288,
                 "y": 400
             },
-            "type": 1,
             "hitbox": {
                 "width": 336,
                 "height": 112
@@ -42,7 +44,6 @@
                 "x": 450,
                 "y": 192
             },
-            "type": 2,
             "hitbox": {
                 "width": 52,
                 "height": 320
@@ -53,21 +54,19 @@
             "position": {
                 "x": 288,
                 "y": 0
-            },
-            "type": 2
+            }
         },
         "bird": {
             "position": {
                 "x": 127,
                 "y": 10
             },
-            "weight": 100,
+            "weight": 80,
             "jump": {
-                "height": 180,
-                "strength": 4,
-                "floating": 65
+                "height": 100,
+                "strength": 5,
+                "floating": 50
             },
-            "type": 3,
             "hitbox": {
                 "width": 34,
                 "height": 24
