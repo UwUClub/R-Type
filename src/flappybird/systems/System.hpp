@@ -35,13 +35,10 @@ namespace ECS {
                                    Core::SparseArray<Component::TypeEntity> &aType);
 
             /**
-             * @brief Kill the bird if it touch the ground
+             * @brief Kill the bird if it touches the ground or a pipe
              *
-             * @param aPos SparseArray of all the entities position
-             * @param aType SparseArray of all the entities type
              */
-            static void killOnTouch(Core::SparseArray<Utils::Vector2f> &aPos,
-                                    Core::SparseArray<Component::TypeEntity> &aType);
+            static void killBird();
 
             /**
              * @brief Display the pipes

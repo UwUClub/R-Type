@@ -18,7 +18,11 @@
             "position": {
                 "y": 400
             },
-            "type": 1
+            "type": 1,
+            "hitbox": {
+                "width": 336,
+                "height": 112
+            }
         },
         "ground_2": {
             "speed": 100,
@@ -26,7 +30,11 @@
                 "x": 288,
                 "y": 400
             },
-            "type": 1
+            "type": 1,
+            "hitbox": {
+                "width": 336,
+                "height": 112
+            }
         },
         "pipe_1": {
             "speed": 100,
@@ -55,7 +63,11 @@
                 "strength": 4,
                 "floating": 65
             },
-            "type": 3
+            "type": 3,
+            "hitbox": {
+                "width": 34,
+                "height": 24
+            }
         }
     }
 }

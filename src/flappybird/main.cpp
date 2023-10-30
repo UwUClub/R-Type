@@ -45,45 +45,49 @@ int main(int ac, char **av)
 
     auto &sprite = world.getComponent<Component::LoadedSprite>();
     auto &weight = world.getComponent<Component::Weight>();
+    auto &hitbox = world.getComponent<Component::HitBox>();
 
     // Setup background
     size_t backgroundId = world.createEntity();
     vec.insertAt(backgroundId, ECS::Utils::Vector2f {0, 0});
     type.insertAt(backgroundId, Component::TypeEntity {EntityType::BACKGROUND});
-    sprite.insertAt(backgroundId, Component::LoadedSprite {"config/flappybird/background.json"});
+    sprite.insertAt(backgroundId, Component::LoadedSprite {"config/flappybird/sprites/background.json"});
 
     // Setup ground entities
     size_t ground1Id = world.createEntity();
     vec.insertAt(ground1Id, ECS::Utils::Vector2f {0, ground1Conf["position"]["y"]});
     speed.insertAt(ground1Id, Component::Speed {ground1Conf["speed"]});
     type.insertAt(ground1Id, Component::TypeEntity {EntityType::GROUND});
-    sprite.insertAt(ground1Id, Component::LoadedSprite {"config/flappybird/ground.json"});
+    sprite.insertAt(ground1Id, Component::LoadedSprite {"config/flappybird/sprites/ground.json"});
+    hitbox.insertAt(ground1Id, Component::HitBox {ground1Conf["hitbox"]["width"], ground1Conf["hitbox"]["height"]});
 
     size_t ground2Id = world.createEntity();
     vec.insertAt(ground2Id, ECS::Utils::Vector2f {ground2Conf["position"]["x"], ground2Conf["position"]["y"]});
     speed.insertAt(ground2Id, Component::Speed {ground2Conf["speed"]});
     type.insertAt(ground2Id, Component::TypeEntity {EntityType::GROUND});
-    sprite.insertAt(ground2Id, Component::LoadedSprite {"config/flappybird/ground.json"});
+    sprite.insertAt(ground2Id, Component::LoadedSprite {"config/flappybird/sprites/ground.json"});
+    hitbox.insertAt(ground2Id, Component::HitBox {ground2Conf["hitbox"]["width"], ground2Conf["hitbox"]["height"]});
 
     // Setup player entity
     size_t birdId = world.createEntity();
     vec.insertAt(birdId, ECS::Utils::Vector2f {birdConf["position"]["x"], birdConf["position"]["y"]});
     type.insertAt(birdId, Component::TypeEntity {EntityType::BIRD});
-    sprite.insertAt(birdId, Component::LoadedSprite {"config/flappybird/bird.json"});
+    sprite.insertAt(birdId, Component::LoadedSprite {"config/flappybird/sprites/bird.json"});
     weight.insertAt(birdId, Component::Weight(birdConf["weight"], physicConf._initialJumpVelocity));
     jump.insertAt(birdId, Component::Jump(birdConf["jump"]["strength"], birdConf["jump"]["height"],
                                           birdConf["jump"]["floating"]));
+    hitbox.insertAt(birdId, Component::HitBox {birdConf["hitbox"]["width"], birdConf["hitbox"]["height"]});
 
     // Setup pipes
     size_t pipeId = world.createEntity();
     type.insertAt(pipeId, Component::TypeEntity {EntityType::PIPE});
-    sprite.insertAt(pipeId, Component::LoadedSprite {"config/flappybird/pipe.json"});
+    sprite.insertAt(pipeId, Component::LoadedSprite {"config/flappybird/sprites/pipe.json"});
     vec.insertAt(pipeId, ECS::Utils::Vector2f {0, 0});
 
     // Load systems
     world.addSystem<ECS::Utils::Vector2f, Component::Jump, Component::Weight>(ECS::System::jump);
     world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveGround);
-    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::killOnTouch);
+    world.addSystem(ECS::System::killBird);
     //    world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::killOnPipe);
     world.addSystem<ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::displayScore);
 
