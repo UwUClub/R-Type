@@ -59,6 +59,7 @@ namespace ECS {
             auto &pos = aPos[i].value();
             auto &speed = aSpeed[i].value().speed;
             RType::Client::MovePayload payload {0, 0};
+
             for (auto &event : keyboardEvent) {
                 if (keyMap.find(event._keyId) == keyMap.end() || !aIsAlive[i].has_value() || !aPos[i].has_value()
                     || !aSpeed[i].has_value() || !aIsAlive[i].value().isAlive) {

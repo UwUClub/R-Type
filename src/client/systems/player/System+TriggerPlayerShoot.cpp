@@ -25,7 +25,7 @@ namespace ECS {
                 continue;
             }
             for (auto &event : keyboardEvent) {
-                if (event._keyId == Event::KeyIdentifier::SPACE) {
+                if (event._keyId == Event::KeyIdentifier::SPACE && event._state == Event::KeyState::PRESSED) {
                     int playerOnlineId = aType[i].value().onlineId.value_or(-1);
 
                     if (playerOnlineId == -1) {
