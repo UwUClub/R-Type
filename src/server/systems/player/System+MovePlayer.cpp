@@ -59,10 +59,7 @@ namespace ECS {
             float speed = aSpeed[entityId].value().speed;
             auto &pos = aPos[entityId].value();
 
-            auto delta = 10.F;
-
-            std::cout << "Move player x " << payload.moveX * speed / delta << std::endl;
-            std::cout << "Move player y " << payload.moveY * speed / delta << std::endl;
+            auto delta = 5.F;
 
             pos.x += payload.moveX * speed / delta;
             pos.y -= payload.moveY * speed / delta;
