@@ -40,17 +40,19 @@ namespace ECS {
                 continue;
             }
 
-            auto &collider = hitBoxPlayer.collidingId;
+            auto &colliders = hitBoxPlayer.collidingId;
 
-            if (!aType[collider].has_value() || !aType[collider].value().isBonus) {
-                continue;
+            for (auto &collider : colliders) {
+                if (!aType[collider].has_value() || !aType[collider].value().isBonus) {
+                    continue;
+                }
+
+                aSpeed[playerId].value().speed *= BONUS_GAIN_FACTOR;
+
+                RType::Server::PlayerGotBonusPayload payload(playerId, collider);
+                server.broadcast(RType::ClientEventType::PLAYER_BONUS, payload, aConnection);
+                world.killEntity(collider);
             }
-
-            aSpeed[playerId].value().speed *= BONUS_GAIN_FACTOR;
-
-            RType::Server::PlayerGotBonusPayload payload(playerId, collider);
-            server.broadcast(RType::ClientEventType::PLAYER_BONUS, payload, aConnection);
-            world.killEntity(collider);
         }
     }
 } // namespace ECS
