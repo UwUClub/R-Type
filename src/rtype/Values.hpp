@@ -9,13 +9,6 @@
 #define VALUES_HPP_
 #include <string>
 
-//------------------ NETWORK ------------------//
-const constexpr unsigned short READ_BUFFER_SIZE = 1024;
-const constexpr float PACKET_TIMEOUT = 2.0F; // in seconds
-const constexpr int AKNOWLEDGMENT_PACKET_TYPE = -1;
-const constexpr int ERROR_PACKET_TYPE = -2;
-const constexpr int UUID_LENGTH = 36;
-
 // ------------------ DISPLAY ------------------ //
 const constexpr int SCREEN_WIDTH = 1920;
 const constexpr int SCREEN_HEIGHT = 1080;
@@ -65,10 +58,11 @@ const constexpr int FAILURE = 84;
 
 //------------------ BONUS ------------------//
 static const std::string BONUS_ASSET = "assets/sprites/powerup.png";
-const constexpr float BONUS_SPEED = 800;
+const constexpr float BONUS_SPEED = 200;
 const constexpr int BONUS_TEX_WIDTH = 250;
 const constexpr int BONUS_TEX_HEIGHT = 280;
 const constexpr float BONUS_SCALE = 0.1;
+const constexpr float BONUS_GAIN_FACTOR = 1.5;
 
 // ------------------ LOADING MESSAGE ------------------ //
 static const std::string LOADING_MESSAGE_ASSET = "assets/sprites/loading-message.png";
@@ -79,5 +73,8 @@ const constexpr int LOADING_MESSAGE_TEX_HEIGHT = 400;
 static const std::string SERVER_FULL_MESSAGE = "assets/sprites/server-full-message.png";
 const constexpr int SERVER_FULL_MESSAGE_TEX_WIDTH = 556;
 const constexpr int SERVER_FULL_MESSAGE_TEX_HEIGHT = 95;
+
+// ------------------ CRASH DETECTION ------------------ //
+const constexpr float PACKET_TIMEOUT = 5;
 
 #endif /* !VALUES_HPP_ */

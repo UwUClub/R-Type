@@ -1,10 +1,13 @@
+#include <iostream>
 #include "AddEntity.hpp"
 #include "ClientGameEvent.hpp"
 #include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Logger.hpp"
 #include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "EwECS/World.hpp"
 #include "IsAlive.hpp"
 #include "SFML/Graphics/Rect.hpp"
+#include "ServerPackets.hpp"
 #include "System.hpp"
 #include "TypeUtils.hpp"
 #include "Values.hpp"
@@ -29,21 +32,28 @@ namespace ECS {
                 continue;
             }
 
-            const auto &payload = gameEvent.getPayload();
+            const auto &payload = gameEvent.getPayload<RType::Server::EnemyDiedPayload>();
 
-            if (payload.size() != 1) {
-                toRemove.push_back(i);
-                continue;
-            }
-
-            auto onlineEnemyId = static_cast<size_t>(payload[0]);
-            size_t localEnemyId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(aType, onlineEnemyId);
+            const auto localEnemyId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(aType, payload.enemyId);
 
             if (!aIsAlive[localEnemyId].has_value()) {
                 toRemove.push_back(i);
                 continue;
             }
             aIsAlive[localEnemyId].value().isAlive = false;
+
+            if (aPos[localEnemyId].has_value()) {
+                try {
+                    AddEntity::addEntity(
+                        ECS::Utils::Vector2f {aPos[localEnemyId].value().x, aPos[localEnemyId].value().y},
+                        Component::Speed {BONUS_SPEED},
+                        Component::TypeEntity {false, false, false, false, false, true, false, payload.bonusId, false},
+                        Component::LoadedSprite {"config/bonus.json"},
+                        Component::HitBox {BONUS_TEX_WIDTH, BONUS_TEX_HEIGHT}, Component::IsAlive {false, 0});
+                } catch (const std::exception &e) {
+                    ECS::Logger::error("[RType client exception] " + std::string(e.what()));
+                }
+            }
             toRemove.push_back(i);
         }
         eventManager->removeEvent<RType::ClientGameEvent>(toRemove);
@@ -73,14 +83,7 @@ namespace ECS {
                     sprite.rectTime[i] = 0.2;
                 }
                 isAlive.timeToDie = 1;
-                if (rand() % 5 == 0) {
-                    AddEntity::addEntity(ECS::Utils::Vector2f {aPos[enemy].value().x, aPos[enemy].value().y},
-                                         Component::Speed {BONUS_SPEED},
-                                         Component::TypeEntity {false, false, false, false, false, true, false},
-                                         Component::LoadedSprite {"config/bonus.json"},
-                                         Component::HitBox {BONUS_TEX_WIDTH, BONUS_TEX_HEIGHT},
-                                         Component::IsAlive {false, 0});
-                }
+
             } else if (!isAlive.isAlive) {
                 isAlive.timeToDie -= world.getDeltaTime();
             }

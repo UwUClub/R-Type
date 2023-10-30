@@ -2,8 +2,10 @@
 #include "AddEntity.hpp"
 #include "ClientGameEvent.hpp"
 #include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Logger.hpp"
 #include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "EwECS/World.hpp"
+#include "ServerPackets.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 
@@ -18,18 +20,22 @@ namespace ECS {
             if (gameEvent.getType() != RType::ClientEventType::PLAYER_SPAWN) {
                 continue;
             }
-            bool isLocalPlayer = gameEvent.getPayload()[1] == 1;
+            const auto &payload = gameEvent.getPayload<RType::Server::PlayerJoinedPayload>();
 
-            if (isLocalPlayer) {
+            if (payload.isReceiver) {
                 world.killEntity(0);
-                AddEntity::addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {BACKGROUND_SPEED},
-                                     Component::TypeEntity {false, false, false, false, false, false, true},
-                                     Component::LoadedSprite {"config/background.json"}, Component::HitBox {},
-                                     Component::IsAlive {false, 0});
-                AddEntity::addEntity(ECS::Utils::Vector2f {SCREEN_WIDTH, 0}, Component::Speed {BACKGROUND_SPEED},
-                                     Component::TypeEntity {false, false, false, false, false, false, true},
-                                     Component::LoadedSprite {"config/background2.json"}, Component::HitBox {},
-                                     Component::IsAlive {false, 0});
+                try {
+                    AddEntity::addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {BACKGROUND_SPEED},
+                                         Component::TypeEntity {false, false, false, false, false, false, true},
+                                         Component::LoadedSprite {"config/background.json"}, Component::HitBox {},
+                                         Component::IsAlive {false, 0});
+                    AddEntity::addEntity(ECS::Utils::Vector2f {SCREEN_WIDTH, 0}, Component::Speed {BACKGROUND_SPEED},
+                                         Component::TypeEntity {false, false, false, false, false, false, true},
+                                         Component::LoadedSprite {"config/background2.json"}, Component::HitBox {},
+                                         Component::IsAlive {false, 0});
+                } catch (const std::exception &e) {
+                    ECS::Logger::error("[RType client exception] " + std::string(e.what()));
+                }
             }
         }
     }

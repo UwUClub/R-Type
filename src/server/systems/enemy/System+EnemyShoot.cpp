@@ -1,9 +1,10 @@
 #include <iostream>
 #include "ClientGameEvent.hpp"
+#include "EwECS/Network/ServerHandler.hpp"
 #include "EwECS/SparseArray.hpp"
 #include "EwECS/World.hpp"
 #include "IsAlive.hpp"
-#include "ServerHandler.hpp"
+#include "ServerPackets.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 
@@ -14,7 +15,7 @@ namespace ECS {
                             Core::SparseArray<Component::IsAlive> &aIsAlive,
                             Core::SparseArray<Component::Connection> &aConnection)
     {
-        auto &server = Network::ServerHandler::getInstance();
+        auto &server = ECS::Network::ServerHandler::getInstance();
         auto &world = Core::World::getInstance();
         const auto size = aPos.size();
 
@@ -28,7 +29,7 @@ namespace ECS {
             auto &isAlive = aIsAlive[idx].value();
 
             if (type.isEnemy && rand() % PROBABILTY_SHOOT_ENEMY == 0 && isAlive.isAlive) {
-                size_t missileId = world.createEntity();
+                auto missileId = world.createEntity();
                 auto posX = pos.x - (MISSILES_TEX_WIDTH * 2);
                 auto posY = pos.y + ENEMY_TEX_HEIGHT / 2.0F - MISSILES_TEX_HEIGHT / 2.0F;
                 ECS::Utils::Vector2f entityPos(posX, posY);
@@ -40,9 +41,8 @@ namespace ECS {
                 aHitBox.insertAt(missileId, Component::HitBox {MISSILES_TEX_WIDTH, MISSILES_TEX_HEIGHT});
 
                 // Send packet
-                std::vector<float> payload = {static_cast<float>(missileId), posX, posY};
-
-                server.broadcast(static_cast<int>(RType::ClientEventType::ENEMY_SHOOT), payload, aConnection);
+                RType::Server::EnemyShotPayload payload(missileId, posX, posY);
+                server.broadcast(RType::ClientEventType::ENEMY_SHOOT, payload, aConnection);
             }
         }
     }

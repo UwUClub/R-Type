@@ -1,9 +1,12 @@
 #include <iostream>
 #include <vector>
+#include "ClientGameEvent.hpp"
+#include "ClientPackets.hpp"
 #include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Network/ServerHandler.hpp"
 #include "EwECS/SparseArray.hpp"
 #include "ServerGameEvent.hpp"
-#include "ServerHandler.hpp"
+#include "ServerPackets.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 #include <unordered_map>
@@ -13,8 +16,7 @@ namespace ECS {
                             Core::SparseArray<Component::Connection> &aConnection)
     {
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
-        Network::NetworkHandler &network = Network::NetworkHandler::getInstance();
-        Network::ServerHandler &server = Network::ServerHandler::getInstance();
+        ECS::Network::ServerHandler &server = ECS::Network::ServerHandler::getInstance();
         auto &events = eventManager->getEventsByType<RType::ServerGameEvent>();
         const auto size = events.size();
         std::vector<size_t> toRemove;
@@ -26,13 +28,7 @@ namespace ECS {
                 continue;
             }
 
-            const auto &payloadReceived = gameEvent.getPayload();
-            // Check payload size
-            if (payloadReceived.size() != 2) {
-                toRemove.push_back(i);
-                network.send(RType::Packet(ERROR_PACKET_TYPE), gameEvent.getClientEndpoint());
-                continue;
-            }
+            const auto &payload = gameEvent.getPayload<RType::Client::MovePayload>();
 
             // Get and check entity ID
             auto entityId = gameEvent.getEntityId();
@@ -40,32 +36,29 @@ namespace ECS {
             if (entityId < 0 || entityId >= aPos.size() || !aPos[entityId].has_value()
                 || !aSpeed[entityId].has_value()) {
                 toRemove.push_back(i);
-                network.send(RType::Packet(ERROR_PACKET_TYPE), gameEvent.getClientEndpoint());
+                server.sendError(entityId);
                 continue;
             }
 
             // Get and check move values
-            float moveX = payloadReceived[0];
-            float moveY = payloadReceived[1];
-
-            if (moveX < -1 || moveX > 1 || moveY < -1 || moveY > 1) {
+            if (payload.moveX < -1 || payload.moveX > 1 || payload.moveY < -1 || payload.moveY > 1) {
                 toRemove.push_back(i);
-                network.send(RType::Packet(ERROR_PACKET_TYPE), gameEvent.getClientEndpoint());
+                server.sendError(entityId);
                 continue;
             }
 
             // Move player
             if (!aSpeed[entityId].has_value() || !aPos[entityId].has_value()) {
                 toRemove.push_back(i);
-                network.send(RType::Packet(ERROR_PACKET_TYPE), gameEvent.getClientEndpoint());
+                server.sendError(entityId);
                 continue;
             }
 
             float speed = aSpeed[entityId].value().speed;
             auto &pos = aPos[entityId].value();
 
-            pos.x += moveX * speed;
-            pos.y -= moveY * speed;
+            pos.x += payload.moveX * speed;
+            pos.y -= payload.moveY * speed;
 
             if (pos.x < 0) {
                 pos.x = 0;
@@ -80,9 +73,9 @@ namespace ECS {
                 pos.y = SCREEN_HEIGHT;
             }
 
-            std::vector<float> payload = {static_cast<float>(entityId), pos.x, pos.y};
+            RType::Server::PlayerPositionPayload payloadToSend(entityId, pos.x, pos.y);
+            server.broadcast(RType::ClientEventType::PLAYER_POSITION, payloadToSend, aConnection);
 
-            server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_POSITION), payload, aConnection);
             toRemove.push_back(i);
         }
         eventManager->removeEvent<RType::ServerGameEvent>(toRemove);

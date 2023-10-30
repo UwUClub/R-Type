@@ -5,6 +5,7 @@
 #include "EwECS/Event/KeyboardEvent.hpp"
 #include "EwECS/Event/MouseEvent.hpp"
 #include "EwECS/Event/WindowEvent.hpp"
+#include "EwECS/Network/Connection.hpp"
 #include "EwECS/Physic/HitBox.hpp"
 #include "EwECS/SparseArray.hpp"
 #include "EwECS/Utils.hpp"
@@ -62,10 +63,25 @@ namespace ECS {
              * @brief Move the player speed up
              *
              * @param aSpeed Sparsearray of all entities speed
+             * @param aPos SparseArray of all entities position
+             * @param aType SparseArray of all entities type
+             */
+            static void moveBonus(Core::SparseArray<Component::Speed> &aSpeed, Core::SparseArray<Utils::Vector2f> &aPos,
+                                  Core::SparseArray<Component::TypeEntity> &aType);
+
+            /**
+             * @brief Trigger the bonus
+             *
+             * @param aType SparseArray of all entities type
+             * @param aIsAlive SparseArray of all entities isAlive
+             * @param aHitBox SparseArray of all entities hitbox
              * @param aConnection SparseArray of all entities connection
              */
-            static void moveSpeedUp(Core::SparseArray<Component::Speed> &aSpeed,
-                                    Core::SparseArray<Component::Connection> &aConnection);
+            static void triggerBonus(Core::SparseArray<Component::TypeEntity> &aType,
+                                     Core::SparseArray<Component::IsAlive> &aIsAlive,
+                                     Core::SparseArray<Component::HitBox> &aHitBox,
+                                     Core::SparseArray<Component::Connection> &aConnection,
+                                     Core::SparseArray<Component::Speed> &aSpeed);
 
             /**
              * @brief Handle players who get hit
@@ -176,9 +192,10 @@ namespace ECS {
              * @param aIsAlive SparseArray of all entities isAlive
              * @param aConnection SparseArray of all entities connection
              */
-            static void killEnemy(Core::SparseArray<Component::TypeEntity> &aType,
-                                  Core::SparseArray<Component::IsAlive> &aIsAlive,
-                                  Core::SparseArray<Component::Connection> &aConnection);
+            static void
+            killEnemy(Core::SparseArray<Component::TypeEntity> &aType, Core::SparseArray<Component::IsAlive> &aIsAlive,
+                      Core::SparseArray<Component::Connection> &aConnection, Core::SparseArray<Utils::Vector2f> &aPos,
+                      Core::SparseArray<Component::HitBox> &aHitBox, Core::SparseArray<Component::Speed> &aSpeed);
 
             /**
              * @brief Move missiles

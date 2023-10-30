@@ -1,11 +1,12 @@
 #include <iostream>
 #include <vector>
+#include "ClientGameEvent.hpp"
 #include "Components.hpp"
 #include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Network/ServerHandler.hpp"
 #include "EwECS/World.hpp"
-#include "Packets.hpp"
 #include "ServerGameEvent.hpp"
-#include "ServerHandler.hpp"
+#include "ServerPackets.hpp"
 #include "System.hpp"
 
 namespace ECS {
@@ -13,7 +14,7 @@ namespace ECS {
     {
         Core::World &world = Core::World::getInstance();
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
-        Network::ServerHandler &server = Network::ServerHandler::getInstance();
+        ECS::Network::ServerHandler &server = ECS::Network::ServerHandler::getInstance();
         auto &events = eventManager->getEventsByType<RType::ServerGameEvent>();
         const auto size = events.size();
         std::vector<size_t> toRemove;
@@ -25,17 +26,16 @@ namespace ECS {
                 continue;
             }
 
-            size_t playerId = gameEvent.getEntityId();
+            auto playerId = gameEvent.getEntityId();
 
             if (!aConnection[playerId].has_value()) {
                 continue;
             }
 
-            std::vector<float> payload = {static_cast<float>(playerId)};
-
-            server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_DISCONNECTION), payload, aConnection);
-            server.removeClient(playerId);
+            RType::Server::PlayerLeftPayload payload(playerId);
+            server.broadcast(RType::ClientEventType::PLAYER_DISCONNECTION, payload, aConnection);
             world.killEntity(playerId);
+            server.removeClient(playerId);
             toRemove.push_back(i);
         }
         eventManager->removeEvent<RType::ServerGameEvent>(toRemove);

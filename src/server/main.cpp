@@ -2,18 +2,22 @@
 #include "Components.hpp"
 #include "EwECS/Asset/AssetManager.hpp"
 #include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Logger.hpp"
+#include "EwECS/Network/ServerHandler.hpp"
 #include "EwECS/Physic/PhysicPlugin.hpp"
 #include "EwECS/Utils.hpp"
 #include "EwECS/World.hpp"
+#include "HitBox.hpp"
 #include "IsAlive.hpp"
-#include "NetworkHandler.hpp"
-#include "ServerHandler.hpp"
+#include "PacketFactory.hpp"
+#include "ServerGameEvent.hpp"
 #include "System.hpp"
+#include "Values.hpp"
 
 int main(int ac, char **av)
 {
     if (ac < 3) {
-        std::cerr << "Usage: " << av[0] << " <host> <port>" << std::endl;
+        ECS::Logger::error("Usage: " + std::string(av[0]) + " <host> <port>");
         return FAILURE;
     }
 
@@ -21,8 +25,23 @@ int main(int ac, char **av)
         // Network
         std::string host(av[1]);
         unsigned short port = static_cast<unsigned short>(std::stoi(av[2]));
-        Network::ServerHandler &server = Network::ServerHandler::getInstance();
-        server.start(host, port);
+        ECS::Network::ServerHandler &server = ECS::Network::ServerHandler::getInstance();
+        server.onReceive([&server](int8_t aPacketType, ECS::Network::IPayload *aPayload, unsigned short aEntityId) {
+            if (aPacketType >= RType::ServerEventType::MAX_SRV_EVT) {
+                server.sendError(aEntityId);
+                return;
+            }
+            if (aPacketType >= 0) {
+                auto eventType = static_cast<RType::ServerEventType>(aPacketType);
+
+                ECS::Event::EventManager::getInstance()->pushEvent<RType::ServerGameEvent>(
+                    RType::ServerGameEvent(eventType, aEntityId, aPayload));
+            } else if (aPacketType == AKNOWLEDGMENT_PACKET_TYPE) {
+                ECS::Event::EventManager::getInstance()->pushEvent<RType::ServerGameEvent>(
+                    RType::ServerGameEvent(RType::ServerEventType::AKNOWLEDGMENT, aEntityId, {}));
+            }
+        });
+        server.start(host, port, 4, RType::packetFactory);
 
         // Setup ECS
         ECS::Core::World &world = ECS::Core::World::getInstance();
@@ -48,8 +67,12 @@ int main(int ac, char **av)
                         Component::Connection>(ECS::System::playerShoot);
         world.addSystem<Component::TypeEntity, Component::IsAlive, Component::HitBox>(ECS::System::playerHit);
         world.addSystem<Component::TypeEntity, Component::IsAlive, Component::Connection>(ECS::System::killPlayer);
-        world.addSystem<Component::Speed, Component::Connection>(ECS::System::moveSpeedUp);
         world.addSystem<Component::Connection>(ECS::System::disconnectPlayer);
+
+        // Bonus systems
+        world.addSystem<Component::Speed, ECS::Utils::Vector2f, Component::TypeEntity>(ECS::System::moveBonus);
+        world.addSystem<Component::TypeEntity, Component::IsAlive, Component::HitBox, Component::Connection,
+                        Component::Speed>(ECS::System::triggerBonus);
 
         // Network systems
         world.addSystem<Component::Connection>(ECS::System::receiveAknowledgment);
@@ -63,7 +86,8 @@ int main(int ac, char **av)
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::HitBox,
                         Component::IsAlive, Component::Connection>(ECS::System::enemyShoot);
         world.addSystem<Component::TypeEntity, Component::HitBox, Component::IsAlive>(ECS::System::enemyHit);
-        world.addSystem<Component::TypeEntity, Component::IsAlive, Component::Connection>(ECS::System::killEnemy);
+        world.addSystem<Component::TypeEntity, Component::IsAlive, Component::Connection, ECS::Utils::Vector2f,
+                        Component::HitBox, Component::Speed>(ECS::System::killEnemy);
 
         // Missile systems
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveMissiles);
@@ -75,10 +99,10 @@ int main(int ac, char **av)
             world.calcDeltaTime();
         }
 
-        Network::NetworkHandler::getInstance().stop();
+        ECS::Network::ServerHandler::getInstance().stop();
     } catch (std::exception &e) {
-        Network::NetworkHandler::getInstance().stop();
-        std::cerr << "[RType server exception] " << e.what() << std::endl;
+        ECS::Network::ServerHandler::getInstance().stop();
+        ECS::Logger::error("[RType server exception] " + std::string(e.what()));
         return FAILURE;
     }
     return SUCCESS;

@@ -14,10 +14,6 @@ target_link_libraries(client
     Threads::Threads
     ecs
     rtype
-    ${Boost_LIBRARIES}
-    Boost::asio
-    Boost::thread
-    Boost::uuid
 )
 
 target_include_directories(client PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

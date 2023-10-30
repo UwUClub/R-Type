@@ -1,5 +1,7 @@
 #include <cstddef>
+#include <memory>
 #include <vector>
+#include "EwECS/Network/Packet.hpp"
 
 #ifndef CLIENTGAMEEVENT_HPP
     #define CLIENTGAMEEVENT_HPP
@@ -28,7 +30,7 @@ namespace RType {
     {
         private:
             ClientEventType _type;
-            std::vector<float> _payload;
+            std::shared_ptr<ECS::Network::IPayload> _payload;
 
         public:
             //-------------------CONSTRUCTORS / DESTRUCTOR-------------------//
@@ -48,7 +50,7 @@ namespace RType {
              * @param aType the type of the event
              * @param aPayload the payload of the event
              */
-            explicit ClientGameEvent(ClientEventType aType, const std::vector<float> &aPayload);
+            explicit ClientGameEvent(ClientEventType aType, ECS::Network::IPayload *aPayload);
 
             /**
              * @brief Get event type
@@ -57,10 +59,14 @@ namespace RType {
             [[nodiscard]] ClientEventType getType() const;
 
             /**
-             * @brief Get the payload of the event
-             * @return std::vector<float>
+             * @brief Get payload
+             * @return The payload
              */
-            [[nodiscard]] const std::vector<float> &getPayload() const;
+            template<typename Payload>
+            [[nodiscard]] const Payload &getPayload() const
+            {
+                return *reinterpret_cast<Payload *>(_payload.get());
+            }
     };
 } // namespace RType
 

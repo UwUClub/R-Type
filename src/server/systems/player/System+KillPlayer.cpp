@@ -1,6 +1,8 @@
 #include <iostream>
+#include "ClientGameEvent.hpp"
+#include "EwECS/Network/ServerHandler.hpp"
 #include "IsAlive.hpp"
-#include "ServerHandler.hpp"
+#include "ServerPackets.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 
@@ -10,7 +12,7 @@ namespace ECS {
                             Core::SparseArray<Component::Connection> &aConnection)
     {
         auto &world = Core::World::getInstance();
-        auto &server = Network::ServerHandler::getInstance();
+        auto &server = ECS::Network::ServerHandler::getInstance();
         const auto size = aType.size();
 
         for (size_t playerId = 0; playerId < size; playerId++) {
@@ -18,9 +20,9 @@ namespace ECS {
                 continue;
             }
             if (!aIsAlive[playerId].value().isAlive) {
-                std::vector<float> payload = {static_cast<float>(playerId)};
+                RType::Server::PlayerDiedPayload payload(playerId);
+                server.broadcast(RType::ClientEventType::PLAYER_DEATH, payload, aConnection);
 
-                server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_DEATH), payload, aConnection);
                 server.removeClient(playerId);
                 world.killEntity(playerId);
             }
