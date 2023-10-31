@@ -19,7 +19,7 @@ static void setupEntities()
     auto &ground1Conf = conf["entities"]["ground_1"];
     auto &ground2Conf = conf["entities"]["ground_2"];
     auto &birdConf = conf["entities"]["bird"];
-    auto &pipe1Conf = conf["entities"]["pipe_1"];
+    auto &pipesConf = conf["entities"]["pipes"];
     auto &physicConf = ECS::Physic::PhysicPluginConfig::getInstance();
 
     // Get components
@@ -47,13 +47,22 @@ static void setupEntities()
     text.insertAt(scoreId, Component::TextComponent("0", Component::TextColor::WHITE, scoreConf["size"]));
 
     // Setup pipes
-    size_t pipe1Id = world.createEntity();
-    vec.insertAt(pipe1Id, ECS::Utils::Vector2f {pipe1Conf["position"]["x"], pipe1Conf["position"]["y"]});
-    speed.insertAt(pipe1Id, Component::Speed {pipe1Conf["speed"]});
-    type.insertAt(pipe1Id, Component::TypeEntity {EntityType::PIPE});
-    sprite.insertAt(pipe1Id, Component::LoadedSprite {"config/flappybird/sprites/pipe.json"});
-    hitbox.insertAt(pipe1Id, Component::HitBox {pipe1Conf["hitbox"]["width"], pipe1Conf["hitbox"]["height"]});
-    score.insertAt(pipe1Id, Component::Score {0});
+    for (auto &pipe : pipesConf["items"]) {
+        size_t pipeId = world.createEntity();
+        std::string pipePath = "config/flappybird/sprites/pipe-" + pipe["orientation"].get<std::string>() + ".json";
+        float pipeScore = 2;
+
+        if (pipe["scored"]) {
+            pipeScore = 0;
+        }
+
+        vec.insertAt(pipeId, ECS::Utils::Vector2f {pipe["x"], pipe["y"]});
+        speed.insertAt(pipeId, Component::Speed {pipesConf["speed"]});
+        type.insertAt(pipeId, Component::TypeEntity {EntityType::PIPE});
+        sprite.insertAt(pipeId, Component::LoadedSprite {pipePath});
+        hitbox.insertAt(pipeId, Component::HitBox {pipesConf["hitbox"]["width"], pipesConf["hitbox"]["height"]});
+        score.insertAt(pipeId, Component::Score {pipeScore});
+    }
 
     // Setup ground entities
     size_t ground1Id = world.createEntity();
@@ -92,7 +101,7 @@ namespace ECS {
         size_t typeSize = type.size();
 
         // first setup
-        if (typeSize == 0 || !type[1].has_value()) {
+        if (typeSize < 1 || !type[1].has_value()) {
             setupEntities();
             return;
         }

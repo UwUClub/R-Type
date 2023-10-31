@@ -1,7 +1,3 @@
-//
-// Created by beafowl on 27/10/23.
-//
-
 #include "EwECS/SFMLDisplayClass/TextComponent.hpp"
 #include "SFMLDisplayClass.hpp"
 #include "System.hpp"
@@ -45,8 +41,9 @@ namespace ECS {
                 }
                 score[pipeId]->score = 1;
                 score[textId]->score += 1;
+                text[textId]->text = std::to_string(score[textId]->score);
+                return;
             }
-            text[textId]->text = std::to_string(score[textId]->score);
         }
     }
 } // namespace ECS
