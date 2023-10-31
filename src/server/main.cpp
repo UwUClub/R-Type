@@ -1,4 +1,5 @@
 #include <iostream>
+#include <thread>
 #include "Components.hpp"
 #include "EwECS/Asset/AssetManager.hpp"
 #include "EwECS/Event/EventManager.hpp"
@@ -97,6 +98,7 @@ int main(int ac, char **av)
             world.runSystems();
             eventManager->keepEventsAndClear<RType::ServerGameEvent>();
             world.calcDeltaTime();
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         }
 
         ECS::Network::ServerHandler::getInstance().stop();

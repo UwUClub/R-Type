@@ -19,7 +19,6 @@ namespace ECS {
     {
         ECS::Event::EventManager *eventManager = ECS::Event::EventManager::getInstance();
         ECS::Network::ServerHandler &server = ECS::Network::ServerHandler::getInstance();
-        Core::World &world = Core::World::getInstance();
         auto &events = eventManager->getEventsByType<RType::ServerGameEvent>();
         const auto size = events.size();
         std::vector<size_t> toRemove;
@@ -60,10 +59,10 @@ namespace ECS {
             float speed = aSpeed[entityId].value().speed;
             auto &pos = aPos[entityId].value();
 
-            auto deltaTime = world.getDeltaTime() * 10000;
+            auto delta = DELTA;
 
-            pos.x += payload.moveX * speed * deltaTime;
-            pos.y -= payload.moveY * speed * deltaTime;
+            pos.x += payload.moveX * speed / delta;
+            pos.y -= payload.moveY * speed / delta;
 
             if (pos.x < 0) {
                 pos.x = 0;

@@ -123,6 +123,7 @@ int main(int ac, char **av)
             world.runSystems();
             eventManager->keepEventsAndClear<RType::ClientGameEvent>();
             world.calcDeltaTime();
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         }
 
         // Quit server properly

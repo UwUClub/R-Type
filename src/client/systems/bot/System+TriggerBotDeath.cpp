@@ -60,6 +60,7 @@ namespace ECS {
             } else if (!isAlive.isAlive && isAlive.timeToDie == 0) {
                 sprite.path = EXPLOSION_ASSET;
                 sprite.texture = nullptr;
+                type.isBot = true;
                 type.isPlayer = false;
                 for (size_t i = 0; i < sprite.rect.size(); i++) {
                     sprite.rect[i].height = EXPLOSION_TEX_HEIGHT;
