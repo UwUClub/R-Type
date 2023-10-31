@@ -1,13 +1,27 @@
 {
-    "path": "assets/flappybird/sprites/bluebird-upflap.png",
+    "path": "assets/flappybird/sprites/bird.png",
     "scale": 1,
     "rects": {
         "frame1": {
             "top": 0,
             "left": 0,
-            "width":34,
+            "width": 34,
             "height": 24,
-            "time": 0
+            "time": 0.2
+        },
+        "frame2": {
+            "top": 0,
+            "left": 34,
+            "width": 34,
+            "height": 24,
+            "time": 0.2
+        },
+        "frame3": {
+            "top": 0,
+            "left": 68,
+            "width": 34,
+            "height": 24,
+            "time": 0.2
         }
     }
 }
