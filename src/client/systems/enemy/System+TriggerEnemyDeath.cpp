@@ -4,6 +4,7 @@
 #include "EwECS/Event/EventManager.hpp"
 #include "EwECS/Logger.hpp"
 #include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
+#include "EwECS/Sound/SoundComponent.hpp"
 #include "EwECS/World.hpp"
 #include "IsAlive.hpp"
 #include "SFML/Graphics/Rect.hpp"
@@ -11,7 +12,6 @@
 #include "System.hpp"
 #include "TypeUtils.hpp"
 #include "Values.hpp"
-#include "EwECS/Sound/SoundComponent.hpp"
 
 namespace ECS {
     void System::triggerEnemyDeath(Core::SparseArray<Component::TypeEntity> &aType,
