@@ -1,1 +1,0 @@
-put registerComponent of Component::Connection in ServerHandler.start()
