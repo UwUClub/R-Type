@@ -77,8 +77,4 @@ const constexpr int SERVER_FULL_MESSAGE_TEX_HEIGHT = 95;
 // ------------------ CRASH DETECTION ------------------ //
 const constexpr float PACKET_TIMEOUT = 5;
 
-// ------------------ SOUND ------------------ //
-static const std::string SOUND_ASSET = "assets/sounds/r-type.ogg";
-static constexpr int BASE_VOLUME = 100;
-
 #endif /* !VALUES_HPP_ */

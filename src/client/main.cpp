@@ -1,16 +1,15 @@
-#include <SFML/Graphics/Rect.hpp>
-#include <iostream>
 #include "AddEntity.hpp"
 #include "ClientGameEvent.hpp"
 #include "Components.hpp"
 #include "EwECS/Asset/AssetManager.hpp"
 #include "EwECS/Event/EventManager.hpp"
-#include "EwECS/EwECS.hpp"
 #include "EwECS/Logger.hpp"
 #include "EwECS/Network/ClientHandler.hpp"
 #include "EwECS/Network/Packet.hpp"
 #include "EwECS/Physic/PhysicPlugin.hpp"
 #include "EwECS/SFMLDisplayClass/RenderPlugin.hpp"
+#include "EwECS/Music/MusicPlugin.hpp"
+#include "EwECS/Sound/SoundPlugin.hpp"
 #include "EwECS/Utils.hpp"
 #include "EwECS/World.hpp"
 #include "IsAlive.hpp"
@@ -54,6 +53,8 @@ int main(int ac, char **av)
         ECS::Render::RenderPlugin renderPlugin;
         ECS::Asset::AssetManager &assetManager = ECS::Asset::AssetManager::getInstance();
         ECS::Physic::PhysicPlugin physicPlugin;
+        ECS::SoundPlugin soundPlugin;
+        ECS::MusicPlugin musicPlugin;
 
         // Graphic systems plug
 
@@ -61,21 +62,18 @@ int main(int ac, char **av)
         world.registerComponent<Component::Speed>();
         world.registerComponent<Component::TypeEntity>();
         world.registerComponent<Component::IsAlive>();
-        world.registerComponent<Component::SoundsComponents>();
-        world.registerComponent<Component::MusicComponents>();
 
         ECS::Physic::PhysicPluginConfig::getInstance().load("config/r-type.json");
         ECS::Render::RenderPluginConfig::getInstance().load("config/r-type.json");
         physicPlugin.plug(world, assetManager);
         renderPlugin.plug(world, assetManager);
+        soundPlugin.plug(world, assetManager);
+        musicPlugin.plug(world, assetManager);
+
 
         // Background systems
         world.addSystem(ECS::System::createBackground);
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBackground);
-
-        // Music systems
-        world.addSystem<Component::MusicComponents>(ECS::System::createMusic);
-        world.addSystem<Component::MusicComponents>(ECS::System::playMusic);
 
         // Player systems
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity, Component::IsAlive>(

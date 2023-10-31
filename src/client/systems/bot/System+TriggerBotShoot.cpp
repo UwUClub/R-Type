@@ -10,7 +10,7 @@
 #include "ServerPackets.hpp"
 #include "System.hpp"
 #include "Values.hpp"
-#include "EwECS/Sound/Sound.hpp"
+#include "EwECS/Sound/SoundComponent.hpp"
 
 namespace ECS {
     void System::triggerBotShoot()
@@ -19,6 +19,7 @@ namespace ECS {
         auto &events = eventManager->getEventsByType<RType::ClientGameEvent>();
         std::vector<size_t> toRemove;
         const auto size = events.size();
+        auto &world = Core::World::getInstance();
 
         for (size_t i = 0; i < size; i++) {
             auto &gameEvent = events[i];
@@ -30,14 +31,12 @@ namespace ECS {
             const auto &payload = gameEvent.getPayload<RType::Server::PlayerShotPayload>();
 
             try {
-                auto &world = Core::World::getInstance();
-                auto &sound = world.getComponent<Component::SoundsComponents>();
                 auto entity_id = AddEntity::addEntity(
                     ECS::Utils::Vector2f {payload.posX, payload.posY}, Component::Speed {BULLET_SPEED},
                     Component::TypeEntity {false, false, false, true, false, false, false, payload.bulletId, false},
                     Component::LoadedSprite {"config/missiles.json"},
                     Component::HitBox {BULLET_TEX_WIDTH, BULLET_TEX_HEIGHT}, Component::IsAlive {false, 0});
-                sound.insertAt(entity_id, Component::SoundsComponents {"assets/sounds/pew.mp3", false, 100, false});
+                world.emplaceEntityComponent<Component::SoundComponent>(entity_id, "assets/sounds/pew.mp3", 40, false);
             } catch (const std::exception &e) {
                 ECS::Logger::error("[RType client exception] " + std::string(e.what()));
             }

@@ -5,7 +5,6 @@ add_subdirectory(missile)
 add_subdirectory(bonus)
 add_subdirectory(background)
 add_subdirectory(graphic)
-add_subdirectory(music)
 
 target_sources(client PRIVATE
         System.hpp

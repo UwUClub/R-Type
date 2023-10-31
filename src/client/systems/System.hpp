@@ -12,7 +12,7 @@
 #include "EwECS/Event/WindowEvent.hpp"
 #include "EwECS/Physic/HitBox.hpp"
 #include "EwECS/SFMLDisplayClass/LoadedSprite.hpp"
-#include "EwECS/Sound/SoundsComponent.hpp"
+#include "EwECS/Sound/SoundComponent.hpp"
 #include "EwECS/Music/MusicComponent.hpp"
 #include "EwECS/SparseArray.hpp"
 #include "EwECS/Utils.hpp"
@@ -183,21 +183,6 @@ namespace ECS {
              * @brief Display error message in case server is full (triggered by server)
              */
             static void createServerFullErrorMessage();
-
-            /**
-             * @brief Add music to the game
-             *
-             * @param aMusic SparseArray of all entities music
-             * @param aType SparseArray of all entities type
-             */
-            static void createMusic(ECS::Core::SparseArray<Component::MusicComponents> &aMusic);
-
-            /**
-             * @brief Play music to the game
-             * @param aMusic SparseArray of all entities music
-             * @param aType SparseArray of all entities type
-             */
-            static void playMusic(ECS::Core::SparseArray<Component::MusicComponents> &aMusic);
 
         private:
             /**

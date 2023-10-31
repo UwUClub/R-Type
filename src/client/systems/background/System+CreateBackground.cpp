@@ -25,7 +25,7 @@ namespace ECS {
             if (payload.isReceiver) {
                 world.killEntity(0);
                 try {
-                    AddEntity::addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {BACKGROUND_SPEED},
+                    auto idx = AddEntity::addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {BACKGROUND_SPEED},
                                          Component::TypeEntity {false, false, false, false, false, false, true},
                                          Component::LoadedSprite {"config/background.json"}, Component::HitBox {},
                                          Component::IsAlive {false, 0});
@@ -33,6 +33,7 @@ namespace ECS {
                                          Component::TypeEntity {false, false, false, false, false, false, true},
                                          Component::LoadedSprite {"config/background2.json"}, Component::HitBox {},
                                          Component::IsAlive {false, 0});
+                    world.emplaceEntityComponent<Component::MusicComponent>(idx, "assets/sounds/rtype.mp3", 100, true);
                 } catch (const std::exception &e) {
                     ECS::Logger::error("[RType client exception] " + std::string(e.what()));
                 }
