@@ -59,7 +59,7 @@ namespace ECS {
             float speed = aSpeed[entityId].value().speed;
             auto &pos = aPos[entityId].value();
 
-            auto delta = 5.F;
+            auto delta = DELTA;
 
             pos.x += payload.moveX * speed / delta;
             pos.y -= payload.moveY * speed / delta;
