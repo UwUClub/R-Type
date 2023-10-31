@@ -50,11 +50,9 @@ int main(int ac, char **av)
         ECS::Asset::AssetManager &assetManager = ECS::Asset::AssetManager::getInstance();
 
         // Components
-        world.registerComponent<ECS::Utils::Vector2f>();
         world.registerComponent<Component::Speed>();
         world.registerComponent<Component::TypeEntity>();
         world.registerComponent<Component::IsAlive>();
-        world.registerComponent<Component::Connection>();
 
         ECS::Physic::PhysicPlugin physicPlugin;
 
