@@ -53,7 +53,6 @@ int main(int ac, char **av)
         world.registerComponent<Component::Speed>();
         world.registerComponent<Component::TypeEntity>();
         world.registerComponent<Component::IsAlive>();
-        world.registerComponent<Component::Connection>();
 
         ECS::Physic::PhysicPlugin physicPlugin;
 
