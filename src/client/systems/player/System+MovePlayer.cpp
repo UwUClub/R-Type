@@ -59,6 +59,7 @@ namespace ECS {
             auto &pos = aPos[i].value();
             auto &speed = aSpeed[i].value().speed;
             RType::Client::MovePayload payload {0, 0};
+
             for (auto &event : keyboardEvent) {
                 if (keyMap.find(event._keyId) == keyMap.end() || !aIsAlive[i].has_value() || !aPos[i].has_value()
                     || !aSpeed[i].has_value() || !aIsAlive[i].value().isAlive) {
@@ -68,7 +69,7 @@ namespace ECS {
                 payload = keyMap.at(event._keyId)(playerMoveState, event._state, speed);
             }
             if (playerMoveState.runningX) {
-                pos.x += speed * world.getDeltaTime() * 2000;
+                pos.x += speed;
                 if (playerMoveState.speedX < 0) {
                     payload.moveX = -1;
                 } else {
@@ -76,7 +77,8 @@ namespace ECS {
                 }
             }
             if (playerMoveState.runningY) {
-                pos.y += speed * world.getDeltaTime() * 2000;
+                pos.y += speed;
+
                 if (playerMoveState.speedY < 0) {
                     payload.moveY = 1;
                 } else {
