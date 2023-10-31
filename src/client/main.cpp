@@ -70,7 +70,6 @@ int main(int ac, char **av)
         soundPlugin.plug(world, assetManager);
         musicPlugin.plug(world, assetManager);
 
-
         // Background systems
         world.addSystem(ECS::System::createBackground);
         world.addSystem<ECS::Utils::Vector2f, Component::Speed, Component::TypeEntity>(ECS::System::moveBackground);

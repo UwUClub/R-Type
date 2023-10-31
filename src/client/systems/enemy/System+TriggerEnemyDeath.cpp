@@ -11,6 +11,7 @@
 #include "System.hpp"
 #include "TypeUtils.hpp"
 #include "Values.hpp"
+#include "EwECS/Sound/SoundComponent.hpp"
 
 namespace ECS {
     void System::triggerEnemyDeath(Core::SparseArray<Component::TypeEntity> &aType,
