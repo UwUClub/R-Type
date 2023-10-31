@@ -4,11 +4,11 @@
 #include "EwECS/Asset/AssetManager.hpp"
 #include "EwECS/Event/EventManager.hpp"
 #include "EwECS/Logger.hpp"
+#include "EwECS/Music/MusicPlugin.hpp"
 #include "EwECS/Network/ClientHandler.hpp"
 #include "EwECS/Network/Packet.hpp"
 #include "EwECS/Physic/PhysicPlugin.hpp"
 #include "EwECS/SFMLDisplayClass/RenderPlugin.hpp"
-#include "EwECS/Music/MusicPlugin.hpp"
 #include "EwECS/Sound/SoundPlugin.hpp"
 #include "EwECS/Utils.hpp"
 #include "EwECS/World.hpp"
@@ -69,7 +69,6 @@ int main(int ac, char **av)
         renderPlugin.plug(world, assetManager);
         soundPlugin.plug(world, assetManager);
         musicPlugin.plug(world, assetManager);
-
 
         // Background systems
         world.addSystem(ECS::System::createBackground);

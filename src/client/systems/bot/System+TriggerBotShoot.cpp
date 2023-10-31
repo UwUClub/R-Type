@@ -5,13 +5,13 @@
 #include "EwECS/Logger.hpp"
 #include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "EwECS/Sound/Sound.hpp"
+#include "EwECS/Sound/SoundComponent.hpp"
 #include "EwECS/SparseArray.hpp"
 #include "EwECS/World.hpp"
 #include "IsAlive.hpp"
 #include "ServerPackets.hpp"
 #include "System.hpp"
 #include "Values.hpp"
-#include "EwECS/Sound/SoundComponent.hpp"
 
 namespace ECS {
     void System::triggerBotShoot()

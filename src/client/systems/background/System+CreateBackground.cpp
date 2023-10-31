@@ -25,10 +25,11 @@ namespace ECS {
             if (payload.isReceiver) {
                 world.killEntity(0);
                 try {
-                    auto idx = AddEntity::addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {BACKGROUND_SPEED},
-                                         Component::TypeEntity {false, false, false, false, false, false, true},
-                                         Component::LoadedSprite {"config/background.json"}, Component::HitBox {},
-                                         Component::IsAlive {false, 0});
+                    auto idx =
+                        AddEntity::addEntity(ECS::Utils::Vector2f {0, 0}, Component::Speed {BACKGROUND_SPEED},
+                                             Component::TypeEntity {false, false, false, false, false, false, true},
+                                             Component::LoadedSprite {"config/background.json"}, Component::HitBox {},
+                                             Component::IsAlive {false, 0});
                     AddEntity::addEntity(ECS::Utils::Vector2f {SCREEN_WIDTH, 0}, Component::Speed {BACKGROUND_SPEED},
                                          Component::TypeEntity {false, false, false, false, false, false, true},
                                          Component::LoadedSprite {"config/background2.json"}, Component::HitBox {},

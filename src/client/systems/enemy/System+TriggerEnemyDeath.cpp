@@ -50,7 +50,8 @@ namespace ECS {
                         Component::TypeEntity {false, false, false, false, false, true, false, payload.bonusId, false},
                         Component::LoadedSprite {"config/bonus.json"},
                         Component::HitBox {BONUS_TEX_WIDTH, BONUS_TEX_HEIGHT}, Component::IsAlive {false, 0});
-                    world.emplaceEntityComponent<Component::SoundComponent>(idx, "assets/sounds/enemy_explosion.mp3", 20, false);
+                    world.emplaceEntityComponent<Component::SoundComponent>(idx, "assets/sounds/enemy_explosion.mp3",
+                                                                            20, false);
                 } catch (const std::exception &e) {
                     ECS::Logger::error("[RType client exception] " + std::string(e.what()));
                 }
