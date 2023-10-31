@@ -4,6 +4,7 @@
 #include "EwECS/Event/EventManager.hpp"
 #include "EwECS/Logger.hpp"
 #include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
+#include "EwECS/Sound/Sound.hpp"
 #include "EwECS/SparseArray.hpp"
 #include "EwECS/World.hpp"
 #include "IsAlive.hpp"
