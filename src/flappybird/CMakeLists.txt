@@ -9,7 +9,6 @@ add_subdirectory(systems)
 
 target_link_libraries(flappybird PRIVATE
         ecs
-        nlohmann_json
 )
 
 target_include_directories(flappybird PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

@@ -1,10 +1,3 @@
-/*
-** EPITECH PROJECT, 2023
-** R-Type
-** File description:
-** Values
-*/
-
 #ifndef VALUES_HPP_
 #define VALUES_HPP_
 #include <string>
