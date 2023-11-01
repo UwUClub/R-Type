@@ -17,8 +17,7 @@ enum EntityType
     GROUND = 1,
     PIPE = 2,
     BIRD = 3,
-    DEAD = 4,
-    TEXT = 5,
+    TEXT = 4,
     NONE = -1,
 };
 
