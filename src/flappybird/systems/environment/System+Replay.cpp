@@ -2,9 +2,11 @@
 #include "EwECS/Event/EventManager.hpp"
 #include "EwECS/Event/KeyboardEvent.hpp"
 #include "EwECS/Logger.hpp"
+#include "EwECS/Music/MusicComponent.hpp"
 #include "EwECS/Physic/PhysicPlugin.hpp"
 #include "EwECS/SFMLDisplayClass/RenderPlugin.hpp"
 #include "EwECS/SFMLDisplayClass/TextComponent.hpp"
+#include "EwECS/Sound/Sound.hpp"
 #include "SparseArray.hpp"
 #include "System.hpp"
 #include "Values.hpp"
@@ -22,6 +24,7 @@ namespace ECS {
             auto &ground2Conf = conf["entities"]["ground_2"];
             auto &birdConf = conf["entities"]["bird"];
             auto &pipesConf = conf["entities"]["pipes"];
+            auto &soundsConf = conf["sounds"];
             auto &physicConf = ECS::Physic::PhysicPluginConfig::getInstance();
 
             // Get components
@@ -94,6 +97,10 @@ namespace ECS {
             jump.insertAt(birdId, Component::Jump(birdConf["jump"]["strength"], birdConf["jump"]["height"],
                                                   birdConf["jump"]["floating"]));
             hitbox.insertAt(birdId, Component::HitBox {birdConf["hitbox"]["width"], birdConf["hitbox"]["height"]});
+
+            // Add music
+            world.emplaceEntityComponent<Component::MusicComponent>(
+                birdId, soundsConf["music"]["path"], soundsConf["music"]["volume"], soundsConf["music"]["loop"]);
         } catch (std::exception &e) {
             Logger::error("Failed to load config: " + std::string(e.what()));
         }
@@ -105,6 +112,7 @@ namespace ECS {
         auto &world = Core::World::getInstance();
         auto &events = eventManager->getEventsByType<Event::KeyboardEvent>();
         auto &type = world.getComponent<Component::TypeEntity>();
+        auto &sound = world.getComponent<Component::SoundComponent>();
 
         size_t typeSize = type.size();
 
@@ -128,6 +136,9 @@ namespace ECS {
             }
             // kill all entities
             for (size_t i = 0; i < typeSize; i++) {
+                if (sound[i].has_value()) {
+                    ECS::Sound::stop(sound[i].value());
+                }
                 world.killEntity(i);
             }
             return;

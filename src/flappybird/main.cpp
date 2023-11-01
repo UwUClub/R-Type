@@ -3,9 +3,11 @@
 #include "EwECS/Asset/AssetManager.hpp"
 #include "EwECS/ConfigReader/ConfigReader.hpp"
 #include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Music/MusicPlugin.hpp"
 #include "EwECS/Physic/PhysicPlugin.hpp"
 #include "EwECS/SFMLDisplayClass/RenderPlugin.hpp"
 #include "EwECS/SFMLDisplayClass/TextComponent.hpp"
+#include "EwECS/Sound/SoundPlugin.hpp"
 #include "EwECS/Utils.hpp"
 #include "EwECS/World.hpp"
 #include "System.hpp"
@@ -28,6 +30,8 @@ int main(int ac, char **av)
 
     auto &renderConf = ECS::Render::RenderPluginConfig::getInstance();
     auto &physicConf = ECS::Physic::PhysicPluginConfig::getInstance();
+    ECS::SoundPlugin soundPlugin;
+    ECS::MusicPlugin musicPlugin;
     renderConf.load(CONFIG_PATH);
     physicConf.load(CONFIG_PATH);
     ECS::Render::RenderPlugin renderPlugin;
@@ -35,6 +39,8 @@ int main(int ac, char **av)
 
     renderPlugin.plug(world, assetManager);
     physicPlugin.plug(world, assetManager);
+    soundPlugin.plug(world, assetManager);
+    musicPlugin.plug(world, assetManager);
 
     auto &sprite = world.getComponent<Component::LoadedSprite>();
     auto &weight = world.getComponent<Component::Weight>();

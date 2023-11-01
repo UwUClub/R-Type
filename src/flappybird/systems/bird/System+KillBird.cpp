@@ -1,9 +1,14 @@
 #include <exception>
 #include "EwECS/ConfigReader/ConfigReader.hpp"
 #include "EwECS/Logger.hpp"
+#include "EwECS/Music/Music.hpp"
+#include "EwECS/Music/MusicComponent.hpp"
+#include "EwECS/Music/MusicPlugin.hpp"
 #include "EwECS/Physic/PhysicPlugin.hpp"
 #include "EwECS/SFMLDisplayClass/RenderPlugin.hpp"
 #include "EwECS/SFMLDisplayClass/TextComponent.hpp"
+#include "EwECS/Sound/Sound.hpp"
+#include "EwECS/Sound/SoundComponent.hpp"
 #include "SparseArray.hpp"
 #include "System.hpp"
 #include "Utils.hpp"
@@ -21,11 +26,16 @@ namespace ECS {
             auto &type = world.getComponent<Component::TypeEntity>();
             auto &speed = world.getComponent<Component::Speed>();
             auto &text = world.getComponent<Component::TextComponent>();
+            auto &music = world.getComponent<Component::MusicComponent>();
 
             auto &replayMessageConf = ConfigReader::getInstance().get(CONFIG_PATH)["entities"]["replay_message"];
+            auto &soundsConf = ConfigReader::getInstance().get(CONFIG_PATH)["sounds"];
 
             size_t typeSize = type.size();
 
+            // Remove music
+            ECS::Music::stop(music[aBirdId].value());
+            world.removeEntityInComponent<Component::MusicComponent>(aBirdId);
             world.killEntity(aBirdId);
 
             // Stop moving entities
@@ -44,6 +54,11 @@ namespace ECS {
             text.insertAt(replayMessageId,
                           Component::TextComponent(replayMessageConf["text"], Component::TextColor::WHITE,
                                                    replayMessageConf["size"]));
+
+            // Add death sound
+            world.emplaceEntityComponent<Component::SoundComponent>(replayMessageId, soundsConf["death"]["path"],
+                                                                    soundsConf["death"]["volume"],
+                                                                    soundsConf["death"]["loop"]);
         } catch (std::exception &e) {
             Logger::error("Failed to load config: " + std::string(e.what()));
         }

@@ -2,7 +2,9 @@
 #include "EwECS/Event/EventManager.hpp"
 #include "EwECS/Event/KeyboardEvent.hpp"
 #include "EwECS/Logger.hpp"
+#include "EwECS/Sound/Sound.hpp"
 #include "EwECS/World.hpp"
+#include "SoundComponent.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 
@@ -13,6 +15,7 @@ namespace ECS {
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         auto &events = eventManager->getEventsByType<Event::KeyboardEvent>();
         auto &world = Core::World::getInstance();
+        auto &soundsConf = ConfigReader::getInstance().get(CONFIG_PATH)["sounds"];
 
         try {
             auto &birdConf = ConfigReader::getInstance().get(CONFIG_PATH)["entities"]["bird"];
@@ -41,6 +44,12 @@ namespace ECS {
 
                 for (auto &keyEvent : events) {
                     if (keyEvent._keyId == Event::KeyIdentifier::SPACE) {
+                        if (!jump.isJumping) {
+                            world.emplaceEntityComponent<Component::SoundComponent>(i, soundsConf["jump"]["path"],
+                                                                                    soundsConf["jump"]["volume"],
+                                                                                    soundsConf["jump"]["loop"]);
+                        }
+
                         jump.isJumping = true;
                         jump.initialAltitude = pos.y;
                     }

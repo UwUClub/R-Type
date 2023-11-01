@@ -9,6 +9,23 @@
         "gravity": 2,
         "initial_fall_velocity": 2
     },
+    "sounds": {
+        "music": {
+            "path": "assets/flappybird/sounds/song.mp3",
+            "volume": 30,
+            "loop": true
+        },
+        "jump": {
+            "path": "assets/flappybird/sounds/jump.ogg",
+            "volume": 100,
+            "loop": false
+        },
+        "death": {
+            "path": "assets/flappybird/sounds/sardoche.mp3",
+            "volume": 100,
+            "loop": false
+        }
+    },
     "entities": {
         "score": {
             "size": 50,
