@@ -9,6 +9,7 @@
 - [Create an Entity](#create-an-entity)
 - [Add a Component to an Entity](#add-a-component-to-an-entity)
 - [Kill an Entity](#kill-an-entity)
+- [Plugins](#Plugins)
 - [Conclusion](#conclusion)
 
 
@@ -244,6 +245,11 @@ int main(void)
     return 0;
 }
 ```
+## Plugins
+All the ECS is working with plug and play components like the sound, the graphic or the network.
+Here is how to use these plugins:
+- [Sound](./plugins/SoundPlugin.md)
+
 ## Conclusion
 This is just some example of how to use the ECS, you can use it as you want.
 Read the full documentation of the ECS on our [website](https://uwuclub.github.io/R-Type/).
