@@ -14,7 +14,6 @@ namespace ECS {
                                  Core::SparseArray<Component::LoadedSprite> &aSprites)
     {
         auto &world = Core::World::getInstance();
-        auto &display = SFMLDisplayClass::getInstance();
         Event::EventManager *eventManager = Event::EventManager::getInstance();
         auto &events = eventManager->getEventsByType<RType::ClientGameEvent>();
         std::vector<size_t> toRemove;

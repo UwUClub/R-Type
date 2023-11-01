@@ -10,6 +10,7 @@
 #include "Components.hpp"
 #include "EwECS/Event/KeyboardEvent.hpp"
 #include "EwECS/Event/WindowEvent.hpp"
+#include "EwECS/Music/MusicComponent.hpp"
 #include "EwECS/Physic/HitBox.hpp"
 #include "EwECS/SFMLDisplayClass/LoadedSprite.hpp"
 #include "EwECS/SparseArray.hpp"

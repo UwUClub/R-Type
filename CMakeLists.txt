@@ -63,6 +63,7 @@ if(MSVC)
 endif()
 
 file(COPY ${CMAKE_SOURCE_DIR}/assets DESTINATION ${CMAKE_BINARY_DIR}/bin)
+file(COPY ${CMAKE_SOURCE_DIR}/config DESTINATION ${CMAKE_BINARY_DIR}/bin)
 
 # set the startup project for the "play" button in MSVC
 set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT server)
@@ -94,5 +95,6 @@ else()
 endif()
 
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/assets" DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/config" DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 include(CPack)
