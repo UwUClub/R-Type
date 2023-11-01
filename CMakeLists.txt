@@ -71,7 +71,7 @@ set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT server)
 # Experience shows that explicit package naming can help make it easier to sort
 # out potential ABI related issues before they start, while helping you
 # track a build to a specific GIT SHA
-install(TARGETS server client
+install(TARGETS server client flappybird
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}

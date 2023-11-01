@@ -1,0 +1,159 @@
+{
+    "graphics": {
+        "name": "Flappy Bird",
+        "width": 288,
+        "height": 512,
+        "font": "assets/font.ttf"
+    },
+    "physics": {
+        "gravity": 2,
+        "initial_fall_velocity": 2
+    },
+    "sounds": {
+        "music": {
+            "path": "assets/flappybird/sounds/song.mp3",
+            "volume": 30,
+            "loop": true
+        },
+        "jump": {
+            "path": "assets/flappybird/sounds/jump.ogg",
+            "volume": 100,
+            "loop": false
+        },
+        "death": {
+            "path": "assets/flappybird/sounds/sardoche.mp3",
+            "volume": 100,
+            "loop": false
+        }
+    },
+    "entities": {
+        "score": {
+            "size": 50,
+            "position": {
+                "x": 131,
+                "y": 50
+            }
+        },
+        "ground_1": {
+            "speed": 100,
+            "position": {
+                "y": 400
+            },
+            "hitbox": {
+                "width": 336,
+                "height": 112
+            }
+        },
+        "ground_2": {
+            "speed": 100,
+            "position": {
+                "x": 288,
+                "y": 400
+            },
+            "hitbox": {
+                "width": 336,
+                "height": 112
+            }
+        },
+        "pipes": {
+            "loop_width": 2000,
+            "speed": 100,
+            "hitbox": {
+                "width": 52,
+                "height": 320
+            },
+            "items": [
+                {
+                    "x": 240,
+                    "y": 250,
+                    "orientation": "bottom",
+                    "scored": true
+                },
+                {
+                    "x": 240,
+                    "y": -250,
+                    "orientation": "top",
+                    "scored": false
+                },
+                {
+                    "x": 480,
+                    "y": 180,
+                    "orientation": "bottom",
+                    "scored": true
+                },
+                {
+                    "x": 480,
+                    "y": -280,
+                    "orientation": "top",
+                    "scored": false
+                },
+                {
+                    "x": 700,
+                    "y": 130,
+                    "orientation": "bottom",
+                    "scored": true
+                },
+                {
+                    "x": 890,
+                    "y": -100,
+                    "orientation": "top",
+                    "scored": true
+                },
+                {
+                    "x": 1100,
+                    "y": 130,
+                    "orientation": "bottom",
+                    "scored": true
+                },
+                {
+                    "x": 1300,
+                    "y": -130,
+                    "orientation": "top",
+                    "scored": true
+                },
+                {
+                    "x": 1560,
+                    "y": -280,
+                    "orientation": "top",
+                    "scored": true
+                },
+                {
+                    "x": 1560,
+                    "y": 210,
+                    "orientation": "bottom",
+                    "scored": false
+                },
+                {
+                    "x": 1800,
+                    "y": 130,
+                    "orientation": "bottom",
+                    "scored": true
+                }
+            ]
+        },
+        "bird": {
+            "position": {
+                "x": 127,
+                "y": 10
+            },
+            "weight": 80,
+            "jump": {
+                "height": 100,
+                "strength": 5,
+                "floating": 50
+            },
+            "hitbox": {
+                "width": 34,
+                "height": 24
+            }
+        },
+        "replay_message": {
+            "position": {
+                "x": 38,
+                "y": 110
+            },
+            "size": 20,
+            "text": "Press escape to replay"
+        }
+    }
+}
