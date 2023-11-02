@@ -41,6 +41,25 @@ git clone git@github.com:UwUClub/R-Type.git
 cmake -S . -B build && cmake --build build
 ```
 
+## Binaries
+### Server
+First start the server
+```bash
+./server <ip> <port>
+```
+### Client
+Then start the client
+```bash
+./client <ip of server> <port of server>
+```
+
+### Flappybird
+Standalone flappybird game to demonstrate ECS.
+```bash
+./flappybird
+```
+
+
 ## More Details
 
  * [Dependency Setup](README_dependencies.md)
