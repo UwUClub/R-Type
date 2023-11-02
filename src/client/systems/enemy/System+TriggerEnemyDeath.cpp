@@ -1,13 +1,17 @@
+#include <iostream>
+#include "AddEntity.hpp"
 #include "ClientGameEvent.hpp"
-#include "EventManager.hpp"
-#include "HitBox.hpp"
+#include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Logger.hpp"
+#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
+#include "EwECS/Sound/SoundComponent.hpp"
+#include "EwECS/World.hpp"
 #include "IsAlive.hpp"
-#include "SDLDisplayClass.hpp"
+#include "SFML/Graphics/Rect.hpp"
+#include "ServerPackets.hpp"
 #include "System.hpp"
 #include "TypeUtils.hpp"
 #include "Values.hpp"
-#include "World.hpp"
-#include <SDL_image.h>
 
 namespace ECS {
     void System::triggerEnemyDeath(Core::SparseArray<Component::TypeEntity> &aType,
@@ -16,60 +20,75 @@ namespace ECS {
                                    Core::SparseArray<Utils::Vector2f> &aPos)
     {
         auto &world = Core::World::getInstance();
-        auto &display = SDLDisplayClass::getInstance();
         Event::EventManager *eventManager = Event::EventManager::getInstance();
-        auto events = eventManager->getEventsByType(Event::EventType::GAME);
+        auto &events = eventManager->getEventsByType<RType::ClientGameEvent>();
+        const auto size = events.size();
+        std::vector<size_t> toRemove;
 
         // Receive death event from server
-        for (auto &event : events) {
-            auto &gameEvent = static_cast<RType::ClientGameEvent &>(*event);
+        for (size_t i = 0; i < size; i++) {
+            auto &gameEvent = events[i];
 
-            if (gameEvent.getType() == RType::ClientEventType::ENEMY_DEATH) {
-                if (gameEvent.getPayload().size() != 1) {
-                    eventManager->removeEvent(event);
-                    continue;
-                }
-                size_t onlineEnemyId = static_cast<size_t>(gameEvent.getPayload()[0]);
-                size_t localEnemyId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(aType, onlineEnemyId);
-                if (!aIsAlive[localEnemyId].has_value()) {
-                    eventManager->removeEvent(event);
-                    continue;
-                }
-                aIsAlive[localEnemyId].value().isAlive = false;
-
-                eventManager->removeEvent(event);
-            }
-        }
-
-        // Explosion + entity removal
-        for (size_t enemy = 0; enemy < aType.size(); enemy++) {
-            if (!aType[enemy].has_value() || !aType[enemy].value().isEnemy) {
+            if (gameEvent.getType() != RType::ClientEventType::ENEMY_DEATH) {
                 continue;
             }
-            if (!aIsAlive[enemy].value().isAlive && aIsAlive[enemy].value().timeToDie < 0) {
-                std::cout << "Enemy " << aType[enemy].value().onlineId.value_or(0) << " killed" << std::endl;
-                display.freeRects(enemy);
-                world.killEntity(enemy);
-            } else if (!aIsAlive[enemy].value().isAlive && aIsAlive[enemy].value().timeToDie == 0) {
-                aSprites[enemy].value().path = EXPLOSION_ASSET;
-                aSprites[enemy].value().texture = nullptr;
-                aSprites[enemy].value().rect->h = EXPLOSION_TEX_HEIGHT;
-                aSprites[enemy].value().rect->w = EXPLOSION_TEX_WIDTH;
-                aSprites[enemy].value().rect->x = 146;
-                aSprites[enemy].value().rect->y = 46;
-                aIsAlive[enemy].value().timeToDie = 1;
-                if (rand() % 5 == 0) {
-                    display.addEntity(
-                        ECS::Utils::Vector2f {aPos[enemy].value().x, aPos[enemy].value().y},
+
+            const auto &payload = gameEvent.getPayload<RType::Server::EnemyDiedPayload>();
+
+            const auto localEnemyId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(aType, payload.enemyId);
+
+            if (!aIsAlive[localEnemyId].has_value()) {
+                toRemove.push_back(i);
+                continue;
+            }
+            aIsAlive[localEnemyId].value().isAlive = false;
+
+            if (aPos[localEnemyId].has_value()) {
+                try {
+                    auto idx = AddEntity::addEntity(
+                        ECS::Utils::Vector2f {aPos[localEnemyId].value().x, aPos[localEnemyId].value().y},
                         Component::Speed {BONUS_SPEED},
-                        Component::TypeEntity {false, false, false, false, false, true, false},
-                        Component::LoadedSprite {BONUS_ASSET, nullptr,
-                                                 new SDL_Rect {125, 520, BONUS_TEX_WIDTH, BONUS_TEX_HEIGHT},
-                                                 new SDL_Rect {0, 0, 50, 50}},
+                        Component::TypeEntity {false, false, false, false, false, true, false, payload.bonusId, false},
+                        Component::LoadedSprite {"config/bonus.json"},
                         Component::HitBox {BONUS_TEX_WIDTH, BONUS_TEX_HEIGHT}, Component::IsAlive {false, 0});
+                    world.emplaceEntityComponent<Component::SoundComponent>(idx, "assets/sounds/enemy_explosion.mp3",
+                                                                            20, false);
+                } catch (const std::exception &e) {
+                    ECS::Logger::error("[RType client exception] " + std::string(e.what()));
                 }
-            } else if (!aIsAlive[enemy].value().isAlive) {
-                aIsAlive[enemy].value().timeToDie -= world.getDeltaTime();
+            }
+            toRemove.push_back(i);
+        }
+        eventManager->removeEvent<RType::ClientGameEvent>(toRemove);
+
+        // Explosion + entity removal
+        const auto typeSize = aType.size();
+
+        for (size_t enemy = 0; enemy < typeSize; enemy++) {
+            if (!aType[enemy].has_value() || !aType[enemy].value().isEnemy || !aIsAlive[enemy].has_value()
+                || !aSprites[enemy].has_value() || !aPos[enemy].has_value()) {
+                continue;
+            }
+
+            auto &sprite = aSprites[enemy].value();
+            auto &isAlive = aIsAlive[enemy].value();
+
+            if (!isAlive.isAlive && isAlive.timeToDie < 0) {
+                world.killEntity(enemy);
+            } else if (!isAlive.isAlive && isAlive.timeToDie == 0) {
+                sprite.path = EXPLOSION_ASSET;
+                sprite.texture = nullptr;
+                for (size_t i = 0; i < sprite.rect.size(); i++) {
+                    sprite.rect[i].height = EXPLOSION_TEX_HEIGHT;
+                    sprite.rect[i].width = EXPLOSION_TEX_WIDTH;
+                    sprite.rect[i].left = 146 * (i + 1);
+                    sprite.rect[i].top = 46;
+                    sprite.rectTime[i] = 0.2;
+                }
+                isAlive.timeToDie = 1;
+
+            } else if (!isAlive.isAlive) {
+                isAlive.timeToDie -= world.getDeltaTime();
             }
         }
     }

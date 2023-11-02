@@ -1,11 +1,14 @@
 #include <functional>
-#include "ClientHandler.hpp"
-#include "EventManager.hpp"
-#include "KeyboardEvent.hpp"
-#include "SDLDisplayClass.hpp"
+#include "ClientPackets.hpp"
+#include "EwECS/Event/EventManager.hpp"
+#include "EwECS/Event/KeyboardEvent.hpp"
+#include "EwECS/Network/ClientHandler.hpp"
+#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
+#include "EwECS/World.hpp"
+#include "PlayerMoveState.hpp"
+#include "ServerGameEvent.hpp"
 #include "System.hpp"
 #include "Values.hpp"
-#include "World.hpp"
 #include "components/IsAlive.hpp"
 #include <unordered_map>
 
@@ -14,66 +17,88 @@ namespace ECS {
                             Core::SparseArray<Component::TypeEntity> &aType,
                             Core::SparseArray<Component::IsAlive> &aIsAlive)
     {
-        Network::ClientHandler &network = Network::ClientHandler::getInstance();
-
+        Core::World &world = Core::World::getInstance();
+        ECS::Network::ClientHandler &client = ECS::Network::ClientHandler::getInstance();
         Event::EventManager *eventManager = Event::EventManager::getInstance();
-        auto keyboardEvent = eventManager->getEventsByType(Event::EventType::KEYBOARD);
-        static const std::unordered_map<Event::KeyIdentifier, std::function<void(float &, Utils::Vector2f &, float)>>
+        PlayerMoveState &playerMoveState = PlayerMoveState::getInstance();
+        auto &keyboardEvent = eventManager->getEventsByType<Event::KeyboardEvent>();
+        static const std::unordered_map<
+            Event::KeyIdentifier, std::function<RType::Client::MovePayload(PlayerMoveState &, Event::KeyState, float)>>
             keyMap = {
                 {Event::KeyIdentifier::UP,
-                 [&network](float &spd, Utils::Vector2f &xy, float onlineId) {
-                     xy.y -= spd;
-                     RType::Packet packet(static_cast<int>(RType::ServerEventType::MOVE), {onlineId, 0, 1});
-                     network.send(packet);
+                 [](PlayerMoveState &moveState, Event::KeyState state, float speed) {
+                     moveState.runningY = (state == Event::KeyState::PRESSED) ? true : false;
+                     moveState.speedY = -speed;
+                     return RType::Client::MovePayload {0, 1};
                  }},
                 {Event::KeyIdentifier::DOWN,
-                 [&network](float &spd, Utils::Vector2f &xy, float onlineId) {
-                     xy.y += spd;
-                     RType::Packet packet(static_cast<int>(RType::ServerEventType::MOVE), {onlineId, 0, -1});
-                     network.send(packet);
+                 [](PlayerMoveState &moveState, Event::KeyState state, float speed) {
+                     moveState.runningY = (state == Event::KeyState::PRESSED) ? true : false;
+                     moveState.speedY = speed;
+                     return RType::Client::MovePayload {0, -1};
                  }},
                 {Event::KeyIdentifier::LEFT,
-                 [&network](float &spd, Utils::Vector2f &xy, float onlineId) {
-                     xy.x -= spd;
-                     RType::Packet packet(static_cast<int>(RType::ServerEventType::MOVE), {onlineId, -1, 0});
-                     network.send(packet);
+                 [](PlayerMoveState &moveState, Event::KeyState state, float speed) {
+                     moveState.runningX = (state == Event::KeyState::PRESSED) ? true : false;
+                     moveState.speedX = -speed;
+                     return RType::Client::MovePayload {-1, 0};
                  }},
                 {Event::KeyIdentifier::RIGHT,
-                 [&network](float &spd, Utils::Vector2f &xy, float onlineId) {
-                     xy.x += spd;
-                     RType::Packet packet(static_cast<int>(RType::ServerEventType::MOVE), {onlineId, 1, 0});
-                     network.send(packet);
+                 [](PlayerMoveState &moveState, Event::KeyState state, float speed) {
+                     moveState.runningX = (state == Event::KeyState::PRESSED) ? true : false;
+                     moveState.speedX = speed;
+                     return RType::Client::MovePayload {1, 0};
                  }},
             };
+        const auto size = aPos.size();
 
-        for (size_t i = 0; i < aPos.size(); i++) {
+        for (size_t i = 0; i < size; i++) {
             if (!aType[i].has_value() || !aType[i].value().isPlayer) {
                 continue;
             }
-            for (auto &event : keyboardEvent) {
-                auto *keyEvent = static_cast<Event::KeyboardEvent *>(event);
-                if (keyMap.find(keyEvent->_keyId) == keyMap.end() || !aIsAlive[i].value().isAlive) {
-                    continue;
-                }
-                auto &pos = aPos[i].value();
-                float onlinePlayerId = static_cast<float>(aType[i].value().onlineId.value_or(-1));
-                if (onlinePlayerId == -1) {
-                    continue;
-                }
-                keyMap.at(keyEvent->_keyId)(aSpeed[i].value().speed, pos, onlinePlayerId);
+            auto &pos = aPos[i].value();
+            auto &speed = aSpeed[i].value().speed;
+            RType::Client::MovePayload payload {0, 0};
 
-                if (pos.x < 0) {
-                    pos.x = 0;
+            for (auto &event : keyboardEvent) {
+                if (keyMap.find(event._keyId) == keyMap.end() || !aIsAlive[i].has_value() || !aPos[i].has_value()
+                    || !aSpeed[i].has_value() || !aIsAlive[i].value().isAlive) {
+                    continue;
                 }
-                if (pos.x > SCREEN_WIDTH) {
-                    pos.x = SCREEN_WIDTH;
+
+                payload = keyMap.at(event._keyId)(playerMoveState, event._state, speed);
+            }
+            if (playerMoveState.runningX) {
+                pos.x += speed;
+                if (playerMoveState.speedX < 0) {
+                    payload.moveX = -1;
+                } else {
+                    payload.moveX = 1;
                 }
-                if (pos.y < 0) {
-                    pos.y = 0;
+            }
+            if (playerMoveState.runningY) {
+                pos.y += speed;
+
+                if (playerMoveState.speedY < 0) {
+                    payload.moveY = 1;
+                } else {
+                    payload.moveY = -1;
                 }
-                if (pos.y > SCREEN_HEIGHT) {
-                    pos.y = SCREEN_HEIGHT;
-                }
+            }
+
+            client.send(RType::ServerEventType::MOVE, payload);
+
+            if (pos.x < 0) {
+                pos.x = 0;
+            }
+            if (pos.x > SCREEN_WIDTH) {
+                pos.x = SCREEN_WIDTH;
+            }
+            if (pos.y < 0) {
+                pos.y = 0;
+            }
+            if (pos.y > SCREEN_HEIGHT) {
+                pos.y = SCREEN_HEIGHT;
             }
         }
     }

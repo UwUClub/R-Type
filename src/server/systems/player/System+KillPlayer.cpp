@@ -1,7 +1,8 @@
 #include <iostream>
-#include "HitBox.hpp"
+#include "ClientGameEvent.hpp"
+#include "EwECS/Network/ServerHandler.hpp"
 #include "IsAlive.hpp"
-#include "ServerHandler.hpp"
+#include "ServerPackets.hpp"
 #include "System.hpp"
 #include "Values.hpp"
 
@@ -11,18 +12,19 @@ namespace ECS {
                             Core::SparseArray<Component::Connection> &aConnection)
     {
         auto &world = Core::World::getInstance();
-        auto &server = Network::ServerHandler::getInstance();
+        auto &server = ECS::Network::ServerHandler::getInstance();
+        const auto size = aType.size();
 
-        for (size_t playerId = 0; playerId < aType.size(); playerId++) {
-            if (!aType[playerId].has_value() || !aType[playerId].value().isPlayer) {
+        for (size_t playerId = 0; playerId < size; playerId++) {
+            if (!aType[playerId].has_value() || !aType[playerId].value().isPlayer || !aIsAlive[playerId].has_value()) {
                 continue;
             }
             if (!aIsAlive[playerId].value().isAlive) {
-                world.killEntity(playerId);
+                RType::Server::PlayerDiedPayload payload(playerId);
+                server.broadcast(RType::ClientEventType::PLAYER_DEATH, payload, aConnection);
+
                 server.removeClient(playerId);
-                std::cout << "Player " << playerId << " killed" << std::endl;
-                server.broadcast(static_cast<int>(RType::ClientEventType::PLAYER_DEATH), {static_cast<float>(playerId)},
-                                 aConnection);
+                world.killEntity(playerId);
             }
         }
     }

@@ -1,13 +1,14 @@
 #include <cstddef>
+#include <memory>
 #include <vector>
-#include "Event.hpp"
+#include "EwECS/Network/Packet.hpp"
 
 #ifndef CLIENTGAMEEVENT_HPP
     #define CLIENTGAMEEVENT_HPP
 
 namespace RType {
 
-    enum class ClientEventType
+    enum ClientEventType
     {
         PLAYER_SPAWN = 0,
         PLAYER_DISCONNECTION = 1,
@@ -19,16 +20,17 @@ namespace RType {
         ENEMY_DEATH = 7,
         ENEMY_SHOOT = 8,
         SERVER_FULL = 9,
+        MAX_CLI_EVT = 10
     };
 
     /**
      * @brief Game event class is the base class of all game events
      */
-    class ClientGameEvent : public ECS::Event::Event
+    class ClientGameEvent
     {
         private:
             ClientEventType _type;
-            std::vector<float> _payload;
+            std::shared_ptr<ECS::Network::IPayload> _payload;
 
         public:
             //-------------------CONSTRUCTORS / DESTRUCTOR-------------------//
@@ -38,24 +40,33 @@ namespace RType {
              */
             explicit ClientGameEvent(ClientEventType aType);
 
+            ClientGameEvent(const ClientGameEvent &gameEvent) = default;
+            ClientGameEvent(ClientGameEvent &&gameEvent) = default;
+            ClientGameEvent &operator=(const ClientGameEvent &gameEvent) = default;
+            ClientGameEvent &operator=(ClientGameEvent &&gameEvent) noexcept = default;
+
             /**
              * @brief Construct a new Game Event object
              * @param aType the type of the event
              * @param aPayload the payload of the event
              */
-            explicit ClientGameEvent(ClientEventType aType, std::vector<float> aPayload);
+            explicit ClientGameEvent(ClientEventType aType, ECS::Network::IPayload *aPayload);
 
             /**
              * @brief Get event type
              * @return ClientEventType
              */
-            ClientEventType getType() const;
+            [[nodiscard]] ClientEventType getType() const;
 
             /**
-             * @brief Get the payload of the event
-             * @return std::vector<float>
+             * @brief Get payload
+             * @return The payload
              */
-            std::vector<float> getPayload() const;
+            template<typename Payload>
+            [[nodiscard]] const Payload &getPayload() const
+            {
+                return *reinterpret_cast<Payload *>(_payload.get());
+            }
     };
 } // namespace RType
 

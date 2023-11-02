@@ -1,0 +1,13 @@
+{
+    "path": "assets/flappybird/sprites/pipe-green-top.png",
+    "scale": 1,
+    "rects": {
+        "frame1": {
+            "top": 0,
+            "left": 0,
+            "width": 52,
+            "height": 320,
+            "time": 0
+        }
+    }
+}

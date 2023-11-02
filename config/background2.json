@@ -1,0 +1,13 @@
+{
+    "path": "assets/sprites/background.png",
+    "scale": 1,
+    "rects": {
+        "frame1": {
+            "top": 15,
+            "left": 400,
+            "width":1920,
+            "height": 1080,
+            "time": 0
+        }
+    }
+}

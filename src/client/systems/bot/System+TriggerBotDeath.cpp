@@ -1,11 +1,12 @@
+#include <vector>
 #include "ClientGameEvent.hpp"
-#include "EventManager.hpp"
+#include "EwECS/Event/EventManager.hpp"
+#include "EwECS/SFMLDisplayClass/SFMLDisplayClass.hpp"
 #include "IsAlive.hpp"
-#include "SDLDisplayClass.hpp"
+#include "ServerPackets.hpp"
 #include "System.hpp"
 #include "TypeUtils.hpp"
 #include "Values.hpp"
-#include <SDL_image.h>
 
 namespace ECS {
     void System::triggerBotDeath(Core::SparseArray<Component::TypeEntity> &aType,
@@ -13,52 +14,63 @@ namespace ECS {
                                  Core::SparseArray<Component::LoadedSprite> &aSprites)
     {
         auto &world = Core::World::getInstance();
-        auto &display = SDLDisplayClass::getInstance();
         Event::EventManager *eventManager = Event::EventManager::getInstance();
-        auto events = eventManager->getEventsByType(Event::EventType::GAME);
+        auto &events = eventManager->getEventsByType<RType::ClientGameEvent>();
+        std::vector<size_t> toRemove;
 
         // Receive death event from server
-        for (auto &event : events) {
-            auto &gameEvent = static_cast<RType::ClientGameEvent &>(*event);
+        for (size_t i = 0; i < events.size(); i++) {
+            auto &gameEvent = events[i];
 
-            if (gameEvent.getType() == RType::ClientEventType::PLAYER_DEATH) {
-                if (gameEvent.getPayload().size() != 1) {
-                    eventManager->removeEvent(event);
-                    continue;
-                }
-
-                size_t onlineBotId = static_cast<size_t>(gameEvent.getPayload()[0]);
-                size_t localBotId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(aType, onlineBotId);
-                if (!aIsAlive[localBotId].has_value()) {
-                    eventManager->removeEvent(event);
-                    continue;
-                }
-
-                aIsAlive[localBotId].value().isAlive = false;
-
-                eventManager->removeEvent(event);
-            }
-        }
-
-        // Explosion + entity removal
-        for (size_t botId = 0; botId < aType.size(); botId++) {
-            if (!aType[botId].has_value() || (!aType[botId].value().isBot && !aType[botId].value().isPlayer)) {
+            if (gameEvent.getType() != RType::ClientEventType::PLAYER_DEATH) {
                 continue;
             }
-            if (!aIsAlive[botId].value().isAlive && aIsAlive[botId].value().timeToDie < 0) {
-                std::cout << "Bot " << aType[botId].value().onlineId.value_or(0) << " killed" << std::endl;
-                display.freeRects(botId);
+
+            const auto &payload = gameEvent.getPayload<RType::Server::PlayerDiedPayload>();
+
+            const auto localBotId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(aType, payload.playerId);
+
+            if (!aIsAlive[localBotId].has_value()) {
+                toRemove.push_back(i);
+                continue;
+            }
+
+            aIsAlive[localBotId].value().isAlive = false;
+
+            toRemove.push_back(i);
+        }
+        eventManager->removeEvent<RType::ClientGameEvent>(toRemove);
+
+        // Explosion + entity removal
+        const auto size = aType.size();
+
+        for (size_t botId = 0; botId < size; botId++) {
+            if (!aType[botId].has_value() || (!aType[botId].value().isBot && !aType[botId].value().isPlayer)
+                || !aIsAlive[botId].has_value() || !aSprites[botId].has_value()) {
+                continue;
+            }
+
+            auto &sprite = aSprites[botId].value();
+            auto &isAlive = aIsAlive[botId].value();
+            auto &type = aType[botId].value();
+
+            if (!isAlive.isAlive && isAlive.timeToDie < 0) {
                 world.killEntity(botId);
-            } else if (!aIsAlive[botId].value().isAlive && aIsAlive[botId].value().timeToDie == 0) {
-                aSprites[botId].value().path = EXPLOSION_ASSET;
-                aSprites[botId].value().texture = nullptr;
-                aSprites[botId].value().rect->h = EXPLOSION_TEX_HEIGHT;
-                aSprites[botId].value().rect->w = EXPLOSION_TEX_WIDTH;
-                aSprites[botId].value().rect->x = 146;
-                aSprites[botId].value().rect->y = 46;
-                aIsAlive[botId].value().timeToDie = 1;
-            } else if (!aIsAlive[botId].value().isAlive) {
-                aIsAlive[botId].value().timeToDie -= world.getDeltaTime();
+            } else if (!isAlive.isAlive && isAlive.timeToDie == 0) {
+                sprite.path = EXPLOSION_ASSET;
+                sprite.texture = nullptr;
+                type.isBot = true;
+                type.isPlayer = false;
+                for (size_t i = 0; i < sprite.rect.size(); i++) {
+                    sprite.rect[i].height = EXPLOSION_TEX_HEIGHT;
+                    sprite.rect[i].width = EXPLOSION_TEX_WIDTH;
+                    sprite.rect[i].left = 146 * (i + 1);
+                    sprite.rect[i].top = 46;
+                    sprite.rectTime[i] = 0.2;
+                }
+                isAlive.timeToDie = 1;
+            } else if (!isAlive.isAlive) {
+                isAlive.timeToDie -= world.getDeltaTime();
             }
         }
     }

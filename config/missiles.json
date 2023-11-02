@@ -1,0 +1,13 @@
+{
+    "path": "assets/sprites/r-typesheet2.png",
+    "scale": 1,
+    "rects": {
+        "frame1": {
+            "top": 10,
+            "left": 207,
+            "width": 25,
+            "height": 13,
+            "time": 0
+        }
+    }
+}

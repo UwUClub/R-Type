@@ -1,5 +1,7 @@
+#include <vector>
 #include "ClientGameEvent.hpp"
-#include "EventManager.hpp"
+#include "EwECS/Event/EventManager.hpp"
+#include "ServerPackets.hpp"
 #include "System.hpp"
 #include "TypeUtils.hpp"
 
@@ -8,27 +10,28 @@ namespace ECS {
     {
         auto &world = Core::World::getInstance();
         Event::EventManager *eventManager = Event::EventManager::getInstance();
-        auto events = eventManager->getEventsByType(Event::EventType::GAME);
+        auto &events = eventManager->getEventsByType<RType::ClientGameEvent>();
+        std::vector<size_t> toRemove;
+        const auto size = events.size();
 
-        for (auto &event : events) {
-            auto &gameEvent = static_cast<RType::ClientGameEvent &>(*event);
+        for (size_t i = 0; i < size; i++) {
+            auto &gameEvent = events[i];
 
-            if (gameEvent.getType() == RType::ClientEventType::PLAYER_DISCONNECTION) {
-                if (gameEvent.getPayload().size() != 1) {
-                    eventManager->removeEvent(event);
-                    continue;
-                }
-                size_t onlineBotId = static_cast<size_t>(gameEvent.getPayload()[0]);
-                size_t localBotId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(aType, onlineBotId);
-                if (!aType[localBotId].has_value()) {
-                    eventManager->removeEvent(event);
-                    continue;
-                }
-                world.killEntity(localBotId);
-
-                eventManager->removeEvent(event);
-                std::cout << "Player " << onlineBotId << " disconnected" << std::endl;
+            if (gameEvent.getType() != RType::ClientEventType::PLAYER_DISCONNECTION) {
+                continue;
             }
+
+            const auto &payload = gameEvent.getPayload<RType::Server::PlayerLeftPayload>();
+
+            const auto localBotId = RType::TypeUtils::getInstance().getEntityIdByOnlineId(aType, payload.playerId);
+
+            if (!aType[localBotId].has_value()) {
+                toRemove.push_back(i);
+                continue;
+            }
+            world.killEntity(localBotId);
+            toRemove.push_back(i);
         }
+        eventManager->removeEvent<RType::ClientGameEvent>(toRemove);
     }
 } // namespace ECS

@@ -1,0 +1,12 @@
+{
+    "graphics": {
+        "name": "R-Type",
+        "width": 1920,
+        "height": 1080,
+        "font": "assets/font.ttf"
+    },
+    "physics": {
+        "gravity": 2,
+        "initial_fall_velocity": 2
+    }
+}
