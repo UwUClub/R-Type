@@ -6,99 +6,106 @@
 \mbox{\Hypertarget{classECS_1_1System_aa537d4e1c9c641749887b27942c26eb1}\label{classECS_1_1System_aa537d4e1c9c641749887b27942c26eb1}} 
 static void \mbox{\hyperlink{classECS_1_1System_aa537d4e1c9c641749887b27942c26eb1}{create\+Background}} ()
 \begin{DoxyCompactList}\small\item\em Create local background once connected to server (triggered by server) \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{classECS_1_1System_a7897bee5f18c30fec9ace48157d59351}{move\+Bonus}} (\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&a\+Pos, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&a\+Speed, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type)
+static void \mbox{\hyperlink{classECS_1_1System_a7897bee5f18c30fec9ace48157d59351}{move\+Bonus}} (Core\+::\+Sparse\+Array$<$ Utils\+::\+Vector2f $>$ \&a\+Pos, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&a\+Speed, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type)
 \begin{DoxyCompactList}\small\item\em Handle the move of the bonus. \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{classECS_1_1System_a08a48055d5b667c97bd92a74d97c808a}{trigger\+Bonus}} (\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&a\+Pos, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&a\+Is\+Alive, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1HitBox}{Component\+::\+Hit\+Box}} $>$ \&a\+Hit\+Box)
-\begin{DoxyCompactList}\small\item\em Handle the trigger of the bonus. \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{classECS_1_1System_a46a3ca20528bc58b509d919823189a5d}{move\+Player}} (\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{ECS\+::\+Utils\+::\+Vector2f}} $>$ \&a\+Pos, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&a\+Speed, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&a\+Is\+Alive)
+static void \mbox{\hyperlink{classECS_1_1System_a1b7be607f30dc79b6ff92f9f266642e9}{move\+Player}} (Core\+::\+Sparse\+Array$<$ ECS\+::\+Utils\+::\+Vector2f $>$ \&a\+Pos, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&a\+Speed, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&a\+Is\+Alive)
 \begin{DoxyCompactList}\small\item\em Move the player. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classECS_1_1System_a57b87ebffb67e841515cd1c479511609}\label{classECS_1_1System_a57b87ebffb67e841515cd1c479511609}} 
 static void \mbox{\hyperlink{classECS_1_1System_a57b87ebffb67e841515cd1c479511609}{create\+Bot}} ()
 \begin{DoxyCompactList}\small\item\em Create a bot (triggered by server) \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classECS_1_1System_a23f40d4b73d2acc8cc1bf7c789d0a0a9}\label{classECS_1_1System_a23f40d4b73d2acc8cc1bf7c789d0a0a9}} 
-static void \mbox{\hyperlink{classECS_1_1System_a23f40d4b73d2acc8cc1bf7c789d0a0a9}{update\+Bot\+Position}} (\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&a\+Pos, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type)
+static void \mbox{\hyperlink{classECS_1_1System_a23f40d4b73d2acc8cc1bf7c789d0a0a9}{update\+Bot\+Position}} (Core\+::\+Sparse\+Array$<$ Utils\+::\+Vector2f $>$ \&a\+Pos, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type)
 \begin{DoxyCompactList}\small\item\em Update a bot position (triggered by server) \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{classECS_1_1System_aefaa281bcc6e04422ade3e8a03c7f00a}\label{classECS_1_1System_aefaa281bcc6e04422ade3e8a03c7f00a}} 
-static void \mbox{\hyperlink{classECS_1_1System_aefaa281bcc6e04422ade3e8a03c7f00a}{get\+Input}} ()
-\begin{DoxyCompactList}\small\item\em Get the all the input of the user (locally) \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{classECS_1_1System_a9faebec6e4a2005a302e99fe73624f94}\label{classECS_1_1System_a9faebec6e4a2005a302e99fe73624f94}} 
-static void \mbox{\hyperlink{classECS_1_1System_a9faebec6e4a2005a302e99fe73624f94}{quit\+SDL}} ()
-\begin{DoxyCompactList}\small\item\em Close the SDL window (locally) \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{classECS_1_1System_acff7f008ce8d2ca34f73070aa663fb10}{load\+Textures}} (\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1LoadedSprite}{Component\+::\+Loaded\+Sprite}} $>$ \&a\+Sprites)
-\begin{DoxyCompactList}\small\item\em Load all the textures of the game (locally) \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{classECS_1_1System_afbdfee9fa04ff8a36d047ed2c2b9dfa5}{display\+Entities}} (\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1LoadedSprite}{Component\+::\+Loaded\+Sprite}} $>$ \&a\+Sprites, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&a\+Pos)
-\begin{DoxyCompactList}\small\item\em Display all the entities on the screen (locally) \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{classECS_1_1System_a5777045583c111817e3ee4498942a741}{move\+Background}} (\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&a\+Pos, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&a\+Speed, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type)
+static void \mbox{\hyperlink{classECS_1_1System_a5777045583c111817e3ee4498942a741}{move\+Background}} (Core\+::\+Sparse\+Array$<$ Utils\+::\+Vector2f $>$ \&a\+Pos, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&a\+Speed, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type)
 \begin{DoxyCompactList}\small\item\em Handle the background\textquotesingle{}s movements (locally) \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classECS_1_1System_aba6a48ed2bc3cf55cdb5993b38988302}\label{classECS_1_1System_aba6a48ed2bc3cf55cdb5993b38988302}} 
 static void \mbox{\hyperlink{classECS_1_1System_aba6a48ed2bc3cf55cdb5993b38988302}{create\+Enemy}} ()
 \begin{DoxyCompactList}\small\item\em Create an enemy (triggered by server) \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{classECS_1_1System_a4191d3bef9464899783b88223c462766}{move\+Enemy}} (\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&a\+Pos, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&a\+Speed, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type)
+static void \mbox{\hyperlink{classECS_1_1System_a4191d3bef9464899783b88223c462766}{move\+Enemy}} (Core\+::\+Sparse\+Array$<$ Utils\+::\+Vector2f $>$ \&a\+Pos, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&a\+Speed, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type)
 \begin{DoxyCompactList}\small\item\em Move enemy on the screen (locally) \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{classECS_1_1System_a3e47cbef8404e482cf21e710b4b25b9d}{trigger\+Player\+Shoot}} (\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&a\+Pos, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&a\+Is\+Alive)
+static void \mbox{\hyperlink{classECS_1_1System_a3e47cbef8404e482cf21e710b4b25b9d}{trigger\+Player\+Shoot}} (Core\+::\+Sparse\+Array$<$ Utils\+::\+Vector2f $>$ \&a\+Pos, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&a\+Is\+Alive)
 \begin{DoxyCompactList}\small\item\em Make player shoot missiles when space is pressed (triggered locally, send to server) \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classECS_1_1System_a31405609178d87aebb6f2b7fb7e2018c}\label{classECS_1_1System_a31405609178d87aebb6f2b7fb7e2018c}} 
 static void \mbox{\hyperlink{classECS_1_1System_a31405609178d87aebb6f2b7fb7e2018c}{trigger\+Bot\+Shoot}} ()
 \begin{DoxyCompactList}\small\item\em Make bots shoot missiles (triggered by server) \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{classECS_1_1System_a432863b4174dc4b83b2d72703807234c}{move\+Missiles}} (\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&a\+Pos, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&a\+Speed, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type)
+static void \mbox{\hyperlink{classECS_1_1System_a432863b4174dc4b83b2d72703807234c}{move\+Missiles}} (Core\+::\+Sparse\+Array$<$ Utils\+::\+Vector2f $>$ \&a\+Pos, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&a\+Speed, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type)
 \begin{DoxyCompactList}\small\item\em Move missiles on the screen (locally) \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{classECS_1_1System_aec9e1a3a0da9f960c0fe773f38916b2d}{enemy\+Hit}} (\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&a\+Pos, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1HitBox}{Component\+::\+Hit\+Box}} $>$ \&a\+Hit\+Box)
+static void \mbox{\hyperlink{classECS_1_1System_a60cc231e00e72e9f3abf4fe105c5b108}{enemy\+Hit}} (Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, Core\+::\+Sparse\+Array$<$ Component\+::\+Hit\+Box $>$ \&a\+Hit\+Box)
 \begin{DoxyCompactList}\small\item\em Handle enemies who get hit (locally) \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{classECS_1_1System_a64b787a1f81da19364b2b6435a017d85}{trigger\+Enemy\+Death}} (\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&a\+Is\+Alive, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1LoadedSprite}{Component\+::\+Loaded\+Sprite}} $>$ \&a\+Sprites, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&a\+Pos)
+static void \mbox{\hyperlink{classECS_1_1System_a64b787a1f81da19364b2b6435a017d85}{trigger\+Enemy\+Death}} (Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&a\+Is\+Alive, Core\+::\+Sparse\+Array$<$ Component\+::\+Loaded\+Sprite $>$ \&a\+Sprites, Core\+::\+Sparse\+Array$<$ Utils\+::\+Vector2f $>$ \&a\+Pos)
 \begin{DoxyCompactList}\small\item\em Handle the death of an enemy (triggered by server) \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classECS_1_1System_a9a4a985682a369c5a480a17e062514d2}\label{classECS_1_1System_a9a4a985682a369c5a480a17e062514d2}} 
 static void \mbox{\hyperlink{classECS_1_1System_a9a4a985682a369c5a480a17e062514d2}{trigger\+Enemy\+Shoot}} ()
 \begin{DoxyCompactList}\small\item\em Make enemies shoot missiles (triggered by server) \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{classECS_1_1System_ae3b6c9ce3fe2bee98d2aa0238a004c5a}{bot\+Hit}} (\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&a\+Pos, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&a\+Is\+Alive, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1HitBox}{Component\+::\+Hit\+Box}} $>$ \&Hit\+Box)
+static void \mbox{\hyperlink{classECS_1_1System_a28b9254fdbdadd6e5a78139b2eb1f93b}{bot\+Hit}} (Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, Core\+::\+Sparse\+Array$<$ Component\+::\+Hit\+Box $>$ \&Hit\+Box)
 \begin{DoxyCompactList}\small\item\em Handle bots who get hit (locally) \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{classECS_1_1System_a9cf1ed1b5e39f563f802ccc03faabab7}{trigger\+Bot\+Death}} (\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&a\+Is\+Alive, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1LoadedSprite}{Component\+::\+Loaded\+Sprite}} $>$ \&a\+Sprites)
+static void \mbox{\hyperlink{classECS_1_1System_a9cf1ed1b5e39f563f802ccc03faabab7}{trigger\+Bot\+Death}} (Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&a\+Is\+Alive, Core\+::\+Sparse\+Array$<$ Component\+::\+Loaded\+Sprite $>$ \&a\+Sprites)
 \begin{DoxyCompactList}\small\item\em Handle the death of a bot (triggered by server) \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{classECS_1_1System_a3e08617f4b897e9012886f24a421860b}{trigger\+Bot\+Bonus}} (\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&a\+Speed, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type)
+static void \mbox{\hyperlink{classECS_1_1System_aff0093c23fbd1df121d3c08d0cda642d}{trigger\+Bonus}} (Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&a\+Speed, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type)
 \begin{DoxyCompactList}\small\item\em Handle the death of a bot (triggered by server) \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classECS_1_1System_a416918ed3e65de8f4152ec7e096a700b}\label{classECS_1_1System_a416918ed3e65de8f4152ec7e096a700b}} 
-static void \mbox{\hyperlink{classECS_1_1System_a416918ed3e65de8f4152ec7e096a700b}{trigger\+Bot\+Disconnect}} (\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type)
+static void \mbox{\hyperlink{classECS_1_1System_a416918ed3e65de8f4152ec7e096a700b}{trigger\+Bot\+Disconnect}} (Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type)
 \begin{DoxyCompactList}\small\item\em Handle the disconnection of a player (triggered by server) \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classECS_1_1System_a3d532f67becb548ff63565034a39cb3e}\label{classECS_1_1System_a3d532f67becb548ff63565034a39cb3e}} 
 static void \mbox{\hyperlink{classECS_1_1System_a3d532f67becb548ff63565034a39cb3e}{create\+Server\+Full\+Error\+Message}} ()
 \begin{DoxyCompactList}\small\item\em Display error message in case server is full (triggered by server) \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{classECS_1_1System_a8799ffddaa62769ce7abbe936d4c3be4}{welcome\+Player}} (\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{ECS\+::\+Utils\+::\+Vector2f}} $>$ \&a\+Pos, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&a\+Speed, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1HitBox}{Component\+::\+Hit\+Box}} $>$ \&a\+Hit\+Box, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&a\+Is\+Alive, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Connection}{Component\+::\+Connection}} $>$ \&a\+Connection)
+static void \mbox{\hyperlink{classECS_1_1System_a5ea0db862df3de44da3c44be8cf62f6c}{jump}} (Core\+::\+Sparse\+Array$<$ ECS\+::\+Utils\+::\+Vector2f $>$ \&a\+Pos, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Jump}{Component\+::\+Jump}} $>$ \&a\+Jump, Core\+::\+Sparse\+Array$<$ Component\+::\+Weight $>$ \&a\+Weight)
+\begin{DoxyCompactList}\small\item\em Make an entity jump. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classECS_1_1System_a71730e29cbe6b04ddeb626645750382b}\label{classECS_1_1System_a71730e29cbe6b04ddeb626645750382b}} 
+static void \mbox{\hyperlink{classECS_1_1System_a71730e29cbe6b04ddeb626645750382b}{move\+Ground}} ()
+\begin{DoxyCompactList}\small\item\em Move the ground. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classECS_1_1System_aef14d9209a42613d7d8f2d01d19d5ae6}\label{classECS_1_1System_aef14d9209a42613d7d8f2d01d19d5ae6}} 
+static void \mbox{\hyperlink{classECS_1_1System_aef14d9209a42613d7d8f2d01d19d5ae6}{move\+Pipes}} ()
+\begin{DoxyCompactList}\small\item\em Move the pipes. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classECS_1_1System_ac2d28523cdb6bcb9af0359a584cb321f}\label{classECS_1_1System_ac2d28523cdb6bcb9af0359a584cb321f}} 
+static void \mbox{\hyperlink{classECS_1_1System_ac2d28523cdb6bcb9af0359a584cb321f}{kill\+Bird}} ()
+\begin{DoxyCompactList}\small\item\em Kill the bird if it touches the ground or a pipe. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classECS_1_1System_a1deebbabacba4c1c82f246f593e2f736}\label{classECS_1_1System_a1deebbabacba4c1c82f246f593e2f736}} 
+static void \mbox{\hyperlink{classECS_1_1System_a1deebbabacba4c1c82f246f593e2f736}{update\+Score}} ()
+\begin{DoxyCompactList}\small\item\em Display the score. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classECS_1_1System_a64292c3b47e74fbcab846d90cb177a4b}\label{classECS_1_1System_a64292c3b47e74fbcab846d90cb177a4b}} 
+static void \mbox{\hyperlink{classECS_1_1System_a64292c3b47e74fbcab846d90cb177a4b}{replay}} ()
+\begin{DoxyCompactList}\small\item\em Replay the game if the player press enter. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{classECS_1_1System_a8799ffddaa62769ce7abbe936d4c3be4}{welcome\+Player}} (Core\+::\+Sparse\+Array$<$ ECS\+::\+Utils\+::\+Vector2f $>$ \&a\+Pos, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&a\+Speed, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, Core\+::\+Sparse\+Array$<$ Component\+::\+Hit\+Box $>$ \&a\+Hit\+Box, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&a\+Is\+Alive, Core\+::\+Sparse\+Array$<$ Component\+::\+Connection $>$ \&a\+Connection)
 \begin{DoxyCompactList}\small\item\em Welcome the players. \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{classECS_1_1System_aec3e9f5d50d8c1bcff1f8b6b3c291ec9}{move\+Player}} (\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{ECS\+::\+Utils\+::\+Vector2f}} $>$ \&a\+Pos, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&a\+Speed, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Connection}{Component\+::\+Connection}} $>$ \&a\+Connection)
+static void \mbox{\hyperlink{classECS_1_1System_a3aea3f5c13e23214d951aa192f0d1c00}{move\+Player}} (Core\+::\+Sparse\+Array$<$ ECS\+::\+Utils\+::\+Vector2f $>$ \&a\+Pos, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&a\+Speed, Core\+::\+Sparse\+Array$<$ Component\+::\+Connection $>$ \&a\+Connection)
 \begin{DoxyCompactList}\small\item\em Move the player. \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{classECS_1_1System_acb47f8c55a3de13f57ab662dba0d1a71}{player\+Shoot}} (\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&a\+Pos, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&a\+Speed, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1HitBox}{Component\+::\+Hit\+Box}} $>$ \&a\+Hit\+Box, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Connection}{Component\+::\+Connection}} $>$ \&a\+Connection)
+static void \mbox{\hyperlink{classECS_1_1System_acb47f8c55a3de13f57ab662dba0d1a71}{player\+Shoot}} (Core\+::\+Sparse\+Array$<$ Utils\+::\+Vector2f $>$ \&a\+Pos, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&a\+Speed, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, Core\+::\+Sparse\+Array$<$ Component\+::\+Hit\+Box $>$ \&a\+Hit\+Box, Core\+::\+Sparse\+Array$<$ Component\+::\+Connection $>$ \&a\+Connection)
 \begin{DoxyCompactList}\small\item\em Make players shoot. \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{classECS_1_1System_a9e41f2bf99e6233ad09a51790f37049b}{move\+Speed\+Up}} (\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&a\+Speed, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Connection}{Component\+::\+Connection}} $>$ \&a\+Connection)
+static void \mbox{\hyperlink{classECS_1_1System_a59074b2400e10ab0820f14b41805de05}{move\+Bonus}} (Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&a\+Speed, Core\+::\+Sparse\+Array$<$ Utils\+::\+Vector2f $>$ \&a\+Pos, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type)
 \begin{DoxyCompactList}\small\item\em Move the player speed up. \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{classECS_1_1System_a73c9a59460e6904a7acee017d6a9a96c}{player\+Hit}} (\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&a\+Pos, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&a\+Is\+Alive, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1HitBox}{Component\+::\+Hit\+Box}} $>$ \&a\+Hit\+Box)
+static void \mbox{\hyperlink{classECS_1_1System_a5f41980ab7cb967552c1f92e8e34c0f9}{trigger\+Bonus}} (Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&a\+Is\+Alive, Core\+::\+Sparse\+Array$<$ Component\+::\+Hit\+Box $>$ \&a\+Hit\+Box, Core\+::\+Sparse\+Array$<$ Component\+::\+Connection $>$ \&a\+Connection, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&a\+Speed)
+\begin{DoxyCompactList}\small\item\em Trigger the bonus. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{classECS_1_1System_aac22b54840b1afff0fa4ef1ec18d6d3b}{player\+Hit}} (Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&a\+Is\+Alive, Core\+::\+Sparse\+Array$<$ Component\+::\+Hit\+Box $>$ \&a\+Hit\+Box)
 \begin{DoxyCompactList}\small\item\em Handle players who get hit. \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{classECS_1_1System_a7c309efc6046c168d62b9ecdd81715d6}{kill\+Player}} (\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&a\+Is\+Alive, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Connection}{Component\+::\+Connection}} $>$ \&a\+Connection)
+static void \mbox{\hyperlink{classECS_1_1System_a7c309efc6046c168d62b9ecdd81715d6}{kill\+Player}} (Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&a\+Is\+Alive, Core\+::\+Sparse\+Array$<$ Component\+::\+Connection $>$ \&a\+Connection)
 \begin{DoxyCompactList}\small\item\em Handle players who get hit. \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{classECS_1_1System_aecc93b6f2f9030919a0c4f58f0df3b4c}{disconnect\+Player}} (\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Connection}{Component\+::\+Connection}} $>$ \&a\+Connection)
+static void \mbox{\hyperlink{classECS_1_1System_aecc93b6f2f9030919a0c4f58f0df3b4c}{disconnect\+Player}} (Core\+::\+Sparse\+Array$<$ Component\+::\+Connection $>$ \&a\+Connection)
 \begin{DoxyCompactList}\small\item\em Disconnect the player from the server. \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{classECS_1_1System_a8af5b9f113e574a5bf139b5765a3f672}{handle\+Player\+Crash}} (\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&a\+Is\+Alive, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Connection}{Component\+::\+Connection}} $>$ \&a\+Connection)
+static void \mbox{\hyperlink{classECS_1_1System_a8af5b9f113e574a5bf139b5765a3f672}{handle\+Player\+Crash}} (Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&a\+Is\+Alive, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, Core\+::\+Sparse\+Array$<$ Component\+::\+Connection $>$ \&a\+Connection)
 \begin{DoxyCompactList}\small\item\em Handle player crash. \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{classECS_1_1System_a43d283bf00017af54380dccbac4f3931}{receive\+Aknowledgment}} (\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Connection}{Component\+::\+Connection}} $>$ \&a\+Connection)
+static void \mbox{\hyperlink{classECS_1_1System_a43d283bf00017af54380dccbac4f3931}{receive\+Aknowledgment}} (Core\+::\+Sparse\+Array$<$ Component\+::\+Connection $>$ \&a\+Connection)
 \begin{DoxyCompactList}\small\item\em Receive client aknowledgment. \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{classECS_1_1System_a5c12cb994e3d56e416f3d35f6a2f706c}{spawn\+Enemy}} (\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&a\+Pos, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&a\+Speed, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1HitBox}{Component\+::\+Hit\+Box}} $>$ \&a\+Hit\+Box, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&a\+Is\+Alive, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Connection}{Component\+::\+Connection}} $>$ \&a\+Connection)
+static void \mbox{\hyperlink{classECS_1_1System_a5c12cb994e3d56e416f3d35f6a2f706c}{spawn\+Enemy}} (Core\+::\+Sparse\+Array$<$ Utils\+::\+Vector2f $>$ \&a\+Pos, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&a\+Speed, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, Core\+::\+Sparse\+Array$<$ Component\+::\+Hit\+Box $>$ \&a\+Hit\+Box, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&a\+Is\+Alive, Core\+::\+Sparse\+Array$<$ Component\+::\+Connection $>$ \&a\+Connection)
 \begin{DoxyCompactList}\small\item\em Spawn enemies. \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{classECS_1_1System_a2259b8dbc8b1161927006518ae62c563}{move\+Enemy}} (\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&a\+Pos, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&a\+Speed, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type)
+static void \mbox{\hyperlink{classECS_1_1System_a2259b8dbc8b1161927006518ae62c563}{move\+Enemy}} (Core\+::\+Sparse\+Array$<$ Utils\+::\+Vector2f $>$ \&a\+Pos, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&a\+Speed, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type)
 \begin{DoxyCompactList}\small\item\em Move enemies. \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{classECS_1_1System_af3f32e846d02336e5884d057a5a2e8ca}{enemy\+Shoot}} (\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&a\+Pos, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&a\+Speed, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1HitBox}{Component\+::\+Hit\+Box}} $>$ \&a\+Hit\+Box, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&a\+Is\+Alive, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Connection}{Component\+::\+Connection}} $>$ \&a\+Connection)
+static void \mbox{\hyperlink{classECS_1_1System_af3f32e846d02336e5884d057a5a2e8ca}{enemy\+Shoot}} (Core\+::\+Sparse\+Array$<$ Utils\+::\+Vector2f $>$ \&a\+Pos, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&a\+Speed, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, Core\+::\+Sparse\+Array$<$ Component\+::\+Hit\+Box $>$ \&a\+Hit\+Box, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&a\+Is\+Alive, Core\+::\+Sparse\+Array$<$ Component\+::\+Connection $>$ \&a\+Connection)
 \begin{DoxyCompactList}\small\item\em Make enemies shoot. \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{classECS_1_1System_a641c8b7e0ef7f2ecd2718c087122621e}{enemy\+Hit}} (\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&a\+Pos, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1HitBox}{Component\+::\+Hit\+Box}} $>$ \&a\+Hit\+Box, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&a\+Is\+Alive)
+static void \mbox{\hyperlink{classECS_1_1System_a4ea1fea24a513ad13092168f68e28f13}{enemy\+Hit}} (Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, Core\+::\+Sparse\+Array$<$ Component\+::\+Hit\+Box $>$ \&a\+Hit\+Box, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&a\+Is\+Alive)
 \begin{DoxyCompactList}\small\item\em Handle enemies who get hit. \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{classECS_1_1System_a901e96602f613538d730d8943e98af99}{kill\+Enemy}} (\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&a\+Is\+Alive, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Connection}{Component\+::\+Connection}} $>$ \&a\+Connection)
+static void \mbox{\hyperlink{classECS_1_1System_a5034f8c49a0548dbc00e90dcdf02e245}{kill\+Enemy}} (Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&a\+Is\+Alive, Core\+::\+Sparse\+Array$<$ Component\+::\+Connection $>$ \&a\+Connection, Core\+::\+Sparse\+Array$<$ Utils\+::\+Vector2f $>$ \&a\+Pos, Core\+::\+Sparse\+Array$<$ Component\+::\+Hit\+Box $>$ \&a\+Hit\+Box, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&a\+Speed)
 \begin{DoxyCompactList}\small\item\em Kill enemies when they shouldn\textquotesingle{}t live anymore. \end{DoxyCompactList}\item 
-static void \mbox{\hyperlink{classECS_1_1System_a867cb7dee87ab7d64c908f454b8aa06e}{move\+Missiles}} (\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&a\+Pos, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&a\+Speed, \mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type)
+static void \mbox{\hyperlink{classECS_1_1System_a867cb7dee87ab7d64c908f454b8aa06e}{move\+Missiles}} (Core\+::\+Sparse\+Array$<$ Utils\+::\+Vector2f $>$ \&a\+Pos, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&a\+Speed, Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&a\+Type)
 \begin{DoxyCompactList}\small\item\em Move missiles. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Member Function Documentation}
-\mbox{\Hypertarget{classECS_1_1System_ae3b6c9ce3fe2bee98d2aa0238a004c5a}\label{classECS_1_1System_ae3b6c9ce3fe2bee98d2aa0238a004c5a}} 
+\mbox{\Hypertarget{classECS_1_1System_a28b9254fdbdadd6e5a78139b2eb1f93b}\label{classECS_1_1System_a28b9254fdbdadd6e5a78139b2eb1f93b}} 
 \index{ECS::System@{ECS::System}!botHit@{botHit}}
 \index{botHit@{botHit}!ECS::System@{ECS::System}}
 \doxysubsubsection{\texorpdfstring{botHit()}{botHit()}}
-{\footnotesize\ttfamily void ECS\+::\+System\+::bot\+Hit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&}]{a\+Pos,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&}]{a\+Is\+Alive,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1HitBox}{Component\+::\+Hit\+Box}} $>$ \&}]{Hit\+Box }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily void ECS\+::\+System\+::bot\+Hit (\begin{DoxyParamCaption}\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{Core\+::\+Sparse\+Array$<$ Component\+::\+Hit\+Box $>$ \&}]{Hit\+Box }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -106,11 +113,7 @@ Handle bots who get hit (locally)
 
 
 \begin{DoxyParams}{Parameters}
-{\em a\+Pos} & Sparse\+Array of all entities position \\
-\hline
 {\em a\+Type} & Sparse\+Array of all entities type \\
-\hline
-{\em a\+Is\+Alive} & Sparse\+Array of all entities is\+Alive component \\
 \hline
 {\em Hit\+Box} & Sparse\+Array of all entities hitbox component \\
 \hline
@@ -119,7 +122,7 @@ Handle bots who get hit (locally)
 \index{ECS::System@{ECS::System}!disconnectPlayer@{disconnectPlayer}}
 \index{disconnectPlayer@{disconnectPlayer}!ECS::System@{ECS::System}}
 \doxysubsubsection{\texorpdfstring{disconnectPlayer()}{disconnectPlayer()}}
-{\footnotesize\ttfamily void ECS\+::\+System\+::disconnect\+Player (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Connection}{Component\+::\+Connection}} $>$ \&}]{a\+Connection }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily void ECS\+::\+System\+::disconnect\+Player (\begin{DoxyParamCaption}\item[{Core\+::\+Sparse\+Array$<$ Component\+::\+Connection $>$ \&}]{a\+Connection }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -130,28 +133,11 @@ Disconnect the player from the server.
 {\em a\+Connection} & Sparse\+Array of all entities connection \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{classECS_1_1System_afbdfee9fa04ff8a36d047ed2c2b9dfa5}\label{classECS_1_1System_afbdfee9fa04ff8a36d047ed2c2b9dfa5}} 
-\index{ECS::System@{ECS::System}!displayEntities@{displayEntities}}
-\index{displayEntities@{displayEntities}!ECS::System@{ECS::System}}
-\doxysubsubsection{\texorpdfstring{displayEntities()}{displayEntities()}}
-{\footnotesize\ttfamily void ECS\+::\+System\+::display\+Entities (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1LoadedSprite}{Component\+::\+Loaded\+Sprite}} $>$ \&}]{a\+Sprites,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&}]{a\+Pos }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
-
-
-
-Display all the entities on the screen (locally) 
-
-
-\begin{DoxyParams}{Parameters}
-{\em a\+Sprites} & Sparse\+Array of all the entities sprites \\
-\hline
-{\em a\+Pos} & Sparse\+Array of all the entities position \\
-\hline
-\end{DoxyParams}
-\mbox{\Hypertarget{classECS_1_1System_aec9e1a3a0da9f960c0fe773f38916b2d}\label{classECS_1_1System_aec9e1a3a0da9f960c0fe773f38916b2d}} 
+\mbox{\Hypertarget{classECS_1_1System_a60cc231e00e72e9f3abf4fe105c5b108}\label{classECS_1_1System_a60cc231e00e72e9f3abf4fe105c5b108}} 
 \index{ECS::System@{ECS::System}!enemyHit@{enemyHit}}
 \index{enemyHit@{enemyHit}!ECS::System@{ECS::System}}
 \doxysubsubsection{\texorpdfstring{enemyHit()}{enemyHit()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily void ECS\+::\+System\+::enemy\+Hit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&}]{a\+Pos,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1HitBox}{Component\+::\+Hit\+Box}} $>$ \&}]{a\+Hit\+Box }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily void ECS\+::\+System\+::enemy\+Hit (\begin{DoxyParamCaption}\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{Core\+::\+Sparse\+Array$<$ Component\+::\+Hit\+Box $>$ \&}]{a\+Hit\+Box }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -159,18 +145,16 @@ Handle enemies who get hit (locally)
 
 
 \begin{DoxyParams}{Parameters}
-{\em a\+Pos} & Sparse\+Array of all entities position \\
-\hline
 {\em a\+Type} & Sparse\+Array of all entities type \\
 \hline
 {\em a\+Hit\+Box} & Sparse\+Array of all entities hitbox \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{classECS_1_1System_a641c8b7e0ef7f2ecd2718c087122621e}\label{classECS_1_1System_a641c8b7e0ef7f2ecd2718c087122621e}} 
+\mbox{\Hypertarget{classECS_1_1System_a4ea1fea24a513ad13092168f68e28f13}\label{classECS_1_1System_a4ea1fea24a513ad13092168f68e28f13}} 
 \index{ECS::System@{ECS::System}!enemyHit@{enemyHit}}
 \index{enemyHit@{enemyHit}!ECS::System@{ECS::System}}
 \doxysubsubsection{\texorpdfstring{enemyHit()}{enemyHit()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily void ECS\+::\+System\+::enemy\+Hit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&}]{a\+Pos,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1HitBox}{Component\+::\+Hit\+Box}} $>$ \&}]{a\+Hit\+Box,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&}]{a\+Is\+Alive }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily void ECS\+::\+System\+::enemy\+Hit (\begin{DoxyParamCaption}\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{Core\+::\+Sparse\+Array$<$ Component\+::\+Hit\+Box $>$ \&}]{a\+Hit\+Box,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&}]{a\+Is\+Alive }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -178,8 +162,6 @@ Handle enemies who get hit.
 
 
 \begin{DoxyParams}{Parameters}
-{\em a\+Pos} & Sparse\+Array of all entities position \\
-\hline
 {\em a\+Type} & Sparse\+Array of all entities type \\
 \hline
 {\em a\+Hit\+Box} & Sparse\+Array of all entities hitbox \\
@@ -191,7 +173,7 @@ Handle enemies who get hit.
 \index{ECS::System@{ECS::System}!enemyShoot@{enemyShoot}}
 \index{enemyShoot@{enemyShoot}!ECS::System@{ECS::System}}
 \doxysubsubsection{\texorpdfstring{enemyShoot()}{enemyShoot()}}
-{\footnotesize\ttfamily void ECS\+::\+System\+::enemy\+Shoot (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&}]{a\+Pos,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&}]{a\+Speed,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1HitBox}{Component\+::\+Hit\+Box}} $>$ \&}]{a\+Hit\+Box,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&}]{a\+Is\+Alive,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Connection}{Component\+::\+Connection}} $>$ \&}]{a\+Connection }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily void ECS\+::\+System\+::enemy\+Shoot (\begin{DoxyParamCaption}\item[{Core\+::\+Sparse\+Array$<$ Utils\+::\+Vector2f $>$ \&}]{a\+Pos,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&}]{a\+Speed,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{Core\+::\+Sparse\+Array$<$ Component\+::\+Hit\+Box $>$ \&}]{a\+Hit\+Box,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&}]{a\+Is\+Alive,  }\item[{Core\+::\+Sparse\+Array$<$ Component\+::\+Connection $>$ \&}]{a\+Connection }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -216,7 +198,7 @@ Make enemies shoot.
 \index{ECS::System@{ECS::System}!handlePlayerCrash@{handlePlayerCrash}}
 \index{handlePlayerCrash@{handlePlayerCrash}!ECS::System@{ECS::System}}
 \doxysubsubsection{\texorpdfstring{handlePlayerCrash()}{handlePlayerCrash()}}
-{\footnotesize\ttfamily void ECS\+::\+System\+::handle\+Player\+Crash (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&}]{a\+Is\+Alive,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Connection}{Component\+::\+Connection}} $>$ \&}]{a\+Connection }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily void ECS\+::\+System\+::handle\+Player\+Crash (\begin{DoxyParamCaption}\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&}]{a\+Is\+Alive,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{Core\+::\+Sparse\+Array$<$ Component\+::\+Connection $>$ \&}]{a\+Connection }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -231,11 +213,30 @@ Handle player crash.
 {\em a\+Connection} & Sparse\+Array of all entities connection \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{classECS_1_1System_a901e96602f613538d730d8943e98af99}\label{classECS_1_1System_a901e96602f613538d730d8943e98af99}} 
+\mbox{\Hypertarget{classECS_1_1System_a5ea0db862df3de44da3c44be8cf62f6c}\label{classECS_1_1System_a5ea0db862df3de44da3c44be8cf62f6c}} 
+\index{ECS::System@{ECS::System}!jump@{jump}}
+\index{jump@{jump}!ECS::System@{ECS::System}}
+\doxysubsubsection{\texorpdfstring{jump()}{jump()}}
+{\footnotesize\ttfamily void ECS\+::\+System\+::jump (\begin{DoxyParamCaption}\item[{Core\+::\+Sparse\+Array$<$ ECS\+::\+Utils\+::\+Vector2f $>$ \&}]{a\+Pos,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Jump}{Component\+::\+Jump}} $>$ \&}]{a\+Jump,  }\item[{Core\+::\+Sparse\+Array$<$ Component\+::\+Weight $>$ \&}]{a\+Weight }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Make an entity jump. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a\+Pos} & Sparse\+Array of all entities position \\
+\hline
+{\em a\+Jump} & Sparsearray of all entities who can jump \\
+\hline
+{\em a\+Weight} & Sparsearray of all entities weight \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classECS_1_1System_a5034f8c49a0548dbc00e90dcdf02e245}\label{classECS_1_1System_a5034f8c49a0548dbc00e90dcdf02e245}} 
 \index{ECS::System@{ECS::System}!killEnemy@{killEnemy}}
 \index{killEnemy@{killEnemy}!ECS::System@{ECS::System}}
 \doxysubsubsection{\texorpdfstring{killEnemy()}{killEnemy()}}
-{\footnotesize\ttfamily void ECS\+::\+System\+::kill\+Enemy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&}]{a\+Is\+Alive,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Connection}{Component\+::\+Connection}} $>$ \&}]{a\+Connection }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily void ECS\+::\+System\+::kill\+Enemy (\begin{DoxyParamCaption}\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&}]{a\+Is\+Alive,  }\item[{Core\+::\+Sparse\+Array$<$ Component\+::\+Connection $>$ \&}]{a\+Connection,  }\item[{Core\+::\+Sparse\+Array$<$ Utils\+::\+Vector2f $>$ \&}]{a\+Pos,  }\item[{Core\+::\+Sparse\+Array$<$ Component\+::\+Hit\+Box $>$ \&}]{a\+Hit\+Box,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&}]{a\+Speed }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -254,7 +255,7 @@ Kill enemies when they shouldn\textquotesingle{}t live anymore.
 \index{ECS::System@{ECS::System}!killPlayer@{killPlayer}}
 \index{killPlayer@{killPlayer}!ECS::System@{ECS::System}}
 \doxysubsubsection{\texorpdfstring{killPlayer()}{killPlayer()}}
-{\footnotesize\ttfamily void ECS\+::\+System\+::kill\+Player (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&}]{a\+Is\+Alive,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Connection}{Component\+::\+Connection}} $>$ \&}]{a\+Connection }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily void ECS\+::\+System\+::kill\+Player (\begin{DoxyParamCaption}\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&}]{a\+Is\+Alive,  }\item[{Core\+::\+Sparse\+Array$<$ Component\+::\+Connection $>$ \&}]{a\+Connection }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -269,26 +270,11 @@ Handle players who get hit.
 {\em a\+Connection} & Sparse\+Array of all entities connection \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{classECS_1_1System_acff7f008ce8d2ca34f73070aa663fb10}\label{classECS_1_1System_acff7f008ce8d2ca34f73070aa663fb10}} 
-\index{ECS::System@{ECS::System}!loadTextures@{loadTextures}}
-\index{loadTextures@{loadTextures}!ECS::System@{ECS::System}}
-\doxysubsubsection{\texorpdfstring{loadTextures()}{loadTextures()}}
-{\footnotesize\ttfamily void ECS\+::\+System\+::load\+Textures (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1LoadedSprite}{Component\+::\+Loaded\+Sprite}} $>$ \&}]{a\+Sprites }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
-
-
-
-Load all the textures of the game (locally) 
-
-
-\begin{DoxyParams}{Parameters}
-{\em a\+Sprites} & Sparse\+Array of all the entities sprites \\
-\hline
-\end{DoxyParams}
 \mbox{\Hypertarget{classECS_1_1System_a5777045583c111817e3ee4498942a741}\label{classECS_1_1System_a5777045583c111817e3ee4498942a741}} 
 \index{ECS::System@{ECS::System}!moveBackground@{moveBackground}}
 \index{moveBackground@{moveBackground}!ECS::System@{ECS::System}}
 \doxysubsubsection{\texorpdfstring{moveBackground()}{moveBackground()}}
-{\footnotesize\ttfamily void ECS\+::\+System\+::move\+Background (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&}]{a\+Pos,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&}]{a\+Speed,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily void ECS\+::\+System\+::move\+Background (\begin{DoxyParamCaption}\item[{Core\+::\+Sparse\+Array$<$ Utils\+::\+Vector2f $>$ \&}]{a\+Pos,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&}]{a\+Speed,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -305,11 +291,30 @@ Background are the entities with the Type\+Entity\+::is\+Background set to true
 {\em a\+Type} & The type of the background \\
 \hline
 \end{DoxyParams}
+\mbox{\Hypertarget{classECS_1_1System_a59074b2400e10ab0820f14b41805de05}\label{classECS_1_1System_a59074b2400e10ab0820f14b41805de05}} 
+\index{ECS::System@{ECS::System}!moveBonus@{moveBonus}}
+\index{moveBonus@{moveBonus}!ECS::System@{ECS::System}}
+\doxysubsubsection{\texorpdfstring{moveBonus()}{moveBonus()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void ECS\+::\+System\+::move\+Bonus (\begin{DoxyParamCaption}\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&}]{a\+Speed,  }\item[{Core\+::\+Sparse\+Array$<$ Utils\+::\+Vector2f $>$ \&}]{a\+Pos,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Move the player speed up. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a\+Speed} & Sparsearray of all entities speed \\
+\hline
+{\em a\+Pos} & Sparse\+Array of all entities position \\
+\hline
+{\em a\+Type} & Sparse\+Array of all entities type \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{classECS_1_1System_a7897bee5f18c30fec9ace48157d59351}\label{classECS_1_1System_a7897bee5f18c30fec9ace48157d59351}} 
 \index{ECS::System@{ECS::System}!moveBonus@{moveBonus}}
 \index{moveBonus@{moveBonus}!ECS::System@{ECS::System}}
-\doxysubsubsection{\texorpdfstring{moveBonus()}{moveBonus()}}
-{\footnotesize\ttfamily void ECS\+::\+System\+::move\+Bonus (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&}]{a\+Pos,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&}]{a\+Speed,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+\doxysubsubsection{\texorpdfstring{moveBonus()}{moveBonus()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void ECS\+::\+System\+::move\+Bonus (\begin{DoxyParamCaption}\item[{Core\+::\+Sparse\+Array$<$ Utils\+::\+Vector2f $>$ \&}]{a\+Pos,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&}]{a\+Speed,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -328,7 +333,7 @@ The bonus is a sprite that is displayed on the screen for a short amount of time
 \index{ECS::System@{ECS::System}!moveEnemy@{moveEnemy}}
 \index{moveEnemy@{moveEnemy}!ECS::System@{ECS::System}}
 \doxysubsubsection{\texorpdfstring{moveEnemy()}{moveEnemy()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily void ECS\+::\+System\+::move\+Enemy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&}]{a\+Pos,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&}]{a\+Speed,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily void ECS\+::\+System\+::move\+Enemy (\begin{DoxyParamCaption}\item[{Core\+::\+Sparse\+Array$<$ Utils\+::\+Vector2f $>$ \&}]{a\+Pos,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&}]{a\+Speed,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -347,7 +352,7 @@ Move enemy on the screen (locally)
 \index{ECS::System@{ECS::System}!moveEnemy@{moveEnemy}}
 \index{moveEnemy@{moveEnemy}!ECS::System@{ECS::System}}
 \doxysubsubsection{\texorpdfstring{moveEnemy()}{moveEnemy()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily static void ECS\+::\+System\+::move\+Enemy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&}]{a\+Pos,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&}]{a\+Speed,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily static void ECS\+::\+System\+::move\+Enemy (\begin{DoxyParamCaption}\item[{Core\+::\+Sparse\+Array$<$ Utils\+::\+Vector2f $>$ \&}]{a\+Pos,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&}]{a\+Speed,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -366,7 +371,7 @@ Move enemies.
 \index{ECS::System@{ECS::System}!moveMissiles@{moveMissiles}}
 \index{moveMissiles@{moveMissiles}!ECS::System@{ECS::System}}
 \doxysubsubsection{\texorpdfstring{moveMissiles()}{moveMissiles()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily void ECS\+::\+System\+::move\+Missiles (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&}]{a\+Pos,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&}]{a\+Speed,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily void ECS\+::\+System\+::move\+Missiles (\begin{DoxyParamCaption}\item[{Core\+::\+Sparse\+Array$<$ Utils\+::\+Vector2f $>$ \&}]{a\+Pos,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&}]{a\+Speed,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -385,7 +390,7 @@ Move missiles on the screen (locally)
 \index{ECS::System@{ECS::System}!moveMissiles@{moveMissiles}}
 \index{moveMissiles@{moveMissiles}!ECS::System@{ECS::System}}
 \doxysubsubsection{\texorpdfstring{moveMissiles()}{moveMissiles()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily static void ECS\+::\+System\+::move\+Missiles (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&}]{a\+Pos,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&}]{a\+Speed,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily static void ECS\+::\+System\+::move\+Missiles (\begin{DoxyParamCaption}\item[{Core\+::\+Sparse\+Array$<$ Utils\+::\+Vector2f $>$ \&}]{a\+Pos,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&}]{a\+Speed,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -400,11 +405,11 @@ Move missiles.
 {\em a\+Type} & Sparse\+Array of all entities type \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{classECS_1_1System_aec3e9f5d50d8c1bcff1f8b6b3c291ec9}\label{classECS_1_1System_aec3e9f5d50d8c1bcff1f8b6b3c291ec9}} 
+\mbox{\Hypertarget{classECS_1_1System_a3aea3f5c13e23214d951aa192f0d1c00}\label{classECS_1_1System_a3aea3f5c13e23214d951aa192f0d1c00}} 
 \index{ECS::System@{ECS::System}!movePlayer@{movePlayer}}
 \index{movePlayer@{movePlayer}!ECS::System@{ECS::System}}
 \doxysubsubsection{\texorpdfstring{movePlayer()}{movePlayer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily void ECS\+::\+System\+::move\+Player (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{ECS\+::\+Utils\+::\+Vector2f}} $>$ \&}]{a\+Pos,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&}]{a\+Speed,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Connection}{Component\+::\+Connection}} $>$ \&}]{a\+Connection }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily static void ECS\+::\+System\+::move\+Player (\begin{DoxyParamCaption}\item[{Core\+::\+Sparse\+Array$<$ ECS\+::\+Utils\+::\+Vector2f $>$ \&}]{a\+Pos,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&}]{a\+Speed,  }\item[{Core\+::\+Sparse\+Array$<$ Component\+::\+Connection $>$ \&}]{a\+Connection }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -419,11 +424,11 @@ Move the player.
 {\em a\+Connection} & Sparse\+Array of all entities connection \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{classECS_1_1System_a46a3ca20528bc58b509d919823189a5d}\label{classECS_1_1System_a46a3ca20528bc58b509d919823189a5d}} 
+\mbox{\Hypertarget{classECS_1_1System_a1b7be607f30dc79b6ff92f9f266642e9}\label{classECS_1_1System_a1b7be607f30dc79b6ff92f9f266642e9}} 
 \index{ECS::System@{ECS::System}!movePlayer@{movePlayer}}
 \index{movePlayer@{movePlayer}!ECS::System@{ECS::System}}
 \doxysubsubsection{\texorpdfstring{movePlayer()}{movePlayer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily void ECS\+::\+System\+::move\+Player (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{ECS\+::\+Utils\+::\+Vector2f}} $>$ \&}]{a\+Pos,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&}]{a\+Speed,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&}]{a\+Is\+Alive }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily static void ECS\+::\+System\+::move\+Player (\begin{DoxyParamCaption}\item[{Core\+::\+Sparse\+Array$<$ ECS\+::\+Utils\+::\+Vector2f $>$ \&}]{a\+Pos,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&}]{a\+Speed,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&}]{a\+Is\+Alive }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -440,28 +445,11 @@ Move the player (locally, send to server)
 {\em a\+Type} & Sparse\+Array of all entities type \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{classECS_1_1System_a9e41f2bf99e6233ad09a51790f37049b}\label{classECS_1_1System_a9e41f2bf99e6233ad09a51790f37049b}} 
-\index{ECS::System@{ECS::System}!moveSpeedUp@{moveSpeedUp}}
-\index{moveSpeedUp@{moveSpeedUp}!ECS::System@{ECS::System}}
-\doxysubsubsection{\texorpdfstring{moveSpeedUp()}{moveSpeedUp()}}
-{\footnotesize\ttfamily void ECS\+::\+System\+::move\+Speed\+Up (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&}]{a\+Speed,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Connection}{Component\+::\+Connection}} $>$ \&}]{a\+Connection }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
-
-
-
-Move the player speed up. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em a\+Speed} & Sparsearray of all entities speed \\
-\hline
-{\em a\+Connection} & Sparse\+Array of all entities connection \\
-\hline
-\end{DoxyParams}
-\mbox{\Hypertarget{classECS_1_1System_a73c9a59460e6904a7acee017d6a9a96c}\label{classECS_1_1System_a73c9a59460e6904a7acee017d6a9a96c}} 
+\mbox{\Hypertarget{classECS_1_1System_aac22b54840b1afff0fa4ef1ec18d6d3b}\label{classECS_1_1System_aac22b54840b1afff0fa4ef1ec18d6d3b}} 
 \index{ECS::System@{ECS::System}!playerHit@{playerHit}}
 \index{playerHit@{playerHit}!ECS::System@{ECS::System}}
 \doxysubsubsection{\texorpdfstring{playerHit()}{playerHit()}}
-{\footnotesize\ttfamily void ECS\+::\+System\+::player\+Hit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&}]{a\+Pos,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&}]{a\+Is\+Alive,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1HitBox}{Component\+::\+Hit\+Box}} $>$ \&}]{a\+Hit\+Box }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily void ECS\+::\+System\+::player\+Hit (\begin{DoxyParamCaption}\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&}]{a\+Is\+Alive,  }\item[{Core\+::\+Sparse\+Array$<$ Component\+::\+Hit\+Box $>$ \&}]{a\+Hit\+Box }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -469,8 +457,6 @@ Handle players who get hit.
 
 
 \begin{DoxyParams}{Parameters}
-{\em a\+Pos} & Sparse\+Array of all entities position \\
-\hline
 {\em a\+Type} & Sparse\+Array of all entities type \\
 \hline
 {\em a\+Is\+Alive} & Sparse\+Array of all entities is\+Alive \\
@@ -482,7 +468,7 @@ Handle players who get hit.
 \index{ECS::System@{ECS::System}!playerShoot@{playerShoot}}
 \index{playerShoot@{playerShoot}!ECS::System@{ECS::System}}
 \doxysubsubsection{\texorpdfstring{playerShoot()}{playerShoot()}}
-{\footnotesize\ttfamily void ECS\+::\+System\+::player\+Shoot (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&}]{a\+Pos,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&}]{a\+Speed,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1HitBox}{Component\+::\+Hit\+Box}} $>$ \&}]{a\+Hit\+Box,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Connection}{Component\+::\+Connection}} $>$ \&}]{a\+Connection }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily void ECS\+::\+System\+::player\+Shoot (\begin{DoxyParamCaption}\item[{Core\+::\+Sparse\+Array$<$ Utils\+::\+Vector2f $>$ \&}]{a\+Pos,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&}]{a\+Speed,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{Core\+::\+Sparse\+Array$<$ Component\+::\+Hit\+Box $>$ \&}]{a\+Hit\+Box,  }\item[{Core\+::\+Sparse\+Array$<$ Component\+::\+Connection $>$ \&}]{a\+Connection }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -507,7 +493,7 @@ Make players shoot.
 \index{ECS::System@{ECS::System}!receiveAknowledgment@{receiveAknowledgment}}
 \index{receiveAknowledgment@{receiveAknowledgment}!ECS::System@{ECS::System}}
 \doxysubsubsection{\texorpdfstring{receiveAknowledgment()}{receiveAknowledgment()}}
-{\footnotesize\ttfamily void ECS\+::\+System\+::receive\+Aknowledgment (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Connection}{Component\+::\+Connection}} $>$ \&}]{a\+Connection }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily void ECS\+::\+System\+::receive\+Aknowledgment (\begin{DoxyParamCaption}\item[{Core\+::\+Sparse\+Array$<$ Component\+::\+Connection $>$ \&}]{a\+Connection }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -522,7 +508,7 @@ Receive client aknowledgment.
 \index{ECS::System@{ECS::System}!spawnEnemy@{spawnEnemy}}
 \index{spawnEnemy@{spawnEnemy}!ECS::System@{ECS::System}}
 \doxysubsubsection{\texorpdfstring{spawnEnemy()}{spawnEnemy()}}
-{\footnotesize\ttfamily void ECS\+::\+System\+::spawn\+Enemy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&}]{a\+Pos,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&}]{a\+Speed,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1HitBox}{Component\+::\+Hit\+Box}} $>$ \&}]{a\+Hit\+Box,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&}]{a\+Is\+Alive,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Connection}{Component\+::\+Connection}} $>$ \&}]{a\+Connection }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily void ECS\+::\+System\+::spawn\+Enemy (\begin{DoxyParamCaption}\item[{Core\+::\+Sparse\+Array$<$ Utils\+::\+Vector2f $>$ \&}]{a\+Pos,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&}]{a\+Speed,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{Core\+::\+Sparse\+Array$<$ Component\+::\+Hit\+Box $>$ \&}]{a\+Hit\+Box,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&}]{a\+Is\+Alive,  }\item[{Core\+::\+Sparse\+Array$<$ Component\+::\+Connection $>$ \&}]{a\+Connection }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -543,32 +529,11 @@ Spawn enemies.
 {\em a\+Connection} & Sparse\+Array of all entities connection \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{classECS_1_1System_a08a48055d5b667c97bd92a74d97c808a}\label{classECS_1_1System_a08a48055d5b667c97bd92a74d97c808a}} 
+\mbox{\Hypertarget{classECS_1_1System_aff0093c23fbd1df121d3c08d0cda642d}\label{classECS_1_1System_aff0093c23fbd1df121d3c08d0cda642d}} 
 \index{ECS::System@{ECS::System}!triggerBonus@{triggerBonus}}
 \index{triggerBonus@{triggerBonus}!ECS::System@{ECS::System}}
-\doxysubsubsection{\texorpdfstring{triggerBonus()}{triggerBonus()}}
-{\footnotesize\ttfamily void ECS\+::\+System\+::trigger\+Bonus (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&}]{a\+Pos,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&}]{a\+Is\+Alive,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1HitBox}{Component\+::\+Hit\+Box}} $>$ \&}]{a\+Hit\+Box }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
-
-
-
-Handle the trigger of the bonus. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em a\+Pos} & The position of the bonus \\
-\hline
-{\em a\+Type} & The type of the bonus \\
-\hline
-{\em a\+Is\+Alive} & The is\+Alive of the bonus \\
-\hline
-{\em a\+Hit\+Box} & The hitbox of the bonus \\
-\hline
-\end{DoxyParams}
-\mbox{\Hypertarget{classECS_1_1System_a3e08617f4b897e9012886f24a421860b}\label{classECS_1_1System_a3e08617f4b897e9012886f24a421860b}} 
-\index{ECS::System@{ECS::System}!triggerBotBonus@{triggerBotBonus}}
-\index{triggerBotBonus@{triggerBotBonus}!ECS::System@{ECS::System}}
-\doxysubsubsection{\texorpdfstring{triggerBotBonus()}{triggerBotBonus()}}
-{\footnotesize\ttfamily void ECS\+::\+System\+::trigger\+Bot\+Bonus (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&}]{a\+Speed,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+\doxysubsubsection{\texorpdfstring{triggerBonus()}{triggerBonus()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void ECS\+::\+System\+::trigger\+Bonus (\begin{DoxyParamCaption}\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&}]{a\+Speed,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -579,11 +544,32 @@ Handle the death of a bot (triggered by server)
 {\em a\+Speed} & \\
 \hline
 \end{DoxyParams}
+\mbox{\Hypertarget{classECS_1_1System_a5f41980ab7cb967552c1f92e8e34c0f9}\label{classECS_1_1System_a5f41980ab7cb967552c1f92e8e34c0f9}} 
+\index{ECS::System@{ECS::System}!triggerBonus@{triggerBonus}}
+\index{triggerBonus@{triggerBonus}!ECS::System@{ECS::System}}
+\doxysubsubsection{\texorpdfstring{triggerBonus()}{triggerBonus()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void ECS\+::\+System\+::trigger\+Bonus (\begin{DoxyParamCaption}\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&}]{a\+Is\+Alive,  }\item[{Core\+::\+Sparse\+Array$<$ Component\+::\+Hit\+Box $>$ \&}]{a\+Hit\+Box,  }\item[{Core\+::\+Sparse\+Array$<$ Component\+::\+Connection $>$ \&}]{a\+Connection,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&}]{a\+Speed }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Trigger the bonus. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a\+Type} & Sparse\+Array of all entities type \\
+\hline
+{\em a\+Is\+Alive} & Sparse\+Array of all entities is\+Alive \\
+\hline
+{\em a\+Hit\+Box} & Sparse\+Array of all entities hitbox \\
+\hline
+{\em a\+Connection} & Sparse\+Array of all entities connection \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{classECS_1_1System_a9cf1ed1b5e39f563f802ccc03faabab7}\label{classECS_1_1System_a9cf1ed1b5e39f563f802ccc03faabab7}} 
 \index{ECS::System@{ECS::System}!triggerBotDeath@{triggerBotDeath}}
 \index{triggerBotDeath@{triggerBotDeath}!ECS::System@{ECS::System}}
 \doxysubsubsection{\texorpdfstring{triggerBotDeath()}{triggerBotDeath()}}
-{\footnotesize\ttfamily void ECS\+::\+System\+::trigger\+Bot\+Death (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&}]{a\+Is\+Alive,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1LoadedSprite}{Component\+::\+Loaded\+Sprite}} $>$ \&}]{a\+Sprites }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily void ECS\+::\+System\+::trigger\+Bot\+Death (\begin{DoxyParamCaption}\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&}]{a\+Is\+Alive,  }\item[{Core\+::\+Sparse\+Array$<$ Component\+::\+Loaded\+Sprite $>$ \&}]{a\+Sprites }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -602,7 +588,7 @@ Handle the death of a bot (triggered by server)
 \index{ECS::System@{ECS::System}!triggerEnemyDeath@{triggerEnemyDeath}}
 \index{triggerEnemyDeath@{triggerEnemyDeath}!ECS::System@{ECS::System}}
 \doxysubsubsection{\texorpdfstring{triggerEnemyDeath()}{triggerEnemyDeath()}}
-{\footnotesize\ttfamily void ECS\+::\+System\+::trigger\+Enemy\+Death (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&}]{a\+Is\+Alive,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1LoadedSprite}{Component\+::\+Loaded\+Sprite}} $>$ \&}]{a\+Sprites,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&}]{a\+Pos }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily void ECS\+::\+System\+::trigger\+Enemy\+Death (\begin{DoxyParamCaption}\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&}]{a\+Is\+Alive,  }\item[{Core\+::\+Sparse\+Array$<$ Component\+::\+Loaded\+Sprite $>$ \&}]{a\+Sprites,  }\item[{Core\+::\+Sparse\+Array$<$ Utils\+::\+Vector2f $>$ \&}]{a\+Pos }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -621,7 +607,7 @@ Handle the death of an enemy (triggered by server)
 \index{ECS::System@{ECS::System}!triggerPlayerShoot@{triggerPlayerShoot}}
 \index{triggerPlayerShoot@{triggerPlayerShoot}!ECS::System@{ECS::System}}
 \doxysubsubsection{\texorpdfstring{triggerPlayerShoot()}{triggerPlayerShoot()}}
-{\footnotesize\ttfamily void ECS\+::\+System\+::trigger\+Player\+Shoot (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{Utils\+::\+Vector2f}} $>$ \&}]{a\+Pos,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&}]{a\+Is\+Alive }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily void ECS\+::\+System\+::trigger\+Player\+Shoot (\begin{DoxyParamCaption}\item[{Core\+::\+Sparse\+Array$<$ Utils\+::\+Vector2f $>$ \&}]{a\+Pos,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&}]{a\+Is\+Alive }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -640,7 +626,7 @@ Make player shoot missiles when space is pressed (triggered locally, send to ser
 \index{ECS::System@{ECS::System}!welcomePlayer@{welcomePlayer}}
 \index{welcomePlayer@{welcomePlayer}!ECS::System@{ECS::System}}
 \doxysubsubsection{\texorpdfstring{welcomePlayer()}{welcomePlayer()}}
-{\footnotesize\ttfamily void ECS\+::\+System\+::welcome\+Player (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structECS_1_1Utils_1_1Vector2f}{ECS\+::\+Utils\+::\+Vector2f}} $>$ \&}]{a\+Pos,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&}]{a\+Speed,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1HitBox}{Component\+::\+Hit\+Box}} $>$ \&}]{a\+Hit\+Box,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&}]{a\+Is\+Alive,  }\item[{\mbox{\hyperlink{classECS_1_1Core_1_1SparseArray}{Core\+::\+Sparse\+Array}}$<$ \mbox{\hyperlink{structComponent_1_1Connection}{Component\+::\+Connection}} $>$ \&}]{a\+Connection }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily void ECS\+::\+System\+::welcome\+Player (\begin{DoxyParamCaption}\item[{Core\+::\+Sparse\+Array$<$ ECS\+::\+Utils\+::\+Vector2f $>$ \&}]{a\+Pos,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1Speed}{Component\+::\+Speed}} $>$ \&}]{a\+Speed,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1TypeEntity}{Component\+::\+Type\+Entity}} $>$ \&}]{a\+Type,  }\item[{Core\+::\+Sparse\+Array$<$ Component\+::\+Hit\+Box $>$ \&}]{a\+Hit\+Box,  }\item[{Core\+::\+Sparse\+Array$<$ \mbox{\hyperlink{structComponent_1_1IsAlive}{Component\+::\+Is\+Alive}} $>$ \&}]{a\+Is\+Alive,  }\item[{Core\+::\+Sparse\+Array$<$ Component\+::\+Connection $>$ \&}]{a\+Connection }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
@@ -672,7 +658,6 @@ src/client/systems/bonus/System+\+Move\+Bonus.\+cpp\item
 src/client/systems/bonus/System+\+Trigger\+Bonus.\+cpp\item 
 src/client/systems/bot/System+\+Bot\+Hit.\+cpp\item 
 src/client/systems/bot/System+\+Create\+Bot.\+cpp\item 
-src/client/systems/bot/System+\+Trigger\+Bot\+Bonus.\+cpp\item 
 src/client/systems/bot/System+\+Trigger\+Bot\+Death.\+cpp\item 
 src/client/systems/bot/System+\+Trigger\+Bot\+Disconnect.\+cpp\item 
 src/client/systems/bot/System+\+Trigger\+Bot\+Shoot.\+cpp\item 
@@ -683,14 +668,14 @@ src/client/systems/enemy/System+\+Move\+Enemy.\+cpp\item
 src/client/systems/enemy/System+\+Trigger\+Enemy\+Death.\+cpp\item 
 src/client/systems/enemy/System+\+Trigger\+Enemy\+Shoot.\+cpp\item 
 src/client/systems/graphic/System+\+Create\+Server\+Full\+Error\+Message.\+cpp\item 
-src/client/systems/graphic/System+\+Display\+Entities.\+cpp\item 
-src/client/systems/graphic/System+\+Get\+Input.\+cpp\item 
-src/client/systems/graphic/System+\+Load\+Textures.\+cpp\item 
-src/client/systems/graphic/System+\+SDLQuit.\+cpp\item 
 src/client/systems/missile/System+\+Move\+Missiles.\+cpp\item 
-src/client/systems/player/System+\+Move\+Player.\+cpp\item 
 src/client/systems/player/System+\+Trigger\+Player\+Shoot.\+cpp\item 
-src/server/systems/bonus/System+\+Move\+Speed.\+cpp\item 
+src/flappybird/systems/bird/System+\+Jump.\+cpp\item 
+src/flappybird/systems/bird/System+\+Kill\+Bird.\+cpp\item 
+src/flappybird/systems/environment/System+\+Move\+Ground.\+cpp\item 
+src/flappybird/systems/environment/System+\+Move\+Pipes.\+cpp\item 
+src/flappybird/systems/environment/System+\+Replay.\+cpp\item 
+src/flappybird/systems/score/System+\+Update\+Score.\+cpp\item 
 src/server/systems/enemy/System+\+Enemy\+Shoot.\+cpp\item 
 src/server/systems/enemy/System+\+Kill\+Enemy.\+cpp\item 
 src/server/systems/enemy/System+\+Spawn\+Enemy.\+cpp\item 

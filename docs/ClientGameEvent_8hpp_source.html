@@ -86,52 +86,62 @@ $(document).ready(function(){initNavTree('ClientGameEvent_8hpp_source.html','');
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &lt;cstddef&gt;</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;Event.hpp&quot;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#ifndef CLIENTGAMEEVENT_HPP</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">    #define CLIENTGAMEEVENT_HPP</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">namespace </span>RType {</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <span class="keyword">enum class</span> ClientEventType</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    {</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        PLAYER_SPAWN = 0,</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        PLAYER_DISCONNECTION = 1,</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        PLAYER_POSITION = 2,</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        PLAYER_SHOOT = 3,</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        PLAYER_BONUS = 4,</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        PLAYER_DEATH = 5,</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        ENEMY_SPAWN = 6,</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        ENEMY_DEATH = 7,</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        ENEMY_SHOOT = 8,</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        SERVER_FULL = 9,</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    };</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="classRType_1_1ClientGameEvent.html">   27</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classRType_1_1ClientGameEvent.html">ClientGameEvent</a> : <span class="keyword">public</span> <a class="code" href="classECS_1_1Event_1_1Event.html">ECS::Event::Event</a></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    {</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            ClientEventType _type;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            std::vector&lt;float&gt; _payload;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            <span class="comment">//-------------------CONSTRUCTORS / DESTRUCTOR-------------------//</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment"></span>            <span class="keyword">explicit</span> <a class="code" href="classRType_1_1ClientGameEvent.html#a755028bb1d6d8a9ed89b337c048a8647">ClientGameEvent</a>(ClientEventType aType);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            <span class="keyword">explicit</span> <a class="code" href="classRType_1_1ClientGameEvent.html#a755028bb1d6d8a9ed89b337c048a8647">ClientGameEvent</a>(ClientEventType aType, std::vector&lt;float&gt; aPayload);</div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;EwECS/Network/Packet.hpp&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef CLIENTGAMEEVENT_HPP</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">    #define CLIENTGAMEEVENT_HPP</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">namespace </span>RType {</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">enum</span> ClientEventType</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    {</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        PLAYER_SPAWN = 0,</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        PLAYER_DISCONNECTION = 1,</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        PLAYER_POSITION = 2,</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        PLAYER_SHOOT = 3,</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        PLAYER_BONUS = 4,</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        PLAYER_DEATH = 5,</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        ENEMY_SPAWN = 6,</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        ENEMY_DEATH = 7,</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        ENEMY_SHOOT = 8,</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        SERVER_FULL = 9,</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        MAX_CLI_EVT = 10</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    };</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="classRType_1_1ClientGameEvent.html">   29</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classRType_1_1ClientGameEvent.html">ClientGameEvent</a></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    {</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            ClientEventType _type;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            std::shared_ptr&lt;ECS::Network::IPayload&gt; _payload;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            <span class="comment">//-------------------CONSTRUCTORS / DESTRUCTOR-------------------//</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment"></span>            <span class="keyword">explicit</span> <a class="code" href="classRType_1_1ClientGameEvent.html#a755028bb1d6d8a9ed89b337c048a8647">ClientGameEvent</a>(ClientEventType aType);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            <a class="code" href="classRType_1_1ClientGameEvent.html#a755028bb1d6d8a9ed89b337c048a8647">ClientGameEvent</a>(<span class="keyword">const</span> <a class="code" href="classRType_1_1ClientGameEvent.html">ClientGameEvent</a> &amp;gameEvent) = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            <a class="code" href="classRType_1_1ClientGameEvent.html#a755028bb1d6d8a9ed89b337c048a8647">ClientGameEvent</a>(<a class="code" href="classRType_1_1ClientGameEvent.html">ClientGameEvent</a> &amp;&amp;gameEvent) = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <a class="code" href="classRType_1_1ClientGameEvent.html">ClientGameEvent</a> &amp;operator=(<span class="keyword">const</span> <a class="code" href="classRType_1_1ClientGameEvent.html">ClientGameEvent</a> &amp;gameEvent) = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            <a class="code" href="classRType_1_1ClientGameEvent.html">ClientGameEvent</a> &amp;operator=(<a class="code" href="classRType_1_1ClientGameEvent.html">ClientGameEvent</a> &amp;&amp;gameEvent) noexcept = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            ClientEventType <a class="code" href="classRType_1_1ClientGameEvent.html#aa35410fdf01d5b38331954ff9ca97a2a">getType</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            std::vector&lt;float&gt; <a class="code" href="classRType_1_1ClientGameEvent.html#a75cd9987eaf6b1a83db59900ce409b0b">getPayload</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    };</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;} <span class="comment">// namespace RType</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// !</span></div>
-<div class="ttc" id="aclassECS_1_1Event_1_1Event_html"><div class="ttname"><a href="classECS_1_1Event_1_1Event.html">ECS::Event::Event</a></div><div class="ttdoc">Event class is the base class of all events.</div><div class="ttdef"><b>Definition:</b> Event.hpp:27</div></div>
-<div class="ttc" id="aclassRType_1_1ClientGameEvent_html"><div class="ttname"><a href="classRType_1_1ClientGameEvent.html">RType::ClientGameEvent</a></div><div class="ttdoc">Game event class is the base class of all game events.</div><div class="ttdef"><b>Definition:</b> ClientGameEvent.hpp:28</div></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            <span class="keyword">explicit</span> <a class="code" href="classRType_1_1ClientGameEvent.html#a755028bb1d6d8a9ed89b337c048a8647">ClientGameEvent</a>(ClientEventType aType, ECS::Network::IPayload *aPayload);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            [[nodiscard]] ClientEventType <a class="code" href="classRType_1_1ClientGameEvent.html#aa35410fdf01d5b38331954ff9ca97a2a">getType</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Payload&gt;</div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="classRType_1_1ClientGameEvent.html#a97d2cd3a1db0f73e096cc6401254c8bf">   66</a></span>&#160;            [[nodiscard]] <span class="keyword">const</span> Payload &amp;<a class="code" href="classRType_1_1ClientGameEvent.html#a97d2cd3a1db0f73e096cc6401254c8bf">getPayload</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keyword">            </span>{</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;                <span class="keywordflow">return</span> *<span class="keyword">reinterpret_cast&lt;</span>Payload *<span class="keyword">&gt;</span>(_payload.get());</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            }</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    };</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;} <span class="comment">// namespace RType</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// !</span></div>
+<div class="ttc" id="aclassRType_1_1ClientGameEvent_html"><div class="ttname"><a href="classRType_1_1ClientGameEvent.html">RType::ClientGameEvent</a></div><div class="ttdoc">Game event class is the base class of all game events.</div><div class="ttdef"><b>Definition:</b> ClientGameEvent.hpp:30</div></div>
 <div class="ttc" id="aclassRType_1_1ClientGameEvent_html_a755028bb1d6d8a9ed89b337c048a8647"><div class="ttname"><a href="classRType_1_1ClientGameEvent.html#a755028bb1d6d8a9ed89b337c048a8647">RType::ClientGameEvent::ClientGameEvent</a></div><div class="ttdeci">ClientGameEvent(ClientEventType aType)</div><div class="ttdoc">Construct a new Game Event object.</div><div class="ttdef"><b>Definition:</b> ClientGameEvent.cpp:5</div></div>
-<div class="ttc" id="aclassRType_1_1ClientGameEvent_html_a75cd9987eaf6b1a83db59900ce409b0b"><div class="ttname"><a href="classRType_1_1ClientGameEvent.html#a75cd9987eaf6b1a83db59900ce409b0b">RType::ClientGameEvent::getPayload</a></div><div class="ttdeci">std::vector&lt; float &gt; getPayload() const</div><div class="ttdoc">Get the payload of the event.</div><div class="ttdef"><b>Definition:</b> ClientGameEvent.cpp:21</div></div>
-<div class="ttc" id="aclassRType_1_1ClientGameEvent_html_aa35410fdf01d5b38331954ff9ca97a2a"><div class="ttname"><a href="classRType_1_1ClientGameEvent.html#aa35410fdf01d5b38331954ff9ca97a2a">RType::ClientGameEvent::getType</a></div><div class="ttdeci">ClientEventType getType() const</div><div class="ttdoc">Get event type.</div><div class="ttdef"><b>Definition:</b> ClientGameEvent.cpp:16</div></div>
+<div class="ttc" id="aclassRType_1_1ClientGameEvent_html_a97d2cd3a1db0f73e096cc6401254c8bf"><div class="ttname"><a href="classRType_1_1ClientGameEvent.html#a97d2cd3a1db0f73e096cc6401254c8bf">RType::ClientGameEvent::getPayload</a></div><div class="ttdeci">const Payload &amp; getPayload() const</div><div class="ttdoc">Get payload.</div><div class="ttdef"><b>Definition:</b> ClientGameEvent.hpp:66</div></div>
+<div class="ttc" id="aclassRType_1_1ClientGameEvent_html_aa35410fdf01d5b38331954ff9ca97a2a"><div class="ttname"><a href="classRType_1_1ClientGameEvent.html#aa35410fdf01d5b38331954ff9ca97a2a">RType::ClientGameEvent::getType</a></div><div class="ttdeci">ClientEventType getType() const</div><div class="ttdoc">Get event type.</div><div class="ttdef"><b>Definition:</b> ClientGameEvent.cpp:14</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

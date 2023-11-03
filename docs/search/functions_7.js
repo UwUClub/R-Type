@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['handleplayercrash_198',['handlePlayerCrash',['../classECS_1_1System.html#a8af5b9f113e574a5bf139b5765a3f672',1,'ECS::System']]],
-  ['hitbox_199',['HitBox',['../structComponent_1_1HitBox.html#af5d8cbd49ff3cc29fe470d6cff7c3f91',1,'Component::HitBox::HitBox()'],['../structComponent_1_1HitBox.html#a0b19870dbdcbd789a87a0534e8c28a5d',1,'Component::HitBox::HitBox(float aWidth, float aHeight)']]]
+  ['isalive_86',['IsAlive',['../structComponent_1_1IsAlive.html#a2c7c88340eaba5a7c8781eacb95f133a',1,'Component::IsAlive::IsAlive()'],['../structComponent_1_1IsAlive.html#a6f9ca187bba60a12e6529fb8d812bc4f',1,'Component::IsAlive::IsAlive(bool aIsAlive, float aTimeToDie)']]]
 ];

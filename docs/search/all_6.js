@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['freerects_40',['freeRects',['../classSDLDisplayClass.html#a840093243cc53036d3d90d55cc2f49c5',1,'SDLDisplayClass']]]
+  ['handleplayercrash_16',['handlePlayerCrash',['../classECS_1_1System.html#a8af5b9f113e574a5bf139b5765a3f672',1,'ECS::System']]]
 ];

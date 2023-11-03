@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['quitsdl_84',['quitSDL',['../classECS_1_1System.html#a9faebec6e4a2005a302e99fe73624f94',1,'ECS::System']]]
+  ['welcomeplayer_55',['welcomePlayer',['../classECS_1_1System.html#a8799ffddaa62769ce7abbe936d4c3be4',1,'ECS::System']]]
 ];

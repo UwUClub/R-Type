@@ -3,15 +3,24 @@
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
+\mbox{\Hypertarget{structComponent_1_1TypeEntity_aa959c47352fc42f7c79147eed3209314}\label{structComponent_1_1TypeEntity_aa959c47352fc42f7c79147eed3209314}} 
+\mbox{\hyperlink{structComponent_1_1TypeEntity_aa959c47352fc42f7c79147eed3209314}{Type\+Entity}} ()=default
+\begin{DoxyCompactList}\small\item\em Construct a new Type Entity object. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structComponent_1_1TypeEntity_a96e51eb31f0c52e53d501f6df78abeb3}\label{structComponent_1_1TypeEntity_a96e51eb31f0c52e53d501f6df78abeb3}} 
+\mbox{\hyperlink{structComponent_1_1TypeEntity_a96e51eb31f0c52e53d501f6df78abeb3}{Type\+Entity}} (Entity\+Type a\+Type)
+\begin{DoxyCompactList}\small\item\em Construct a new Type Entity object. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structComponent_1_1TypeEntity_a6bde13af372c0fe012957fc00118305f}\label{structComponent_1_1TypeEntity_a6bde13af372c0fe012957fc00118305f}} 
 \mbox{\hyperlink{structComponent_1_1TypeEntity_a6bde13af372c0fe012957fc00118305f}{Type\+Entity}} ()
 \begin{DoxyCompactList}\small\item\em Construct a new Type Entity object. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{structComponent_1_1TypeEntity_a59cb4cf0fe8f0ed9752bab3b0d369623}{Type\+Entity}} (bool a\+Is\+Player, bool a\+Is\+Bot, bool a\+Is\+Enemy, bool a\+Is\+Bullet, bool a\+Is\+Wall, bool a\+Is\+Bonus, bool a\+Is\+Background)
+\mbox{\hyperlink{structComponent_1_1TypeEntity_a38ea85b6c92d5da5e145bb309b82e814}{Type\+Entity}} (bool a\+Is\+Player, bool a\+Is\+Bot, bool a\+Is\+Enemy, bool a\+Is\+Bullet, bool a\+Is\+Wall, bool a\+Is\+Bonus, bool a\+Is\+Background, bool a\+Is\+Enemy\+Missile=false)
 \begin{DoxyCompactList}\small\item\em Construct a new Type Entity object. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{structComponent_1_1TypeEntity_a81497f3c1093d0fce8d9e4e520cfc833}{Type\+Entity}} (bool a\+Is\+Player, bool a\+Is\+Bot, bool a\+Is\+Enemy, bool a\+Is\+Bullet, bool a\+Is\+Wall, bool a\+Is\+Bonus, bool a\+Is\+Background, size\+\_\+t a\+Online\+Id)
+\mbox{\hyperlink{structComponent_1_1TypeEntity_acc2ee20800fd9d847b514d65277c2f63}{Type\+Entity}} (bool a\+Is\+Player, bool a\+Is\+Bot, bool a\+Is\+Enemy, bool a\+Is\+Bullet, bool a\+Is\+Wall, bool a\+Is\+Bonus, bool a\+Is\+Background, size\+\_\+t a\+Online\+Id, bool a\+Is\+Enemy\+Missile=false)
 \begin{DoxyCompactList}\small\item\em Construct a new Type Entity object. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structComponent_1_1TypeEntity_aba45e5080f3e351b2d3ccb4fec0c8bdb}\label{structComponent_1_1TypeEntity_aba45e5080f3e351b2d3ccb4fec0c8bdb}} 
+Entity\+Type {\bfseries type} = NONE
 \item 
 \mbox{\Hypertarget{structComponent_1_1TypeEntity_afc82b3fdffe747c488dfb04c91ccfd46}\label{structComponent_1_1TypeEntity_afc82b3fdffe747c488dfb04c91ccfd46}} 
 bool {\bfseries is\+Player}
@@ -36,15 +45,18 @@ bool {\bfseries is\+Background}
 \item 
 \mbox{\Hypertarget{structComponent_1_1TypeEntity_ad5bd093a076d3994259561497a31d0b0}\label{structComponent_1_1TypeEntity_ad5bd093a076d3994259561497a31d0b0}} 
 std\+::optional$<$ size\+\_\+t $>$ {\bfseries online\+Id}
+\item 
+\mbox{\Hypertarget{structComponent_1_1TypeEntity_a7fb113650e703a5b09bb68170965fc1a}\label{structComponent_1_1TypeEntity_a7fb113650e703a5b09bb68170965fc1a}} 
+bool {\bfseries is\+Enemy\+Missile}
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Constructor \& Destructor Documentation}
-\mbox{\Hypertarget{structComponent_1_1TypeEntity_a59cb4cf0fe8f0ed9752bab3b0d369623}\label{structComponent_1_1TypeEntity_a59cb4cf0fe8f0ed9752bab3b0d369623}} 
+\mbox{\Hypertarget{structComponent_1_1TypeEntity_a38ea85b6c92d5da5e145bb309b82e814}\label{structComponent_1_1TypeEntity_a38ea85b6c92d5da5e145bb309b82e814}} 
 \index{Component::TypeEntity@{Component::TypeEntity}!TypeEntity@{TypeEntity}}
 \index{TypeEntity@{TypeEntity}!Component::TypeEntity@{Component::TypeEntity}}
 \doxysubsubsection{\texorpdfstring{TypeEntity()}{TypeEntity()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily Component\+::\+Type\+Entity\+::\+Type\+Entity (\begin{DoxyParamCaption}\item[{bool}]{a\+Is\+Player,  }\item[{bool}]{a\+Is\+Bot,  }\item[{bool}]{a\+Is\+Enemy,  }\item[{bool}]{a\+Is\+Bullet,  }\item[{bool}]{a\+Is\+Wall,  }\item[{bool}]{a\+Is\+Bonus,  }\item[{bool}]{a\+Is\+Background }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily Component\+::\+Type\+Entity\+::\+Type\+Entity (\begin{DoxyParamCaption}\item[{bool}]{a\+Is\+Player,  }\item[{bool}]{a\+Is\+Bot,  }\item[{bool}]{a\+Is\+Enemy,  }\item[{bool}]{a\+Is\+Bullet,  }\item[{bool}]{a\+Is\+Wall,  }\item[{bool}]{a\+Is\+Bonus,  }\item[{bool}]{a\+Is\+Background,  }\item[{bool}]{a\+Is\+Enemy\+Missile = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -67,11 +79,11 @@ Construct a new Type Entity object.
 {\em a\+Is\+Background} & a boolean to know if the entity is a background \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{structComponent_1_1TypeEntity_a81497f3c1093d0fce8d9e4e520cfc833}\label{structComponent_1_1TypeEntity_a81497f3c1093d0fce8d9e4e520cfc833}} 
+\mbox{\Hypertarget{structComponent_1_1TypeEntity_acc2ee20800fd9d847b514d65277c2f63}\label{structComponent_1_1TypeEntity_acc2ee20800fd9d847b514d65277c2f63}} 
 \index{Component::TypeEntity@{Component::TypeEntity}!TypeEntity@{TypeEntity}}
 \index{TypeEntity@{TypeEntity}!Component::TypeEntity@{Component::TypeEntity}}
 \doxysubsubsection{\texorpdfstring{TypeEntity()}{TypeEntity()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily Component\+::\+Type\+Entity\+::\+Type\+Entity (\begin{DoxyParamCaption}\item[{bool}]{a\+Is\+Player,  }\item[{bool}]{a\+Is\+Bot,  }\item[{bool}]{a\+Is\+Enemy,  }\item[{bool}]{a\+Is\+Bullet,  }\item[{bool}]{a\+Is\+Wall,  }\item[{bool}]{a\+Is\+Bonus,  }\item[{bool}]{a\+Is\+Background,  }\item[{size\+\_\+t}]{a\+Online\+Id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily Component\+::\+Type\+Entity\+::\+Type\+Entity (\begin{DoxyParamCaption}\item[{bool}]{a\+Is\+Player,  }\item[{bool}]{a\+Is\+Bot,  }\item[{bool}]{a\+Is\+Enemy,  }\item[{bool}]{a\+Is\+Bullet,  }\item[{bool}]{a\+Is\+Wall,  }\item[{bool}]{a\+Is\+Bonus,  }\item[{bool}]{a\+Is\+Background,  }\item[{size\+\_\+t}]{a\+Online\+Id,  }\item[{bool}]{a\+Is\+Enemy\+Missile = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -100,4 +112,4 @@ Construct a new Type Entity object.
 
 The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-src/rtype/components/Type\+Entity.\+hpp\end{DoxyCompactItemize}
+src/flappybird/components/Type\+Entity.\+hpp\end{DoxyCompactItemize}
